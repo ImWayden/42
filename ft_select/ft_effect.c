@@ -18,24 +18,21 @@ int		ft_effect(t_list *list)
 	t_list	*tmp;
 
 	tmp = list;
-	tmp->curseur = 'y';
+	list = ft_setlist(list);
 	while (1)
 	{
-		list = ft_setlist(list);
+		ft_putstr(tgoto(tgetstr("sc", NULL), tmp->col, tmp->row));
 		ft_effect2(list);
-		buffer[2] = 0;
+		buffer[1] = 0;
+		ft_putstr(tgetstr("me", NULL));
 		read(0, buffer, 3);
-		if (buffer[0] == 27 && buffer[1] == 91 && buffer[2] == 'B')
+		if (buffer[0] == 27)
 		{
-			tmp->curseur = 'n';
-			tmp = tmp->next;
-			tmp->curseur = 'y';
-		}
-		else if (buffer[0] == 27 && buffer[1] == 91 && buffer[2] == 'A')
-		{
-			tmp->curseur = 'n';
-			tmp = tmp->prev;
-			tmp->curseur = 'y';
+			if (buffer[1] == 91 && buffer[2] == 'B')
+				tmp = tmp->next;
+			if (buffer[1] == 91 && buffer[2] == 'A')
+				tmp = tmp->prev;
+			ft_putstr(tgoto(tgetstr("cm", NULL), tmp->col, tmp->row));
 		}
 		else if (buffer[0] == ' ')
 		{
@@ -44,10 +41,7 @@ int		ft_effect(t_list *list)
 			else
 				tmp->select = 'y';
 		}
-		else if (buffer[0] == 27)
-		{
-			printf("Ctlr+d, on quitte !\n");
+		else if (buffer[0] == 'q')
 			return (0);
-		}
 	}
 }

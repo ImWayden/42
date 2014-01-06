@@ -12,37 +12,45 @@
 
 #include "ft_select.h"
 
+static	void	choice(t_list *list)
+{
+	ft_putstr(tgoto(tgetstr("cm", NULL), list->col, list->row));
+	if (list->select == 'y')
+	{
+		ft_putstr(tgetstr("mr", NULL));
+		ft_putstr(list->str);
+		ft_putstr(tgetstr("me", NULL));
+	}
+	else
+		ft_putstr(list->str);
+}
+
 int		ft_effect2(t_list *list)
 {
-	char	*clearscreen;
 	t_list	*tmp;
 
 	ft_putstr(tgetstr("cl", NULL));
 	tmp = list;
-	ft_putstr(tgoto(tgetstr("cm", NULL), tmp->col, tmp->row));
-	if (tmp->curseur == 'y')
-			ft_putstr(tgetstr("us", NULL));
-	if (tmp->select == 'y')
-			ft_putstr(tgetstr("md", NULL));	
-	ft_putstr(tmp->str);
-	if (tmp->curseur == 'y'|| tmp->select == 'y')
+	/*if (tmp->select == 'y')
+	{
+		ft_putstr(tgetstr("mr", NULL));
+		ft_putstr(tmp->str);
 		ft_putstr(tgetstr("me", NULL));
+	}
+	else
+		ft_putstr(tmp->str);*/
+	choice(tmp);
 	tmp = tmp->next;
 	while(tmp != list)
 	{
-		ft_putstr(tgoto(tgetstr("cm", NULL), tmp->col, tmp->row));
-		if (tmp->curseur == 'y')
-			ft_putstr(tgetstr("us", NULL));
+		/*ft_putstr(tgoto(tgetstr("cm", NULL), tmp->col, tmp->row));
 		if (tmp->select == 'y')
-			ft_putstr(tgetstr("md", NULL));
+			ft_putstr(tgetstr("mr", NULL));
 		ft_putstr(tmp->str);
-		if (tmp->curseur == 'y' || tmp->select == 'y')
-			ft_putstr(tgetstr("me", NULL));
+		if (tmp->select == 'y')
+			ft_putstr(tgetstr("me", NULL));*/ choice(tmp);
 		tmp = tmp->next;
 	}
-	tmp = list->prev;
-	while (tmp->curseur != 'y' && tmp != list)
-		tmp = tmp->prev;
-	ft_putstr(tgoto(tgetstr("cm", NULL), tmp->col, tmp->row));
+	ft_putstr(tgetstr("rc", NULL));
 	return (0);
 }
