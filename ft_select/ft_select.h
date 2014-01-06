@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <curses.h>
+#include <sys/ioctl.h>
 #include <term.h>
 
 typedef struct 		s_list
@@ -25,6 +26,8 @@ typedef struct 		s_list
 	char			*str;
 	int 			curseur;
 	int 			select;
+	int 			row;
+	int 			col;
 	struct s_list	*next;
 	struct s_list	*prev;
 }					t_list;
@@ -37,6 +40,7 @@ int		ft_strlen(char *str);
 char	*ft_strdup(char *s1);
 void	ft_putstr(char *str);
 void	ft_putlist(t_list *list);
+t_list		*ft_setlist(t_list *list);
 int		ft_recup(char **str, t_list **list);
 t_list		*ft_addlist(t_list *list, char *str);
 int		ft_defconfig(struct termios *term);

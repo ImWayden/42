@@ -23,5 +23,5 @@ int		ft_recup(char **str, t_list **list)
 		*list = ft_addlist(*list, str[i]);
 		i++;
 	}
-	return (++i);
+	return (i);
 }

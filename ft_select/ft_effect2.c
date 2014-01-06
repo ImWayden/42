@@ -19,33 +19,30 @@ int		ft_effect2(t_list *list)
 
 	ft_putstr(tgetstr("cl", NULL));
 	tmp = list;
+	ft_putstr(tgoto(tgetstr("cm", NULL), tmp->col, tmp->row));
 	if (tmp->curseur == 'y')
 			ft_putstr(tgetstr("us", NULL));
 	if (tmp->select == 'y')
 			ft_putstr(tgetstr("md", NULL));	
 	ft_putstr(tmp->str);
-	write(1, "\n", 1);
 	if (tmp->curseur == 'y'|| tmp->select == 'y')
 		ft_putstr(tgetstr("me", NULL));
 	tmp = tmp->next;
 	while(tmp != list)
 	{
+		ft_putstr(tgoto(tgetstr("cm", NULL), tmp->col, tmp->row));
 		if (tmp->curseur == 'y')
 			ft_putstr(tgetstr("us", NULL));
 		if (tmp->select == 'y')
 			ft_putstr(tgetstr("md", NULL));
 		ft_putstr(tmp->str);
-		write(1, "\n", 1);
 		if (tmp->curseur == 'y' || tmp->select == 'y')
 			ft_putstr(tgetstr("me", NULL));
 		tmp = tmp->next;
 	}
 	tmp = list->prev;
 	while (tmp->curseur != 'y' && tmp != list)
-	{
 		tmp = tmp->prev;
-		ft_putstr(tgetstr("up", NULL));
-	}
-	ft_putstr(tgetstr("up", NULL));
+	ft_putstr(tgoto(tgetstr("cm", NULL), tmp->col, tmp->row));
 	return (0);
 }

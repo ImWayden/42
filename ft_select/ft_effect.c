@@ -21,6 +21,7 @@ int		ft_effect(t_list *list)
 	tmp->curseur = 'y';
 	while (1)
 	{
+		list = ft_setlist(list);
 		ft_effect2(list);
 		buffer[2] = 0;
 		read(0, buffer, 3);
