@@ -12,17 +12,15 @@
 
 #include "ft_select.h"
 
-static	void	choice(t_list *list)
+static	void	choice2(t_list *list)
 {
 	ft_putstr(tgoto(tgetstr("cm", NULL), list->col, list->row));
 	if (list->select == 'y')
-	{
 		ft_putstr(tgetstr("mr", NULL));
-		ft_putstr(list->str);
-		ft_putstr(tgetstr("me", NULL));
-	}
-	else
-		ft_putstr(list->str);
+	if (list->curseur == 'y')
+		ft_putstr(tgetstr("us", NULL));
+	ft_putstr(list->str);
+	ft_putstr(tgetstr("me", NULL));
 }
 
 int		ft_effect2(t_list *list)
@@ -31,26 +29,12 @@ int		ft_effect2(t_list *list)
 
 	ft_putstr(tgetstr("cl", NULL));
 	tmp = list;
-	/*if (tmp->select == 'y')
-	{
-		ft_putstr(tgetstr("mr", NULL));
-		ft_putstr(tmp->str);
-		ft_putstr(tgetstr("me", NULL));
-	}
-	else
-		ft_putstr(tmp->str);*/
-	choice(tmp);
+	choice2(tmp);
 	tmp = tmp->next;
 	while(tmp != list)
 	{
-		/*ft_putstr(tgoto(tgetstr("cm", NULL), tmp->col, tmp->row));
-		if (tmp->select == 'y')
-			ft_putstr(tgetstr("mr", NULL));
-		ft_putstr(tmp->str);
-		if (tmp->select == 'y')
-			ft_putstr(tgetstr("me", NULL));*/ choice(tmp);
+		choice2(tmp);
 		tmp = tmp->next;
 	}
-	ft_putstr(tgetstr("rc", NULL));
 	return (0);
 }

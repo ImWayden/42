@@ -19,7 +19,10 @@
 #include <stdio.h>
 #include <curses.h>
 #include <sys/ioctl.h>
+#include <signal.h>
 #include <term.h>
+
+
 
 typedef struct 		s_list
 {

@@ -12,36 +12,54 @@
 
 #include "ft_select.h"
 
+static	t_list	*choice(t_list **tmp, char *buffer)
+{
+	if (buffer[0] == 27)
+	{
+		(*tmp)->curseur = 'n';
+		if (buffer[1] == 91 && buffer[2] == 'B')
+			(*tmp) = (*tmp)->next;
+		if (buffer[1] == 91 && buffer[2] == 'A')
+			(*tmp) = (*tmp)->prev;
+		(*tmp)->curseur = 'y';
+	}
+	else if (buffer[0] == ' ')
+	{
+		if ((*tmp)->select == 'y')
+			(*tmp)->select = 'n';
+		else
+			(*tmp)->select = 'y';
+		(*tmp) = (*tmp)->next;
+	}
+	return (*tmp);
+}
+
+void    mywinch(int i)
+{
+	exit;
+}
+
 int		ft_effect(t_list *list)
 {
 	char	buffer[3];
 	t_list	*tmp;
 
 	tmp = list;
-	list = ft_setlist(list);
 	while (1)
 	{
-		ft_putstr(tgoto(tgetstr("sc", NULL), tmp->col, tmp->row));
+		//signal(SIGWINCH, mywinch);
+		list = ft_setlist(list);
 		ft_effect2(list);
-		buffer[1] = 0;
-		ft_putstr(tgetstr("me", NULL));
+		ft_putstr(tgoto(tgetstr("cm", NULL), tmp->col, tmp->row));
+		buffer[0] = 0;buffer[1] = 0;buffer[2] = 0;	
 		read(0, buffer, 3);
-		if (buffer[0] == 27)
+		tmp = choice(&tmp, buffer);
+		if (buffer[0] == 'q')
 		{
-			if (buffer[1] == 91 && buffer[2] == 'B')
-				tmp = tmp->next;
-			if (buffer[1] == 91 && buffer[2] == 'A')
-				tmp = tmp->prev;
-			ft_putstr(tgoto(tgetstr("cm", NULL), tmp->col, tmp->row));
-		}
-		else if (buffer[0] == ' ')
-		{
-			if (tmp->select == 'y')
-				tmp->select = 'n';
-			else
-				tmp->select = 'y';
-		}
-		else if (buffer[0] == 'q')
+			ft_putstr(tgetstr("cl", NULL));
+			ft_putstr(tgetstr("me", NULL));
 			return (0);
+		}
 	}
 }
+
