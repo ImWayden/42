@@ -27,3 +27,24 @@ void	ft_putlist(t_list *list)
 		tmp = tmp->next;
 	}
 }
+
+void	ft_sendlist(t_list *list)
+{
+	t_list *tmp;
+	
+	tmp = list;
+	if (tmp->select == 'y')
+		ft_putstr(tmp->str);
+	if (tmp->select == 'y')
+			write(1, " ", 1);
+	tmp = tmp->next;
+	while (tmp != list)
+	{
+		if (tmp->select == 'y')
+			ft_putstr(tmp->str);
+		if (tmp->select == 'y')
+			write(1, " ", 1);
+		tmp = tmp->next;
+	}
+	ft_putstr(tgetstr("le", NULL));
+}

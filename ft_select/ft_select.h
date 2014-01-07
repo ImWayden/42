@@ -20,6 +20,7 @@
 #include <curses.h>
 #include <sys/ioctl.h>
 #include <signal.h>
+#include <fcntl.h>
 #include <term.h>
 
 
@@ -35,7 +36,7 @@ typedef struct 		s_list
 	struct s_list	*prev;
 }					t_list;
 
-int		ft_effect(t_list *list);
+t_list	*ft_effect(t_list *list);
 int		ft_effect2(t_list *list);
 int		ft_init(struct termios *term);
 int		ft_config(struct termios *term);
@@ -43,6 +44,7 @@ int		ft_strlen(char *str);
 char	*ft_strdup(char *s1);
 void	ft_putstr(char *str);
 void	ft_putlist(t_list *list);
+void	ft_sendlist(t_list *list);
 t_list		*ft_setlist(t_list *list);
 int		ft_recup(char **str, t_list **list);
 t_list		*ft_addlist(t_list *list, char *str);

@@ -34,12 +34,35 @@ static	t_list	*choice(t_list **tmp, char *buffer)
 	return (*tmp);
 }
 
+typedef struct	s_bar
+{
+	t_list	*list;
+}				t_bar;
+
+void	*uf_get_instance(void)
+{
+	static t_bar	*instance = NULL;
+ 
+	if (instance == NULL)
+		instance = malloc(sizeof(*instance));
+	return (instance);
+}
+
 void    mywinch(int i)
 {
+	t_list		*list;
+
+	list = ((t_bar *)uf_get_instance())->list;
+	ft_putstr(tgetstr("cl", NULL));
+	ft_effect2(list);
+	while (list->curseur != 'y')
+		list = list->next;
+	list = ft_setlist(list);
+	ft_putstr(tgoto(tgetstr("cm", NULL), list->col, list->row));
 	exit;
 }
 
-int		ft_effect(t_list *list)
+t_list		*ft_effect(t_list *list)
 {
 	char	buffer[3];
 	t_list	*tmp;
@@ -47,7 +70,8 @@ int		ft_effect(t_list *list)
 	tmp = list;
 	while (1)
 	{
-		//signal(SIGWINCH, mywinch);
+		((t_bar *)uf_get_instance())->list = list;
+		signal(SIGWINCH, mywinch);
 		list = ft_setlist(list);
 		ft_effect2(list);
 		ft_putstr(tgoto(tgetstr("cm", NULL), tmp->col, tmp->row));
@@ -58,7 +82,7 @@ int		ft_effect(t_list *list)
 		{
 			ft_putstr(tgetstr("cl", NULL));
 			ft_putstr(tgetstr("me", NULL));
-			return (0);
+			return (list);
 		}
 	}
 }
