@@ -14,11 +14,16 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
 
 typedef struct s_env
 {
 	void	*mlx;
 	void	*win;
+	char	*str;
 }				t_env;
 
 typedef struct e_point
@@ -27,29 +32,16 @@ typedef struct e_point
 	int		y;
 }				t_point;
 
-
-void	drawline(t_point *p1, t_point *p2, t_env *e)
-{
-	int 	x;
-
-	x = p1->x;
-	while (x < p2->x)
-	{
-		mlx_pixel_put(e->mlx, e->win, x, p1->y + ((p2->y - p1->y) * (x - p1->x)) / (p2->x - p1->x), 0xFF0000);
-		x++;
-	}
-}
-
-void	draw(t_env *e)
+void	draw(t_env *e, t_point *point)
 {
 	int 	x;
 	int 	y;
 
-	y = 100;
-	while (y < 200)
+	y = point->y;
+	while (y < (point->y + 10))
 	{
-		x = 100;
-		while (x < 200)
+		x = point->x;
+		while (x < (point->x + 10))
 		{
 			mlx_pixel_put(e->mlx, e->win, x, y, 0xFF0000);
 			x++;
@@ -58,9 +50,38 @@ void	draw(t_env *e)
 	}
 }
 
+
+void	drawmap(t_env *e)
+{
+	int 	fd;
+	char	buff[2];
+	t_point point;
+
+	fd = open(e->str, O_RDONLY);
+	point.y = 0;
+	point.x = 0;
+	while (read(fd, buff, 1))
+	{
+		if (buff[0] == '\n')
+		{
+			write(1, "\n", 1);
+			point.y = point.y + 10;
+			point.x = 0;
+		}
+		else
+		{
+			write(1, &buff[0], 1);
+			draw(e, &point);
+			point.x = point.x + 10;
+		}
+	}
+}
+
+
+
 int 	expose_hook(t_env *e)
 {
-	draw(e);
+	drawmap(e);
 	return (0);
 }
 
@@ -78,11 +99,13 @@ int 	mouse_hook(int button, int x, int y, t_env *e)
 	return (0);
 }
 
-int main(int argc, char const *argv[])
+int main(int argc, char **argv)
 {
 	t_env	e;
+	t_point poit1,point2;
 
 	e.mlx = mlx_init();
+	e.str = argv[1];
 	e.win = mlx_new_window(e.mlx, 420, 420, "Negusse");
 	mlx_mouse_hook(e.win, mouse_hook, &e);
 	mlx_key_hook(e.win, key_hook, &e);
