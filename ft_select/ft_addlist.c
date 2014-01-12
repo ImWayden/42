@@ -35,3 +35,19 @@ t_list		*ft_addlist(t_list *list, char *str)
 	}
 	return (list);
 }
+
+t_list		*ft_dellistelmt(t_list *list, char *str)
+{
+	t_list	*tmp;
+	
+	tmp = list;
+	if (list != NULL)
+	{
+		while (ft_strcmp(tmp->str, str))
+			tmp = tmp->next;
+		tmp->next->prev = tmp->prev;
+		tmp->prev->next = tmp->next;
+		free(tmp);
+	}
+	return (list);
+}

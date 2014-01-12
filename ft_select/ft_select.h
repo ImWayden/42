@@ -36,6 +36,11 @@ typedef struct 		s_list
 	struct s_list	*prev;
 }					t_list;
 
+typedef struct	s_bar
+{
+	t_list	*list;
+}				t_bar;
+
 t_list	*ft_effect(t_list *list);
 int		ft_effect2(t_list *list);
 int		ft_init(struct termios *term);
@@ -50,5 +55,6 @@ int		ft_recup(char **str, t_list **list);
 t_list		*ft_addlist(t_list *list, char *str);
 int		ft_defconfig(struct termios *term);
 t_list	*ft_add_list(t_list *list, char *str);
+int		ft_strcmp(char *s1, char *s2);
 
 #endif
