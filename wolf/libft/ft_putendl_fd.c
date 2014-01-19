@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_defconfig.c                                     :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: xmachado <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/03 14:51:54 by msarr             #+#    #+#             */
-/*   Updated: 2014/01/03 14:51:56 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/29 20:24:44 by xmachado          #+#    #+#             */
+/*   Updated: 2013/12/03 19:10:13 by xmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include "libft.h"
 
-int		ft_defconfig(struct termios *term)
+void	ft_putendl_fd(char const *s, int fd)
 {
-	ft_putstr(tgetstr("cl", NULL));
-	(*term).c_lflag = (ICANON | ECHO);
-	if (tcsetattr(0, TCSADRAIN, term) == -1)
-		return (-1);
-	return (0);
+	char const	*c;
+
+	c = s;
+	ft_putstr_fd(c, fd);
+	write(fd, "\n", 1);
 }

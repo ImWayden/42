@@ -26,7 +26,6 @@ int 	main(int argc, char **argv, char **env)
 		if (ft_config(&term))
 			return (-1);
 		ft_effect(list);
-		ft_sendlist(list);
 		if (ft_defconfig(&term))
 			return (-1);
 	}

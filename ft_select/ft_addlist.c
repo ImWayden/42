@@ -45,6 +45,7 @@ t_list		*ft_dellistelmt(t_list *list, char *str)
 	{
 		while (ft_strcmp(tmp->str, str))
 			tmp = tmp->next;
+		tmp->next->curseur = 'y';
 		tmp->next->prev = tmp->prev;
 		tmp->prev->next = tmp->next;
 		free(tmp);

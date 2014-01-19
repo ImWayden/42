@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_defconfig.c                                     :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: xmachado <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/03 14:51:54 by msarr             #+#    #+#             */
-/*   Updated: 2014/01/03 14:51:56 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/29 19:26:57 by xmachado          #+#    #+#             */
+/*   Updated: 2013/12/19 14:28:46 by xmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include "libft.h"
 
-int		ft_defconfig(struct termios *term)
+void	ft_putnbr(int n)
 {
-	ft_putstr(tgetstr("cl", NULL));
-	(*term).c_lflag = (ICANON | ECHO);
-	if (tcsetattr(0, TCSADRAIN, term) == -1)
-		return (-1);
-	return (0);
+	if (n < 0)
+	{
+		n = -n;
+		ft_putchar('-');
+	}
+	if (n > 9)
+	{
+		ft_putnbr(n / 10);
+		ft_putnbr(n % 10);
+	}
+	if (n < 10)
+		ft_putchar(n + '0');
 }

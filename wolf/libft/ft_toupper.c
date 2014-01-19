@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_defconfig.c                                     :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: xmachado <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/03 14:51:54 by msarr             #+#    #+#             */
-/*   Updated: 2014/01/03 14:51:56 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/21 13:37:40 by xmachado          #+#    #+#             */
+/*   Updated: 2013/11/22 19:24:10 by xmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
-
-int		ft_defconfig(struct termios *term)
+int ft_toupper(int c)
 {
-	ft_putstr(tgetstr("cl", NULL));
-	(*term).c_lflag = (ICANON | ECHO);
-	if (tcsetattr(0, TCSADRAIN, term) == -1)
-		return (-1);
-	return (0);
+	if (c >= 'a' && c <= 'z')
+		return (c - 32);
+	else
+		return (c);
 }

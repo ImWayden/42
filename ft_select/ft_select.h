@@ -56,5 +56,7 @@ t_list		*ft_addlist(t_list *list, char *str);
 int		ft_defconfig(struct termios *term);
 t_list	*ft_add_list(t_list *list, char *str);
 int		ft_strcmp(char *s1, char *s2);
+t_list		*ft_dellistelmt(t_list *list, char *str);
+
 
 #endif

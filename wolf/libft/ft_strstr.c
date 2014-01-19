@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_defconfig.c                                     :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: xmachado <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/03 14:51:54 by msarr             #+#    #+#             */
-/*   Updated: 2014/01/03 14:51:56 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/22 16:46:04 by xmachado          #+#    #+#             */
+/*   Updated: 2013/11/28 19:44:08 by xmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include "libft.h"
 
-int		ft_defconfig(struct termios *term)
+char	*ft_strstr(const char *s1, const char *s2)
 {
-	ft_putstr(tgetstr("cl", NULL));
-	(*term).c_lflag = (ICANON | ECHO);
-	if (tcsetattr(0, TCSADRAIN, term) == -1)
-		return (-1);
+	size_t		n;
+
+	n = ft_strlen((char*)s2);
+	if (*s2 == '\0')
+		return ((char*)s1);
+	while (*s1)
+	{
+		if (ft_strncmp(s1, s2, n))
+			s1++;
+		else
+			return ((char*)s1);
+	}
 	return (0);
 }

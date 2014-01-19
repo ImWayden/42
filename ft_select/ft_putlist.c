@@ -31,19 +31,19 @@ void	ft_putlist(t_list *list)
 void	ft_sendlist(t_list *list)
 {
 	t_list *tmp;
-	int		fd;
-	
+
+	ft_putstr(tgetstr("cl", NULL));
+	ft_putstr(tgetstr("me", NULL));
 	tmp = list;
-	fd = open("/dev/pts/1", O_WRONLY);
 	if (tmp->select == 'y')
-		write(fd, tmp->str, ft_strlen(tmp->str));
+		write(1, tmp->str, ft_strlen(tmp->str));
 	if (tmp->select == 'y')
-			write(fd, " ", 1);
+			write(1, " ", 1);
 	tmp = tmp->next;
 	while (tmp != list)
 	{
 		if (tmp->select == 'y')
-			write(fd, tmp->str, ft_strlen(tmp->str));
+			write(1, tmp->str, ft_strlen(tmp->str));
 		if (tmp->select == 'y')
 			write(1, " ", 1);
 		tmp = tmp->next;

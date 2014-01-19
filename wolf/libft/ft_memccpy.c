@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_defconfig.c                                     :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: xmachado <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/03 14:51:54 by msarr             #+#    #+#             */
-/*   Updated: 2014/01/03 14:51:56 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/22 16:07:45 by xmachado          #+#    #+#             */
+/*   Updated: 2013/11/25 15:10:09 by xmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include <string.h>
 
-int		ft_defconfig(struct termios *term)
+void	*ft_memccpy(void *dest, const void *src, int c, size_t n)
 {
-	ft_putstr(tgetstr("cl", NULL));
-	(*term).c_lflag = (ICANON | ECHO);
-	if (tcsetattr(0, TCSADRAIN, term) == -1)
-		return (-1);
-	return (0);
+	char	*x;
+	char	*y;
+	int		i;
+
+	x = dest;
+	y = (char*)src;
+	i = 0;
+	while (n != 0)
+	{
+		*x++ = i = *y++;
+		if (i == c)
+			return (x);
+		n--;
+	}
+	return (NULL);
 }

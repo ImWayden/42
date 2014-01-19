@@ -31,10 +31,14 @@ static	t_list	*choice(t_list **tmp, char *buffer)
 			(*tmp)->select = 'y';
 		(*tmp) = (*tmp)->next;
 	}
+	if (buffer[0] == 8 || buffer[0] == 127)
+	{
+		*tmp = ft_dellistelmt(*tmp, (*tmp)->str);
+	}
 	return (*tmp);
 }
 
-void	*uf_get_instance(void)
+static void	*uf_get_instance(void)
 {
 	static t_bar	*instance = NULL;
  
@@ -43,7 +47,7 @@ void	*uf_get_instance(void)
 	return (instance);
 }
 
-void    mywinch(int i)
+static	void	mywinch(int i)
 {
 	t_list		*list;
 
@@ -57,9 +61,9 @@ void    mywinch(int i)
 	exit;
 }
 
-void    mywinch2(int i)
+static	void	mywinch2(int i)
 {
-	t_list		*list;
+	/*t_list		*list;
 
 	list = ((t_bar *)uf_get_instance())->list;
 	ft_putstr(tgetstr("cl", NULL));
@@ -68,7 +72,8 @@ void    mywinch2(int i)
 		list = list->next;
 	list = ft_setlist(list);
 	ft_putstr(tgoto(tgetstr("cm", NULL), list->col, list->row));
-	exit;
+	exit;*/
+	write(1, "a", 1);
 }
 
 t_list		*ft_effect(t_list *list)
@@ -81,18 +86,22 @@ t_list		*ft_effect(t_list *list)
 	{
 		((t_bar *)uf_get_instance())->list = list;
 		signal(SIGWINCH, mywinch);
-		signal(SIGBREAK, mywinch2);
+		signal(SIGTSTP, mywinch2);
 		list = ft_setlist(list);
 		ft_effect2(list);
 		ft_putstr(tgoto(tgetstr("cm", NULL), tmp->col, tmp->row));
 		buffer[0] = 0;buffer[1] = 0;buffer[2] = 0;	
 		read(0, buffer, 3);
 		tmp = choice(&tmp, buffer);
-		if (buffer[0] == 'q')
+		if (buffer[0] == 10)
+		{
+			ft_sendlist(list);
+			return (list);
+		}
+		if (buffer[0] == 27 && buffer[1] == 0)
 		{
 			ft_putstr(tgetstr("cl", NULL));
-			ft_putstr(tgetstr("me", NULL));
-			return (list);
+			return (0);
 		}
 	}
 }
