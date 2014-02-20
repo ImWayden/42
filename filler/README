@@ -1,0 +1,6 @@
+Pour lancer la VM du filler:
+
+cp ruby-2.1.0.tar.bz2 ~/.
+cd && tar xvf ruby-2.1.0.tar.bz2
+cd ruby-2.1.0/bin
+./ruby ~/Downloads/vm_beta.rb
