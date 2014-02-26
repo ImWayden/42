@@ -1,0 +1,52 @@
+EX: Author
+========== AUTHOR FILE ==========
+Author file OK.
+=================================
+Note = 1
+
+EX: Ulstr
+========== ULSTR ==========
+Compiling /tmp/tmprjAC5Bdeepthought-work-directory/ulstr.c
+$ gcc /tmp/tmprjAC5Bdeepthought-work-directory/ulstr.c -o ./user_ulstr
+
+- Test [./user_ulstr "L'eSPrit nE peUt plUs pRogResSer s'Il staGne et sI peRsIsTent VAnIte et auto-justification." | cat -e] OK !
+- Test [./user_ulstr "S'enTOuRer dE sECreT eSt uN sIGnE De mAnQuE De coNNaiSSanCe.  " | cat -e] OK !
+- Test [./user_ulstr "3:21 Ba  tOut  moUn ki Ka di KE m'en Ka fe fot" | cat -e] OK !
+- Test [./user_ulstr "Pour l'Imperium de l'Humanite" | cat -e] OK !
+- Test [./user_ulstr "..." | cat -e] OK !
+- Test [./user_ulstr "" | cat -e] OK !
+===========================
+Note = 5
+
+EX: Wdmatch
+========== WDMATCH ==========
+Compiling /tmp/tmpH63LM_deepthought-work-directory/wdmatch.c
+$ gcc /tmp/tmpH63LM_deepthought-work-directory/wdmatch.c -o ./user_wdmatch
+
+- Test [./user_wdmatch "faya" "fgvvfdxcacpolhyghbreda" | cat -e] OK !
+- Test [./user_wdmatch "faya" "fgvvfdxcacpolhyghbred" | cat -e] OK !
+- Test [./user_wdmatch "quarante deux" "qfqfsudf arzgsayns tsregfdgs sjytdekuoixq " | cat -e] OK !
+- Test [./user_wdmatch "error" "rrerrrfiiljdfxjyuifrrvcoojh" | cat -e] OK !
+- Test [./user_wdmatch "... un dernier pour la route" "... UN DERNIER POUR LA ROUTE" | cat -e] OK !
+- Test [./user_wdmatch "oui" "qowueir" | cat -e] OK !
+- Test [./user_wdmatch "" "" | cat -e] OK !
+============================
+Note = 4
+
+EX: Ft_strdup
+========== FT_STRDUP ==========
+Compiling /tmp/tmp2FfTT7deepthought-work-directory/test0.c /tmp/tmp2FfTT7deepthought-work-directory/ft_strdup.c
+$ gcc /tmp/tmp2FfTT7deepthought-work-directory/test0.c /tmp/tmp2FfTT7deepthought-work-directory/ft_strdup.c -o ./user_g_diam
+
+$ diff --suppress-common-lines ./user.out /tmp/tmp2FfTT7deepthought-work-directory/test0.output | cat -e
+KO :(
+Difference: < le votre, > le notre
+12d11$
+< ./user_g_diam got killed by a: Segmentation Fault$
+\ No newline at end of file$
+
+===============================
+Note = 0
+
+Note Finale: 10
+Commentaire: Author: OK (1 pts) / Ulstr: OK (5 pts) / Wdmatch: OK (4 pts) / Ft_strdup: Fail

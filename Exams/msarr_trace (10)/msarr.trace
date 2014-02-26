@@ -1,0 +1,52 @@
+EX: Author
+========== AUTHOR FILE ==========
+Author file OK.
+=================================
+Note = 1
+
+EX: Rotone
+========== ROTONE ==========
+Compiling /tmp/tmprWp6OPdeepthought-work-directory/rotone.c
+$ gcc /tmp/tmprWp6OPdeepthought-work-directory/rotone.c -o ./user_rotone
+
+$ diff --suppress-common-lines ./user.out test1.output | cat -e
+Good !
+$ diff --suppress-common-lines ./user.out test2.output | cat -e
+Good !
+$ diff --suppress-common-lines ./user.out test3.output | cat -e
+Good !
+============================
+Note = 6
+
+EX: Hidenp
+========== HIDENP ==========
+Compiling /tmp/tmpjFxlQNdeepthought-work-directory/hidenp.c
+$ gcc /tmp/tmpjFxlQNdeepthought-work-directory/hidenp.c -o ./user_hidenp
+
+- Test [./user_hidenp "abc" "a" | cat -e] OK !
+- Test [./user_hidenp "" "abc" | cat -e] OK !
+- Test [./user_hidenp "abc" "" | cat -e] OK !
+- Test [./user_hidenp "abc" "abc" | cat -e] OK !
+- Test [./user_hidenp "abc" "adbc" | cat -e] OK !
+- Test [./user_hidenp "abc" "adcb" | cat -e] OK !
+- Test [./user_hidenp "abc" "adcbjgieuwhc" | cat -e] OK !
+- Test [./user_hidenp "abc" "adbcd" | cat -e] OK !
+- Test [./user_hidenp "abc" "abababababababab" | cat -e] OK !
+- Test [./user_hidenp "zzzzzz" "z" | cat -e] OK !
+- Test [./user_hidenp "zzzzzz" "zzzz" | cat -e] OK !
+- Test [./user_hidenp "zzzzzz" "azzzzzzzzzzzzz" | cat -e] OK !
+============================
+Note = 5
+
+EX: Union
+========== UNION ==========
+Compiling /tmp/tmpj4CbSideepthought-work-directory/union.c
+$ gcc /tmp/tmpj4CbSideepthought-work-directory/union.c -o ./user_union
+
+- Test [./user_union "bqwuiobqiwrvi-1,-1.-1-38901gbi" "3u3bkjnqoq8dbiu1p1po,-8491" | cat -e] OK !
+- Test [./user_union "" "3u3bkjnqosbhs9q8dbiu1p1po,-8491" | cat -e] FAILED !
+===========================
+Note = 0
+
+Note Finale: 12
+Commentaire: Author: OK (1 pts) / Rotone: OK (6 pts) / Hidenp: OK (5 pts) / Union: Fail
