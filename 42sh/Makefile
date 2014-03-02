@@ -19,7 +19,12 @@ LDIR = libft/
 SDIR = srcs/
 
 SRC = $(SDIR)main.c $(SDIR)ft_init.c $(SDIR)ft_get.c $(SDIR)env_builtin.c \
+<<<<<<< HEAD
 		$(SDIR)cd_builtin.c $(SDIR)ft_parselex.c
+=======
+		$(SDIR)cd_builtin.c $(SDIR)ft_parselex.c $(SDIR)termcap.c \
+		$(SDIR)termcap1.c $(SDIR)needed.c\
+>>>>>>> fc382db9c32f12bfa015c589a3e35834beacc415
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes
@@ -36,7 +41,11 @@ $(NAME): $(OBJ)
 	@echo "\033[31;1m"
 	@echo -n '---> Compilation in progress... <---'
 	@echo "\033[0m"
+<<<<<<< HEAD
 	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LIB)
+=======
+	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LIB) -ltermcap
+>>>>>>> fc382db9c32f12bfa015c589a3e35834beacc415
 	@echo "\033[1;32m"
 	@echo -n '---> DONE ! <---'
 	@echo "\033[0m"
