@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/24 14:23:52 by msarr             #+#    #+#             */
-/*   Updated: 2013/11/24 14:23:58 by msarr            ###   ########.fr       */
+/*   Updated: 2014/03/02 18:03:27 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "includes/libft.h"
 
-char	*ft_strcpy(char *s1, char *s2)
+char		*ft_strcpy(char *s1, char *s2)
 {
-	int i;
+	int		i;
 
 	
 	i = 0;
-	while (s2[i])
+	while (s2 && s2[i])
 	{
 		s1[i] = s2[i];
 		i++;

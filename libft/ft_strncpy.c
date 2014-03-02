@@ -3,38 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/24 14:28:18 by msarr             #+#    #+#             */
-/*   Updated: 2013/11/24 14:28:25 by msarr            ###   ########.fr       */
+/*   Updated: 2014/03/02 14:10:40 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "includes/libft.h"
 
-char	*ft_strncpy(char *s1, char *s2, size_t n)
+char		*ft_strncpy(char *s1, char *s2, size_t n)
 {
-	char	*tmp1;
-	char	*tmp2;
+	int		i;
 	
-	if (!s1 || !s2 )
-			return (NULL);
-	else if (!n)
-		return (s1); 
-	else
+	i = 0;
+	while (s2[i] && n)
 	{
-		tmp1 = s1;
-		tmp2 = s2;
-		while (*tmp2 && n && tmp1)
-		{
-			*tmp1++ = *tmp2++;
-			n--;
-		}
-		while (tmp1 && n)
-		{
-			*tmp1++ = '\0';
-			n--;
-		}
+		s1[i] = s2[i];
+		i++;
+		n--;
 	}
 	return (s1);
 }

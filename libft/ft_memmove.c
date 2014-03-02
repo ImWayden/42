@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/24 17:49:19 by msarr             #+#    #+#             */
-/*   Updated: 2013/11/24 17:49:24 by msarr            ###   ########.fr       */
+/*   Updated: 2014/03/02 13:37:16 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "includes/libft.h"
 
-void	*ft_memmove(void *s1, const void *s2, size_t n)
+void			*ft_memmove(void *s1, const void *s2, size_t n)
 {
-	char	*tmp1;
+	char		*tmp1;
 	const char	*tmp2;
 
 	tmp1 = s1;

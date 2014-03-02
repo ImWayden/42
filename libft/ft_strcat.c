@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/24 15:02:53 by msarr             #+#    #+#             */
-/*   Updated: 2013/11/24 15:02:56 by msarr            ###   ########.fr       */
+/*   Updated: 2014/03/02 14:13:18 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "includes/libft.h"
 
-char	*ft_strcat(char *s1, char *s2)
+char		*ft_strcat(char *s1, char *s2)
 {
-	int i;
+	int		i;
 	
 	i = ft_strlen(s1);
 	while (*s2)

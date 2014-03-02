@@ -3,71 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/27 14:25:10 by msarr             #+#    #+#             */
-/*   Updated: 2013/11/27 14:25:13 by msarr            ###   ########.fr       */
+/*   Updated: 2014/03/03 00:09:57 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "includes/libft.h"
 
-static size_t	ft_Word_Number(char const *s, char c)
+static char		**ft_array(char *s, char c)
 {
-	size_t		i;
 	size_t		j;
-
-	i = 0;
-	j = 0;
-	while (s[i])
-	{
-		while (s[i] == c && s[i])
-			i++;
-		if (s[i])
-			j++;
-		while (s[i] != c && s[i])
-			i++;
-	}
-	return (j);
-}
-
-static char		**ft_Malloc(size_t x)
-{
 	char		**split;
 
-	split = (char **)malloc(sizeof(char *) * (x + 1));
-	if (split == 0)
-		return (NULL);
-	ft_bzero(split, x);
+	j = 0;
+	while (s && *s)
+	{
+		while (*s && *s == c)
+			s++;
+		if (*s)
+			j++;
+		while (*s && *s != c)
+			s++;
+	}
+	split = (char **)ft_memalloc(j + 1);
 	return (split);
 }
 
-char	**ft_strsplit(char const *s, char c)
+char			*ft_split(char *str, int *c)
+{
+	int			i;
+	while (str && *str == *c)
+		str++;
+	i = 0;
+	while (str && str[i] && str[i] != *c)
+		i++;
+	*c = i;
+	return (str);
+}
+
+char			**ft_strsplit(char const *s, char c)
 {
 	char		**split;
-	size_t		x;
-	size_t		y;
-	size_t		z;
-	size_t		n;
+	int			j;
+	int			i;
 
-	x = ft_Word_Number(s, c);
-	n = 0;
-	y = 0;
-	split = ft_Malloc(x + 1);
-	while (s[y])
+	i = 0;
+	split = ft_array((char *)s, c);
+	while (split && s && *s)
 	{
-		z = 0;
-		while (s[y] == c && s[y])
-			y++;
-		z = y;
-		while (s[y] != c && s[y])
-			y++;
-		if (n != x)
-		{
-			split[n] = ft_strsub(s, z, (y - z));
-			n++;
-		}
+		j = c;
+		s = ft_split((char *)s, &j);
+		split[i] = ft_strsub(s, 0, j);
+		s = s + j;
+		i++;
 	}
-	split[n] = '\0';
 	return (split);
 }
