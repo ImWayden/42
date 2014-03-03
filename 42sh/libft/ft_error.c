@@ -23,8 +23,9 @@ void		ft_print_error(char *error)
 void		ft_is_not_found(char *cmd)
 {
 	write(2, "\033[0;31;1m", 9);
+	write(2, "bsh: ", 5);
 	write(2, cmd, ft_strlen((const char *)cmd));
-	write(2, " : Command not found.", 21);
+	write(2, ": command not found", 19);
 	write(2, "\033[0m", 4);
 	write(2, "\n", 1);
 }

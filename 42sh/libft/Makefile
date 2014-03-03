@@ -6,7 +6,7 @@
 #    By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/11/22 20:29:32 by sraccah           #+#    #+#              #
-#    Updated: 2014/02/14 14:07:51 by sraccah          ###   ########.fr        #
+#    Updated: 2014/03/01 15:13:49 by sraccah          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC = ft_strcpy.c ft_strlen.c ft_strcmp.c ft_strncmp.c ft_memmove.c\
       ft_print_list.c ft_strsub.c ft_strsplit2.c ft_strreverse.c ft_strmapi.c\
       ft_strjoin.c ft_strmap.c ft_strlen_ps.c get_next_line.c ft_strdup_gnl.c \
       ft_strjoin_gnl.c ft_isint.c ft_strtrim.c ft_print_colours.c \
-      ft_print_colours2.c ft_error.c ft_strsplit.c
+      ft_print_colours2.c ft_error.c ft_strsplit.c ft_free.c
 
 OBJ = $(SRC:.c=.o)
 

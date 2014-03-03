@@ -6,7 +6,7 @@
 /*   By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/23 18:20:21 by sraccah           #+#    #+#             */
-/*   Updated: 2014/02/05 18:23:49 by sraccah          ###   ########.fr       */
+/*   Updated: 2014/03/01 15:13:40 by sraccah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ void			ft_print_green(char *error);
 void			ft_print_bleue(char *error);
 void			ft_print_purple(char *error);
 void			ft_print_yellow(char *error);
+void			ft_free2(char *s1, char *s2);
+void			ft_free3(char *s1, char *s2, char *s3);
+void			ft_free4(char *s1, char *s2, char *s3, char *s4);
 
 /*
 ** Lib C

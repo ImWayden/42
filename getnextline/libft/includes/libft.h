@@ -3,27 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/21 13:57:05 by msarr             #+#    #+#             */
-/*   Updated: 2013/11/21 13:57:10 by msarr            ###   ########.fr       */
+/*   Updated: 2014/03/02 19:32:10 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef		__FT_H__
-# define	__FT_H__
+#ifndef LIBFT_H
+# define LIBFT_H
 
-#include <string.h>
-#include <unistd.h>
-#include <stdlib.h>
+# include <unistd.h>
+# include <string.h>
+# include <stdlib.h>
+# include <ctype.h>
 
-typedef struct s_list
+# define BUFF_SIZE 1024
+# define BLACK     "\033[1;30m"
+# define RED       "\033[1;31m"
+# define GREEN     "\033[1;32m"
+# define YELLOW    "\033[1;33m"
+# define BLUE      "\033[1;34m"
+# define PURPLE    "\033[1;35m"
+# define CYAN      "\033[1;36m"
+# define GREY      "\033[1;37m"
+
+
+/*
+** Lists and Strutures
+*/
+
+typedef struct		s_list
 {
-void *content;
-size_t content_size;
-struct s_list *next;
-} t_list ;
+	char			*content;
+	size_t			content_size;
+	struct s_list	*next;
+}					t_list;
 
+/*
+** Functions for Lists and Strutures
+*/
 
 int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
@@ -77,6 +96,5 @@ void	ft_putnbr(int n);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(const char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
-char	*ft_strrealloc(char **str, unsigned int len);
 
 #endif
