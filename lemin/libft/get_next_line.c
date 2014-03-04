@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_.c                                   :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/02 17:32:20 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/15 20:15:57 by msarr            ###   ########.fr       */
+/*   Updated: 2014/03/04 13:34:51 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int						ft_is(char *str, int c)
 	int					i;
 
 	i = 0;
-	while (*str)
+	while (str && *str)
 	{
 		if (*str == c)
 			return (i);
@@ -50,7 +50,7 @@ int		first(t_getline *sd, char **line)
 	int		i;
 
 	tmp = ft_strnew(BUFF_SIZE);
-	if (sd->str && (ret = ft_is(sd->str, '\n')))
+	if (sd && sd->str && (ret = ft_is(sd->str, '\n')))
 	{
 		i = ft_strlen(sd->str);
 		*line = ft_strsub(sd->str , 0, ret);
@@ -58,12 +58,12 @@ int		first(t_getline *sd, char **line)
 		sd->str = ft_strsub(sd->str, ret + 1, i);
 		return (1);
 	}
-	else if (sd->str)
+	else if (sd && sd->str)
 	{
 		*line = sd->str;
 		sd->str = NULL;
 	}
-	while ((ret = read(sd->fd, tmp, BUFF_SIZE)))
+	while (sd && (ret = read(sd->fd, tmp, BUFF_SIZE)))
 	{
 		if (!ret)
 			return (0);

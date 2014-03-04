@@ -6,17 +6,17 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/04 02:11:40 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/04 15:40:15 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-t_lemlist		*ft_listnew(int i, char *str)
+t_lemlist		*ft_lemlistnew(char *str)
 {
 	t_lemlist	*tmp;
 
-	tmp = (t_lemlist *)malloc(sizeof(t_lemlist));
+	tmp = (t_lemlist *)ft_memalloc(1);
 	if (tmp)
 	{
 		tmp->str = str;
@@ -25,12 +25,12 @@ t_lemlist		*ft_listnew(int i, char *str)
 	return (tmp);
 }
 
-t_lemlist		*ft_addlist(t_lemlist *list, char *str)
+t_lemlist		*ft_addlemlist(t_lemlist *list, char *str)
 {
-	t_getline	*tmp;
+	t_lemlist	*tmp;
 
-	tmp = ft_listnew(i, str);
-	if (!list)
+	tmp = ft_lemlistnew(str);
+	if (list)
 		tmp->next = list;
 	return (tmp);
 }

@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+         #
+#    By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/22 14:52:23 by sraccah           #+#    #+#              #
-#    Updated: 2014/02/24 11:55:22 by sraccah          ###   ########.fr        #
+#    Updated: 2014/03/04 12:45:29 by mozzie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = 42sh
+NAME = lem-in
 
 MAKE = make
 CC = gcc
@@ -18,8 +18,7 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 
-SRC = $(SDIR)main.c $(SDIR)ft_init.c $(SDIR)ft_get.c $(SDIR)env_builtin.c \
-		$(SDIR)cd_builtin.c $(SDIR)ft_parselex.c
+SRC = $(SDIR)parser.c $(SDIR)list.c
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes

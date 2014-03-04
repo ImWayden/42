@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/02 17:42:23 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/04 01:17:55 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/04 15:20:37 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ typedef struct 			s_getline
 t_getline		*ft_listnew(int i, char *str);
 t_getline		*ft_addlist(t_getline *list, char *str, int i);
 int				getnextline(int const fd, char **line);
+int				ft_is(char *str, int c);
 
 #endif

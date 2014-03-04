@@ -6,11 +6,11 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/04 02:14:47 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/04 16:55:14 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lemin!.h"
+#include "../includes/lemin.h"
 
 int			hashcode(char *str)
 {
@@ -29,25 +29,63 @@ int			hashcode(char *str)
 	return (code % 1000);
 }
 
-char				**parse()
+t_lem				*parse()
 {
-	s_lemlist		*tab[1000];
+	t_lem			*pars;
 	int				i;
 	char			*str = NULL;
 
 	i = 0;
+	pars = (t_lem *)malloc(sizeof(t_lem));
 	while (getnextline(0, &str))
 	{
-		ft_putstr(str);
+		ft_putendl(str);
 		if (!i)
-			j = ft_itoa(str);
+		{
+			pars->j = ft_atoi(str);
+			i = 3;
+		}
 		else if (!ft_strcmp(str, "##start"))
 			i = 1;
-		else if (ft_strcmp(str, "##start"))
+		else if (!ft_strcmp(str, "##end"))
 			i = 2;
 		else if (i)
 		{
-			tab[hashcode(ft_strplit(str, ' '))]
+			if (i == 1 )
+				pars->start = (ft_strsplit(str, ' '))[0];
+			if (i == 2)
+				pars->end = (ft_strsplit(str, ' '))[0];
+			if (i == 1 || i == 2)
+				i = 3;
+			if (ft_is(str, '-'))
+				pars->tab[hashcode((ft_strsplit(str, '-'))[0])]
+				= ft_addlemlist(pars->tab[hashcode((ft_strsplit(str, '-'))[0])]
+				, (ft_strsplit(str, '-'))[1]);
+			else
+				pars->tab[hashcode((ft_strsplit(str, ' '))[0])] = ft_lemlistnew(NULL);
 		}
 	}
+	return (pars);
+}
+
+t_lemlist		**find(t_lem *lem, t_lemlist **tab)
+{
+	while (lem->tab[hashcode(lem->star)])
+	{
+		(*tab) =
+		lem->tab[hashcode(lem->star)] = (lem->tab[hashcode(lem->star)])->next;
+	}
+	return(tab);
+}
+
+int main()
+{
+	t_lem		*lem;
+
+	lem = parse();
+	ft_putnbr(lem->j);
+	ft_putendl((lem->tab[hashcode("2")])->next->str);
+	ft_putendl(lem->start);
+	ft_putendl(lem->end);
+	return 0;
 }
