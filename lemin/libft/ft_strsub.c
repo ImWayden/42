@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   ft_strsub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/03/03 13:57:57 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/04 02:14:44 by mozzie           ###   ########.fr       */
+/*   Created: 2013/11/27 11:40:58 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 15:58:42 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
+#include "includes/libft.h"
 
-t_getline		*ft_listnew(int i, char *str)
+char		*ft_strsub(char const *s, unsigned int start, size_t len)
 {
-	t_getline	*tmp;
+	char	*str;
+	int		i;
 
-	tmp = (t_getline *)malloc(sizeof(t_getline));
-	if (tmp)
+	str = ft_strnew(len);
+	i = 0;
+	while (str && s[start] && i < (int) len)
 	{
-		tmp->fd = i;
-		tmp->str = str;
-		tmp->next = NULL;
+		str[i] = s[start];
+		i++;
+		start++;
 	}
-	return (tmp);
-}
-
-t_getline		*ft_addlist(t_getline *list, char *str, int i)
-{
-	t_getline	*tmp;
-
-	tmp = ft_listnew(i, str);
-	if (!list)
-		tmp->next = list;
-	return (tmp);
+	return (str);
 }

@@ -1,37 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/03/03 13:57:57 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/04 02:14:44 by mozzie           ###   ########.fr       */
+/*   Created: 2013/11/24 12:29:08 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 13:48:08 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
+#include "includes/libft.h"
 
-t_getline		*ft_listnew(int i, char *str)
+char		*ft_strdup(const char *s1)
 {
-	t_getline	*tmp;
+	int		i;
+	char	*cpy;
 
-	tmp = (t_getline *)malloc(sizeof(t_getline));
-	if (tmp)
+	i = ft_strlen(s1);
+	cpy = ft_strnew(i);
+	while (i && cpy)
 	{
-		tmp->fd = i;
-		tmp->str = str;
-		tmp->next = NULL;
+		cpy[i] = s1[i];
+		i--;
 	}
-	return (tmp);
-}
-
-t_getline		*ft_addlist(t_getline *list, char *str, int i)
-{
-	t_getline	*tmp;
-
-	tmp = ft_listnew(i, str);
-	if (!list)
-		tmp->next = list;
-	return (tmp);
+	return (cpy);
 }

@@ -5,28 +5,27 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/03/03 13:57:57 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/04 02:14:44 by mozzie           ###   ########.fr       */
+/*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/04 02:11:40 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
+#include "../includes/lemin.h"
 
-t_getline		*ft_listnew(int i, char *str)
+t_lemlist		*ft_listnew(int i, char *str)
 {
-	t_getline	*tmp;
+	t_lemlist	*tmp;
 
-	tmp = (t_getline *)malloc(sizeof(t_getline));
+	tmp = (t_lemlist *)malloc(sizeof(t_lemlist));
 	if (tmp)
 	{
-		tmp->fd = i;
 		tmp->str = str;
 		tmp->next = NULL;
 	}
 	return (tmp);
 }
 
-t_getline		*ft_addlist(t_getline *list, char *str, int i)
+t_lemlist		*ft_addlist(t_lemlist *list, char *str)
 {
 	t_getline	*tmp;
 

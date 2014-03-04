@@ -1,37 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/03/03 13:57:57 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/04 02:14:44 by mozzie           ###   ########.fr       */
+/*   Created: 2013/11/24 14:41:55 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 18:00:30 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
+#include "includes/libft.h"
 
-t_getline		*ft_listnew(int i, char *str)
+char		*ft_strchr(const char *s, int c)
 {
-	t_getline	*tmp;
-
-	tmp = (t_getline *)malloc(sizeof(t_getline));
-	if (tmp)
+	while (s && *s != c)
 	{
-		tmp->fd = i;
-		tmp->str = str;
-		tmp->next = NULL;
+		if (!(*s))
+			return (NULL);
+		s++;
 	}
-	return (tmp);
-}
-
-t_getline		*ft_addlist(t_getline *list, char *str, int i)
-{
-	t_getline	*tmp;
-
-	tmp = ft_listnew(i, str);
-	if (!list)
-		tmp->next = list;
-	return (tmp);
+	return ((char *)s);
 }

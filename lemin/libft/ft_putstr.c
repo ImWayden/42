@@ -1,37 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/03/03 13:57:57 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/04 02:14:44 by mozzie           ###   ########.fr       */
+/*   Created: 2013/11/21 15:03:30 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 20:34:44 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
+#include "includes/libft.h"
 
-t_getline		*ft_listnew(int i, char *str)
+void	ft_putstr(const char *str)
 {
-	t_getline	*tmp;
+	int		i;
 
-	tmp = (t_getline *)malloc(sizeof(t_getline));
-	if (tmp)
-	{
-		tmp->fd = i;
-		tmp->str = str;
-		tmp->next = NULL;
-	}
-	return (tmp);
-}
-
-t_getline		*ft_addlist(t_getline *list, char *str, int i)
-{
-	t_getline	*tmp;
-
-	tmp = ft_listnew(i, str);
-	if (!list)
-		tmp->next = list;
-	return (tmp);
+	i = 0;
+	while (str && str[i])
+		write(1, &str[i++], 1);
 }

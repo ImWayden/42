@@ -1,37 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/03/03 13:57:57 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/04 02:14:44 by mozzie           ###   ########.fr       */
+/*   Created: 2013/11/26 16:04:33 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 19:28:44 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
+#include "includes/libft.h"
 
-t_getline		*ft_listnew(int i, char *str)
+void				ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	t_getline	*tmp;
+	unsigned int	i;
 
-	tmp = (t_getline *)malloc(sizeof(t_getline));
-	if (tmp)
+	i = 0;
+	while (s[i])
 	{
-		tmp->fd = i;
-		tmp->str = str;
-		tmp->next = NULL;
+		f(i, &s[i]);
+		i++;
 	}
-	return (tmp);
-}
-
-t_getline		*ft_addlist(t_getline *list, char *str, int i)
-{
-	t_getline	*tmp;
-
-	tmp = ft_listnew(i, str);
-	if (!list)
-		tmp->next = list;
-	return (tmp);
 }

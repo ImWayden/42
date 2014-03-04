@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/02 17:42:23 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/03 23:41:26 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/04 01:17:55 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/uio.h>
-#include "../includes/libft.h"
+#include "./libft.h"
 
 
 typedef struct 			s_getline

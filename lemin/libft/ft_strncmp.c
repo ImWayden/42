@@ -1,37 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/03/03 13:57:57 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/04 02:14:44 by mozzie           ###   ########.fr       */
+/*   Created: 2013/11/21 12:53:24 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 17:59:35 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
+#include "includes/libft.h"
 
-t_getline		*ft_listnew(int i, char *str)
+int			ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	t_getline	*tmp;
-
-	tmp = (t_getline *)malloc(sizeof(t_getline));
-	if (tmp)
+	while (s1 && s2 && *s1 && *s2 && n && *s1 == *s2)
 	{
-		tmp->fd = i;
-		tmp->str = str;
-		tmp->next = NULL;
+		s1++;
+		s2++;
+		n--;
 	}
-	return (tmp);
-}
-
-t_getline		*ft_addlist(t_getline *list, char *str, int i)
-{
-	t_getline	*tmp;
-
-	tmp = ft_listnew(i, str);
-	if (!list)
-		tmp->next = list;
-	return (tmp);
+	if (!n && s1 && s2)
+		return (0);
+	else
+		return (*s1 - *s2);
 }

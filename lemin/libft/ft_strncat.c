@@ -1,37 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/03/03 13:57:57 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/04 02:14:44 by mozzie           ###   ########.fr       */
+/*   Created: 2013/11/24 15:13:48 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 14:12:53 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
+#include "includes/libft.h"
 
-t_getline		*ft_listnew(int i, char *str)
+char		*ft_strncat(char *s1, char *s2, size_t n)
 {
-	t_getline	*tmp;
+	int		i;
 
-	tmp = (t_getline *)malloc(sizeof(t_getline));
-	if (tmp)
+	i = ft_strlen(s1);
+	while (*s2 && n)
 	{
-		tmp->fd = i;
-		tmp->str = str;
-		tmp->next = NULL;
+		s1[i] = *s2++;
+		i++;
+		n--;
 	}
-	return (tmp);
-}
-
-t_getline		*ft_addlist(t_getline *list, char *str, int i)
-{
-	t_getline	*tmp;
-
-	tmp = ft_listnew(i, str);
-	if (!list)
-		tmp->next = list;
-	return (tmp);
+	s1[i] = '\0';
+	return (s1);
 }

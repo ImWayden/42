@@ -1,37 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/03/03 13:57:57 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/04 02:14:44 by mozzie           ###   ########.fr       */
+/*   Created: 2013/11/25 18:24:35 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 14:23:32 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
+#include "includes/libft.h"
 
-t_getline		*ft_listnew(int i, char *str)
+int			ft_strlcat(char *dest, const char *src, size_t size)
 {
-	t_getline	*tmp;
+	size_t	t_dest;
+    size_t	t_src;
+    size_t	i;
+    size_t	j;
+    size_t	k;
 
-	tmp = (t_getline *)malloc(sizeof(t_getline));
-	if (tmp)
+	t_dest = ft_strlen(dest);
+	t_src = ft_strlen((char*)src);
+	i = 0;
+	j = t_dest;
+	k = size - t_dest - 1;
+	if (size > t_dest)
 	{
-		tmp->fd = i;
-		tmp->str = str;
-		tmp->next = NULL;
+		while (i < k)
+		{
+			dest[j] = src[i];
+			i++;
+			j++;
+		}
+		dest[j] = '\0';
+		return (t_dest + t_src);
 	}
-	return (tmp);
-}
-
-t_getline		*ft_addlist(t_getline *list, char *str, int i)
-{
-	t_getline	*tmp;
-
-	tmp = ft_listnew(i, str);
-	if (!list)
-		tmp->next = list;
-	return (tmp);
+	return (t_src + size);
 }
