@@ -49,33 +49,57 @@ t_lem				*parse()
 			i = 1;
 		else if (!ft_strcmp(str, "##end"))
 			i = 2;
-		else if (i)
+		else if (i && *str != '#')
 		{
-			if (i == 1 )
-				pars->start = (ft_strsplit(str, ' '))[0];
+			if (i == 1)
+				pars->start = (ft_strsplit(str, ' ')[0]);
 			if (i == 2)
 				pars->end = (ft_strsplit(str, ' '))[0];
 			if (i == 1 || i == 2)
 				i = 3;
 			if (ft_is(str, '-'))
+			{
 				pars->tab[hashcode((ft_strsplit(str, '-'))[0])]
 				= ft_addlemlist(pars->tab[hashcode((ft_strsplit(str, '-'))[0])]
 				, (ft_strsplit(str, '-'))[1]);
+				pars->tab[hashcode((ft_strsplit(str, '-'))[1])]
+				= ft_addlemlist(pars->tab[hashcode((ft_strsplit(str, '-'))[1])]
+				, (ft_strsplit(str, '-'))[0]);
+			}
 			else
+			{
 				pars->tab[hashcode((ft_strsplit(str, ' '))[0])] = ft_lemlistnew(NULL);
+				pars->list = ft_addlemlist(pars->list, (ft_strsplit(str, ' '))[0]);
+			}
+			free(str);
 		}
 	}
 	return (pars);
 }
 
-t_lemlist		**find(t_lem *lem, t_lemlist **tab)
+void		dist(t_lem *lem, char *end, int i)
 {
-	while (lem->tab[hashcode(lem->star)])
+	t_lemlist	*list = NULL;
+	t_lemlist	*tmp = NULL;
+
+	list = lem->tab[hashcode(end)];
+	ft_putendl("OK");
+	tmp = list; 
+	while(tmp)
 	{
-		(*tab) =
-		lem->tab[hashcode(lem->star)] = (lem->tab[hashcode(lem->star)])->next;
+		if (tmp->dist == 0)
+			tmp->dist = i;
+		if (!ft_strcmp(list->str, "1"))
+			exit(1);
+		tmp = tmp->next;
 	}
-	return(tab);
+	while (list)
+	{
+		i++;
+		if (list->str)
+			dist(lem, list->str, i);
+		list = list->next;
+	}
 }
 
 int main()
@@ -84,7 +108,7 @@ int main()
 
 	lem = parse();
 	ft_putnbr(lem->j);
-	ft_putendl((lem->tab[hashcode("2")])->next->str);
+	ft_putendl((lem->tab[hashcode("1")])->next->str);
 	ft_putendl(lem->start);
 	ft_putendl(lem->end);
 	return 0;

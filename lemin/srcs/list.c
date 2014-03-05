@@ -16,10 +16,11 @@ t_lemlist		*ft_lemlistnew(char *str)
 {
 	t_lemlist	*tmp;
 
-	tmp = (t_lemlist *)ft_memalloc(1);
+	tmp = (t_lemlist *)malloc(sizeof(t_lemlist));
 	if (tmp)
 	{
 		tmp->str = str;
+		tmp->dist = 0;
 		tmp->next = NULL;
 	}
 	return (tmp);

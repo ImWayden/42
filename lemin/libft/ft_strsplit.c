@@ -27,13 +27,15 @@ static char		**ft_array(char *s, char c)
 		while (*s && *s != c)
 			s++;
 	}
-	split = (char **)ft_memalloc(j + 1);
+	split = (char **)malloc(sizeof(*split) * (j + 1));
+	split[j] = NULL;
 	return (split);
 }
 
 char			*ft_split(char *str, int *c)
 {
 	int			i;
+	
 	while (str && *str == *c)
 		str++;
 	i = 0;
@@ -43,20 +45,22 @@ char			*ft_split(char *str, int *c)
 	return (str);
 }
 
-char			**ft_strsplit(char const *s, char c)
+char			**ft_strsplit(char const *s, int c)
 {
 	char		**split;
+	char		*str;
 	int			j;
 	int			i;
 
 	i = 0;
-	split = ft_array((char *)s, c);
-	while (split && s && *s)
+	str = (char *)s;
+	split = ft_array((char *)str, c);
+	while (split && str && *str)
 	{
 		j = c;
-		s = ft_split((char *)s, &j);
-		split[i] = ft_strsub(s, 0, j);
-		s = s + j;
+		str = ft_split((char *)str, &j);
+		split[i] = ft_strsub(str, 0, j);
+		str = str + j;
 		i++;
 	}
 	return (split);

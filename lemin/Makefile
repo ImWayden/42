@@ -23,7 +23,7 @@ SRC = $(SDIR)parser.c $(SDIR)list.c
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes
 LIB = ./libft/libft.a
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 all: $(NAME)
 

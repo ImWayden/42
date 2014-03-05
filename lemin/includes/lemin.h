@@ -19,11 +19,13 @@
 typedef struct 			s_lemlist
 {
 	char				*str;
+	int					dist;
 	struct s_lemlist	*next;
 }						t_lemlist;
 
 typedef struct 			s_lem
 {
+	t_lemlist			*list;
 	t_lemlist			*tab[1000];
 	int					j;
 	char				*start;
