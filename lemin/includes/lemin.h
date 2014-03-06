@@ -19,7 +19,6 @@
 typedef struct 			s_lemlist
 {
 	char				*str;
-	int					dist;
 	struct s_lemlist	*next;
 }						t_lemlist;
 
@@ -32,9 +31,20 @@ typedef struct 			s_lem
 	char				*end;
 }						t_lem;
 
-int					hashcode(char *str);
-t_lem				*parse();
-t_lemlist			*ft_lemlistnew(char *str);
-t_lemlist			*ft_addlemlist(t_lemlist *list, char *str);
+typedef struct 			s_lemroom
+{
+	int					dist;
+	char				*name;
+	struct s_lemroom	**tab;
+}						t_lemroom;
+
+int						hashcode(char *str);
+t_lem					*parse();
+t_lemlist				*ft_lemlistnew(char *str);
+t_lemroom				*newroom(char *str);
+t_lemlist				*ft_addlemlist(t_lemlist *list, char *str);
+int						ft_lemlistlen(t_lemlist *list);
+void					recupnextroom(t_lemroom *room, t_lem *lem);
+t_lemroom				*recupallroom(t_lemroom *room, t_lem *lem);
 
 #endif

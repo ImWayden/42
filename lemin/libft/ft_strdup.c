@@ -19,10 +19,12 @@ char		*ft_strdup(const char *s1)
 
 	i = ft_strlen(s1);
 	cpy = ft_strnew(i);
-	while (i && cpy)
+	i = 0;
+	while (cpy && s1[i])
 	{
 		cpy[i] = s1[i];
-		i--;
+		i++;
 	}
+	ft_putendl(cpy);
 	return (cpy);
 }

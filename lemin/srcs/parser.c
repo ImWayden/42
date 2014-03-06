@@ -77,39 +77,86 @@ t_lem				*parse()
 	return (pars);
 }
 
-void		dist(t_lem *lem, char *end, int i)
+void		recupnextroom(t_lemroom *room, t_lem *lem)
 {
-	t_lemlist	*list = NULL;
-	t_lemlist	*tmp = NULL;
+	t_lemlist	*list;
+	int			i;
 
-	list = lem->tab[hashcode(end)];
-	ft_putendl("OK");
-	tmp = list; 
-	while(tmp)
+	list = lem->tab[hashcode(room->name)];
+	i = ft_lemlistlen(list);
+	room->tab = (t_lemroom **)malloc(sizeof(t_lemroom *) * (i + 1));
+	(room->tab)[i] = NULL;
+	i = 0;
+	while (list && room)
 	{
-		if (tmp->dist == 0)
-			tmp->dist = i;
-		if (!ft_strcmp(list->str, "1"))
-			exit(1);
-		tmp = tmp->next;
-	}
-	while (list)
-	{
-		i++;
-		if (list->str)
-			dist(lem, list->str, i);
+		if (list->str && ft_strcmp(list->str, lem->start))
+		{
+			(room->tab)[i] = newroom(list->str);
+			i++;
+		} 
 		list = list->next;
 	}
+	(room->tab)[i] = NULL;
+}
+
+t_lemroom		*newroom(char *str)
+{
+	t_lemroom	*room;
+
+	room = (t_lemroom *)malloc(sizeof(t_lemroom));
+	if (room)
+	{
+		if (str)
+			room->name = ft_strdup(str);
+		else
+			room->name = NULL;
+		room->tab  = NULL;
+	}
+	return (room);
+}
+
+t_lemroom		*recupallroom(t_lemroom *room, t_lem *lem)
+{
+}
+
+void			dsaput(t_lemroom *room)
+{
+	int			i;
+	t_lemroom	**tab;
+
+	
+	ft_putendl(room->name);
+	tab = room->tab;
+	i = 0;
+	while (tab && tab[i])
+	{
+		ft_putstr(((tab)[i])->name);
+		ft_putstr(" ");
+		i++;
+	}
+	ft_putstr("\n");
+	i = 0;
+	while (tab && tab[i])
+	{
+		dsaput(tab[i]);
+		i++;
+	}
+	ft_putstr("\n");
 }
 
 int main()
 {
 	t_lem		*lem;
+	t_lemroom	*room;
+	
 
-	lem = parse();
+	lem = parse();	
 	ft_putnbr(lem->j);
-	ft_putendl((lem->tab[hashcode("1")])->next->str);
-	ft_putendl(lem->start);
-	ft_putendl(lem->end);
+	ft_putendl((lem->tab[hashcode("1")])->str);
+	ft_putendl("");
+	room = newroom(lem->start);
+	room = recupallroom(room, lem);
+	ft_putendl("");
+	dsaput(room);
 	return 0;
 }

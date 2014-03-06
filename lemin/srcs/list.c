@@ -20,7 +20,6 @@ t_lemlist		*ft_lemlistnew(char *str)
 	if (tmp)
 	{
 		tmp->str = str;
-		tmp->dist = 0;
 		tmp->next = NULL;
 	}
 	return (tmp);
@@ -34,4 +33,17 @@ t_lemlist		*ft_addlemlist(t_lemlist *list, char *str)
 	if (list)
 		tmp->next = list;
 	return (tmp);
+}
+
+int				ft_lemlistlen(t_lemlist *list)
+{
+	int			i;
+
+	i = 0;
+	while (list)
+	{
+		list = list->next;
+		i++;
+	}
+	return (i);
 }
