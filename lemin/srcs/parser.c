@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/04 16:55:14 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/06 09:39:09 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_lem				*parse()
 	return (pars);
 }
 
-void		recupnextroom(t_lemroom *room, t_lem *lem)
+t_lemroom		**recupfirstroom(t_lemroom *room, t_lem *lem)
 {
 	t_lemlist	*list;
 	int			i;
@@ -96,7 +96,63 @@ void		recupnextroom(t_lemroom *room, t_lem *lem)
 		} 
 		list = list->next;
 	}
+	lem->tab[hashcode(room->name)] = NULL;
 	(room->tab)[i] = NULL;
+	return (room->tab);
+}
+
+t_lemroom		**merge(t_lemroom **tabroom, t_lemroom **tabroom1)
+{
+	int			i;
+	int			j;
+	int			k;
+	t_lemroom	**tabroom2;
+
+	if(!tabroom1)
+		return (tabroom);
+	if(!tabroom)
+		return (tabroom1);
+	i = 0;
+	j = 0;
+	while (tabroom[i])
+		i++;
+	while (tabroom1[j])
+		j++;
+	tabroom2 = (t_lemroom **)malloc(sizeof(t_lemroom *) * (i + j + 1));
+	tabroom2[i + j] = NULL;
+	k = i;
+	i--;
+	j--;
+	while (tabroom[i] || tabroom1[i + j])
+	{
+		if (tabroom[i])
+			tabroom2[i] = tabroom[i];
+		if (tabroom1[j])
+			tabroom2[k + j] = tabroom1[j];
+		i--;
+	}
+	return (tabroom2);
+}
+
+t_lemroom		**recupnextroom(t_lemroom **tabroom, t_lem *lem)
+{
+	t_lemroom	**tabroom1 = NULL;
+	int			i;
+
+	i = 0;
+	while (tabroom && tabroom[i])
+	{
+		tabroom1 = merge(tabroom1, recupfirstroom(tabroom[i], lem));
+		i++;
+	}
+	i = 0;
+	while (tabroom[i])
+	{
+		if (ft_strcmp((tabroom[i])->name, lem->end))
+			lem->tab[hashcode((tabroom[i])->name)] = NULL;
+		i++;
+	}
+	return (tabroom1);
 }
 
 t_lemroom		*newroom(char *str)
@@ -115,39 +171,12 @@ t_lemroom		*newroom(char *str)
 	return (room);
 }
 
-t_lemroom		*recupallroom(t_lemroom *room, t_lem *lem)
-{
-}
-
-void			dsaput(t_lemroom *room)
-{
-	int			i;
-	t_lemroom	**tab;
-
-	
-	ft_putendl(room->name);
-	tab = room->tab;
-	i = 0;
-	while (tab && tab[i])
-	{
-		ft_putstr(((tab)[i])->name);
-		ft_putstr(" ");
-		i++;
-	}
-	ft_putstr("\n");
-	i = 0;
-	while (tab && tab[i])
-	{
-		dsaput(tab[i]);
-		i++;
-	}
-	ft_putstr("\n");
-}
-
 int main()
 {
 	t_lem		*lem;
+	t_lemroom	**tabroom;
 	t_lemroom	*room;
+	int			i;
 	
 
 	lem = parse();	
@@ -155,8 +184,26 @@ int main()
 	ft_putendl((lem->tab[hashcode("1")])->str);
 	ft_putendl("");
 	room = newroom(lem->start);
-	room = recupallroom(room, lem);
+	tabroom = recupfirstroom(room, lem);
+	i = 0;
+	while (tabroom[i])
+	{
+		ft_putendl((tabroom[i])->name);
+		i++;
+	}
 	ft_putendl("");
-	dsaput(room);
-	return 0;
+	while ((tabroom = recupnextroom(tabroom, lem)))
+	{
+		i = 0;
+		while (tabroom[i])
+		{
+			ft_putendl((tabroom[i])->name);
+			i++;
+		}
+	}
+	ft_putendl("");
+	ft_putendl(room->name);
+	ft_putendl(((room->tab)[0])->name);
+	ft_putendl(((((room->tab)[0])->tab)[0])->name);
+		return 0;
 }
