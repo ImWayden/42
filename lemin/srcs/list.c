@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/04 15:40:15 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/06 23:41:23 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_lemlist		*ft_lemlistnew(char *str)
 {
 	t_lemlist	*tmp;
 
+	if (!str)
+		return (NULL);
 	tmp = (t_lemlist *)malloc(sizeof(t_lemlist));
 	if (tmp)
 	{

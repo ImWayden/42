@@ -6,7 +6,7 @@
 #    By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/22 14:52:23 by sraccah           #+#    #+#              #
-#    Updated: 2014/03/04 12:45:29 by mozzie           ###   ########.fr        #
+#    Updated: 2014/03/06 23:08:23 by mozzie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 
-SRC = $(SDIR)parser.c $(SDIR)list.c
+SRC = $(SDIR)parser.c $(SDIR)list.c $(SDIR)room.c
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes
