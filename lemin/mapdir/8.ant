@@ -1,0 +1,26 @@
+4
+##start
+tata 23 3
+titi 16 7
+#commentaire
+tutu 16 3
+tete 16 5
+##pouet
+toto 3 9
+6 1 0
+7 4 8
+##end
+0 9 5
+0-tete
+0-6
+titi-tutu
+tete-tutu
+toto-titi
+tutu-toto
+#autre commentaire
+tete-titi
+titi-tata
+7-6
+7-titi
+7-tete
+6-toto

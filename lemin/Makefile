@@ -18,7 +18,7 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 
-SRC = $(SDIR)parser.c $(SDIR)list.c $(SDIR)room.c
+SRC = $(SDIR)parser.c $(SDIR)list.c $(SDIR)room.c $(SDIR)main.c
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes

@@ -28,6 +28,18 @@ t_lemroom		*newroom(char *str)
 	return (room);
 }
 
+t_lemroom		**newtabroom(int i)
+{
+	t_lemroom	**tabroom;
+
+	if (!i)
+		return (NULL);
+	tabroom = (t_lemroom **)malloc(sizeof(t_lemroom *) * (i + 1));
+	if (tabroom)
+		tabroom[i] = NULL;
+	return (tabroom);
+}
+
 int			tabroomlen(t_lemroom **tabroom)
 {
 	int		i;
@@ -38,17 +50,30 @@ int			tabroomlen(t_lemroom **tabroom)
 	return (i);
 }
 
+void				puttabroom(t_lemroom **tabroom)
+{
+	int				i;
+
+	i = 0;
+	while (tabroom && tabroom[i])
+	{
+		ft_putstr((tabroom[i])->name);
+		ft_putstr(" ");
+		i++;
+	}
+}
+
 void		tabroomcpy(t_lemroom **tabroom, t_lemroom **tabroom1, t_lemroom **tabroom2)
 {
 	int		i;
 
 	i = 0;
-	while (tabroom[i])
+	while (tabroom && tabroom[i])
 	{
 		tabroom2[i] = tabroom[i];
 		i++;
 	}
-	while (tabroom1[i])
+	while (tabroom1 && tabroom1[i])
 	{
 		tabroom2[i] = tabroom1[i];
 		i++;
@@ -57,30 +82,38 @@ void		tabroomcpy(t_lemroom **tabroom, t_lemroom **tabroom1, t_lemroom **tabroom2
 
 t_lemroom		**recupfirstroom(t_lemroom *room, t_lem *lem)
 {
-	t_lemlist	*list;
+	t_lemlist	*list = NULL;
 	int			i;
 
 	i = 0;
+	if (!ft_strcmp(room->name, lem->end))
+		return (NULL);
 	list = lem->tab[hashcode(room->name)];
 	if (is(list, lem))
 	{
-		room->tab = (t_lemroom **)malloc(sizeof(t_lemroom *));
+		room->tab = newtabroom(1);
 		(room->tab)[0] = newroom(lem->end);
+		puttabroom(room->tab);
 		return (NULL);
 	}
 	i = ft_lemlistlen(list);
-	room->tab = (t_lemroom **)malloc(sizeof(t_lemroom *) * (i + 1));
-	(room->tab)[i] = NULL;	
+	room->tab = newtabroom(i);
 	i = 0;
-	while (list && room)
+	while (list && room && room->tab)
 	{
 		if (list->str && ft_strcmp(list->str, lem->start) && ft_strcmp(list->str, room->name))
 		{
-			(room->tab)[i] = newroom(list->str);
-			i++;
+			if ((lem->tab)[hashcode(list->str)])
+			{
+				(room->tab)[i] = newroom(list->str);
+				i++;
+			}
 		} 
 		list = list->next;
+		(room->tab)[i] = NULL;
 	}
+	puttabroom(room->tab);
+	ft_putendl(NULL);
 	lem->tab[hashcode(room->name)] = NULL;
 	return (room->tab);
 }
@@ -106,16 +139,23 @@ t_lemroom	**merge(t_lemroom **tabroom, t_lemroom **tabroom1)
 t_lemroom	**recupnextroom(t_lemroom **tabroom, t_lem *lem)
 {
 	t_lemroom	**tabroom1 = NULL;
+	t_lemroom	**tabroom2 = NULL;
 	int	i;
 
 	i = 0;
 	while (tabroom && tabroom[i])
 	{
-		tabroom1 = merge(tabroom1, recupfirstroom(tabroom[i], lem));
+		if (ft_strcmp((tabroom[i])->name, lem->end))
+		{
+			tabroom2 = recupfirstroom(tabroom[i], lem);
+			if (tabroom2)
+				ft_putstr("-- ");
+			tabroom1 = merge(tabroom1, tabroom2);
+		}
 		i++;
 	}
 	i = 0;
-	while (tabroom[i])
+	while (tabroom && tabroom[i])
 	{
 		if (ft_strcmp((tabroom[i])->name, lem->end))
 		lem->tab[hashcode((tabroom[i])->name)] = NULL;

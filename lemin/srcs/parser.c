@@ -12,11 +12,25 @@
 
 #include "../includes/lemin.h"
 
-int			hashcode(char *str)
+t_lem				*newlem(void)
 {
-	int		code;
-	int		len;
-	int		i;
+	t_lem			*pars;
+	int				i;
+
+	pars = (t_lem *)malloc(sizeof(t_lem));
+	pars->start = NULL;
+	pars->end = NULL;
+	i = 0;
+	while (((pars->tab)[i] = NULL))
+		i++;
+	return(pars);
+}
+
+int					hashcode(char *str)
+{
+	int				code;
+	int				len;
+	int				i;
 
 	len = ft_strlen(str);
 	code = 7;
@@ -29,7 +43,7 @@ int			hashcode(char *str)
 	return (code % 1000);
 }
 
-int				is(t_lemlist *list, t_lem *lem)
+int					is(t_lemlist *list, t_lem *lem)
 {
 	while (list)
 	{
@@ -71,7 +85,7 @@ t_lem				*parse()
 	char			*str = NULL;
 
 	i = 0;
-	pars = (t_lem *)malloc(sizeof(t_lem));
+	pars = newlem();
 	while (getnextline(0, &str))
 	{
 		ft_putendl(str);
@@ -89,43 +103,4 @@ t_lem				*parse()
 		free(str);
 	}
 	return (pars);
-}
-
-int main()
-{
-	t_lem		*lem;
-	t_lemroom	**tabroom;
-	t_lemroom	*room;
-	int			i;
-	
-
-	lem = parse();
-	ft_putendl("");	
-	ft_putendl(lem->start);
-	ft_putendl(lem->end);
-	room = newroom(lem->start);
-	ft_putendl(NULL);
-	tabroom = recupfirstroom(room, lem);
-	i = 0;
-	while (tabroom && tabroom[i])
-	{
-		ft_putstr((tabroom[i])->name);
-		ft_putstr(" ");
-		i++;
-	}
-	ft_putendl("");
-	while (tabroom && ft_strcmp((tabroom[0])->name, lem->end) && (tabroom = recupnextroom(tabroom, lem)))
-	{
-		i = 0;
-		while (tabroom && tabroom[i])
-		{
-			ft_putendl((tabroom[i])->name);
-			i++;
-		}
-	}
-	ft_putendl("");
-	ft_putendl(room->name);
-	ft_putendl(((room->tab)[0])->name);
-	//ft_putendl(((((room->tab)[0])->tab)[0])->name);
-	return 0;
 }

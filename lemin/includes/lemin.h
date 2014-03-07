@@ -47,5 +47,6 @@ t_lemlist				*ft_addlemlist(t_lemlist *list, char *str);
 int						ft_lemlistlen(t_lemlist *list);
 t_lemroom				**recupfirstroom(t_lemroom *room, t_lem *lem);
 t_lemroom				**recupnextroom(t_lemroom **tabroom, t_lem *lem);
+void					puttabroom(t_lemroom **tabroom);
 
 #endif
