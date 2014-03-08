@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/21 13:57:05 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/02 19:32:10 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/08 01:40:43 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ void	ft_putnbr(int n);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(const char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+void	ft_swap(void **a, void **b);
 
 #endif

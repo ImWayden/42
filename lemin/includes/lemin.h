@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/07 01:42:24 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/08 01:27:36 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@ int						is(t_lemlist *list, t_lem *lem);
 t_lemroom				*newroom(char *str);
 t_lemlist				*ft_addlemlist(t_lemlist *list, char *str);
 int						ft_lemlistlen(t_lemlist *list);
-t_lemroom				**recupfirstroom(t_lemroom *room, t_lem *lem);
+t_lemroom				**recupfirstroom(t_lemroom *room, t_lem *lem, t_lemroom **tabroom);
 t_lemroom				**recupnextroom(t_lemroom **tabroom, t_lem *lem);
 void					puttabroom(t_lemroom **tabroom);
+void					weight(t_lemroom *room, t_lem *lem);
 
 #endif

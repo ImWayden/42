@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/07 02:10:14 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/08 03:20:20 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,46 @@ t_lem				*parse()
 		free(str);
 	}
 	return (pars);
+}
+
+void				sort(t_lemroom **tabroom)
+{
+	int				i;
+	int				j;
+
+	i = 0;
+	while (tabroom && tabroom[i])
+	{
+		j = i + 1;
+		while (tabroom[j])
+		{
+			if ((tabroom[i])->dist > (tabroom[j])->dist && (tabroom[j])->dist)
+				ft_swap((void **)&(tabroom[i]), (void **)&(tabroom[j]));
+			if (!(tabroom[i])->dist)
+				ft_swap((void **)&(tabroom[i]), (void **)&(tabroom[j]));
+			j++;
+		}
+		i++;
+	}
+}
+
+void				weight(t_lemroom *room, t_lem *lem)
+{
+	int				i;
+
+	i = 0;
+	while (room && room->tab && (room->tab)[i])
+	{
+		weight((room->tab)[i], lem);
+		i++;
+	}
+	if (room && room->name && !ft_strcmp(room->name, lem->end))
+		room->dist = 0;
+	else if (room && room->tab && ((room->tab)[0])->name && !ft_strcmp(((room->tab)[0])->name, lem->end))
+		room->dist = 1;
+	else if (room && room->tab && (room->tab)[0])
+	{
+		sort(room->tab);
+		room->dist = ((room->tab)[0])->dist + 1;
+	}
 }

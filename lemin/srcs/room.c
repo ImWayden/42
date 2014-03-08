@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/07 01:38:28 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/08 01:32:04 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_lemroom		*newroom(char *str)
 		else
 			room->name = NULL;
 		room->tab  = NULL;
+		room->dist = 0;
 	}
 	return (room);
 }
@@ -80,7 +81,21 @@ void		tabroomcpy(t_lemroom **tabroom, t_lemroom **tabroom1, t_lemroom **tabroom2
 	}
 }
 
-t_lemroom		**recupfirstroom(t_lemroom *room, t_lem *lem)
+int					lis(t_lemroom **tabroom, char *str)
+{
+	int				i;
+
+	i = 0;
+	while (tabroom && tabroom[i])
+	{
+		if (!ft_strcmp((tabroom[i])->name, str))
+			return (i);
+		i++;
+	}
+	return (0);
+}
+
+t_lemroom		**recupfirstroom(t_lemroom *room, t_lem *lem, t_lemroom **tabroom)
 {
 	t_lemlist	*list = NULL;
 	int			i;
@@ -103,7 +118,7 @@ t_lemroom		**recupfirstroom(t_lemroom *room, t_lem *lem)
 	{
 		if (list->str && ft_strcmp(list->str, lem->start) && ft_strcmp(list->str, room->name))
 		{
-			if ((lem->tab)[hashcode(list->str)])
+			if ((lem->tab)[hashcode(list->str)] && !lis(tabroom, list->str))
 			{
 				(room->tab)[i] = newroom(list->str);
 				i++;
@@ -147,9 +162,7 @@ t_lemroom	**recupnextroom(t_lemroom **tabroom, t_lem *lem)
 	{
 		if (ft_strcmp((tabroom[i])->name, lem->end))
 		{
-			tabroom2 = recupfirstroom(tabroom[i], lem);
-			if (tabroom2)
-				ft_putstr("-- ");
+			tabroom2 = recupfirstroom(tabroom[i], lem, tabroom);
 			tabroom1 = merge(tabroom1, tabroom2);
 		}
 		i++;

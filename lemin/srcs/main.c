@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/07 18:45:56 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/07 18:46:02 by msarr            ###   ########.fr       */
+/*   Updated: 2014/03/08 03:03:13 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,13 @@ int 				main()
 		ft_putendl(lem->end);
 		room = newroom(lem->start);
 		ft_putendl(room->name);
-		tabroom = recupfirstroom(room, lem);
-		while (tabroom && ft_strcmp((tabroom[0])->name, lem->end))
+		tabroom = recupfirstroom(room, lem, NULL);
+		while (tabroom && tabroom[0] && ft_strcmp((tabroom[0])->name, lem->end))
 			tabroom = recupnextroom(tabroom, lem);
+		weight(room, lem);
+		ft_putendl("ok");
+		ft_putendl(NULL);
+		ft_putnbr(room->dist);
 	}
 	return 0;
 }
