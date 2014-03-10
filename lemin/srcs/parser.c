@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/08 03:20:20 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/10 03:14:47 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,8 +138,10 @@ void				weight(t_lemroom *room, t_lem *lem)
 	}
 	if (room && room->name && !ft_strcmp(room->name, lem->end))
 		room->dist = 0;
-	else if (room && room->tab && ((room->tab)[0])->name && !ft_strcmp(((room->tab)[0])->name, lem->end))
-		room->dist = 1;
+	else if (room && !room->tab && ft_strcmp(room->name, lem->end))
+		room->dist = 100000;
+	else if (room && room->tab && !(room->tab)[0] && ft_strcmp(room->name, lem->end))
+		room->dist = 100000;
 	else if (room && room->tab && (room->tab)[0])
 	{
 		sort(room->tab);

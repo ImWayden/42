@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/08 01:32:04 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/10 02:57:18 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_lemroom		**newtabroom(int i)
 		tabroom[i] = NULL;
 	return (tabroom);
 }
+
 
 int			tabroomlen(t_lemroom **tabroom)
 {
