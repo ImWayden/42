@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/21 13:57:05 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/08 01:40:43 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/08 23:10:01 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ char	*ft_strdup(const char *s1);
 int		ft_strlen(const char *str);
 char	*ft_strncat(char *s1, char *s2, size_t n);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+void	ft_putcolorstr(const char *str, char *color);
 char	*ft_strncpy(char *s1, char *s2, size_t n);
 char	*ft_strnstr(const char *s1, const char *s2, size_t n);
 char	*ft_strrchr(const char *s, int c);
@@ -97,5 +98,6 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(const char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	ft_swap(void **a, void **b);
+int		hashcode(char *str);
 
 #endif

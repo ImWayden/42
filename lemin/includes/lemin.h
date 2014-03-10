@@ -38,16 +38,21 @@ typedef struct 			s_lemroom
 	struct s_lemroom	**tab;
 }						t_lemroom;
 
-int						hashcode(char *str);
 t_lem					*parse();
+t_lem					*newlem(void);
 t_lemlist				*ft_lemlistnew(char *str);
-int						is(t_lemlist *list, t_lem *lem);
-t_lemroom				*newroom(char *str);
+t_lemlist				*is(t_lemlist *list, t_lem *lem);
+t_lemroom				*newroom(char *str, t_lem *lem);
 t_lemlist				*ft_addlemlist(t_lemlist *list, char *str);
-int						ft_lemlistlen(t_lemlist *list);
-t_lemroom				**recupfirstroom(t_lemroom *room, t_lem *lem, t_lemroom **tabroom);
+int						ft_lemlistlen(t_lemlist *list, char * str1, char *str2);
 t_lemroom				**recupnextroom(t_lemroom **tabroom, t_lem *lem);
-void					puttabroom(t_lemroom **tabroom);
+void					putroom(t_lemroom *room);
 void					weight(t_lemroom *room, t_lem *lem);
+t_lemroom				**newtabroom(int i);
+int						tabroomlen(t_lemroom **tabroom);
+t_lemroom				**merge(t_lemroom **tabroom, t_lemroom **tabroom1);
+void					sort(t_lemroom **tabroom);
+void					delroomlist(t_lemroom *room, t_lem *lem);
+void					tabroomcpy(t_lemroom **tab, t_lemroom **tab1, t_lemroom **tab2);
 
 #endif

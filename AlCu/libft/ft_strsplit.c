@@ -35,7 +35,7 @@ static char		**ft_array(char *s, char c)
 char			*ft_split(char *str, int *c)
 {
 	int			i;
-	
+
 	while (str && *str == *c)
 		str++;
 	i = 0;

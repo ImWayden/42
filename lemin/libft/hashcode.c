@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   hashcode.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/21 12:48:39 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/04 14:06:38 by mozzie           ###   ########.fr       */
+/*   Created: 2014/03/10 14:57:16 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/10 14:57:19 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/libft.h"
 
-int			ft_strcmp(const char *s1, const char *s2)
+int					hashcode(char *str)
 {
-	while (*s1 && *s2 && *s1 == *s2)
+	int				code;
+	int				len;
+	int				i;
+
+	len = ft_strlen(str);
+	code = 7;
+	i = 0;
+	while (i < len)
 	{
-		s1++;
-		s2++;
+		code = str[i] + 31 * code;
+		i++;
 	}
-	return (*s1 - *s2);
+	return (code % 1000);
 }

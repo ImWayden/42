@@ -15,8 +15,9 @@
 int 				main()
 {
 	t_lem			*lem;
-	t_lemroom		**tabroom;
+	//t_lemroom		**tabroom;
 	t_lemroom		*room;
+	//int				i;
 
 	lem = parse();
 	lem->tab[hashcode(lem->end)] = NULL;
@@ -26,15 +27,9 @@ int 				main()
 		ft_putendl(lem->start);
 		ft_putstr("END :");	
 		ft_putendl(lem->end);
-		room = newroom(lem->start);
-		ft_putendl(room->name);
-		tabroom = recupfirstroom(room, lem, NULL);
-		while (tabroom && tabroom[0] && ft_strcmp((tabroom[0])->name, lem->end))
-			tabroom = recupnextroom(tabroom, lem);
-		weight(room, lem);
-		ft_putendl("ok");
-		ft_putendl(NULL);
-		ft_putnbr(room->dist);
+		room = newroom(lem->start, lem);
+		delroomlist(room, lem);
+		putroom(room);
 	}
 	return 0;
 }

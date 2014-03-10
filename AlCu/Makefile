@@ -18,7 +18,8 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 
-SRC = $(SDIR)game.c
+SRC = $(SDIR)game.c $(SDIR)display.c $(SDIR)player.c $(SDIR)check.c \
+      $(SDIR)win.c $(SDIR)needed.c $(SDIR)main.c
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes

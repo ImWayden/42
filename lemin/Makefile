@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+         #
+#    By: sraccah <msarr@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2014/01/22 14:52:23 by sraccah           #+#    #+#              #
-#    Updated: 2014/03/06 23:08:23 by mozzie           ###   ########.fr        #
+#    Created: 2014/01/22 14:52:23 by msarr	           #+#    #+#              #
+#    Updated: 2014/02/24 11:55:22 by msarr            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = lem-in
+NAME = lemin
 
 MAKE = make
 CC = gcc
@@ -18,12 +18,13 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 
-SRC = $(SDIR)parser.c $(SDIR)list.c $(SDIR)room.c $(SDIR)main.c
+SRC = $(SDIR)lib.c $(SDIR)list.c $(SDIR)parser.c $(SDIR)room.c $(SDIR)room1.c \
+	  $(SDIR)lemin.c $(SDIR)main.c
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes
 LIB = ./libft/libft.a
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
@@ -35,6 +36,7 @@ $(NAME): $(OBJ)
 	@echo "\033[31;1m"
 	@echo -n '---> Compilation in progress... <---'
 	@echo "\033[0m"
+	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LIB)
 	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LIB)
 	@echo "\033[1;32m"
 	@echo -n '---> DONE ! <---'

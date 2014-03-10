@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/21 12:48:39 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/04 14:06:38 by mozzie           ###   ########.fr       */
+/*   Created: 2014/03/09 12:47:49 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/09 12:47:51 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/libft.h"
+#include "../includes/p4.h"
 
-int			ft_strcmp(const char *s1, const char *s2)
+int 		main(int argc, char **argv)
 {
-	while (*s1 && *s2 && *s1 == *s2)
-	{
-		s1++;
-		s2++;
-	}
-	return (*s1 - *s2);
+	if (argc)
+		game(argv);
+	return 0;
 }

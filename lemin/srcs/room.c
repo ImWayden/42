@@ -12,36 +12,6 @@
 
 #include "../includes/lemin.h"
 
-t_lemroom		*newroom(char *str)
-{
-	t_lemroom	*room;
-
-	room = (t_lemroom *)malloc(sizeof(t_lemroom));
-	if (room)
-	{
-		if (str)
-			room->name = ft_strdup(str);
-		else
-			room->name = NULL;
-		room->tab  = NULL;
-		room->dist = 0;
-	}
-	return (room);
-}
-
-t_lemroom		**newtabroom(int i)
-{
-	t_lemroom	**tabroom;
-
-	if (!i)
-		return (NULL);
-	tabroom = (t_lemroom **)malloc(sizeof(t_lemroom *) * (i + 1));
-	if (tabroom)
-		tabroom[i] = NULL;
-	return (tabroom);
-}
-
-
 int			tabroomlen(t_lemroom **tabroom)
 {
 	int		i;
@@ -52,128 +22,105 @@ int			tabroomlen(t_lemroom **tabroom)
 	return (i);
 }
 
-void				puttabroom(t_lemroom **tabroom)
-{
-	int				i;
-
-	i = 0;
-	while (tabroom && tabroom[i])
-	{
-		ft_putstr((tabroom[i])->name);
-		ft_putstr(" ");
-		i++;
-	}
-}
-
-void		tabroomcpy(t_lemroom **tabroom, t_lemroom **tabroom1, t_lemroom **tabroom2)
+void		putroom(t_lemroom *room)
 {
 	int		i;
 
 	i = 0;
-	while (tabroom && tabroom[i])
+	if (room)
 	{
-		tabroom2[i] = tabroom[i];
+		ft_putcolorstr(room->name, RED);
+		ft_putcolorstr(" : ", RED);
+		while (room->tab && (room->tab)[i])
+		{
+			ft_putstr(((room->tab)[i])->name);
+			ft_putstr(" ");
+			i++;
+		}
+		ft_putendl(NULL);
+	}
+}
+
+void		tabroomcpy(t_lemroom **tab, t_lemroom **tab1, t_lemroom **tab2)
+{
+	int		i;
+
+	i = 0;
+	while (tab && tab[i])
+	{
+		tab2[i] = tab[i];
 		i++;
 	}
-	while (tabroom1 && tabroom1[i])
+	while (tab1 && tab1[i])
 	{
-		tabroom2[i] = tabroom1[i];
+		tab2[i] = tab1[i];
 		i++;
 	}
 }
 
-int					lis(t_lemroom **tabroom, char *str)
+t_lemroom		*allocroom(char *str)
 {
-	int				i;
+	t_lemroom	*room;
 
-	i = 0;
-	while (tabroom && tabroom[i])
+	room = (t_lemroom *)malloc(sizeof(t_lemroom));
+	if (room)
 	{
-		if (!ft_strcmp((tabroom[i])->name, str))
-			return (i);
-		i++;
+		room->name = ft_strdup(str);
+		room->tab = NULL;
 	}
-	return (0);
+	return (room);
 }
 
-t_lemroom		**recupfirstroom(t_lemroom *room, t_lem *lem, t_lemroom **tabroom)
+t_lemroom		**alloctabroom(int i)
 {
-	t_lemlist	*list = NULL;
-	int			i;
+	t_lemroom	**tab;
+
+	if (!i)
+		return (NULL);
+	tab = (t_lemroom **)malloc(sizeof(t_lemroom *) * (i + 1));
+	while (tab && i)
+	{
+		tab[i] = NULL;
+		i--;
+	}
+	return (tab);
+}
+
+void		listtotab(t_lemlist *list, t_lem *lem, t_lemroom *room, int j)
+{
+	int		i;
 
 	i = 0;
-	if (!ft_strcmp(room->name, lem->end))
-		return (NULL);
-	list = lem->tab[hashcode(room->name)];
-	if (is(list, lem))
-	{
-		room->tab = newtabroom(1);
-		(room->tab)[0] = newroom(lem->end);
-		puttabroom(room->tab);
-		return (NULL);
-	}
-	i = ft_lemlistlen(list);
-	room->tab = newtabroom(i);
-	i = 0;
-	while (list && room && room->tab)
+	while (list && room && i < j)
 	{
 		if (list->str && ft_strcmp(list->str, lem->start) && ft_strcmp(list->str, room->name))
-		{
-			if ((lem->tab)[hashcode(list->str)] && !lis(tabroom, list->str))
-			{
-				(room->tab)[i] = newroom(list->str);
-				i++;
-			}
-		} 
+			((room->tab)[i]) = allocroom(list->str);		
 		list = list->next;
-		(room->tab)[i] = NULL;
+		i++;
 	}
-	puttabroom(room->tab);
-	ft_putendl(NULL);
-	lem->tab[hashcode(room->name)] = NULL;
-	return (room->tab);
 }
 
-t_lemroom	**merge(t_lemroom **tabroom, t_lemroom **tabroom1)
+t_lemroom		*newroom(char *str, t_lem *lem)
 {
+	t_lemroom	*room;
+	t_lemlist	*list;
 	int			i;
-	int			j;
-	t_lemroom	**tabroom2;
 
-	if(!tabroom1)
-		return (tabroom);
-	if(!tabroom)
-		return (tabroom1);
-	i = tabroomlen(tabroom);
-	j = tabroomlen(tabroom1);
-	tabroom2 = (t_lemroom **)malloc(sizeof(t_lemroom *) * (i + j + 1));
-	tabroom2[i + j] = NULL;
-	tabroomcpy(tabroom, tabroom1, tabroom2);
-	return (tabroom2);
-}
-
-t_lemroom	**recupnextroom(t_lemroom **tabroom, t_lem *lem)
-{
-	t_lemroom	**tabroom1 = NULL;
-	t_lemroom	**tabroom2 = NULL;
-	int	i;
-
-	i = 0;
-	while (tabroom && tabroom[i])
+	list = (lem->tab)[hashcode(str)];
+	if (!list)
+		return (NULL);
+	list = is(list, lem);
+	i = ft_lemlistlen(list, str, lem->start);
+	room = allocroom(str);
+	if (room && !ft_strcmp(room->name, lem->end))
 	{
-		if (ft_strcmp((tabroom[i])->name, lem->end))
-		{
-			tabroom2 = recupfirstroom(tabroom[i], lem, tabroom);
-			tabroom1 = merge(tabroom1, tabroom2);
-		}
-		i++;
+		room->tab = NULL;
+		return (room);
 	}
-	i = 0;
-	while (tabroom && tabroom[i])
+	else
 	{
-		if (ft_strcmp((tabroom[i])->name, lem->end))
-		lem->tab[hashcode((tabroom[i])->name)] = NULL;
-		i++;
+		room->tab = alloctabroom(i);
+		listtotab(list, lem, room, i);
 	}
-	return (tabroom1);
+	return (room);
 }
