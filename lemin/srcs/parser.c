@@ -20,7 +20,7 @@ void				recuparsetab(char *str, t_lem *pars, int *i)
 		pars->end = (ft_strsplit(str, ' '))[0];
 	if (*i == 1 || *i == 2)
 		*i = 3;
-	if (ft_is(str, '-'))
+	if (!ft_is(str, ' '))
 	{
 		pars->tab[hashcode((ft_strsplit(str, '-'))[0])]
 		= ft_addlemlist(pars->tab[hashcode((ft_strsplit(str, '-'))[0])]
@@ -32,7 +32,7 @@ void				recuparsetab(char *str, t_lem *pars, int *i)
 	else
 	{
 		pars->tab[hashcode((ft_strsplit(str, ' '))[0])]
-		= ft_lemlistnew(NULL);
+		= ft_lemlistnew((ft_strsplit(str, ' '))[0]);
 		pars->list = ft_addlemlist(pars->list, (ft_strsplit(str, ' '))[0]);
 	}	
 }
@@ -58,7 +58,11 @@ t_lem				*parse()
 		else if (!ft_strcmp(str, "##end"))
 			i = 2;
 		else if (i && *str != '#')
+		{
+			if (!ft_is(str, ' ') && !(pars->tab[hashcode((ft_strsplit(str, '-'))[0])]))
+				return (NULL);
 			recuparsetab(str, pars, &i);
+		}
 		free(str);
 	}
 	return (pars);

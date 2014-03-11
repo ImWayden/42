@@ -16,12 +16,11 @@ t_lemlist		*ft_lemlistnew(char *str)
 {
 	t_lemlist	*tmp;
 
-	if (!str)
-		return (NULL);
 	tmp = (t_lemlist *)malloc(sizeof(t_lemlist));
 	if (tmp)
 	{
-		tmp->str = ft_strdup(str);
+		if (str)
+			tmp->str = ft_strdup(str);
 		tmp->next = NULL;
 	}
 	return (tmp);
@@ -37,15 +36,17 @@ t_lemlist		*ft_addlemlist(t_lemlist *list, char *str)
 	return (tmp);
 }
 
-int				ft_lemlistlen(t_lemlist *list, char * str1, char *str2)
+int				ft_lemlistlen(t_lemlist *list, char * str, t_lem *lem)
 {
 	int			i;
 
 	i = 0;
 	while (list && list->str)
 	{
-		if (ft_strcmp(list->str, str1) && ft_strcmp(list->str, str2))
+		if (ft_strcmp(list->str, str) && ft_strcmp(list->str, lem->start))
 			i++;
+		if (!ft_strcmp(list->str, lem->end))
+			return (-1);
 		list = list->next;
 	}
 	return (i);
