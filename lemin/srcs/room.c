@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/10 02:57:18 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/10 22:59:14 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,25 @@ t_lemroom		*newroom(char *str, t_lem *lem)
 		return (room);
 	}
 	else
+	{
+		room->tab = alloctabroom(i);
+		listtotab(list, lem, room, i);
+	}
+	return (room);
+}
+
+t_lemroom		*newendroom(char *str, t_lem *lem)
+{
+	t_lemroom	*room;
+	t_lemlist	*list;
+	int			i;
+
+	list = (lem->tab)[hashcode(str)];
+	if (!list)
+		return (NULL);
+	i = ft_lemlistlen(list, str, str);
+	room = allocroom(str);
+	if (room)
 	{
 		room->tab = alloctabroom(i);
 		listtotab(list, lem, room, i);

@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/07 18:45:56 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/08 03:03:13 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/10 23:02:33 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 int 				main()
 {
 	t_lem			*lem;
-	//t_lemroom		**tabroom;
 	t_lemroom		*room;
-	//int				i;
+	t_lemroom		*room1;
 
 	lem = parse();
-	lem->tab[hashcode(lem->end)] = NULL;
 	if (lem->start && lem->end && lem->j)
 	{
 		ft_putstr("SENDING LEMS....\nSTART :");	
@@ -28,8 +26,11 @@ int 				main()
 		ft_putstr("END :");	
 		ft_putendl(lem->end);
 		room = newroom(lem->start, lem);
-		delroomlist(room, lem);
+		room1 = newendroom(lem->end, lem);
+		//delroomlist(room, lem);
+		//delroomlist(room1, lem);
 		putroom(room);
+		putroom(room1);
 	}
 	return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/08 01:27:36 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/10 22:56:19 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_lem					*newlem(void);
 t_lemlist				*ft_lemlistnew(char *str);
 t_lemlist				*is(t_lemlist *list, t_lem *lem);
 t_lemroom				*newroom(char *str, t_lem *lem);
+t_lemroom				*newendroom(char *str, t_lem *lem);
 t_lemlist				*ft_addlemlist(t_lemlist *list, char *str);
 int						ft_lemlistlen(t_lemlist *list, char * str1, char *str2);
 t_lemroom				**recupnextroom(t_lemroom **tabroom, t_lem *lem);
