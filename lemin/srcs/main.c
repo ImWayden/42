@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/07 18:45:56 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/10 23:02:33 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/13 09:00:35 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,12 @@ void				mainverif(t_lemroom **start, t_lem *lem)
 		ft_putendl(NULL);
 	}
 	else if ((*start)->dist == 10000)
+	{
 		*start = connect(*start, lem);
+		if ((*start)->tab)
+			epure(((*start)->tab)[0], lem);
+		//dellist(&(lem->tab[(hashcode(lem->start))]));
+	}
 }
 
 int 				main()
@@ -43,6 +48,7 @@ int 				main()
 		room1 = newendroom(lem->end, lem);
 		mainverif(&room, lem);
 		putroom(room);
+		putroom(room1);
 	}
 	else
 		ft_putcolorstr("WRONG MAP !\n", RED);

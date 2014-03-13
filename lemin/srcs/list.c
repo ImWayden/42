@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/06 23:41:23 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/13 08:58:38 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ t_lemlist		*ft_lemlistnew(char *str)
 	tmp = (t_lemlist *)malloc(sizeof(t_lemlist));
 	if (tmp)
 	{
-		if (str)
-			tmp->str = ft_strdup(str);
+		tmp->str = ft_strdup(str);
 		tmp->next = NULL;
 	}
 	return (tmp);
@@ -62,11 +61,15 @@ void			dellist(t_lemlist **list)
 		tmp = *list;
 		while (tmp->next)
 			tmp = tmp->next;
-		if (tmp->str)
 			ft_memdel((void **)&(tmp->str));
 		if (tmp)
-			ft_memdel((void **)&tmp);
-		tmp = NULL;
+		{
+			if (tmp->str)
+			ft_memdel((void **)&(tmp->str));
+			//ft_memdel((void **)&tmp);
+			tmp = NULL;
+		}
+		*list = (*list)->next;
 	}
 }
 
