@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/07 18:45:56 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/13 09:00:35 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/13 14:07:09 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void				mainverif(t_lemroom **start, t_lem *lem)
 {
+	t_lemlist		*list;
+
 	if ((*start)->dist == -1)
 	{
 		ft_putendl("THERE IS NO WAY BETWEEN : ");
@@ -25,9 +27,9 @@ void				mainverif(t_lemroom **start, t_lem *lem)
 	else if ((*start)->dist == 10000)
 	{
 		*start = connect(*start, lem);
-		if ((*start)->tab)
-			epure(((*start)->tab)[0], lem);
-		//dellist(&(lem->tab[(hashcode(lem->start))]));
+		list = (lem->tab)[hashcode(lem->start)];
+		epure(((*start)->tab)[0], lem);
+		dellist(&list);
 	}
 }
 

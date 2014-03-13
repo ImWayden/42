@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/13 08:58:38 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/13 14:07:49 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void			dellist(t_lemlist **list)
 	t_lemlist	*tmp;
 
 	
-	while (list)
+	while (*list)
 	{
 		tmp = *list;
 		while (tmp->next)
