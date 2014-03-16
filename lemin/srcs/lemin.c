@@ -16,29 +16,23 @@ void			epure(t_lemroom *room, t_lem *lem)
 {
 	int				i;
 
-	i = tabroomlen(room->tab) - 1;
-	while (room && room->tab && (room->tab)[i] && i)
+	i = 1;
+	if (room && room->tab && room->tab[0])
+		epure(room->tab[0], lem);
+	while (room && room->tab && room->tab[i])
 	{
-		(room->tab)[i] = NULL;
-		i--;
-	}
-	if (room->tab && (room->tab)[0])
-	{
-		epure((room->tab)[0], lem);
-		dellist(&(lem->tab[hashcode((room->tab[0])->name)]));
+		lem->tab[hash((room->tab[i])->name)] = room->tab[i];
+		room->tab[i] = NULL;
+		i++;
 	}
 }
 
-void			epureall(t_lemroom *room, t_lem *lem)
+void					moove(t_lemroom **tab, int k)
 {
 	int				i;
 
-	i = tabroomlen(room->tab) - 1;
-	while (room && room->tab && (room->tab)[i] && i)
-	{
-		(room->tab)[i] = NULL;
-		i--;
-	}
-	if (room->tab && (room->tab)[0])
-		epure((room->tab)[0], lem);
+	i = tabroomlen(tab)  - 1;
+	if (tab && tab[i] && tab[k])
+		ft_swap((void **)&(tab[i]), (void **)&(tab[k]));
+	delroom(&tab[i]);
 }

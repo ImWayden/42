@@ -98,6 +98,7 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(const char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	ft_swap(void **a, void **b);
-int		hashcode(char *str);
+int		hash(char *str);
+void	deltab(char ***tab);
 
 #endif

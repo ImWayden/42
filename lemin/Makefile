@@ -18,7 +18,7 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 
-SRC = $(SDIR)lib.c $(SDIR)list.c $(SDIR)parser.c $(SDIR)room.c $(SDIR)room1.c \
+SRC = $(SDIR)lib.c $(SDIR)parser.c $(SDIR)room.c $(SDIR)room1.c \
 	  $(SDIR)lemin.c $(SDIR)main.c
 
 OBJ = $(SRC:.c=.o)

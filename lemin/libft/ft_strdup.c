@@ -17,10 +17,12 @@ char		*ft_strdup(const char *s1)
 	int		i;
 	char	*cpy;
 
+	if (!s1)
+		return ((char *)s1);
 	i = ft_strlen(s1);
 	cpy = ft_strnew(i);
 	i = 0;
-	while (cpy && s1[i])
+	while (cpy && s1 && s1[i])
 	{
 		cpy[i] = s1[i];
 		i++;

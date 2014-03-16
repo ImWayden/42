@@ -14,27 +14,47 @@
 
 void				recuparsetab(char *str, t_lem *pars, int *i)
 {
-	if (*i == 1)
-		pars->start = (ft_strsplit(str, ' ')[0]);
-	if (*i == 2)
-		pars->end = (ft_strsplit(str, ' '))[0];
+	char	**tab;
+
 	if (*i == 1 || *i == 2)
+	{
+		tab = ft_strsplit(str, ' ');
+		if (*i == 1)
+			pars->start = ft_strdup(tab[0]);
+		else
+			pars->end = ft_strdup(tab[0]);
 		*i = 3;
+		deltab(&tab);
+	}
 	if (!ft_is(str, ' '))
 	{
-		pars->tab[hashcode((ft_strsplit(str, '-'))[0])]
-		= ft_addlemlist(pars->tab[hashcode((ft_strsplit(str, '-'))[0])]
-		, (ft_strsplit(str, '-'))[1]);
-		pars->tab[hashcode((ft_strsplit(str, '-'))[1])]
-		= ft_addlemlist(pars->tab[hashcode((ft_strsplit(str, '-'))[1])]
-		, (ft_strsplit(str, '-'))[0]);
+		tab = ft_strsplit(str, '-');
+		addroom(pars->tab[hash(tab[0])], tab[1]);
+		addroom(pars->tab[hash(tab[1])], tab[0]);
 	}
 	else
 	{
-		pars->tab[hashcode((ft_strsplit(str, ' '))[0])]
-		= ft_lemlistnew((ft_strsplit(str, ' '))[0]);
-		pars->list = ft_addlemlist(pars->list, (ft_strsplit(str, ' '))[0]);
-	}	
+		tab = ft_strsplit(str, ' ');
+		pars->tab[hash(tab[0])] = allocroom(tab[0]);
+	}
+	deltab(&tab);
+}
+
+static	int		isgood(char *str, t_lem *pars)
+{
+	char			**tab;
+
+	if (!ft_is(str, ' '))
+	{
+		tab = ft_strsplit(str, '-');
+		if (!(pars->tab[hash(tab[0])]))
+		{
+			deltab(&tab);
+			return (1);
+		}
+		deltab(&tab);
+	}
+	return (0);
 }
 
 t_lem				*parse()
@@ -58,12 +78,13 @@ t_lem				*parse()
 		else if (!ft_strcmp(str, "##end"))
 			i = 2;
 		else if (i && *str != '#')
-		{
-			if (!ft_is(str, ' ') && !(pars->tab[hashcode((ft_strsplit(str, '-'))[0])]))
-				return (NULL);
-			recuparsetab(str, pars, &i);
+		{ 
+			if (isgood(str, pars))
+				return (pars);
+			else
+				recuparsetab(str, pars, &i);
 		}
-		free(str);
+		ft_memdel((void **)&str);
 	}
 	return (pars);
 }

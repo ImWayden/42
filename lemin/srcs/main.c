@@ -12,32 +12,12 @@
 
 #include "../includes/lemin.h"
 
-void				mainverif(t_lemroom **start, t_lem *lem)
-{
-	t_lemlist		*list;
-
-	if ((*start)->dist == -1)
-	{
-		ft_putendl("THERE IS NO WAY BETWEEN : ");
-		ft_putcolorstr(lem->start, GREEN);
-		ft_putstr(" AND ");
-		ft_putcolorstr(lem->end, YELLOW);
-		ft_putendl(NULL);
-	}
-	else if ((*start)->dist == 10000)
-	{
-		*start = connect(*start, lem);
-		list = (lem->tab)[hashcode(lem->start)];
-		epure(((*start)->tab)[0], lem);
-		dellist(&list);
-	}
-}
 
 int 				main()
 {
 	t_lem			*lem;
 	t_lemroom		*room;
-	t_lemroom		*room1;
+	t_lemroom		**tab;
 
 	lem = parse();
 	if (lem && lem->start && lem->end && lem->j)
@@ -46,13 +26,20 @@ int 				main()
 		ft_putendl(lem->start);
 		ft_putstr("END :");	
 		ft_putendl(lem->end);
-		room = newroom(lem->start, lem);
-		room1 = newendroom(lem->end, lem);
-		mainverif(&room, lem);
-		putroom(room);
-		putroom(room1);
+		room = lem->tab[hash(lem->start)];
+		lem->tab[hash(room->name)] = NULL;
+		room = connect(room, lem);
+		tab = room->tab;
+		while (tab)
+		{
+			//verif(tab, lem);
+			tab = allconnect(tab, lem);
+		}
+		putroom(room);	
 	}
 	else
 		ft_putcolorstr("WRONG MAP !\n", RED);
+	//dellem(&lem);
+	sleep(15);
 	return 0;
 }

@@ -12,79 +12,118 @@
 
 #include "../includes/lemin.h"
 
-t_lemroom		*newroom(char *str, t_lem *lem)
+void		tabroomcpy(t_lemroom **tab, t_lemroom **tab1, t_lemroom **tab2)
 {
-	t_lemroom	*room;
-	t_lemlist	*list;
-	int			i;
+	int		i;
 
-	list = (lem->tab)[hashcode(str)];
-	list = is(list, lem);
-	i = ft_lemlistlen(list, str, lem);
-	room = allocroom(str);
-	if (room && i > 0)
+	i = 0;
+	while (tab && tab[i])
 	{
-		room->tab = alloctabroom(i);
-		if (!room->tab)
-			room->dist = -1;
-		else
-			listtotab(list, lem, room, i);
+		tab2[i] = tab[i];
+		i++;
 	}
-	else if (i == -1)
+	while (tab1 && tab1[i])
 	{
-		room->tab = alloctabroom(1);
-		room->tab[0] = allocroom(lem->end);
-		room->dist = 1;
+		tab2[i] = tab1[i];
+		i++;
 	}
-	return (room);
 }
 
-t_lemroom		*newendroom(char *str, t_lem *lem)
+t_lemroom	**merge(t_lemroom **tabroom, t_lemroom **tabroom1)
 {
-	t_lemroom	*room;
-	t_lemlist	*list;
+	int			i;
+	int			j;
+	t_lemroom	**tabroom2;
+
+	if(!tabroom1)
+		return (tabroom);
+	if(!tabroom)
+		return (tabroom1);
+	i = tabroomlen(tabroom);
+	j = tabroomlen(tabroom1);
+	tabroom2 = alloctabroom(i + j);
+	tabroomcpy(tabroom, tabroom1, tabroom2);
+	return (tabroom2);
+}
+
+static int		filter(t_lemroom *room, t_lem *lem)
+{
 	int			i;
 
-	list = (lem->tab)[hashcode(str)];
-	if (!list)
-		return (NULL);
-	i = ft_lemlistlen(list, str, lem);
-	room = allocroom(str);
-	if (room && i != -1)
+	i = 0;
+	while(room->tab && room->tab[i])
 	{
-		room->tab = alloctabroom(i);
-		if (!room->tab)
-			room->dist = -1;
+		if (!ft_strcmp(lem->start, (room->tab[i])->name))
+			moove(room->tab, i);
+		else if (!ft_strcmp(lem->end, (room->tab[i])->name))
+		{
+			deltabroom(&(room->tab));
+			room->tab = alloctabroom(1);
+			room->tab[0] = lem->tab[hash(lem->end)];
+			deltabroom(&((room->tab[0])->tab));
+			(room->tab[0])->dist = 0;
+			return (1);
+		}
 		else
-			listtotab(list, lem, room, i);
+			i++;
 	}
-	return (room);
+	if (room && (!room->tab || !room->tab[0]))
+		return (1);
+	return (0);
 }
+
 
 t_lemroom		*connect(t_lemroom *room, t_lem *lem)
 {
 	int			i;
+	t_lemroom	*room1;
 
-	if (room && room->tab && room->dist == 10000)
+	if (room && !ft_strcmp(room->name, lem->end))
 	{
-		i = 0;
-		while (room->tab && room->tab[i])
+		room->dist = 0;
+		deltabroom(&room->tab);
+	}
+	else if (room && room->tab)
+	{
+		if ((i = filter(room, lem)))
 		{
-			room->tab[i] = newroom(((room->tab)[i])->name, lem);
-			i++;
+			room->dist = room->tab[0]->dist + 1;
+			return (room);
 		}
 		i = 0;
-		while (room->tab && room->tab[i])
+		while (room && room->tab[i])
 		{
-			if ((room->tab[i])->dist == 10000)
-				room->tab[i] = connect(room->tab[i], lem);
-			i++;
+			room1 = (room->tab[i]);
+			if (lem->tab[hash(room1->name)])
+			{
+				room->tab[i] = lem->tab[hash(room1->name)];
+				delroom(&room1);
+				i++;
+			}
+			else
+				moove(room->tab, i);
 		}
-		sort(room->tab);
-		if (room && room->tab && room->tab[0])
-			room->dist = (room->tab[0])->dist + 1;
-		else
-			room->dist = -1;
 	}
 	return (room);
+}
+
+t_lemroom		**allconnect(t_lemroom **room, t_lem *lem)
+{
+	int			i;
+	t_lemroom	**tab;
+	t_lemroom   *room1;
+
+	i = 0;
+	tab = NULL;
+	while(room && room[i])
+	{
+		room1 = connect(room[i], lem);
+		if (!ft_strcmp(lem->start, room1->name))
+			lem->tab[hash(room1->name)] = NULL;
+		tab = merge(tab, room1->tab);
+		i++;
+	}
+	if (tab && !tab[0])
+		deltabroom(&tab);
+	return (tab);
 }

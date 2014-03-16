@@ -29,11 +29,19 @@ void		putroom(t_lemroom *room)
 	i = 0;
 	if (room)
 	{
-		ft_putcolorstr("R", RED);
+		ft_putcolorstr("R_", RED);
 		ft_putcolorstr(room->name, RED);
-		ft_putcolorstr("- DIST", RED);
+		ft_putcolorstr("- DIST_", RED);
 		ft_putnbr(room->dist);
-		ft_putcolorstr(" : ", RED);
+		ft_putcolorstr(" : \n", RED);
+		while (room->tab && (room->tab)[i])
+		{
+			ft_putstr(((room->tab)[i])->name);
+			ft_putstr(" ");
+			i++;
+		}
+		ft_putendl(NULL);
+		i = 0;
 		while (room->tab && (room->tab)[i])
 		{
 			putroom((room->tab)[i]);
@@ -58,31 +66,71 @@ t_lemroom		*allocroom(char *str)
 	return (room);
 }
 
+void			addroom(t_lemroom *room, char *str)
+{
+	int			i;
+	t_lemroom	**tmp;
+
+	i = tabroomlen(room->tab);
+	tmp = alloctabroom(i + 1);
+	if (tmp)
+		tmp[i] = allocroom(str);
+	i--;
+	while(i >= 0)
+	{
+		tmp[i] = room->tab[i];
+		i--;
+	}
+	free(room->tab);
+	room->tab = tmp;
+}
+
+void			delroom(t_lemroom **room)
+{
+	int			i;
+
+	i = 0;
+	if (*room)
+	{
+		while ((*room)->tab && (*room)->tab[i])
+		{
+			delroom(&((*room)->tab[i]));
+			i++;
+		}
+		if ((*room)->tab)
+			free((*room)->tab);
+		if ((*room)->name)
+			ft_memdel((void **)&((*room)->name));
+		free(*room);
+		*room = NULL;
+	}
+}
+
+void			deltabroom(t_lemroom ***room)
+{
+	int			i;
+
+	i = 0;
+	if (*room && *room[i])
+	{
+		delroom(&(*room)[i]);
+		i++;
+	}
+	free(*room);
+	*room = NULL;
+}
+
 t_lemroom		**alloctabroom(int i)
 {
 	t_lemroom	**tab;
 
-	if (!i)
-		return (NULL);
 	tab = (t_lemroom **)malloc(sizeof(t_lemroom *) * (i + 1));
-	while (tab && i)
+	tab[i] = NULL;
+	i = 0;
+	while (tab && tab[i])
 	{
 		tab[i] = NULL;
-		i--;
-	}
-	return (tab);
-}
-
-void		listtotab(t_lemlist *list, t_lem *lem, t_lemroom *room, int j)
-{
-	int		i;
-
-	i = 0;
-	while (list && room && i < j)
-	{
-		if (list->str && ft_strcmp(list->str, lem->start) && ft_strcmp(list->str, room->name))
-			((room->tab)[i]) = allocroom(list->str);		
-		list = list->next;
 		i++;
 	}
+	return (tab);
 }

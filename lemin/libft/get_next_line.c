@@ -43,26 +43,13 @@ static t_getline		*ft_search(t_getline *list, int fd, char **line)
 		return (NULL);
 }
 
-int		first(t_getline *sd, char **line)
+int		readstr(t_getline *sd, char **line)
 {
 	char	*tmp;
+	char	*tmp1;
 	int		ret;
-	int		i;
 
 	tmp = ft_strnew(BUFF_SIZE);
-	if (sd && sd->str && (ret = ft_is(sd->str, '\n')))
-	{
-		i = ft_strlen(sd->str);
-		*line = ft_strsub(sd->str , 0, ret);
-		i = i - ft_strlen(*line);
-		sd->str = ft_strsub(sd->str, ret + 1, i);
-		return (1);
-	}
-	else if (sd && sd->str)
-	{
-		*line = sd->str;
-		sd->str = NULL;
-	}
 	while (sd && (ret = read(sd->fd, tmp, BUFF_SIZE)))
 	{
 		if (!ret)
@@ -70,15 +57,45 @@ int		first(t_getline *sd, char **line)
 		if ((ret = ft_is(tmp, '\n')))
 		{
 			tmp[ret] = '\0';
+			tmp1 = *line;
 			*line = ft_strjoin(*line, tmp);
+			ft_memdel((void **)&tmp1);
+			tmp1 = sd->str;;
 			sd->str = ft_strjoin(sd->str, &(tmp[ret + 1]));
+			ft_memdel((void **)&tmp1);
 			tmp[ret] = '\n';
+			ft_memdel((void **)&tmp);
 			return (1);
 		}
 		else
 			*line = ft_strjoin(*line, tmp);
+		ft_memdel((void **)&tmp);
 	}
 	return (ret);
+}
+
+int		first(t_getline *sd, char **line)
+{
+	char	*tmp;
+	int		ret;
+	int		i;
+
+	if (sd && sd->str && (ret = ft_is(sd->str, '\n')))
+	{
+		i = ft_strlen(sd->str);
+		*line = ft_strsub(sd->str , 0, ret);
+		i = i - ft_strlen(*line);
+		tmp = sd->str;
+		sd->str = ft_strsub(sd->str, ret + 1, i);
+		ft_memdel((void **)&tmp);
+		return (1);
+	}
+	else if (sd && sd->str)
+	{
+		*line = ft_strdup(sd->str);
+		ft_memdel((void **)&(sd->str));
+	}
+	return (readstr(sd, line));
 }
 
 int						getnextline(int const fd, char **line)

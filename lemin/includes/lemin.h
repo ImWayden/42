@@ -16,21 +16,6 @@
 # include "../libft/includes/libft.h"
 # include "../libft/includes/get_next_line.h"
 
-typedef struct 			s_lemlist
-{
-	char				*str;
-	struct s_lemlist	*next;
-}						t_lemlist;
-
-typedef struct 			s_lem
-{
-	t_lemlist			*list;
-	t_lemlist			*tab[1000];
-	int					j;
-	char				*start;
-	char				*end;
-}						t_lem;
-
 typedef struct 			s_lemroom
 {
 	int					dist;
@@ -38,27 +23,31 @@ typedef struct 			s_lemroom
 	struct s_lemroom	**tab;
 }						t_lemroom;
 
+typedef struct 			s_lem
+{
+	t_lemroom			*tab[1000];
+	int					j;
+	char				*start;
+	char				*end;
+}						t_lem;
+
 t_lem					*parse();
 t_lem					*newlem(void);
+void					dellem(t_lem **lem);
 t_lemroom				*allocroom(char *str);
 t_lemroom				**alloctabroom(int i);
-t_lemlist				*ft_lemlistnew(char *str);
-t_lemroom				*newroom(char *str, t_lem *lem);
-void					dellist(t_lemlist **list);
-t_lemlist				*is(t_lemlist *list, t_lem *lem);
-t_lemroom				*newendroom(char *str, t_lem *lem);
-t_lemlist				*ft_addlemlist(t_lemlist *list, char *str);
-int						ft_lemlistlen(t_lemlist *list, char * str, t_lem *lem);
+t_lemroom				*connect(t_lemroom *room, t_lem *lem);
+void					delroom(t_lemroom **room);
+t_lemroom				*newendroom(char *str);
+void					deltabroom(t_lemroom ***room);
+void					addroom(t_lemroom *room, char *str);
 t_lemroom				**recupnextroom(t_lemroom **tabroom, t_lem *lem);
 void					putroom(t_lemroom *room);
 t_lemroom				**newtabroom(int i);
 int						tabroomlen(t_lemroom **tabroom);
 void					sort(t_lemroom **tabroom);
 void					moove(t_lemroom **tab, int k);
-t_lemroom				*connect(t_lemroom *room, t_lem *lem);
-void					delroomlist(t_lemroom *room, t_lem *lem);
 void					epure(t_lemroom *room, t_lem *lem);
-void					tabroomcpy(t_lemroom **tab, t_lemroom **tab1, t_lemroom **tab2);
-void					listtotab(t_lemlist *list, t_lem *lem, t_lemroom *room, int j);
+t_lemroom				**allconnect(t_lemroom **room, t_lem *lem);
 
 #endif

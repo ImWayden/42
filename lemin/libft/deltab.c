@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hashcode.c                                         :+:      :+:    :+:   */
+/*   deltab.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/03/10 14:57:16 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/10 14:57:19 by msarr            ###   ########.fr       */
+/*   Created: 2014/03/14 01:47:23 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/14 01:47:26 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/libft.h"
 
-int					hash(char *str)
+void				deltab(char ***str)
 {
-	int				code;
-	int				len;
-	int				i;
+	int 			i;
+	char			**tab;
 
-	len = ft_strlen(str);
-	code = 7;
+	tab = *str;
 	i = 0;
-	while (i < len)
+	while(tab && tab[i])
 	{
-		code = str[i] + 31 * code;
+		ft_memdel((void **)&(tab[i]));
 		i++;
 	}
-	return (code % 1000);
+	ft_memdel((void **)&(*str));
+	*str = NULL;
 }

@@ -26,18 +26,22 @@ t_lem				*newlem(void)
 	return(pars);
 }
 
-t_lemlist					*is(t_lemlist *list, t_lem *lem)
+void				dellem(t_lem **lem)
 {
-	t_lemlist				*tmp;
+	t_lem 			*tmp;
+	int 			i;
 
-	tmp = list;
-	while (tmp)
+	i = 0;
+	tmp = *lem;
+	while(tmp->tab && i < 1000)
 	{
-		if (!ft_strcmp(tmp->str, lem->end))
-			return (tmp);
-		tmp = tmp->next;
+		delroom(&(tmp->tab[i]));
+		i++;
 	}
-	return (list);
+	ft_memdel((void **)&(tmp->end));
+	ft_memdel((void **)&(tmp->start));
+	ft_memdel((void **)&tmp);
+	tmp = NULL;
 }
 
 int						istab(t_lemroom **room, t_lem *lem)
@@ -54,45 +58,26 @@ int						istab(t_lemroom **room, t_lem *lem)
 	return (-1);
 }
 
-void					moove(t_lemroom **tab, int k)
-{
-	int				i;
-	int				j;
 
-	i = 0;
-	j = 0;
-	while (tab && tab[i])
-		i++;
-	i--;
-	while (tab && tab[j])
-	{
-		if (tab[j]->dist == k)
-		{
-			ft_swap((void **)&(tab[i]), (void **)&(tab[j]));
-			free(tab[i]);
-			tab[i] = NULL;
-			i--;
-		}
-		j++;
-	}
-}
 
 void				sort(t_lemroom **tab)
 {
 	int				i;
 	int				j;
+	t_lemroom		*room;
 
 	i = 0;
-	moove(tab, -1);
 	while (tab && tab[i])
 	{
 		j = i + 1;
 		while (tab[j])
 		{
-			if ((tab[i])->dist > (tab[j])->dist && (tab[j])->dist)
-				ft_swap((void **)&(tab[i]), (void **)&(tab[j]));
-			if (!(tab[i])->dist)
-				ft_swap((void **)&(tab[i]), (void **)&(tab[j]));
+			if ((tab[i])->dist > (tab[j])->dist)
+			{
+				room = tab[i];
+				tab[i] = tab[j];
+				tab[j] = room;
+			}
 			j++;
 		}
 		i++;
