@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   room1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/10 15:42:44 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/10 15:42:47 by msarr            ###   ########.fr       */
+/*   Updated: 2014/03/17 11:34:37 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,44 +53,35 @@ static int		filter(t_lemroom *room, t_lem *lem)
 	i = 0;
 	while(room->tab && room->tab[i])
 	{
-		if (!ft_strcmp(lem->start, (room->tab[i])->name))
-			moove(room->tab, i);
-		else if (!ft_strcmp(lem->end, (room->tab[i])->name))
+		if (!ft_strcmp(lem->end, (room->tab[i])->name))
 		{
 			deltabroom(&(room->tab));
 			room->tab = alloctabroom(1);
 			room->tab[0] = lem->tab[hash(lem->end)];
-			deltabroom(&((room->tab[0])->tab));
 			(room->tab[0])->dist = 0;
 			return (1);
 		}
 		else
 			i++;
 	}
-	if (room && (!room->tab || !room->tab[0]))
-		return (1);
 	return (0);
 }
 
 
-t_lemroom		*connect(t_lemroom *room, t_lem *lem)
+void			connect(t_lemroom *room, t_lem *lem)
 {
 	int			i;
 	t_lemroom	*room1;
 
-	if (room && !ft_strcmp(room->name, lem->end))
-	{
-		room->dist = 0;
-		deltabroom(&room->tab);
-	}
-	else if (room && room->tab)
+	if (room && room->tab)
 	{
 		if ((i = filter(room, lem)))
 		{
 			room->dist = room->tab[0]->dist + 1;
-			return (room);
+			i = -1;
 		}
-		i = 0;
+		else
+			i = 0;
 		while (room && room->tab[i])
 		{
 			room1 = (room->tab[i]);
@@ -104,26 +95,23 @@ t_lemroom		*connect(t_lemroom *room, t_lem *lem)
 				moove(room->tab, i);
 		}
 	}
-	return (room);
 }
 
 t_lemroom		**allconnect(t_lemroom **room, t_lem *lem)
 {
 	int			i;
 	t_lemroom	**tab;
-	t_lemroom   *room1;
+	t_lemroom   **tmp;
 
 	i = 0;
 	tab = NULL;
 	while(room && room[i])
 	{
-		room1 = connect(room[i], lem);
-		if (!ft_strcmp(lem->start, room1->name))
-			lem->tab[hash(room1->name)] = NULL;
-		tab = merge(tab, room1->tab);
+		connect(room[i], lem);
+		tmp = room[i]->tab;
+		if (tmp && tmp[0] && ft_strcmp(tmp[0]->name, lem->end))
+			tab = merge(tab, tmp);
 		i++;
 	}
-	if (tab && !tab[0])
-		deltabroom(&tab);
 	return (tab);
 }

@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/10 22:59:14 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/17 14:47:56 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void		putroom(t_lemroom *room)
 	}
 }
 
-t_lemroom		*allocroom(char *str)
+t_lemroom		*allocroom(char *str, t_lem *lem)
 {
 	t_lemroom	*room;
 
@@ -60,29 +60,46 @@ t_lemroom		*allocroom(char *str)
 	if (room)
 	{
 		room->name = ft_strdup(str);
-		room->dist = 10000;
+		if (lem->end && !ft_strcmp(str, lem->end))
+			room->dist = 0;
+		else
+			room->dist = 10000;
 		room->tab = NULL;
 	}
 	return (room);
 }
 
-void			addroom(t_lemroom *room, char *str)
+void			addroom(t_lemroom *room, char *str, t_lem *lem)
 {
 	int			i;
 	t_lemroom	**tmp;
 
-	i = tabroomlen(room->tab);
-	tmp = alloctabroom(i + 1);
-	if (tmp)
-		tmp[i] = allocroom(str);
-	i--;
-	while(i >= 0)
+	if (room && room->dist == 10000)
 	{
-		tmp[i] = room->tab[i];
-		i--;
+		if (!ft_strcmp(str, lem->end))
+		{
+			if (room->tab)
+				deltabroom(&(room->tab));
+			room->tab = alloctabroom(1);
+			room->tab[0] = lem->tab[hash(lem->end)];
+			room->dist = 1;
+		}
+		else
+		{
+			i = tabroomlen(room->tab);
+			tmp = alloctabroom(i + 1);
+			if (tmp)
+				tmp[i] = allocroom(str, lem);
+			i--;
+			while(i >= 0)
+			{
+				tmp[i] = room->tab[i];
+				i--;
+			}
+			deltabroom(&(room->tab));
+			room->tab = tmp;
+		}
 	}
-	free(room->tab);
-	room->tab = tmp;
 }
 
 void			delroom(t_lemroom **room)

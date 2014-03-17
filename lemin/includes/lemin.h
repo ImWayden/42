@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/13 08:42:21 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/17 12:17:10 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ typedef struct 			s_lem
 t_lem					*parse();
 t_lem					*newlem(void);
 void					dellem(t_lem **lem);
-t_lemroom				*allocroom(char *str);
+t_lemroom				*allocroom(char *str, t_lem *lem);
 t_lemroom				**alloctabroom(int i);
-t_lemroom				*connect(t_lemroom *room, t_lem *lem);
+void					connect(t_lemroom *room, t_lem *lem);
 void					delroom(t_lemroom **room);
 t_lemroom				*newendroom(char *str);
 void					deltabroom(t_lemroom ***room);
-void					addroom(t_lemroom *room, char *str);
+void					addroom(t_lemroom *room, char *str, t_lem *lem);
 t_lemroom				**recupnextroom(t_lemroom **tabroom, t_lem *lem);
 void					putroom(t_lemroom *room);
 t_lemroom				**newtabroom(int i);
