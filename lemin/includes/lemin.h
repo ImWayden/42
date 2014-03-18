@@ -19,6 +19,8 @@
 typedef struct 			s_lemroom
 {
 	int					dist;
+	int					step;
+	int					lem;
 	char				*name;
 	struct s_lemroom	**tab;
 }						t_lemroom;
@@ -48,6 +50,7 @@ int						tabroomlen(t_lemroom **tabroom);
 void					sort(t_lemroom **tabroom);
 void					moove(t_lemroom **tab, int k);
 void					epure(t_lemroom *room, t_lem *lem);
+void					weight(t_lemroom *room, t_lem *lem);
 t_lemroom				**allconnect(t_lemroom **room, t_lem *lem);
 
 #endif

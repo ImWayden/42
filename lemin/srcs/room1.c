@@ -46,54 +46,44 @@ t_lemroom	**merge(t_lemroom **tabroom, t_lemroom **tabroom1)
 	return (tabroom2);
 }
 
-static int		filter(t_lemroom *room, t_lem *lem)
-{
-	int			i;
-
-	i = 0;
-	while(room->tab && room->tab[i])
-	{
-		if (!ft_strcmp(lem->end, (room->tab[i])->name))
-		{
-			deltabroom(&(room->tab));
-			room->tab = alloctabroom(1);
-			room->tab[0] = lem->tab[hash(lem->end)];
-			(room->tab[0])->dist = 0;
-			return (1);
-		}
-		else
-			i++;
-	}
-	return (0);
-}
-
-
 void			connect(t_lemroom *room, t_lem *lem)
 {
 	int			i;
 	t_lemroom	*room1;
 
-	if (room && room->tab)
+	if (room && room->dist == 10000)
 	{
-		if ((i = filter(room, lem)))
-		{
-			room->dist = room->tab[0]->dist + 1;
-			i = -1;
-		}
-		else
-			i = 0;
-		while (room && room->tab[i])
+		i = 0;
+		while (room && room->tab && room->tab[i])
 		{
 			room1 = (room->tab[i]);
 			if (lem->tab[hash(room1->name)])
 			{
 				room->tab[i] = lem->tab[hash(room1->name)];
+				lem->tab[hash(room1->name)] = NULL;
 				delroom(&room1);
 				i++;
 			}
 			else
 				moove(room->tab, i);
 		}
+	}
+}
+
+void				weight(t_lemroom *room, t_lem *lem)
+{
+	int				i;
+
+	i = 0;
+	while (room && room->tab && (room->tab)[i])
+	{
+		weight((room->tab)[i], lem);
+		i++;
+	}
+	if (room && room->tab && room->tab[0])
+	{
+		sort(room->tab);
+		room->dist = ((room->tab)[0])->dist + 1;
 	}
 }
 

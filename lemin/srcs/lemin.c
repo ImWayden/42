@@ -34,5 +34,6 @@ void					moove(t_lemroom **tab, int k)
 	i = tabroomlen(tab)  - 1;
 	if (tab && tab[i] && tab[k])
 		ft_swap((void **)&(tab[i]), (void **)&(tab[k]));
+	delroom(&tab[i + 1]);
 	delroom(&tab[i]);
 }

@@ -33,7 +33,9 @@ void		putroom(t_lemroom *room)
 		ft_putcolorstr(room->name, RED);
 		ft_putcolorstr("- DIST_", RED);
 		ft_putnbr(room->dist);
-		ft_putcolorstr(" : \n", RED);
+		ft_putcolorstr(" : lem : ", RED);
+		ft_putnbr(room->lem);
+		ft_putcolorstr(" : ", RED);
 		while (room->tab && (room->tab)[i])
 		{
 			ft_putstr(((room->tab)[i])->name);
@@ -48,7 +50,6 @@ void		putroom(t_lemroom *room)
 			ft_putendl(NULL);
 			i++;
 		}
-		ft_putendl(NULL);
 	}
 }
 
@@ -60,10 +61,12 @@ t_lemroom		*allocroom(char *str, t_lem *lem)
 	if (room)
 	{
 		room->name = ft_strdup(str);
-		if (lem->end && !ft_strcmp(str, lem->end))
+		if (lem->end && lem->end && !ft_strcmp(str, lem->end))
 			room->dist = 0;
 		else
 			room->dist = 10000;
+		room->lem = 0;
+		room->step = 0;
 		room->tab = NULL;
 	}
 	return (room);
@@ -84,7 +87,7 @@ void			addroom(t_lemroom *room, char *str, t_lem *lem)
 			room->tab[0] = lem->tab[hash(lem->end)];
 			room->dist = 1;
 		}
-		else
+		else if (ft_strcmp(str, lem->start))
 		{
 			i = tabroomlen(room->tab);
 			tmp = alloctabroom(i + 1);
@@ -96,7 +99,7 @@ void			addroom(t_lemroom *room, char *str, t_lem *lem)
 				tmp[i] = room->tab[i];
 				i--;
 			}
-			deltabroom(&(room->tab));
+			free(room->tab);
 			room->tab = tmp;
 		}
 	}
@@ -133,7 +136,8 @@ void			deltabroom(t_lemroom ***room)
 		delroom(&(*room)[i]);
 		i++;
 	}
-	free(*room);
+	if (*room)
+		free(*room);
 	*room = NULL;
 }
 
