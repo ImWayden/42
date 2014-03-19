@@ -18,12 +18,12 @@ LDIR = libft/
 SDIR = srcs/
 
 SRC = $(SDIR)lib.c $(SDIR)parser.c $(SDIR)room.c $(SDIR)room1.c \
-	  $(SDIR)lemin.c $(SDIR)main.c
+	  $(SDIR)lemin.c $(SDIR)way.c $(SDIR)main.c
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes
 LIB = ./libft/libft.a
-CFLAGS = 
+CFLAGS = -Wall -Wextra -Werror -g 
 
 all: $(NAME)
 

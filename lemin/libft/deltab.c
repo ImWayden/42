@@ -19,7 +19,7 @@ void				deltab(char ***str)
 
 	tab = *str;
 	i = 0;
-	while(tab && tab[i])
+	while (tab && tab[i])
 	{
 		ft_memdel((void **)&(tab[i]));
 		i++;

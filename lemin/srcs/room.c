@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
-#include <stdio.h>
 
 int			tabroomlen(t_lemroom **tabroom)
 {
@@ -30,7 +29,6 @@ void		putroom(t_lemroom *room)
 	i = 0;
 	if (room)
 	{
-		printf("%x\n", room);
 		ft_putcolorstr("R_", RED);
 		ft_putcolorstr(room->name, RED);
 		ft_putcolorstr("- DIST_", RED);
@@ -95,12 +93,8 @@ void			addroom(t_lemroom *room, char *str, t_lem *lem)
 			tmp = alloctabroom(i + 1);
 			if (tmp)
 				tmp[i] = allocroom(str, lem);
-			i--;
-			while(i >= 0)
-			{
+			while (--i >= 0)
 				tmp[i] = room->tab[i];
-				i--;
-			}
 			free(room->tab);
 			room->tab = tmp;
 		}
@@ -126,34 +120,4 @@ void			delroom(t_lemroom **room)
 		free(*room);
 		*room = NULL;
 	}
-}
-
-void			deltabroom(t_lemroom ***room)
-{
-	int			i;
-
-	i = 0;
-	if (*room && *room[i])
-	{
-		delroom(&(*room)[i]);
-		i++;
-	}
-	if (*room)
-		free(*room);
-	*room = NULL;
-}
-
-t_lemroom		**alloctabroom(int i)
-{
-	t_lemroom	**tab;
-
-	tab = (t_lemroom **)malloc(sizeof(t_lemroom *) * (i + 1));
-	tab[i] = NULL;
-	i = 0;
-	while (tab && tab[i])
-	{
-		tab[i] = NULL;
-		i++;
-	}
-	return (tab);
 }

@@ -17,13 +17,19 @@ t_lem				*newlem(void)
 	t_lem			*pars;
 	int				i;
 
-	pars = (t_lem *)malloc(sizeof(t_lem));
-	pars->start = NULL;
-	pars->end = NULL;
+	if ((pars = (t_lem *)malloc(sizeof(t_lem))))
+	{
+		pars->start = NULL;
+		pars->end = NULL;
+		pars->j = 0;
+	}
 	i = 0;
-	while (((pars->tab)[i] = NULL))
+	while (pars && pars->tab && i < 1000)
+	{
+		pars->tab[i] = NULL;
 		i++;
-	return(pars);
+	}
+	return (pars);
 }
 
 void				dellem(t_lem **lem)
@@ -33,32 +39,22 @@ void				dellem(t_lem **lem)
 
 	i = 0;
 	tmp = *lem;
-	while(tmp->tab && i < 1000)
-	{
-		delroom(&(tmp->tab[i]));
-		i++;
-	}
 	ft_memdel((void **)&(tmp->end));
 	ft_memdel((void **)&(tmp->start));
 	ft_memdel((void **)&tmp);
 	tmp = NULL;
 }
 
-int						istab(t_lemroom **room, t_lem *lem)
+void					moove(t_lemroom **tab, int k)
 {
-	int					i;
+	int				i;
 
-	i = 0;
-	while (room && room[i])
-	{
-		if (!ft_strcmp((room[i])->name, lem->end))
-			return (i);
-		i++;
-	}
-	return (-1);
+	i = tabroomlen(tab)  - 1;
+	if (tab && tab[i] && tab[k])
+		ft_swap((void **)&(tab[i]), (void **)&(tab[k]));
+	delroom(&tab[i + 1]);
+	delroom(&tab[i]);
 }
-
-
 
 void				sort(t_lemroom **tab)
 {

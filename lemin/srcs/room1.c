@@ -12,6 +12,36 @@
 
 #include "../includes/lemin.h"
 
+void			deltabroom(t_lemroom ***room)
+{
+	int			i;
+
+	i = 0;
+	if (*room && *room[i])
+	{
+		delroom(&(*room)[i]);
+		i++;
+	}
+	if (*room)
+		free(*room);
+	*room = NULL;
+}
+
+t_lemroom		**alloctabroom(int i)
+{
+	t_lemroom	**tab;
+
+	if ((tab = (t_lemroom **)malloc(sizeof(t_lemroom *) * (i + 1))))
+		tab[i] = NULL;
+	i = 0;
+	while (tab && tab[i])
+	{
+		tab[i] = NULL;
+		i++;
+	}
+	return (tab);
+}
+
 void		tabroomcpy(t_lemroom **tab, t_lemroom **tab1, t_lemroom **tab2)
 {
 	int		i;
@@ -35,73 +65,13 @@ t_lemroom	**merge(t_lemroom **tabroom, t_lemroom **tabroom1)
 	int			j;
 	t_lemroom	**tabroom2;
 
-	if(!tabroom1)
+	if (!tabroom1)
 		return (tabroom);
-	if(!tabroom)
+	if (!tabroom)
 		return (tabroom1);
 	i = tabroomlen(tabroom);
 	j = tabroomlen(tabroom1);
 	tabroom2 = alloctabroom(i + j);
 	tabroomcpy(tabroom, tabroom1, tabroom2);
 	return (tabroom2);
-}
-
-void			connect(t_lemroom *room, t_lem *lem)
-{
-	int			i;
-	t_lemroom	*room1;
-
-	if (room && room->dist == 10000)
-	{
-		i = 0;
-		while (room && room->tab && room->tab[i])
-		{
-			room1 = (room->tab[i]);
-			if (lem->tab[hash(room1->name)])
-			{
-				room->tab[i] = lem->tab[hash(room1->name)];
-				lem->tab[hash(room1->name)] = NULL;
-				delroom(&room1);
-				i++;
-			}
-			else
-				moove(room->tab, i);
-		}
-	}
-}
-
-void				weight(t_lemroom *room, t_lem *lem)
-{
-	int				i;
-
-	i = 0;
-	while (room && room->tab && (room->tab)[i])
-	{
-		weight((room->tab)[i], lem);
-		i++;
-	}
-	if (room && room->tab && room->tab[0])
-	{
-		sort(room->tab);
-		room->dist = ((room->tab)[0])->dist + 1;
-	}
-}
-
-t_lemroom		**allconnect(t_lemroom **room, t_lem *lem)
-{
-	int			i;
-	t_lemroom	**tab;
-	t_lemroom   **tmp;
-
-	i = 0;
-	tab = NULL;
-	while(room && room[i])
-	{
-		connect(room[i], lem);
-		tmp = room[i]->tab;
-		if (tmp && tmp[0] && ft_strcmp(tmp[0]->name, lem->end))
-			tab = merge(tab, tmp);
-		i++;
-	}
-	return (tab);
 }
