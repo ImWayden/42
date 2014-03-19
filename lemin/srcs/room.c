@@ -6,11 +6,12 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/17 14:47:56 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/18 23:57:31 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
+#include <stdio.h>
 
 int			tabroomlen(t_lemroom **tabroom)
 {
@@ -29,6 +30,7 @@ void		putroom(t_lemroom *room)
 	i = 0;
 	if (room)
 	{
+		printf("%x\n", room);
 		ft_putcolorstr("R_", RED);
 		ft_putcolorstr(room->name, RED);
 		ft_putcolorstr("- DIST_", RED);

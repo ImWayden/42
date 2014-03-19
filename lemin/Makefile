@@ -3,13 +3,12 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sraccah <msarr@student.42.fr>              +#+  +:+       +#+         #
+#    By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2014/01/22 14:52:23 by msarr	           #+#    #+#              #
-#    Updated: 2014/02/24 11:55:22 by msarr            ###   ########.fr        #
+#    Created: 2014/01/22 14:52:23 by msarr             #+#    #+#              #
+#    Updated: 2014/03/18 23:53:35 by mozzie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 NAME = lemin
 
 MAKE = make
@@ -24,7 +23,7 @@ SRC = $(SDIR)lib.c $(SDIR)parser.c $(SDIR)room.c $(SDIR)room1.c \
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes
 LIB = ./libft/libft.a
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = 
 
 all: $(NAME)
 
