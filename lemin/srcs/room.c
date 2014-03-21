@@ -12,7 +12,7 @@
 
 #include "../includes/lemin.h"
 
-int			tabroomlen(t_lemroom **tabroom)
+int				tabroomlen(t_lemroom **tabroom)
 {
 	int		i;
 
@@ -22,35 +22,13 @@ int			tabroomlen(t_lemroom **tabroom)
 	return (i);
 }
 
-void		putroom(t_lemroom *room)
+void			putroom(t_lemroom *room, t_lemroom *room1, int j)
 {
-	int		i;
-
-	i = 0;
-	if (room)
-	{
-		ft_putcolorstr("R_", RED);
-		ft_putcolorstr(room->name, RED);
-		ft_putcolorstr("- DIST_", RED);
-		ft_putnbr(room->dist);
-		ft_putcolorstr(" : lem : ", RED);
-		ft_putnbr(room->lem);
-		ft_putcolorstr(" : ", RED);
-		while (room->tab && (room->tab)[i])
-		{
-			ft_putstr(((room->tab)[i])->name);
-			ft_putstr(" ");
-			i++;
-		}
-		ft_putendl(NULL);
-		i = 0;
-		while (room->tab && (room->tab)[i])
-		{
-			putroom((room->tab)[i]);
-			ft_putendl(NULL);
-			i++;
-		}
-	}
+	ft_putstr("L");
+	ft_putnbr(j - room->lem + 1);
+	ft_putstr("-");
+	ft_putstr(room1->name);
+	ft_putchar(' ');
 }
 
 t_lemroom		*allocroom(char *str, t_lem *lem)

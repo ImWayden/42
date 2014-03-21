@@ -20,7 +20,7 @@ int 				main()
 	if (lem && lem->start && lem->end && lem->j)
 	{
 		lemin(lem);
-		//dellem(&lem);
+		dellem(&lem);
 	}
 	else if (lem)
 	{
@@ -30,7 +30,7 @@ int 				main()
 			ft_putcolorstr("THERE IS NO END !\n", RED);
 		else if (lem && !lem->j)
 			ft_putcolorstr("NO LEM TO SEND !\n", RED);
-		//dellem(&lem);
+		dellem(&lem);
 	}
 	else
 		ft_putcolorstr("WRONG MAP !\n", RED);

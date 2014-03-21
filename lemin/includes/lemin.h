@@ -48,7 +48,6 @@ void					dellem(t_lem **lem);
 t_lemroom				**newtabroom(int i);
 t_lemroom				**alloctabroom(int i);
 t_lemroom				*newendroom(char *str);
-void					putroom(t_lemroom *room);
 void					delroom(t_lemroom **room);
 void					sort(t_lemroom **tabroom);
 void					moove(t_lemroom **tab, int k);
@@ -60,6 +59,7 @@ void					connect(t_lemroom *room, t_lem *lem);
 t_lemroom				**allconnect(t_lemroom **room, t_lem *lem);
 void					addroom(t_lemroom *room, char *str, t_lem *lem);
 t_lemroom				**recupnextroom(t_lemroom **tabroom, t_lem *lem);
+void					putroom(t_lemroom *room, t_lemroom *room1, int j);
 t_lemroom				**merge(t_lemroom **tabroom, t_lemroom **tabroom1);
 
 #endif/* !LEMIN_H */
