@@ -40,6 +40,8 @@ void				dellem(t_lem **lem)
 	i = 0;
 	tmp = *lem;
 	ft_memdel((void **)&(tmp->end));
+	while ((*lem)->tab[i])
+		delroom(&(*lem)->tab[i++]);
 	ft_memdel((void **)&(tmp->start));
 	ft_memdel((void **)&tmp);
 	tmp = NULL;

@@ -59,19 +59,19 @@ void		tabroomcpy(t_lemroom **tab, t_lemroom **tab1, t_lemroom **tab2)
 	}
 }
 
-t_lemroom	**merge(t_lemroom **tabroom, t_lemroom **tabroom1)
+t_lemroom	**merge(t_lemroom ***tabroom, t_lemroom **tabroom1)
 {
 	int			i;
 	int			j;
 	t_lemroom	**tabroom2;
 
 	if (!tabroom1)
-		return (tabroom);
-	if (!tabroom)
+		return (*tabroom);
+	if (!(*tabroom))
 		return (tabroom1);
-	i = tabroomlen(tabroom);
+	i = tabroomlen(*tabroom);
 	j = tabroomlen(tabroom1);
 	tabroom2 = alloctabroom(i + j);
-	tabroomcpy(tabroom, tabroom1, tabroom2);
+	tabroomcpy(*tabroom, tabroom1, tabroom2);
 	return (tabroom2);
 }

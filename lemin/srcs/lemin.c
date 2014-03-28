@@ -141,4 +141,10 @@ void				lemin(t_lem *lem)
 	}
 	if (room->dist >= 10000)
 		ft_putcolorstr("NO WAY FOUND!\n", RED);
+	deltabroom(&room1->tab);
+	deltabroom(&room->tab);
+	//free(room1->name);
+	//free(room->name);
+
+	sleep(30);
 }

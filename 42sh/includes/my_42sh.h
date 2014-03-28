@@ -3,29 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   my_42sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/23 14:47:56 by sraccah           #+#    #+#             */
 /*   Updated: 2014/02/24 23:09:36 by mozzie           ###   ########.fr       */
-=======
 /*   By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/23 14:47:56 by sraccah           #+#    #+#             */
 /*   Updated: 2014/02/23 19:32:59 by sraccah          ###   ########.fr       */
->>>>>>> fc382db9c32f12bfa015c589a3e35834beacc415
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MY_42SH_H
 # define MY_42SH_H
 
-<<<<<<< HEAD
 # include <stdio.h>
 # include "libft.h"
 #include <sys/types.h>
 #include <sys/wait.h>
-=======
 #include <stdlib.h>
 #include <termios.h>
 #include <unistd.h>
@@ -37,13 +32,10 @@
 #include <term.h>
 # include "libft.h"
 
->>>>>>> fc382db9c32f12bfa015c589a3e35834beacc415
 /*
 ** Lists and Structures
 */
 
-<<<<<<< HEAD
-=======
 typedef struct			s_termlist
 {
 	char				*str;
@@ -51,7 +43,6 @@ typedef struct			s_termlist
 	struct s_termlist	*next;
 }						t_termlist;
 
->>>>>>> fc382db9c32f12bfa015c589a3e35834beacc415
 typedef struct 	s_env
 {
 	char		*path;
@@ -87,8 +78,6 @@ char			**setenv_builtin(char **envs, char *name, char *value);
 char			**unsetenv_builtin(char **envs, char *name);
 char			**cd_builtin(char **av, char **envs);
 
-<<<<<<< HEAD
-=======
 /*
 ** termcaps
 */
@@ -106,5 +95,4 @@ t_termlist		*ft_editlist(t_termlist *list, char *str);
 void			init(char ***cmd, char **envc);
 t_termlist		*ft_choice(char *buffer, t_termlist *list, char **str, int *i);
 
->>>>>>> fc382db9c32f12bfa015c589a3e35834beacc415
 #endif /* !MY_42SH_H */

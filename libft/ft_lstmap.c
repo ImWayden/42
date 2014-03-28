@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/24 12:29:08 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/06 08:50:35 by mozzie           ###   ########.fr       */
+/*   Created: 2014/03/28 13:07:57 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/28 13:08:00 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/libft.h"
 
-char		*ft_strdup(const char *s1)
+t_list		*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	int		i;
-	char	*cpy;
-
-	i = ft_strlen(s1);
-	cpy = ft_strnew(i);
-	i = 0;
-	while (cpy && s1 && s1[i])
-	{
-		cpy[i] = s1[i];
-		i++;
-	}
-	return (cpy);
+	if (lst && lst->next)
+		return (ft_lstadd(&(f(lst->next)), f(lst)))
+	else if (lst)
+		return (f(lst));
 }

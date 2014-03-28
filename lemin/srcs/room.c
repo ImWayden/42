@@ -86,16 +86,12 @@ void			delroom(t_lemroom **room)
 	i = 0;
 	if (*room)
 	{
-		while ((*room)->tab && (*room)->tab[i])
-		{
-			delroom(&((*room)->tab[i]));
-			i++;
-		}
-		if ((*room)->tab)
-			free((*room)->tab);
-		if ((*room)->name)
+		if (*room && (*room)->tab && (*room)->tab[i])
+			deltabroom(&(*room)->tab);
+		if ((*room)->name != NULL)
 			ft_memdel((void **)&((*room)->name));
-		free(*room);
+		if (*room)
+			free(*room);
 		*room = NULL;
 	}
 }

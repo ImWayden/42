@@ -66,7 +66,7 @@ t_lemroom		**allconnect(t_lemroom **room, t_lem *lem)
 		connect(room[i], lem);
 		tmp = room[i]->tab;
 		if (tmp && tmp[0] && ft_strcmp(tmp[0]->name, lem->end))
-			tab = merge(tab, tmp);
+			tab = merge(&tab, tmp);
 		i++;
 	}
 	return (tab);
