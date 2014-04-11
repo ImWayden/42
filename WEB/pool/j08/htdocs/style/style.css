@@ -1,0 +1,23 @@
+
+h1 {
+	text-align: center;
+}
+
+p {
+	text-align: center;
+}
+
+#map {
+	position: absolute;
+	margin-top: 1%;
+	margin-left: 5%;
+}
+
+.startgame {
+	text-align: center;
+	background-color: cyan;
+	margin-right: 29%;
+	margin-left: 29%;
+	padding-top: 1%;
+	padding-bottom: 1%;
+}
