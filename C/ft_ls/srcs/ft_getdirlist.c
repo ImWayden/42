@@ -12,11 +12,11 @@
 
 #include "lsft.h"
 
-t_list				*ft_getdirlist(char *dir)
+t_dirlist				*ft_getdirlist(char *dir)
 {
-	dir				*dp;
+	DIR				*dp;
 	struct dirent 	*entry;
-	t_list  		*dirlist;
+	t_dirlist  		*dirlist;
 	struct stat 	test;
 	
 	dirlist = NULL;
@@ -30,11 +30,6 @@ t_list				*ft_getdirlist(char *dir)
 				dirlist = ft_addlist(dirlist, entry->d_name, ctime((const time_t *)&test.st_mtime));
 			}
 		}
-	}
-	else
-	{
-		stat(dir ,&test);
-		dirlist = ft_add_list(dirlist, dir, ctime((const time_t *)&test.st_mtime));		
 	}
 	return (dirlist);
 }

@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef		 __LSFT_H__
-# define		__LSFT_H__
+#ifndef		 		LSFT_H__
+# define			LSFT_H__
 
 #include <unistd.h>
 #include <stdio.h>
@@ -27,27 +27,32 @@
 #include "libft.h"
 
 
-typedef struct		s_list
+typedef struct 			s_dirlist
 {
-	char			*str;
-	char			*atime;
-	struct s_list	*next;
-}					t_list;
+	char				*str;
+	char				*atime;
+	struct s_dirlist	*next;
+}						t_dirlist;
 
-t_list				*ft_add_list(t_list *list, char *str, char *atime);
-void				ft_putattr(struct stat sb);
-t_list				*ft_recupdir(char *dir);
-t_list				*ft_arecupdir(char *dir);
-t_list				*ft_sortlist(t_list *list);
-t_list				*ft_rsortlist(t_list *list);
-t_list				*ft_arsortlist(t_list *list);
-t_list      		*ft_asortlist(t_list *list);
-void				ft_putdir(char *str);
-void				ft_put_ilist(t_list *list, char *dir);
-void				ft_put_list(t_list *list);
-void				ft_putends(const char *s);
-void				ft_acceserror(char *str , char **argv, int argc);
-void				ft_putinfos(struct stat test);
-void				ft_listswap(t_list *tmp, t_list *tmp1);
+typedef struct			s_dir
+{
+	char				**dir;
+	int					recursive;
+	int					infos;
+	int					sort_type;
+	int					hiden;
+	t_dirlist			*dirlist;
+}						t_dir;
+
+t_dirlist				*ft_addlist(t_dirlist *list, char *str, char *atime);
+void					ft_putattr(struct stat sb);
+t_dirlist				*ft_getdirlist(char *dir);
+t_dirlist				*ft_arecupdir(char *dir);
+t_dirlist				*ft_sortlist(t_dirlist **list);
+void					ft_ls(char *line, t_dir *dir, struct stat dirstat);
+void					ft_put_s(const char *s);
+void					ft_acceserror(char *str , char **argv, int argc);
+void					ft_putinfos(struct stat test);
+t_dir					*ft_parse(int argc, char **argv);
 
 #endif

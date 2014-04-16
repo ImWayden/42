@@ -12,7 +12,7 @@
 
 #include "lsft.h"
 
-void	ft_putends(const char *s)
+void	ft_put_s(const char *s)
 {
 	ft_putstr((char *)s);
 	ft_putstr(" ");

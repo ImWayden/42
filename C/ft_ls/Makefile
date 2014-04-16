@@ -19,8 +19,9 @@ LDIR = libft/
 SDIR = srcs/
 
 SRC = $(SDIR)ft_addlist.c $(SDIR)ft_error.c $(SDIR)ft_sortlist.c \
-		$(SDIR)ft_getdirlist.c $(SDIR)ft_putatt.c $(SDIR)ft_put_s.c \
-		$(SDIR)ft_putlist.c $(SDIR)main.c.c\
+		$(SDIR)ft_getdirlist.c $(SDIR)ft_putattr.c $(SDIR)ft_put_s.c \
+		$(SDIR)ft_ls.c $(SDIR)ft_parse.c $(SDIR)ft_putinfos.c \
+		$(SDIR)main.c\
 
 
 OBJ = $(SRC:.c=.o)

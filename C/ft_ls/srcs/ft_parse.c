@@ -12,21 +12,28 @@
 
 #include "lsft.h"
 
-static void		ft_verif(char **argv)
+t_dir			*ft_parse(int argc, char **argv)
 {
-	int			i;
+	t_dir		*dir;
 
-	i = 1;
-	while (argv[i] && argv[i][0] == '-')
-		i++;
-
-}
-
-int				ft_parse(int argc, char **argv)
-{
-	if (argc == 1)
-		argv[0] = "./";
-	else
+	dir = (t_dir *)malloc(sizeof(t_dir));
+	dir->dir = NULL;
+	while (argc && argv && *argv && **argv == '-')
 	{
+		if (!ft_strcmp("-r", *argv))
+			dir->sort_type = 1;
+		else if (!ft_strcmp("-a", *argv))
+			dir->hiden = 1;
+		else if (!ft_strcmp("-R", *argv))
+			dir->recursive = 1;
+		else if (!ft_strcmp("-l", *argv))
+			dir->infos = 1;
+		argv++;
+		argc--;
 	}
+	if (argc)
+		dir->dir = argv;
+	else
+		dir->dir = NULL;
+	return (dir);
 }

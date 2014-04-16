@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_addlist.c                                       :+:      :+:    :+:   */
+/*   ft_listswap.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/15 22:00:35 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/15 22:00:39 by msarr            ###   ########.fr       */
+/*   Created: 2013/12/15 19:20:23 by msarr             #+#    #+#             */
+/*   Updated: 2013/12/15 19:20:48 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lsft.h"
 
-t_dirlist		*ft_addlist(t_dirlist *list, char *str, char *atime)
+void		ft_listswap(t_list *tmp, t_list *tmp1)
 {
-	t_dirlist  *tmp;
-	
-	tmp = (t_dirlist *)malloc(sizeof(t_dirlist));
-	tmp->str = ft_strdup(str);
-	tmp->atime = ft_strdup(atime);
-	tmp->next = list;
-	return (tmp);
+	char	*str;
+	char	*str1;
+
+	str = ft_strnew((size_t)ft_strlen(tmp->str));
+	str1 = ft_strnew((size_t)ft_strlen(tmp->str));
+	str = ft_strcpy(str,tmp->str);
+	str1 = ft_strcpy(str,tmp->str);
+	tmp->str = ft_strcpy(tmp->str, tmp1->str);
+	tmp->atime = ft_strcpy(tmp->atime, tmp1->atime);
+	tmp1->str = ft_strcpy(tmp1->str, str);
+	tmp1->atime = ft_strcpy(tmp1->atime, str1);
 }
