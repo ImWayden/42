@@ -10,24 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef		 		LSFT_H__
-# define			LSFT_H__
+#ifndef		 		LSFT_H
+# define			LSFT_H
 
-#include <unistd.h>
-#include <stdio.h>
-#include <dirent.h>
-#include <string.h>
-#include <sys/stat.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <time.h>
-#include <errno.h>
-#include <pwd.h>
-#include <grp.h>
-#include "libft.h"
+# include <unistd.h>
+# include <stdio.h>
+# include <dirent.h>
+# include <string.h>
+# include <sys/stat.h>
+# include <stdlib.h>
+# include <sys/types.h>
+# include <time.h>
+# include <errno.h>
+# include <pwd.h>
+# include <grp.h>
+# include "libft.h"
 
-
-typedef struct 			s_dirlist
+typedef struct			s_dirlist
 {
 	char				*str;
 	time_t				atime;
@@ -52,7 +51,7 @@ t_dirlist				*ft_arecupdir(char *dir);
 t_dirlist				*ft_sortlist(t_dirlist **list, int i, int j);
 void					ft_ls(char *line, t_dir *dir, struct stat dirstat);
 void					ft_put_s(const char *s);
-void					ft_acceserror(char *str , char **argv, int argc);
+void					ft_acceserror(char *str, char **argv, int argc);
 void					ft_putinfos(struct stat test);
 t_dir					*ft_parse(int argc, char **argv);
 

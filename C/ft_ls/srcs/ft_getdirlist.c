@@ -15,10 +15,10 @@
 t_dirlist				*ft_getdirlist(char *dir)
 {
 	DIR				*dp;
-	struct dirent 	*entry;
-	t_dirlist  		*dirlist;
-	struct stat 	test;
-	
+	struct dirent	*entry;
+	t_dirlist		*dirlist;
+	struct stat		test;
+
 	dirlist = NULL;
 	if ((dp = opendir(dir)) != NULL)
 	{
@@ -27,7 +27,8 @@ t_dirlist				*ft_getdirlist(char *dir)
 			if ((entry->d_name)[0] != '.')
 			{
 				stat(ft_strjoin(ft_strjoin(dir, "/"), entry->d_name), &test);
-				dirlist = ft_addlist(dirlist, entry->d_name, time((time_t *)&test.st_mtime));
+				dirlist = ft_addlist(dirlist, entry->d_name,
+							time((time_t *)&test.st_mtime));
 			}
 		}
 	}

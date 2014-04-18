@@ -12,7 +12,7 @@
 
 #include "lsft.h"
 
-static t_dir	*allocdir()
+static t_dir	*allocdir(void)
 {
 	t_dir		*dir;
 
@@ -27,6 +27,14 @@ static t_dir	*allocdir()
 		dir->dirlist = NULL;
 	}
 	return (dir);
+}
+
+static void		ft_error(char c)
+{
+	ft_putstr("ls : illegal option -- ");
+	ft_putchar(c);
+	ft_putstr("\n");
+	exit (1);
 }
 
 static int		ft_choice(int c, t_dir *dir)
@@ -64,11 +72,7 @@ t_dir			*ft_parse(int argc, char **argv)
 			argc--;
 		}
 		else
-		{
-			ft_putchar(*str);
-			ft_putendl(": invalid option.");
-			exit (1);
-		}
+			ft_error(*str);
 	}
 	if (argc)
 		dir->dir = argv;

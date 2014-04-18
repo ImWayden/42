@@ -17,13 +17,13 @@ void					ft_putinfos(struct stat test)
 	struct passwd		*tmp;
 	struct group		*tmp1;
 	char				*s;
-	
+
 	ft_putattr(test);
 	tmp = getpwuid(test.st_uid);
 	ft_put_s(tmp->pw_name);
 	tmp1 = getgrgid(test.st_gid);
 	ft_put_s(tmp1->gr_name);
-	ft_putnbr((int) test.st_size);
+	ft_putnbr((int)test.st_size);
 	ft_putchar(' ');
 	if (test.st_mtime)
 	{

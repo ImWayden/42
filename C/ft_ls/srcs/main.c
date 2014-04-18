@@ -32,9 +32,9 @@ int					main(int argc, char **argv)
 		}
 		if (!i)
 		{
-			stat("./", &test);
-			ft_ls("./", dir, test);
+			stat(".", &test);
+			ft_ls(".", dir, test);
 		}
 	}
-	return 0;
+	return (0);
 }
