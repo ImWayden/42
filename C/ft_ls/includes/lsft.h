@@ -30,7 +30,7 @@
 typedef struct 			s_dirlist
 {
 	char				*str;
-	char				*atime;
+	time_t				atime;
 	struct s_dirlist	*next;
 }						t_dirlist;
 
@@ -40,15 +40,16 @@ typedef struct			s_dir
 	int					recursive;
 	int					infos;
 	int					sort_type;
+	int					sort_mod;
 	int					hiden;
 	t_dirlist			*dirlist;
 }						t_dir;
 
-t_dirlist				*ft_addlist(t_dirlist *list, char *str, char *atime);
+t_dirlist				*ft_addlist(t_dirlist *list, char *str, time_t atime);
 void					ft_putattr(struct stat sb);
 t_dirlist				*ft_getdirlist(char *dir);
 t_dirlist				*ft_arecupdir(char *dir);
-t_dirlist				*ft_sortlist(t_dirlist **list);
+t_dirlist				*ft_sortlist(t_dirlist **list, int i, int j);
 void					ft_ls(char *line, t_dir *dir, struct stat dirstat);
 void					ft_put_s(const char *s);
 void					ft_acceserror(char *str , char **argv, int argc);

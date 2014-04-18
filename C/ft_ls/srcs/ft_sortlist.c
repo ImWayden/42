@@ -23,7 +23,7 @@ static void				ft_listswap(t_dirlist **tmp, t_dirlist **tmp1)
 }
 
 
-t_dirlist				*ft_sortlist(t_dirlist **list)
+t_dirlist				*ft_sortlist(t_dirlist **list, int i, int j)
 {
 	t_dirlist			*tmp;
 	t_dirlist			*tmp1;
@@ -34,7 +34,13 @@ t_dirlist				*ft_sortlist(t_dirlist **list)
 		tmp1 = tmp->next;
 		while (tmp1)
 		{
-			if (ft_strcmp(tmp->atime, tmp1->atime) > 0)
+			if (ft_strcmp(tmp->str, tmp1->str) > 0 && !j && !i)
+				ft_listswap(&tmp, &tmp1);
+			if (tmp->atime < tmp1->atime && j && !i)
+				ft_listswap(&tmp, &tmp1);
+			if (ft_strcmp(tmp->str, tmp1->str) < 0 && !j && i)
+				ft_listswap(&tmp, &tmp1);
+			if (tmp->atime > tmp1->atime && j && i)
 				ft_listswap(&tmp, &tmp1);
 			tmp1 = tmp1->next;
 		}

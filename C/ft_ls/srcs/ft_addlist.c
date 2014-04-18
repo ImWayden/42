@@ -12,13 +12,14 @@
 
 #include "lsft.h"
 
-t_dirlist		*ft_addlist(t_dirlist *list, char *str, char *atime)
+t_dirlist		*ft_addlist(t_dirlist *list, char *str, time_t atime)
 {
 	t_dirlist  *tmp;
 	
 	tmp = (t_dirlist *)malloc(sizeof(t_dirlist));
 	tmp->str = ft_strdup(str);
-	tmp->atime = ft_strdup(atime);
+	tmp->atime = atime;
+	printf("%ld", tmp->atime);
 	tmp->next = list;
 	return (tmp);
 }

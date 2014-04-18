@@ -12,28 +12,65 @@
 
 #include "lsft.h"
 
-t_dir			*ft_parse(int argc, char **argv)
+static t_dir	*allocdir()
 {
 	t_dir		*dir;
 
-	dir = (t_dir *)malloc(sizeof(t_dir));
-	dir->dir = NULL;
+	if ((dir = (t_dir *)malloc(sizeof(t_dir))))
+	{
+		dir->dir = 0;
+		dir->recursive = 0;
+		dir->infos = 0;
+		dir->sort_type = 0;
+		dir->sort_mod = 0;
+		dir->hiden = 0;
+		dir->dirlist = NULL;
+	}
+	return (dir);
+}
+
+static int		ft_choice(int c, t_dir *dir)
+{
+	if (c == 'r')
+		dir->sort_type = 1;
+	else if (c == 'a')
+		dir->hiden = 1;
+	else if (c == 'R')
+		dir->recursive = 1;
+	else if (c == 'l')
+		dir->infos = 1;
+	else if (c == 't')
+		dir->sort_mod = 1;
+	else
+		return (0);
+	return (1);
+}
+
+t_dir			*ft_parse(int argc, char **argv)
+{
+	t_dir		*dir;
+	int			i;
+	char		*str;
+
+	dir = allocdir();
 	while (argc && argv && *argv && **argv == '-')
 	{
-		if (!ft_strcmp("-r", *argv))
-			dir->sort_type = 1;
-		else if (!ft_strcmp("-a", *argv))
-			dir->hiden = 1;
-		else if (!ft_strcmp("-R", *argv))
-			dir->recursive = 1;
-		else if (!ft_strcmp("-l", *argv))
-			dir->infos = 1;
-		argv++;
-		argc--;
+		str = ++(*argv);
+		while (*str && (i = ft_choice(*str, dir)))
+			str++;
+		if (i)
+		{
+			argv++;
+			argc--;
+		}
+		else
+		{
+			ft_putchar(*str);
+			ft_putendl(": invalid option.");
+			exit (1);
+		}
 	}
 	if (argc)
 		dir->dir = argv;
-	else
-		dir->dir = NULL;
 	return (dir);
 }

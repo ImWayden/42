@@ -27,8 +27,7 @@ void					ft_ls(char *line, t_dir *dir, struct stat dirstat)
 
 	if ((list = ft_getdirlist(line)))
 	{
-		if (dir->sort_type)
-			list = ft_sortlist(&list);
+		list = ft_sortlist(&list, dir->sort_type, dir->sort_mod);
 		while (list)
 		{
 			str = ft_strjoin(ft_strjoin(line, "/"), list->str);
