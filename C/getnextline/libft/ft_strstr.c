@@ -14,7 +14,7 @@
 
 char		*ft_strstr(const char *s1, const char *s2)
 {
-	int		j;
+	size_t	j;
 	char	*tmp1;
 	char	*tmp2;
 
@@ -28,7 +28,7 @@ char		*ft_strstr(const char *s1, const char *s2)
 		if (ft_strncmp(tmp1, tmp2, j))
 			tmp1++;
 		else
-			return ((char *) tmp1);
+			return ((char *)tmp1);
 	}
 	return (NULL);
 }

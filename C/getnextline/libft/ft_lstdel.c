@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putlist.c                                       :+:      :+:    :+:   */
+/*   ft_lstdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/15 13:57:59 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/15 14:57:01 by msarr            ###   ########.fr       */
+/*   Created: 2014/03/28 13:07:29 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/28 13:07:31 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lsft.h"
+#include "includes/libft.h"
 
-void	ft_put_list(t_list *list)
+void		ft_lstdel(t_list **alst, void (*del)(void *, size_t))
 {
-	t_list *tmp;
-	
-	tmp = list;
-	while (tmp)
+	if (alst && *alst && (*alst)->next)
+		ft_lstdel(&((*alst)->next), del);
+	else if (alst && *alst)
 	{
-		ft_putendl(tmp->str);
-		tmp = tmp->next;
+		del((void *)(*alst)->content, (*alst)->content_size);
+		free(*alst);
+		*alst = NULL;
 	}
 }

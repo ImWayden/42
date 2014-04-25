@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putdir.c                                        :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/15 13:56:55 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/15 14:48:27 by msarr            ###   ########.fr       */
+/*   Created: 2014/03/28 13:39:12 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/28 13:39:25 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lsft.h"
+#include "includes/libft.h"
 
-void    ft_putdir(char *str)
+void ft_lstiter(t_list *lst, void (*f)(t_list *elem))
 {
-	int i;
-	
-	i = 0;
-	while (str[i])
-		write(1, &str[i++], 1);
-	write(1, " :\n", 3);
+	if (lst && lst->next)
+		f(lst->next);
+	else if (lst)
+		f(lst);
 }

@@ -18,9 +18,12 @@ t_list		*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 
 	if (lst && lst->next)
 	{
-		list = ft_listmap(lst->next, f);
-		return (ft_lstadd(&list, f(lst)));
+		list = ft_lstmap(lst->next, f);
+		ft_lstadd(&list, f(lst));
+		return (list);
 	}
 	else if (lst)
 		return (f(lst));
+	else
+		return (lst);
 }

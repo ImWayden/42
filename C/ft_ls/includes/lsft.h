@@ -46,7 +46,7 @@ typedef struct			s_dir
 
 t_dirlist				*ft_addlist(t_dirlist *list, char *str, time_t atime);
 void					ft_putattr(struct stat sb);
-t_dirlist				*ft_getdirlist(char *dir);
+t_dirlist				*ft_getdirlist(char *dir, int h);
 t_dirlist				*ft_arecupdir(char *dir);
 t_dirlist				*ft_sortlist(t_dirlist **list, int i, int j);
 void					ft_ls(char *line, t_dir *dir, struct stat dirstat);

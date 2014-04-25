@@ -14,18 +14,18 @@
 
 int			ft_strlcat(char *dest, const char *src, size_t size)
 {
-	size_t	t_dest;
-    size_t	t_src;
-    size_t	i;
-    size_t	j;
-    size_t	k;
+	size_t	tmp1;
+	size_t	tmp2;
+	size_t	i;
+	size_t	j;
+	size_t	k;
 
-	t_dest = ft_strlen(dest);
-	t_src = ft_strlen((char*)src);
+	tmp1 = ft_strlen(dest);
+	tmp2 = ft_strlen((char*)src);
 	i = 0;
-	j = t_dest;
-	k = size - t_dest - 1;
-	if (size > t_dest)
+	j = tmp1;
+	k = size - tmp1 - 1;
+	if (size > tmp1)
 	{
 		while (i < k)
 		{
@@ -34,7 +34,7 @@ int			ft_strlcat(char *dest, const char *src, size_t size)
 			j++;
 		}
 		dest[j] = '\0';
-		return (t_dest + t_src);
+		return (tmp1 + tmp2);
 	}
-	return (t_src + size);
+	return (tmp2 + size);
 }

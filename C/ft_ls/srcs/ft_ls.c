@@ -12,43 +12,57 @@
 
 #include "lsft.h"
 
-static void				ft_putdir(char *str, int infos, struct stat test)
+static void			ft_putdir(char *str, int infos, struct stat test)
 {
 	if (infos)
 		ft_putinfos(test);
 	ft_putendl(str);
 }
 
-static void				ft_rls(char *str, t_dir *dir, struct stat test)
+static void			ft_rls(char *str, char *str1, t_dir *dir, struct stat test)
 {
-	ft_putendl(str);
-	ft_ls(str, dir, test);
+	if (dir->recursive && (S_ISDIR(test.st_mode)))
+	{
+		ft_putdir(str, dir->infos, test);
+		ft_ls(str, dir, test);
+	}
+	else
+		ft_putdir(str1, dir->infos, test);
 }
 
-void					ft_ls(char *line, t_dir *dir, struct stat dirstat)
+static t_dirlist	*ft_delelmt(t_dirlist *list)
 {
-	t_dirlist			*list;
-	struct stat			test;
-	char				*str;
+	t_dirlist		*list1;
 
-	if ((list = ft_getdirlist(line)))
+	list1 = list;
+	list = list->next;
+	free(list1->str);
+	free(list1);
+	return (list);
+}
+
+void				ft_ls(char *line, t_dir *dir, struct stat dirstat)
+{
+	t_dirlist		*list;
+	struct stat		test;
+	char			*str;
+
+	if ((list = ft_getdirlist(line, dir->hiden)))
 	{
 		list = ft_sortlist(&list, dir->sort_type, dir->sort_mod);
+		if (line[ft_strlen(line) - 1] != '/')
+			line = ft_strjoin(line, "/");
 		while (list)
 		{
-			if (line[ft_strlen(line) - 1] != '/')
-				line = ft_strjoin(line, "/");
 			str = ft_strjoin(line, list->str);
-			if (!stat(str, &test))
-			{
-				if (dir->recursive && (S_ISDIR(test.st_mode)))
-					ft_rls(str, dir, test);
-				else
-					ft_putdir(list->str, dir->infos, test);
-			}
+			if (!stat(str, &test) && ft_strcmp(list->str, ".")
+				&& ft_strcmp(list->str, ".."))
+				ft_rls(str, list->str, dir, test);
+			else if (!ft_strcmp(list->str, ".") || !ft_strcmp(list->str, ".."))
+				ft_putdir(list->str, dir->infos, test);
 			else
 				perror(str);
-			list = list->next;
+			list = ft_delelmt(list);
 		}
 	}
 	else

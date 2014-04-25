@@ -10,27 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef		GETNEXTLINE__H
-#define			GETNEXTLINE__H
+#ifndef					GET_NEXT_LINE_H
+# define				GET_NEXT_LINE_H
 
-#include <fcntl.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/uio.h>
-#include "./libft/includes/libft.h"
+# include <fcntl.h>
+# include <unistd.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include "./libft/includes/libft.h"
 
-#define BUFF_SIZE 1000000
+# define BUFF_SIZE 1000000
 
-
-typedef struct 	s_getline
+typedef struct			s_getline
 {
-	int			fd;
-	char		*str;
-	struct 		s_getline next;
-}				t_getline;
+	int					fd;
+	char				*str;
+	struct s_getline	*next;
+}						t_getline;
 
-t_getline		*ft_listnew(int i, char *str);
-t_getline		*ft_addlist(t_getline *list, char *str, int i);
-int				getnextline(int const fd, char **line);
+int						get_next_line(int const fd, char **line);
 
 #endif

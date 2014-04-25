@@ -36,6 +36,8 @@ t_dirlist				*ft_sortlist(t_dirlist **list, int i, int j)
 		tmp1 = tmp->next;
 		while (tmp1)
 		{
+			if (ft_strcmp(tmp->str, tmp1->str) > 0 && !j && !i)
+				ft_listswap(tmp, tmp1);
 			if (ft_strcmp(tmp->str, tmp1->str) < 0 && !j && i)
 				ft_listswap(tmp, tmp1);
 			if (tmp->atime < tmp1->atime && j && !i)

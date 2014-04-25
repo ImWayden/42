@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
+#include "get_next_line.h"
 
-int						ft_is(char *str, int c)
+static int				ft_is(char *str, int c)
 {
 	int					i;
 
@@ -43,35 +43,21 @@ static t_getline		*ft_search(t_getline *list, int fd, char **line)
 		return (NULL);
 }
 
-int		first(t_getline *sd, char **line)
+static int				first(t_getline *sd, char **line)
 {
-	char	*tmp;
-	int		ret;
-	int		i;
+	char				*tmp;
+	int					ret;
 
+	ft_putstr("WELCOME");
 	tmp = ft_strnew(BUFF_SIZE);
-	if (sd->str && (ret = ft_is(sd->str, '\n')))
+	while ((ret = read(sd->fd, tmp, BUFF_SIZE)) > 0)
 	{
-		i = ft_strlen(sd->str);
-		*line = ft_strsub(sd->str , 0, ret);
-		i = i - ft_strlen(*line);
-		sd->str = ft_strsub(sd->str, ret + 1, i);
-		return (1);
-	}
-	else if (sd->str)
-	{
-		*line = sd->str;
-		sd->str = NULL;
-	}
-	while ((ret = read(sd->fd, tmp, BUFF_SIZE)))
-	{
-		if (!ret)
-			return (0);
 		if ((ret = ft_is(tmp, '\n')))
 		{
 			tmp[ret] = '\0';
 			*line = ft_strjoin(*line, tmp);
 			sd->str = ft_strjoin(sd->str, &(tmp[ret + 1]));
+			ft_putstr("WELCOME");
 			tmp[ret] = '\n';
 			return (1);
 		}
@@ -81,15 +67,45 @@ int		first(t_getline *sd, char **line)
 	return (ret);
 }
 
-int						getnextline(int const fd, char **line)
+static int				next(t_getline *sd, char **line)
+{
+	int					i;
+	int					ret;
+
+	if (sd->str && (ret = ft_is(sd->str, '\n')))
+	{
+		i = ft_strlen(sd->str);
+		*line = ft_strsub(sd->str, 0, ret);
+		i = i - ft_strlen(*line);
+		sd->str = ft_strsub(sd->str, ret + 1, i);
+		return (1);
+	}
+	else if (sd->str)
+	{
+		*line = sd->str;
+		sd->str = NULL;
+	}
+	return (first(sd, line));
+}
+
+int						get_next_line(int const fd, char **line)
 {
 	static t_getline	*sd = NULL;
 	t_getline			*tmp;
 
 	tmp = ft_search(sd, fd, line);
 	if (tmp)
-		return (first(tmp, line));
+		return (next(tmp, line));
 	else
-		sd = ft_addlist(sd, NULL, fd);
+	{
+		tmp = (t_getline *)malloc(sizeof(t_getline));
+		if (tmp)
+		{
+			tmp->fd = fd;
+			tmp->str = NULL;
+			tmp->next = sd;
+			sd = tmp;
+		}
+	}
 	return (first(sd, line));
 }

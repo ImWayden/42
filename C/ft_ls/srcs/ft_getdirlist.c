@@ -12,7 +12,7 @@
 
 #include "lsft.h"
 
-t_dirlist				*ft_getdirlist(char *dir)
+t_dirlist				*ft_getdirlist(char *dir, int h)
 {
 	DIR				*dp;
 	struct dirent	*entry;
@@ -24,7 +24,7 @@ t_dirlist				*ft_getdirlist(char *dir)
 	{
 		while ((entry = readdir(dp)))
 		{
-			if ((entry->d_name)[0] != '.')
+			if (h || (entry->d_name)[0] != '.')
 			{
 				stat(ft_strjoin(ft_strjoin(dir, "/"), entry->d_name), &test);
 				dirlist = ft_addlist(dirlist, entry->d_name,

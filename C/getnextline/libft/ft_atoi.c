@@ -19,17 +19,17 @@ int			ft_atoi(const char *str)
 
 	rslt = 0;
 	s = 1;
-	while (*str == ' ' || *str == '\f' || *str == '\r' || *str == '\v'
-		|| *str == '\n' || *str == '\t')
+	while (str && (*str == ' ' || *str == '\f' || *str == '\r' || *str == '\v'
+		|| *str == '\n' || *str == '\t'))
 		str++;
-	if (*str == '-')
+	if (str && *str == '-')
 	{
 		s = -1;
 		str++;
 	}
-	else if (*str == '+')
+	else if (str && *str == '+')
 		str++;
-	while (*str && ft_isdigit(*str))
+	while (str && *str && ft_isdigit(*str))
 		rslt = rslt * 10 + (*str++ - '0');
 	return (s * rslt);
 }
