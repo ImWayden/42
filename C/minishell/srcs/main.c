@@ -24,7 +24,6 @@ void	init(char ***path, char ***cmd, char **envc)
 	write(1, "$>", 2);
 	str = NULL;
 	get_next_line(0, &str);
-	write(1, "ok", 2);
 	*path = ft_strsplit(ft_getenv(envc, "PATH"), ':');
 	str = ft_strtrim(str);
 	*cmd = ft_strsplit(str, ';');
@@ -44,6 +43,8 @@ static	void	process(char **path, char **cmd, char **envc)
 	{
 		while (path[i])
 		{
+			write(1, "ici", 3);
+			ft_putendl(path[i]);
 			execve(ft_strjoin(ft_strjoin(path[i], "/"), cmd[0]), cmd, envc);
 			i++;
 		}
@@ -75,7 +76,7 @@ static	char	**cp_env(char **env)
 
 	i = 0;
 	envc = (char **)malloc(sizeof(env));
-	while (env[i])
+	while (envc && env && env[i])
 	{
 		envc[i] = ft_strdup(env[i]);
 		i++;
@@ -102,11 +103,11 @@ void	shell(char **env)
 	char		**envc;
 
 	envc = cp_env(env);
-	while (42)
+	while (42 && envc)
 	{
 		init(&path, &cmd, envc);
 		i = 0;
-		while (cmd[i])
+		while (cmd && cmd[i])
 		{
 			ft_exec(cmd[i], envc, path);
 			i++;
