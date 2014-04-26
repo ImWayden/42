@@ -17,14 +17,14 @@ static int				ft_is(char *str, int c)
 	int					i;
 
 	i = 0;
-	while (*str)
+	while (str && *str)
 	{
 		if (*str == c)
 			return (i);
 		str++;
 		i++;
 	}
-	return (0);
+	return (-1);
 }
 
 static t_getline		*ft_search(t_getline *list, int fd, char **line)
@@ -32,7 +32,7 @@ static t_getline		*ft_search(t_getline *list, int fd, char **line)
 	t_getline			*tmp;
 
 	tmp = list;
-	while (tmp && tmp->next && tmp->fd != fd)
+	while (tmp && tmp->fd != fd)
 		tmp = tmp->next;
 	if (tmp && tmp->fd == fd)
 	{
@@ -48,16 +48,14 @@ static int				first(t_getline *sd, char **line)
 	char				*tmp;
 	int					ret;
 
-	ft_putstr("WELCOME");
 	tmp = ft_strnew(BUFF_SIZE);
 	while ((ret = read(sd->fd, tmp, BUFF_SIZE)) > 0)
 	{
-		if ((ret = ft_is(tmp, '\n')))
+		if ((ret = ft_is(tmp, '\n')) >= 0)
 		{
 			tmp[ret] = '\0';
 			*line = ft_strjoin(*line, tmp);
 			sd->str = ft_strjoin(sd->str, &(tmp[ret + 1]));
-			ft_putstr("WELCOME");
 			tmp[ret] = '\n';
 			return (1);
 		}
@@ -72,7 +70,7 @@ static int				next(t_getline *sd, char **line)
 	int					i;
 	int					ret;
 
-	if (sd->str && (ret = ft_is(sd->str, '\n')))
+	if (sd->str && (ret = ft_is(sd->str, '\n')) >= 0)
 	{
 		i = ft_strlen(sd->str);
 		*line = ft_strsub(sd->str, 0, ret);
@@ -94,18 +92,23 @@ int						get_next_line(int const fd, char **line)
 	t_getline			*tmp;
 
 	tmp = ft_search(sd, fd, line);
+	write(1, "ok", 2);
 	if (tmp)
 		return (next(tmp, line));
 	else
 	{
+	write(1, "k", 2);
+
 		tmp = (t_getline *)malloc(sizeof(t_getline));
 		if (tmp)
 		{
+		write(1, "ok", 2);
 			tmp->fd = fd;
 			tmp->str = NULL;
 			tmp->next = sd;
 			sd = tmp;
 		}
 	}
+	write(1, "k", 2);
 	return (first(sd, line));
 }

@@ -12,19 +12,18 @@
 
 #include "minishell2.h"
 
-char		**ft_unsetenv(char **env, char *str)
+char				**ft_unsetenv(char **env, char *str)
 {
-	int		i;
+	int				i;
 
 	i = ft_isenv(env, str);
 	while (env[i] && env[i + 1])
 	{
-		free (env[i]);
-		env[i] = ft_strdup(env[i + 1]);
+		env[i] = env[i + 1];
 		i++;
 	}
 	if (i == -1)
-		print_err("unsetenv", " : wrong var env name.");
+		ft_putendl("unsetenv : wrong var env name.");
 	else
 	{
 		free (env[i]);
@@ -33,24 +32,65 @@ char		**ft_unsetenv(char **env, char *str)
 	return (env);
 }
 
-int		ft_isenv(char **env, char *str)
+char			*ft_getenv(char **env, char *str)
 {
-	int		i;
+	int			i;
+	char		*str1;
 
 	i = 0;
 	while (env[i])
 	{
-		if (ft_strnequ(ft_strjoin(str, "="), env[i], (ft_strlen(str) + 1))
-			== 1)
+		str1 = ft_strjoin(str, "=");
+		if (ft_strnequ(str1, env[i], ft_strlen(str1)) == 1)
+		{
+			free(str1);
+			return (ft_strdup(ft_strchr(env[i], '=')));
+		}
+		else
+			i++;
+		free(str1);
+	}
+	return (NULL);
+}
+
+int				ft_isenv(char **env, char *str)
+{
+	int			i;
+	char		*str1;
+
+	i = 0;
+	while (env[i])
+	{
+		str1 = ft_strjoin(str, "=");
+		if (ft_strnequ(str1, env[i], ft_strlen(str1)) == 1)
+		{
+			free(str1);
 			return (i);
-		i++;
+		}
+		else
+			i++;
+		free(str1);
 	}
 	return (-1);
 }
 
-void	ft_env_i(char ***env)
+void			ft_env_i(char ***env)
 {
-	ft_memdel((void **)*env);
+	char		**str;
+	int			i;
+
+	str = *env;
+	i = 0;
+	while (str && str[i])
+	{
+		ft_memdel((void **)&(str[i]));
+		i++;
+	}
+	if (str)
+	{
+		free(str);
+		str = NULL;
+	}
 }
 
 void	ft_env(char **env)
@@ -59,7 +99,7 @@ void	ft_env(char **env)
 
 	i = 0;
 	while (env[i])
-		ft_putendl_fd(env[i++], 1);
+		ft_putendl(env[i++]);
 }
 
 void	ft_changepwd(char **envc, char *pwd)
@@ -68,7 +108,7 @@ void	ft_changepwd(char **envc, char *pwd)
 	char	*str;
 
 	i = 0;
-	str = (get_env(envc, "PWD"))[0];
+	str = ft_getenv(envc, "PWD");
 	while (envc[i])
 	{
 		if (ft_strnequ("PWD=", envc[i], 4) == 1)
@@ -81,9 +121,9 @@ void	ft_changepwd(char **envc, char *pwd)
 
 void	ft_cd(char **envc, char *cmd)
 {
-	char 	**buf;
+	char 	*buf;
 
-	buf = get_env(envc, "HOME");
+	buf = ft_getenv(envc, "HOME");
 	if (cmd)
 	{
 		cmd = ft_strtrim(cmd);
@@ -91,24 +131,24 @@ void	ft_cd(char **envc, char *cmd)
 		{
 			cmd++;
 			if (cmd)
-				cmd = ft_strjoin(*buf, &cmd[1]);
+				cmd = ft_strjoin(buf, &cmd[1]);
 			else
-				cmd = *buf;
+				cmd = buf;
 		}
 		else if (*cmd == '/')
-			cmd = ft_strjoin(*buf, cmd);
+			cmd = ft_strjoin(buf, cmd);
 		else if (ft_strnequ("-", cmd, ft_strlen(cmd)) == 1)
-			cmd = (get_env(envc, "OLDPWD"))[0];
+			cmd = ft_getenv(envc, "OLDPWD");
 		if (chdir(cmd) == -1)
 		{
-			print_err("cd", "No such file or directory");
+			ft_putendl("cd : No such file or directory");
 			return ;
 		}
 	}
 	else
 	{
-		chdir(*buf);
-		cmd = *buf;
+		chdir(buf);
+		cmd = buf;
 	}
 	ft_changepwd(envc, cmd);
 }

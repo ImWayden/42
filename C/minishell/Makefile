@@ -18,7 +18,7 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 
-SRC = $(SDIR)main.c $(SDIR)ft_strrealloc.c $(SDIR)builtin.c $(SDIR)needed.c\
+SRC = $(SDIR)main.c $(SDIR)ft_strrealloc.c $(SDIR)builtin.c
 
 
 OBJ = $(SRC:.c=.o)

@@ -17,17 +17,16 @@
 #include <stdlib.h>
 #include "minishell2.h"
 
-static	void	init(char ***path, char ***cmd, char **envc)
+void	init(char ***path, char ***cmd, char **envc)
 {
 	char		*str;
-	static t_list		*list = NULL;
 
 	write(1, "$>", 2);
-	str = ft_edit(&list);
-	*path = get_env(envc, "PATH");
+	str = NULL;
+	get_next_line(0, &str);
+	write(1, "ok", 2);
+	*path = ft_strsplit(ft_getenv(envc, "PATH"), ':');
 	str = ft_strtrim(str);
-	//if (*cmd)
-		//ft_memdel((void **)*cmd);
 	*cmd = ft_strsplit(str, ';');
 	ft_memdel((void **)&str);
 }
@@ -48,11 +47,11 @@ static	void	process(char **path, char **cmd, char **envc)
 			execve(ft_strjoin(ft_strjoin(path[i], "/"), cmd[0]), cmd, envc);
 			i++;
 		}
-		print_err(cmd[0], "command not found");
+		ft_putendl("command not found");
 		exit(1);
 	}
 	if (process == -1)
-		print_err(cmd[0], "Fork error : retry !");
+		ft_putendl("Fork error : retry !");
 }
 
 static	int 	builtin_verif(char *str)
@@ -101,7 +100,6 @@ void	shell(char **env)
 	char		**path;
 	char		**cmd;
 	char		**envc;
-	int			j;
 
 	envc = cp_env(env);
 	while (42)
@@ -110,23 +108,11 @@ void	shell(char **env)
 		i = 0;
 		while (cmd[i])
 		{
-			if (ft_is(cmd[i], '|') || ft_is(cmd[i], '>'))
-			{
-				dup2(STDIN_FILENO, j);
-				if (ft_is(cmd[i], '|'))
-					ft_pipe(cmd[i], envc, path);
-				if (ft_is(cmd[i], '>'))
-					ft_redir(cmd[i], envc, path);
-				dup2(j, STDIN_FILENO);
-			}
-			else
-				ft_exec(cmd[i], envc, path);
+			ft_exec(cmd[i], envc, path);
 			i++;
 		}
 	}
 }
-
-
 
 void		ft_exec(char *cmd, char **envc, char **path)
 {

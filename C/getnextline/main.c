@@ -27,7 +27,7 @@ int	main(int argc, char ** argv)
 		close(fd2);
 		return (-1);
 	}
-	while (get_next_line(fd, &line) >= 0)
+	while (get_next_line(0, &line) && strlen(line))
 	{
 		write(0, line, strlen(line));
 		write(0, &n, 1);					// attention si le fichier test n a pas de \n et que ca affiche une erreur c'est normal
