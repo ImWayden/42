@@ -1,34 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrealloc.c                                    :+:      :+:    :+:   */
+/*   ft_lstadd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/08 14:12:25 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/08 14:12:29 by msarr            ###   ########.fr       */
+/*   Created: 2014/03/28 13:07:45 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/28 13:07:46 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell1.h"
+#include "includes/libft.h"
 
-char		*ft_strrealloc(char **line, unsigned int len)
+void			ft_lstadd(t_list **alst, t_list *new)
 {
-	int		i;
-	char	*str;
-	char	*s2;
-
-	i = ft_strlen(*line);
-	s2 = *line;
-	str = (char *)malloc(sizeof(char) * (i + len + 1));
-	i = 0;
-	while (*s2)
+	if (new)
 	{
-		str[i] = *s2;
-		s2++;
-		i++;
+		new->next = *alst;
+		*alst = new;
 	}
-	ft_memdel((void **)&s2);
-	ft_bzero(&str[i], len + 1);
-	return (str);
 }

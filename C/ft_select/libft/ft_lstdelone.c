@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrealloc.c                                    :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/08 14:12:25 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/08 14:12:29 by msarr            ###   ########.fr       */
+/*   Created: 2014/03/28 13:07:07 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/28 13:07:09 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell1.h"
+#include "includes/libft.h"
 
-char		*ft_strrealloc(char **line, unsigned int len)
+void		ft_lstdelone(t_list **alst, void (*del)(void *, size_t))
 {
-	int		i;
-	char	*str;
-	char	*s2;
-
-	i = ft_strlen(*line);
-	s2 = *line;
-	str = (char *)malloc(sizeof(char) * (i + len + 1));
-	i = 0;
-	while (*s2)
+	if (*alst)
 	{
-		str[i] = *s2;
-		s2++;
-		i++;
+		del(&(*alst)->content, (*alst)->content_size);
+		(*alst)->next = NULL;
+		ft_memdel((void **)alst);
 	}
-	ft_memdel((void **)&s2);
-	ft_bzero(&str[i], len + 1);
-	return (str);
 }

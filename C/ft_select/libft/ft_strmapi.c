@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/24 12:47:05 by msarr             #+#    #+#             */
-/*   Updated: 2014/01/24 12:47:10 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/27 10:38:11 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 19:29:09 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell1.h"
+#include "includes/libft.h"
 
-int					main(int argc, char **argv, char **env)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int				i;
+	char	*str;
+	int		i;
 
-	i = 1;
-	if (argc == 1)
-		shell(env);
-	else
+	i = ft_strlen(s);
+	str = ft_strnew(i);
+	if (str)
 	{
-		write(1, argv[0], ft_strlen(argv[0]));
-		write(1, " : need to be executed without argument.\n", 41);
+		while (i)
+		{
+			i--;
+			str[i] = f(i, s[i]);
+		}
 	}
-	return (0);
+	return (str);
 }

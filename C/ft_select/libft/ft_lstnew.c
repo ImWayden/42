@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrealloc.c                                    :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/08 14:12:25 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/08 14:12:29 by msarr            ###   ########.fr       */
+/*   Created: 2014/03/28 13:06:49 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/28 13:06:56 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell1.h"
+#include "includes/libft.h"
 
-char		*ft_strrealloc(char **line, unsigned int len)
+t_list		*ft_listnew(void const *content, size_t content_size)
 {
-	int		i;
-	char	*str;
-	char	*s2;
+	t_list	*tmp;
 
-	i = ft_strlen(*line);
-	s2 = *line;
-	str = (char *)malloc(sizeof(char) * (i + len + 1));
-	i = 0;
-	while (*s2)
+	tmp = (t_list *)malloc(sizeof(t_list));
+	if (tmp)
 	{
-		str[i] = *s2;
-		s2++;
-		i++;
+		if (content)
+		{
+			tmp->content = ft_memalloc(content_size);
+			ft_memcpy(tmp->content, content, content_size);
+			tmp->content_size = content_size;
+		}
+		else
+		{
+			tmp->content = NULL;
+			tmp->content_size = 0;
+		}
+		tmp->next = NULL;
 	}
-	ft_memdel((void **)&s2);
-	ft_bzero(&str[i], len + 1);
-	return (str);
+	return (tmp);
 }

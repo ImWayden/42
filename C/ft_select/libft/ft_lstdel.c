@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrealloc.c                                    :+:      :+:    :+:   */
+/*   ft_lstdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/08 14:12:25 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/08 14:12:29 by msarr            ###   ########.fr       */
+/*   Created: 2014/03/28 13:07:29 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/28 13:07:31 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell1.h"
+#include "includes/libft.h"
 
-char		*ft_strrealloc(char **line, unsigned int len)
+void		ft_lstdel(t_list **alst, void (*del)(void *, size_t))
 {
-	int		i;
-	char	*str;
-	char	*s2;
-
-	i = ft_strlen(*line);
-	s2 = *line;
-	str = (char *)malloc(sizeof(char) * (i + len + 1));
-	i = 0;
-	while (*s2)
+	if (alst && *alst && (*alst)->next)
+		ft_lstdel(&((*alst)->next), del);
+	else if (alst && *alst)
 	{
-		str[i] = *s2;
-		s2++;
-		i++;
+		del((void *)(*alst)->content, (*alst)->content_size);
+		free(*alst);
+		*alst = NULL;
 	}
-	ft_memdel((void **)&s2);
-	ft_bzero(&str[i], len + 1);
-	return (str);
 }

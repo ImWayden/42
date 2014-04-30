@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/24 12:47:05 by msarr             #+#    #+#             */
-/*   Updated: 2014/01/24 12:47:10 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/21 15:48:45 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 13:35:49 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell1.h"
+#include "includes/libft.h"
 
-int					main(int argc, char **argv, char **env)
+void		ft_bzero(void *s, size_t n)
 {
-	int				i;
+	char	*tmp;
 
-	i = 1;
-	if (argc == 1)
-		shell(env);
-	else
+	tmp = s;
+	while (n && tmp)
 	{
-		write(1, argv[0], ft_strlen(argv[0]));
-		write(1, " : need to be executed without argument.\n", 41);
+		*tmp++ = '\0';
+		n--;
 	}
-	return (0);
 }

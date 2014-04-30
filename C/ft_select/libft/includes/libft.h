@@ -17,12 +17,7 @@
 # include <string.h>
 # include <stdlib.h>
 # include <ctype.h>
-# include <fcntl.h>
-# include <unistd.h>
-# include <sys/types.h>
-# include <sys/uio.h>
 
-# define BUFF_SIZE 1000
 # define BLACK     "\033[1;30m"
 # define RED       "\033[1;31m"
 # define GREEN     "\033[1;32m"
@@ -35,13 +30,6 @@
 /*
 ** Lists and Strutures
 */
-
-typedef struct		s_getline
-{
-	int					fd;
-	char				*str;
-	struct s_getline	*next;
-}					t_getline;
 
 typedef struct		s_list
 {
@@ -112,9 +100,5 @@ void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-int					get_next_line(int const fd, char **line);
-char				**ft_tabdup(char **array);
-size_t				ft_tablen(char **array);
-void				ft_puttab(char **array);
 
 #endif

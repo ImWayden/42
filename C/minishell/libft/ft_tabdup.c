@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrealloc.c                                    :+:      :+:    :+:   */
+/*   ft_tabdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/08 14:12:25 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/08 14:12:29 by msarr            ###   ########.fr       */
+/*   Created: 2014/04/27 13:34:22 by msarr             #+#    #+#             */
+/*   Updated: 2014/04/27 13:34:24 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell1.h"
+#include "includes/libft.h"
 
-char		*ft_strrealloc(char **line, unsigned int len)
+char			**ft_tabdup(char **tab)
 {
-	int		i;
-	char	*str;
-	char	*s2;
+	int			i;
+	char		**dup;
 
-	i = ft_strlen(*line);
-	s2 = *line;
-	str = (char *)malloc(sizeof(char) * (i + len + 1));
 	i = 0;
-	while (*s2)
+	dup = (char **)malloc(sizeof(char *) * (ft_tablen(tab) + 1));
+	while (dup && tab && tab[i])
 	{
-		str[i] = *s2;
-		s2++;
+		dup[i] = ft_strdup(tab[i]);
 		i++;
 	}
-	ft_memdel((void **)&s2);
-	ft_bzero(&str[i], len + 1);
-	return (str);
+	return (dup);
 }

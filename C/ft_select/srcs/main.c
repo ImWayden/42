@@ -1,34 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrealloc.c                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/08 14:12:25 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/08 14:12:29 by msarr            ###   ########.fr       */
+/*   Created: 2014/01/03 14:52:29 by msarr             #+#    #+#             */
+/*   Updated: 2014/01/03 14:52:31 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell1.h"
+#include "ft_select.h"
 
-char		*ft_strrealloc(char **line, unsigned int len)
+int 	main(int argc, char **argv)
 {
-	int		i;
-	char	*str;
-	char	*s2;
+	struct termios term;
+	t_selectlist			*list;
 
-	i = ft_strlen(*line);
-	s2 = *line;
-	str = (char *)malloc(sizeof(char) * (i + len + 1));
-	i = 0;
-	while (*s2)
+	list = NULL;
+	if (argc > 1)
 	{
-		str[i] = *s2;
-		s2++;
-		i++;
+		ft_recup(&argv[1], &list);
+		if (ft_init(&term))
+			return (-1);
+		if (ft_config(&term))
+			return (-1);
+		ft_effect(list);
+		if (ft_defconfig(&term))
+			return (-1);
 	}
-	ft_memdel((void **)&s2);
-	ft_bzero(&str[i], len + 1);
-	return (str);
+	if (list)
+		ft_memdel((void **)&list);
+	return (0);
 }

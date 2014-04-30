@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/24 12:47:05 by msarr             #+#    #+#             */
-/*   Updated: 2014/01/24 12:47:10 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/21 12:53:24 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 17:59:35 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell1.h"
+#include "includes/libft.h"
 
-int					main(int argc, char **argv, char **env)
+int			ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int				i;
-
-	i = 1;
-	if (argc == 1)
-		shell(env);
-	else
+	while (s1 && s2 && *s1 && *s2 && n && *s1 == *s2)
 	{
-		write(1, argv[0], ft_strlen(argv[0]));
-		write(1, " : need to be executed without argument.\n", 41);
+		s1++;
+		s2++;
+		n--;
 	}
-	return (0);
+	if (!n && s1 && s2)
+		return (0);
+	else
+		return (*s1 - *s2);
 }

@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/24 12:47:05 by msarr             #+#    #+#             */
-/*   Updated: 2014/01/24 12:47:10 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/26 16:04:33 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 19:28:44 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell1.h"
+#include "includes/libft.h"
 
-int					main(int argc, char **argv, char **env)
+void				ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	int				i;
+	unsigned int	i;
 
-	i = 1;
-	if (argc == 1)
-		shell(env);
-	else
+	i = 0;
+	while (s[i])
 	{
-		write(1, argv[0], ft_strlen(argv[0]));
-		write(1, " : need to be executed without argument.\n", 41);
+		f(i, &s[i]);
+		i++;
 	}
-	return (0);
 }

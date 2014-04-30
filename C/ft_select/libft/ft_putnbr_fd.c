@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/24 12:47:05 by msarr             #+#    #+#             */
-/*   Updated: 2014/01/24 12:47:10 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/19 15:03:35 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 19:27:33 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell1.h"
+#include "includes/libft.h"
 
-int					main(int argc, char **argv, char **env)
+void	ft_putnbr_fd(int n, int fd)
 {
-	int				i;
-
-	i = 1;
-	if (argc == 1)
-		shell(env);
-	else
+	if (n < 0)
 	{
-		write(1, argv[0], ft_strlen(argv[0]));
-		write(1, " : need to be executed without argument.\n", 41);
+		n = -n;
+		ft_putchar_fd('-', fd);
 	}
-	return (0);
+	if (n > 9)
+	{
+		ft_putnbr_fd(n / 10, fd);
+		ft_putnbr_fd(n % 10, fd);
+	}
+	else
+		ft_putchar_fd(n + '0', fd);
 }

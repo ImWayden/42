@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrealloc.c                                    :+:      :+:    :+:   */
+/*   ft_recup.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/08 14:12:25 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/08 14:12:29 by msarr            ###   ########.fr       */
+/*   Created: 2013/12/22 14:42:27 by msarr             #+#    #+#             */
+/*   Updated: 2013/12/22 14:42:38 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell1.h"
+#include "ft_select.h"
 
-char		*ft_strrealloc(char **line, unsigned int len)
+int		ft_recup(char **str, t_selectlist **list)
 {
 	int		i;
-	char	*str;
-	char	*s2;
 
-	i = ft_strlen(*line);
-	s2 = *line;
-	str = (char *)malloc(sizeof(char) * (i + len + 1));
+	*list = NULL;
 	i = 0;
-	while (*s2)
+	while (str[i])
 	{
-		str[i] = *s2;
-		s2++;
+		*list = ft_addlist(*list, str[i]);
 		i++;
 	}
-	ft_memdel((void **)&s2);
-	ft_bzero(&str[i], len + 1);
-	return (str);
+	(*list)->curseur = 'y';
+	return (i);
 }

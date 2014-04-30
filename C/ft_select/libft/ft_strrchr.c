@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/24 12:47:05 by msarr             #+#    #+#             */
-/*   Updated: 2014/01/24 12:47:10 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/24 14:52:35 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 14:30:35 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell1.h"
+#include "includes/libft.h"
 
-int					main(int argc, char **argv, char **env)
+char		*ft_strrchr(const char *s, int c)
 {
-	int				i;
+	char	*tmp;
 
-	i = 1;
-	if (argc == 1)
-		shell(env);
-	else
+	tmp = (char *)s + ft_strlen(s);
+	while (*tmp != (char)c && s)
 	{
-		write(1, argv[0], ft_strlen(argv[0]));
-		write(1, " : need to be executed without argument.\n", 41);
+		if (tmp == s)
+			return (NULL);
+		tmp--;
 	}
-	return (0);
+	return (tmp);
 }

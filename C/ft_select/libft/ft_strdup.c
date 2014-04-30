@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/24 12:47:05 by msarr             #+#    #+#             */
-/*   Updated: 2014/01/24 12:47:10 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/24 12:29:08 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 13:48:08 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell1.h"
+#include "includes/libft.h"
 
-int					main(int argc, char **argv, char **env)
+char		*ft_strdup(const char *s1)
 {
-	int				i;
+	int		i;
+	char	*cpy;
 
-	i = 1;
-	if (argc == 1)
-		shell(env);
-	else
+	cpy = ft_strnew(ft_strlen(s1));
+	i = 0;
+	while (s1[i])
 	{
-		write(1, argv[0], ft_strlen(argv[0]));
-		write(1, " : need to be executed without argument.\n", 41);
+		cpy[i] = s1[i];
+		i++;
 	}
-	return (0);
+	return (cpy);
 }

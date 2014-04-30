@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_sh1
+NAME = ft_minishell1
 
 MAKE = make
 CC = gcc
@@ -18,8 +18,9 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 
-SRC = $(SDIR)main.c $(SDIR)ft_strrealloc.c $(SDIR)builtin.c
-
+SRC = $(SDIR)ft_strrealloc.c $(SDIR)getenv.c $(SDIR)setenv.c $(SDIR)isenv.c \
+	  $(SDIR)unsetenv.c $(SDIR)minishell1.c $(SDIR)pwd.c $(SDIR)cd.c \
+	  $(SDIR)setenv.c $(SDIR)main.c 
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes

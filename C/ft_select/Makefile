@@ -3,33 +3,70 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: msarr <marvin@42.fr>                       +#+  +:+       +#+         #
+#    By: msarr <msarr@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2013/12/15 19:55:50 by msarr             #+#    #+#              #
-#    Updated: 2013/12/15 19:55:52 by msarr            ###   ########.fr        #
+#    Created: 2014/01/22 14:52:23 by sraccah           #+#    #+#              #
+#    Updated: 2014/02/24 11:55:22 by sraccah          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_select
 
-HEAD =	ft_select.h
+MAKE = make
+CC = gcc
+RM = /bin/rm
+LDIR = libft/
+SDIR = srcs/
 
-SRC = ft_config.c ft_init.c ft_recup.c ft_strcmp.c ft_defconfig.c \
-		  ft_memdel.c ft_strdup.c ft_effect.c ft_putlist.c ft_strlen.c \
-		  ft_addlist.c ft_effect2.c ft_putstr.c ft_setlist.c main.c
+SRC = $(SDIR)ft_addlist.c $(SDIR)ft_config.c $(SDIR)ft_defconfig.c \
+	  $(SDIR)ft_effect.c $(SDIR)ft_effect2.c $(SDIR)ft_init.c \
+	  $(SDIR)ft_putlist.c $(SDIR)ft_recup.c $(SDIR)ft_setlist.c \
+	  $(SDIR)main.c
 
-FLAGS = -Werror -Wall -Wextra
+
+OBJ = $(SRC:.c=.o)
+INC = -I includes -I $(LDIR)includes
+LIB = ./libft/libft.a
+CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
-$(NAME): 
-	gcc -o  $(NAME) $(FLAGS) $(SRC) -ltermcap
+$(NAME): $(OBJ)
+	@echo "\033[31;1m"
+	@echo -n '---> Creating the Libft... <---'
+	@echo "\033[0m"
+	$(MAKE) re -C $(LDIR)
+	@echo "\033[31;1m"
+	@echo -n '---> Compilation in progress... <---'
+	@echo "\033[0m"
+	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LIB) -ltermcap
+	@echo "\033[1;32m"
+	@echo -n '---> DONE ! <---'
+	@echo "\033[0m"
 
-
-fclean: clean
-	/bin/rm -f $(NAME)
+%.o:%.c
+	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 clean:
+	@echo "\033[31;1m"
+	@echo -n '---> Clean : <---'
+	@echo "\033[0m"
+	$(RM) -rf $(OBJ)
+	$(MAKE) clean -C $(LDIR)
+	@echo "\033[1;32m"
+	@echo -n '---> DONE ! <---'
+	@echo "\033[0m"
+
+fclean: clean
+	@echo "\033[31;1m"
+	@echo -n '---> FClean : <---'
+	@echo "\033[0m"
+	$(RM) -rf $(NAME)
+	$(MAKE) fclean -C $(LDIR)
+	@echo "\033[1;32m"
+	@echo -n '---> DONE ! <---'
+	@echo "\033[0m"
 
 re: fclean all
- 
+
+.PHONY: all name clean fclean re

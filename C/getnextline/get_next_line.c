@@ -27,7 +27,7 @@ static int				ft_is(char *str, int c)
 	return (-1);
 }
 
-static t_getline		*ft_search(t_getline *list, int fd, char **line)
+static t_getline		*ft_search(t_getline *list, int fd)
 {
 	t_getline			*tmp;
 
@@ -35,10 +35,7 @@ static t_getline		*ft_search(t_getline *list, int fd, char **line)
 	while (tmp && tmp->fd != fd)
 		tmp = tmp->next;
 	if (tmp && tmp->fd == fd)
-	{
-		*line = tmp->str;
 		return (tmp);
-	}
 	else
 		return (NULL);
 }
@@ -61,6 +58,7 @@ static int				first(t_getline *sd, char **line)
 		}
 		else
 			*line = ft_strjoin(*line, tmp);
+		ft_memdel((void **)&tmp);
 	}
 	return (ret);
 }
@@ -91,24 +89,19 @@ int						get_next_line(int const fd, char **line)
 	static t_getline	*sd = NULL;
 	t_getline			*tmp;
 
-	tmp = ft_search(sd, fd, line);
-	write(1, "ok", 2);
+	tmp = ft_search(sd, fd);
 	if (tmp)
 		return (next(tmp, line));
 	else
 	{
-	write(1, "k", 2);
-
 		tmp = (t_getline *)malloc(sizeof(t_getline));
 		if (tmp)
 		{
-		write(1, "ok", 2);
 			tmp->fd = fd;
 			tmp->str = NULL;
 			tmp->next = sd;
 			sd = tmp;
 		}
 	}
-	write(1, "k", 2);
 	return (first(sd, line));
 }

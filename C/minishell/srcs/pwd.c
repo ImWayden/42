@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrealloc.c                                    :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/08 14:12:25 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/08 14:12:29 by msarr            ###   ########.fr       */
+/*   Created: 2014/04/27 13:27:01 by msarr             #+#    #+#             */
+/*   Updated: 2014/04/27 13:27:07 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell1.h"
 
-char		*ft_strrealloc(char **line, unsigned int len)
+void	ft_changepwd(char **envc, char *pwd)
 {
 	int		i;
 	char	*str;
-	char	*s2;
 
-	i = ft_strlen(*line);
-	s2 = *line;
-	str = (char *)malloc(sizeof(char) * (i + len + 1));
 	i = 0;
-	while (*s2)
+	str = ft_getenv(envc, "PWD");
+	while (envc && envc[i])
 	{
-		str[i] = *s2;
-		s2++;
+		if (ft_strnequ("PWD=", envc[i], 4) == 1)
+			envc[i] = ft_strjoin("PWD=", pwd);
+		else if (ft_strnequ("OLDPWD=", envc[i], 7) == 1)
+			envc[i] = ft_strjoin("OLDPWD=", str);
 		i++;
 	}
-	ft_memdel((void **)&s2);
-	ft_bzero(&str[i], len + 1);
-	return (str);
 }
