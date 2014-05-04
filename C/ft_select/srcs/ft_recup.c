@@ -12,13 +12,13 @@
 
 #include "ft_select.h"
 
-int		ft_recup(char **str, t_selectlist **list)
+int			ft_recup(char **str, t_selectlist **list)
 {
 	int		i;
 
 	*list = NULL;
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 	{
 		*list = ft_addlist(*list, str[i]);
 		i++;

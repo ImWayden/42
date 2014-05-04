@@ -21,7 +21,7 @@ SDIR = srcs/
 SRC = $(SDIR)ft_addlist.c $(SDIR)ft_config.c $(SDIR)ft_defconfig.c \
 	  $(SDIR)ft_effect.c $(SDIR)ft_effect2.c $(SDIR)ft_init.c \
 	  $(SDIR)ft_putlist.c $(SDIR)ft_recup.c $(SDIR)ft_setlist.c \
-	  $(SDIR)main.c
+	  $(SDIR)ft_listnew.c $(SDIR)ft_dellistelmt.c $(SDIR)main.c
 
 
 OBJ = $(SRC:.c=.o)

@@ -12,41 +12,45 @@
 
 #include "ft_select.h"
 
-void	ft_putlist(t_selectlist *list)
+void				ft_putlist(t_selectlist *list)
 {
-	t_selectlist *tmp;
+	t_selectlist	*tmp;
 
 	tmp = list;
-	ft_putstr(tmp->str);
-	write(1, "\n", 1);
-	tmp = tmp->next;
-	while (tmp != list)
+	if (tmp)
 	{
 		ft_putstr(tmp->str);
 		write(1, "\n", 1);
 		tmp = tmp->next;
+		while (tmp != list)
+		{
+			ft_putstr(tmp->str);
+			write(1, "\n", 1);
+			tmp = tmp->next;
+		}
 	}
 }
 
-void	ft_sendlist(t_selectlist *list)
+void				ft_sendlist(t_selectlist *list)
 {
-	t_selectlist *tmp;
+	t_selectlist	*tmp;
 
 	ft_putstr(tgetstr("cl", NULL));
 	ft_putstr(tgetstr("me", NULL));
 	tmp = list;
-	if (tmp->select == 'y')
-		write(1, tmp->str, ft_strlen(tmp->str));
-	if (tmp->select == 'y')
-			write(1, " ", 1);
-	tmp = tmp->next;
-	while (tmp != list)
+	if (tmp && tmp->select == 'y')
 	{
-		if (tmp->select == 'y')
-			write(1, tmp->str, ft_strlen(tmp->str));
-		if (tmp->select == 'y')
-			write(1, " ", 1);
+		write(1, tmp->str, ft_strlen(tmp->str));
+		write(1, " ", 1);
 		tmp = tmp->next;
+		while (tmp && tmp != list)
+		{
+			if (tmp->select == 'y')
+				write(1, tmp->str, ft_strlen(tmp->str));
+			if (tmp->select == 'y')
+				write(1, " ", 1);
+			tmp = tmp->next;
+		}
+		ft_putstr(tgetstr("le", NULL));
 	}
-	ft_putstr(tgetstr("le", NULL));
 }

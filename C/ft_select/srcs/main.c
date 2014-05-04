@@ -12,24 +12,28 @@
 
 #include "ft_select.h"
 
-int 	main(int argc, char **argv)
+int							main(int argc, char **argv)
 {
-	struct termios term;
+	struct termios			term;
 	t_selectlist			*list;
+	int						i;
 
 	list = NULL;
 	if (argc > 1)
 	{
 		ft_recup(&argv[1], &list);
-		if (ft_init(&term))
-			return (-1);
-		if (ft_config(&term))
-			return (-1);
-		ft_effect(list);
-		if (ft_defconfig(&term))
-			return (-1);
+		if (list)
+		{
+			if (ft_init(&term))
+				return (-1);
+			if (ft_config(&term))
+				return (-1);
+			i = ft_effect(&list);
+			if (ft_defconfig(&term))
+				return (-1);
+			if (!i)
+				ft_sendlist(list);
+		}
 	}
-	if (list)
-		ft_memdel((void **)&list);
 	return (0);
 }

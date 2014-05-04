@@ -19,7 +19,7 @@
 # include <sys/uio.h>
 # include "./libft/includes/libft.h"
 
-# define BUFF_SIZE 10000
+# define BUFF_SIZE 1
 
 typedef struct			s_getline
 {
