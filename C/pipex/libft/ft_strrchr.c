@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init.c                                          :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/03 14:52:08 by msarr             #+#    #+#             */
-/*   Updated: 2014/01/03 14:52:10 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/24 14:52:35 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 14:30:35 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include "includes/libft.h"
 
-int			ft_init(struct termios *term)
+char		*ft_strrchr(const char *s, int c)
 {
-	char	*termname;
+	char	*tmp;
 
-	if ((termname = getenv("TERM")) == NULL)
-		return (-1);
-	if (tgetent(NULL, termname) == ERR)
-		return (-1);
-	if (tcgetattr(0, term) == -1)
-		return (-1);
-	return (0);
+	tmp = (char *)s + ft_strlen(s);
+	while (*tmp != (char)c && s)
+	{
+		if (tmp == s)
+			return (NULL);
+		tmp--;
+	}
+	return (tmp);
 }

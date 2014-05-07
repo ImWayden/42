@@ -10,37 +10,36 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_SELECT_H
-# define FT_SELECT_H
+#ifndef 					FTSELECT_H
+# define 					FTSELECT_H
 
 # include <stdlib.h>
 # include <termios.h>
 # include <unistd.h>
 # include <stdio.h>
-# include <curses.h>
 # include <sys/ioctl.h>
 # include <signal.h>
 # include <fcntl.h>
 # include <term.h>
 # include "libft.h"
 
-typedef struct			s_selectlist
+typedef struct				s_selectlist
 {
-	char				*str;
-	int 				curseur;
-	int 				select;
-	int 				row;
-	int 				col;
+	char					*str;
+	int 					curseur;
+	int 					select;
+	int 					row;
+	int 					col;
 	struct s_selectlist		*next;
 	struct s_selectlist		*prev;
-}						t_selectlist;
+}							t_selectlist;
 
 typedef struct				s_bar
 {
 	t_selectlist			*list;
 }							t_bar;
 
-t_selectlist				*ft_effect(t_selectlist *list);
+int							ft_effect(t_selectlist **list);
 int							ft_selectlistlen(t_selectlist *list);;
 int							ft_effect2(t_selectlist *list);
 int							ft_init(struct termios *term);
@@ -52,6 +51,7 @@ int							ft_recup(char **str, t_selectlist **list);
 t_selectlist				*ft_addlist(t_selectlist *list, char *str);
 int							ft_defconfig(struct termios *term);
 t_selectlist				*ft_add_list(t_selectlist *list, char *str);
-t_selectlist				*ft_dellistelmt(t_selectlist *list, char *str);
+t_selectlist				*ft_dellistelmt(t_selectlist **list, char *str);
+t_selectlist				*ft_listnew(char *str);
 
 #endif

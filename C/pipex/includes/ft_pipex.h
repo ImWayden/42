@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init.c                                          :+:      :+:    :+:   */
+/*   ft_pipex.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/03 14:52:08 by msarr             #+#    #+#             */
-/*   Updated: 2014/01/03 14:52:10 by msarr            ###   ########.fr       */
+/*   Created: 2013/12/30 20:30:23 by msarr             #+#    #+#             */
+/*   Updated: 2013/12/30 20:30:27 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#ifndef  FT_PIPEX_H
+# define FT_PIPEX_H
 
-int			ft_init(struct termios *term)
-{
-	char	*termname;
+# include <stdarg.h>
+# include <stdio.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include "libft.h"
 
-	if ((termname = getenv("TERM")) == NULL)
-		return (-1);
-	if (tgetent(NULL, termname) == ERR)
-		return (-1);
-	if (tcgetattr(0, term) == -1)
-		return (-1);
-	return (0);
-}
+int				ft_father(char **argv, char **str, int fd, int tube[2]);
+int				ft_son(char **argv, char **str, int fd, int tube[2]);
+
+#endif

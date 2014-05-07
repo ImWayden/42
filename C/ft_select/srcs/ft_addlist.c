@@ -12,10 +12,10 @@
 
 #include "ft_select.h"
 
-int		ft_selectlistlen(t_selectlist *list)
+int						ft_selectlistlen(t_selectlist *list)
 {
 	t_selectlist		*tmp;
-	int			i;
+	int					i;
 
 	i = 0;
 	tmp = list;
@@ -32,15 +32,12 @@ int		ft_selectlistlen(t_selectlist *list)
 	return (i);
 }
 
-t_selectlist		*ft_addlist(t_selectlist *list, char *str)
+t_selectlist			*ft_addlist(t_selectlist *list, char *str)
 {
-	t_selectlist	*tmp;
+	t_selectlist		*tmp;
 
-	tmp = (t_selectlist *)malloc(sizeof(t_selectlist));
-	tmp->str = ft_strdup(str);
-	tmp->curseur = 'n';
-	tmp->select = 'n';
-	if (list == NULL)
+	tmp = ft_listnew(str);
+	if (!list)
 	{
 		tmp->next = tmp;
 		tmp->prev = tmp;
@@ -52,28 +49,6 @@ t_selectlist		*ft_addlist(t_selectlist *list, char *str)
 		list->prev->next = tmp;
 		tmp->next = list;
 		list->prev = tmp;
-	}
-	return (list);
-}
-
-t_selectlist		*ft_dellistelmt(t_selectlist *list, char *str)
-{
-	t_selectlist	*tmp;
-
-	tmp = list;
-	if (list != NULL)
-	{
-		if (ft_selectlistlen(list) == 1)
-			list = NULL;
-		else
-		{
-			while (ft_strcmp(tmp->str, str))
-				tmp = tmp->next;
-			tmp->next->curseur = 'y';
-			tmp->next->prev = tmp->prev;
-			tmp->prev->next = tmp->next;
-			free(tmp);
-		}
 	}
 	return (list);
 }

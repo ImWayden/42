@@ -12,18 +12,18 @@
 
 #include "ft_select.h"
 
-static	void	choice2(t_selectlist *list)
+static	void		choice2(t_selectlist *list)
 {
 	ft_putstr(tgoto(tgetstr("cm", NULL), list->col, list->row));
 	if (list->select == 'y')
 		ft_putstr(tgetstr("mr", NULL));
 	if (list->curseur == 'y')
 		ft_putstr(tgetstr("us", NULL));
-	ft_putstr(list->str);
+	ft_putendl(list->str);
 	ft_putstr(tgetstr("me", NULL));
 }
 
-int		ft_effect2(t_selectlist *list)
+int					ft_effect2(t_selectlist *list)
 {
 	t_selectlist	*tmp;
 

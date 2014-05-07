@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init.c                                          :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/03 14:52:08 by msarr             #+#    #+#             */
-/*   Updated: 2014/01/03 14:52:10 by msarr            ###   ########.fr       */
+/*   Created: 2014/03/28 13:07:07 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/28 13:07:09 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include "includes/libft.h"
 
-int			ft_init(struct termios *term)
+void		ft_lstdelone(t_list **alst, void (*del)(void *, size_t))
 {
-	char	*termname;
-
-	if ((termname = getenv("TERM")) == NULL)
-		return (-1);
-	if (tgetent(NULL, termname) == ERR)
-		return (-1);
-	if (tcgetattr(0, term) == -1)
-		return (-1);
-	return (0);
+	if (*alst)
+	{
+		del(&(*alst)->content, (*alst)->content_size);
+		(*alst)->next = NULL;
+		ft_memdel((void **)alst);
+	}
 }

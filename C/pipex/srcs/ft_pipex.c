@@ -1,26 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init.c                                          :+:      :+:    :+:   */
+/*   ft_pipex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/03 14:52:08 by msarr             #+#    #+#             */
-/*   Updated: 2014/01/03 14:52:10 by msarr            ###   ########.fr       */
+/*   Created: 2013/12/31 03:00:29 by msarr             #+#    #+#             */
+/*   Updated: 2013/12/31 03:00:32 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include "ft_pipex.h"
 
-int			ft_init(struct termios *term)
+int				main(int argc, char **argv)
 {
-	char	*termname;
+	pid_t		father;
+	char		**str;
+	int			tube[2];
+	int			fd;
 
-	if ((termname = getenv("TERM")) == NULL)
-		return (-1);
-	if (tgetent(NULL, termname) == ERR)
-		return (-1);
-	if (tcgetattr(0, term) == -1)
-		return (-1);
+	pipe(tube);
+	str = NULL;
+	fd = -1;
+	father = fork();
+	if (argc == 5)
+	{
+		if (father > 0)
+		{
+			wait(NULL);
+			fd = open(argv[4], O_WRONLY | O_CREAT);
+			if (fd < 0)
+				return (0);
+			ft_father(argv, str, fd, tube);
+			close (fd);
+		}
+		if (father == 0)
+			return (ft_son(argv, str, fd, tube));
+	}
 	return (0);
 }

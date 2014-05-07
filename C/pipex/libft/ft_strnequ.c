@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_recup.c                                         :+:      :+:    :+:   */
+/*   ft_strnequ.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/22 14:42:27 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/22 14:42:38 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/27 11:12:17 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 15:55:48 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include "includes/libft.h"
 
-int			ft_recup(char **str, t_selectlist **list)
+int			ft_strnequ(const char *s1, const char *s2, size_t n)
 {
-	int		i;
-
-	*list = NULL;
-	i = 0;
-	while (str && str[i])
+	while (s1 && s2 && *s1 && *s2 && *s1 == *s2 && n--)
 	{
-		*list = ft_addlist(*list, str[i]);
-		i++;
+		if (!n)
+			return (1);
+		s1++;
+		s2++;
 	}
-	(*list)->curseur = 'y';
-	return (i);
+	if (s1 && s2 && !(*s1) && !(*s2))
+		return (1);
+	else
+		return (0);
 }

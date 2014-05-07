@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/03 14:52:29 by msarr             #+#    #+#             */
-/*   Updated: 2014/01/03 14:52:31 by msarr            ###   ########.fr       */
+/*   Created: 2014/03/28 13:06:49 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/28 13:06:56 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include "includes/libft.h"
 
-int							main(int argc, char **argv)
+t_list		*ft_listnew(void const *content, size_t content_size)
 {
-	struct termios			term;
-	t_selectlist			*list;
-	int						i;
+	t_list	*tmp;
 
-	list = NULL;
-	if (argc > 1)
+	tmp = (t_list *)malloc(sizeof(t_list));
+	if (tmp)
 	{
-		ft_recup(&argv[1], &list);
-		if (list)
+		if (content)
 		{
-			if (ft_init(&term))
-				return (-1);
-			if (ft_config(&term))
-				return (-1);
-			i = ft_effect(&list);
-			if (ft_defconfig(&term))
-				return (-1);
-			if (!i)
-				ft_sendlist(list);
+			tmp->content = ft_memalloc(content_size);
+			ft_memcpy(tmp->content, content, content_size);
+			tmp->content_size = content_size;
 		}
+		else
+		{
+			tmp->content = NULL;
+			tmp->content_size = 0;
+		}
+		tmp->next = NULL;
 	}
-	return (0);
+	return (tmp);
 }

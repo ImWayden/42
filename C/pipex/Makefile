@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_select
+NAME = pipex
 
 MAKE = make
 CC = gcc
@@ -18,10 +18,7 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 
-SRC = $(SDIR)ft_addlist.c $(SDIR)ft_config.c $(SDIR)ft_defconfig.c \
-	  $(SDIR)ft_effect.c $(SDIR)ft_effect2.c $(SDIR)ft_init.c \
-	  $(SDIR)ft_putlist.c $(SDIR)ft_recup.c $(SDIR)ft_setlist.c \
-	  $(SDIR)ft_listnew.c $(SDIR)ft_dellistelmt.c $(SDIR)main.c
+SRC = $(SDIR)ft_father.c $(SDIR)ft_son.c $(SDIR)ft_pipex.c 
 
 
 OBJ = $(SRC:.c=.o)
@@ -39,7 +36,7 @@ $(NAME): $(OBJ)
 	@echo "\033[31;1m"
 	@echo -n '---> Compilation in progress... <---'
 	@echo "\033[0m"
-	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LIB) -ltermcap
+	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LIB)
 	@echo "\033[1;32m"
 	@echo -n '---> DONE ! <---'
 	@echo "\033[0m"

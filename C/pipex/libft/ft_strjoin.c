@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_recup.c                                         :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/22 14:42:27 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/22 14:42:38 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/27 12:24:13 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 19:28:52 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include "includes/libft.h"
 
-int			ft_recup(char **str, t_selectlist **list)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		i;
+	int		j;
+	char	*str;
 
-	*list = NULL;
-	i = 0;
-	while (str && str[i])
-	{
-		*list = ft_addlist(*list, str[i]);
-		i++;
-	}
-	(*list)->curseur = 'y';
-	return (i);
+	i = ft_strlen(s1);
+	j = ft_strlen(s2);
+	str = ft_strnew(i + j);
+	while (j-- && str)
+		str[i + j] = s2[j];
+	while (i-- && str)
+		str[i] = s1[i];
+	return (str);
 }
