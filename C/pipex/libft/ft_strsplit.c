@@ -28,6 +28,7 @@ static char		**ft_array(char *s, char c)
 			s++;
 	}
 	split = (char **)ft_memalloc(j + 1);
+	split[j] = NULL;
 	return (split);
 }
 

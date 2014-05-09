@@ -24,7 +24,7 @@ int			ft_father(char **argv, int fd, int tube[2])
 		dup2(STDOUT_FILENO, tmp);
 		dup2(tube[0], STDIN_FILENO);
 		dup2(fd, STDOUT_FILENO);
-		execvp(str[0], str);
+		execvp(str[0], &str[1]);
 		close(fd);
 		perror(ft_strjoin("ft_pipex[ft_father] : ", argv[3]));
 		exit (0);

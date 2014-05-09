@@ -26,7 +26,7 @@ int				main(int argc, char **argv)
 		if (father > 0)
 		{
 			wait(NULL);
-			if ((fd = open(argv[4], O_RDWR | O_CREAT | S_IRWXU | S_IRWXG | S_IRWXG)) != -1)
+			if ((fd = open(argv[4], O_RDWR | O_CREAT, 0755)) != -1)
 			{
 				ft_father(argv, fd, tube);
 				close (fd);
