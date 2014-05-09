@@ -23,7 +23,7 @@
 # include <stdlib.h>
 # include "libft.h"
 
-int				ft_father(char **argv, char **str, int fd, int tube[2]);
-int				ft_son(char **argv, char **str, int fd, int tube[2]);
+int				ft_father(char **argv, int fd, int tube[2]);
+int				ft_son(char **argv, int fd, int tube[2]);
 
 #endif

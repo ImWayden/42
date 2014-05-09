@@ -15,12 +15,10 @@
 int				main(int argc, char **argv)
 {
 	pid_t		father;
-	char		**str;
 	int			tube[2];
 	int			fd;
 
 	pipe(tube);
-	str = NULL;
 	fd = -1;
 	father = fork();
 	if (argc == 5)
@@ -28,14 +26,16 @@ int				main(int argc, char **argv)
 		if (father > 0)
 		{
 			wait(NULL);
-			fd = open(argv[4], O_WRONLY | O_CREAT);
-			if (fd < 0)
-				return (0);
-			ft_father(argv, str, fd, tube);
-			close (fd);
+			if ((fd = open(argv[4], O_RDWR | O_CREAT | S_IRWXU | S_IRWXG | S_IRWXG)) != -1)
+			{
+				ft_father(argv, fd, tube);
+				close (fd);
+			}
+			else
+				perror ("ft_pipex[main]");
 		}
 		if (father == 0)
-			return (ft_son(argv, str, fd, tube));
+			return (ft_son(argv, fd, tube));
 	}
 	return (0);
 }

@@ -12,28 +12,22 @@
 
 #include "ft_pipex.h"
 
-int			ft_son(char **argv, char **str, int fd, int tube[2])
+int			ft_son(char **argv, int fd, int tube[2])
 {
 	int		tmp;
+	char	**str;
 
 	tmp = -1;
 	str = ft_strsplit(argv[2], ' ');
 	close(tube[0]);
-	fd = open(argv[1], O_WRONLY);
-	if (fd < 0)
+	if ((fd = open(argv[1], O_RDONLY | S_IRWXU | S_IRWXG | S_IRWXG)) != -1)
 	{
-		write (1, argv[1], ft_strlen(argv[1]));
-		write (1, ": No such file or directory\n", 28);
+		dup2(STDIN_FILENO, tmp);
+		dup2(fd, STDIN_FILENO);
+		dup2(tube[1], STDOUT_FILENO);
+		execvp(str[0], str);
 	}
 	else
-		close(fd);
-	dup2(STDOUT_FILENO, tmp);
-	dup2(tube[1], STDOUT_FILENO);
-	execvp(str[0], str);
-	dup2(tmp, STDOUT_FILENO);
-	ft_putstr(argv[0]);
-	ft_putstr(" : ");
-	ft_putstr(str[0]);
-	ft_putstr(" : command not found\n");
+		perror(ft_strjoin("ft_pipex[ft_son] : ", argv[1]));
 	exit(0);
 }
