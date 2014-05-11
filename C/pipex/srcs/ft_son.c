@@ -14,20 +14,17 @@
 
 int			ft_son(char **argv, int fd, int tube[2])
 {
-	int		tmp;
 	char	**str;
 
-	tmp = -1;
-	str = ft_strsplit(argv[2], ' ');
-	close(tube[0]);
-	if ((fd = open(argv[1], O_RDONLY, 0755)) != -1)
+	if ((fd = open(argv[1], O_RDWR)) != -1)
 	{
-		dup2(STDIN_FILENO, tmp);
+		str = ft_strsplit(argv[2], ' ');
+		close(tube[0]);
 		dup2(fd, STDIN_FILENO);
+		dup2(tube[1], STDOUT_FILENO);
+		execvp(str[0], str);
 	}
 	else
-		perror(ft_strjoin("ft_pipex[ft_son] : ", argv[1]));
-	dup2(tube[1], STDOUT_FILENO);
-	execvp(str[0], &str[0]);
+		perror(ft_strjoin("ft_pipex : ", argv[1]));	
 	exit(0);
 }

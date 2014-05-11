@@ -14,21 +14,21 @@
 
 int			ft_father(char **argv, int fd, int tube[2])
 {
-	int		tmp;
 	char	**str;
 
-	tmp = -1;
-	if ((str = ft_strsplit(argv[3], ' ')))
+	if ((fd = open(argv[4], O_RDWR | O_CREAT, 0755)) != -1)
 	{
-		close(tube[1]);
-		dup2(STDOUT_FILENO, tmp);
-		dup2(tube[0], STDIN_FILENO);
-		dup2(fd, STDOUT_FILENO);
-		execvp(str[0], &str[1]);
-		close(fd);
-		perror(ft_strjoin("ft_pipex[ft_father] : ", argv[3]));
-		exit (0);
+		if ((str = ft_strsplit(argv[3], ' ')))
+		{
+			close(tube[1]);
+			dup2(tube[0], STDIN_FILENO);
+			dup2(fd, STDOUT_FILENO);
+			execvp(str[0], str);
+			close(fd);
+			perror(ft_strjoin("ft_pipex[ft_father] : ", argv[3]));
+		}
 	}
 	else
-		exit (0);
+		perror(ft_strjoin("ft_pipex : ", argv[4]));
+	exit (0);
 }

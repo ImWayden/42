@@ -26,16 +26,10 @@ int				main(int argc, char **argv)
 		if (father > 0)
 		{
 			wait(NULL);
-			if ((fd = open(argv[4], O_RDWR | O_CREAT, 0755)) != -1)
-			{
-				ft_father(argv, fd, tube);
-				close (fd);
-			}
-			else
-				perror ("ft_pipex[main]");
+			ft_father(argv, fd, tube);	
 		}
 		if (father == 0)
-			return (ft_son(argv, fd, tube));
+			ft_son(argv, fd, tube);
 	}
 	return (0);
 }
