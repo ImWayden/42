@@ -25,6 +25,6 @@ int			ft_son(char **argv, int fd, int tube[2])
 		execvp(str[0], str);
 	}
 	else
-		perror(ft_strjoin("ft_pipex : ", argv[1]));	
+		perror(ft_strjoin("ft_pipex : ", argv[1]));
 	exit(0);
 }

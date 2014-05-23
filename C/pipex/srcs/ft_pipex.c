@@ -26,7 +26,7 @@ int				main(int argc, char **argv)
 		if (father > 0)
 		{
 			wait(NULL);
-			ft_father(argv, fd, tube);	
+			ft_father(argv, fd, tube);
 		}
 		if (father == 0)
 			ft_son(argv, fd, tube);
