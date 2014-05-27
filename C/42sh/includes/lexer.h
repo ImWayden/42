@@ -13,37 +13,12 @@
 #ifndef PARSER_H_
 # define PARSER_H_
 
-typedef enum			s_tokenid
-{
-	TOK_NONE,
-	TOK_AND,	 // &&
-	TOK_SEPAND,	 // &
-	TOK_OR,	 // ||
-	TOK_PIPE,	 // |
-	TOK_SEP,	 // ;
-	TOK_LPAREN,	 // (
-	TOK_RPAREN,	 // )
-	TOK_DLESS,	 // <<
-	TOK_LESS,	 // <
-	TOK_DGREAT,	 // >>
-	TOK_GREAT,	 // >
-	TOK_WORD	 // all others
-} 						t_tokenid;
+# include "libft.h"
 
-typedef struct	 		s_node
+typedef struct	 		s_lexlist
 {
-	s_tokenid	 		id;
-	struct s_node		left;
-	struct s_node		right;
-}						s_token;
-
-typedef struct			t_quote
-{
-	const char	 		*start;
-	const size_t		lenstart;
-	const char	 		*stop;
-	const size_t	 	lenstop;
-} 						s_quote;
-
+	char				*str;
+	struct s_lexlist	*next;
+}						t_lexlist;
 
 #endif

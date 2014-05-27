@@ -3,36 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/03 19:00:16 by sraccah           #+#    #+#             */
-/*   Updated: 2014/01/23 23:08:13 by sraccah          ###   ########.fr       */
+/*   Created: 2013/11/27 12:55:53 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 17:53:34 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "includes/libft.h"
 
 char		*ft_strtrim(char const *s)
 {
-	char	*x;
-	int		i;
+	char	*str;
 	int		j;
 
-	i = 0;
-	while (s[i] == ' ' || s[i] == '\n' || s[i] == '\t')
-		i++;
+	while (s && (*s == ' ' || *s == '\n' || *s == '\t'))
+		s++;
 	j = ft_strlen((char *)s) - 1;
-	while (s[j] == ' ' || s[j] == '\n' || s[j] == '\t')
+	while (s && j > 0 && (s[j] == ' ' || s[j] == '\n' || s[j] == '\t'))
 		j--;
-	if (j < 0)
-	{
-		x = (char*)malloc(sizeof(*x));
-		x[0] = '\0';
-		return (x);
-	}
-	x = (char *)malloc(sizeof(*x) * (j - i + 1));
-	if (x == 0)
+	str = ft_strnew(j + 1);
+	if (!str)
 		return (NULL);
-	x = ft_strsub(s, i, (j - i + 1));
-	return ((char*)x);
+	str = ft_strncpy(str, (char *)s, (j + 1));
+	return (str);
 }

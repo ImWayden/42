@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_puttab.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/25 10:49:39 by sraccah           #+#    #+#             */
-/*   Updated: 2014/01/23 23:26:43 by sraccah          ###   ########.fr       */
+/*   Created: 2014/04/27 14:03:07 by msarr             #+#    #+#             */
+/*   Updated: 2014/04/27 14:03:11 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "includes/libft.h"
 
-void	ft_exit(char *str)
+void			ft_puttab(char **tab)
 {
-	ft_putstr(str);
-	exit(0);
+	int			i;
+
+	i = 0;
+	while (tab && tab[i])
+	{
+		ft_putendl(tab[i]);
+		i++;
+	}
 }

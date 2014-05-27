@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/19 12:15:45 by msarr             #+#    #+#             */
-/*   Updated: 2013/11/19 14:07:23 by msarr            ###   ########.fr       */
+/*   Created: 2014/03/27 10:29:09 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/27 10:29:11 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/libft.h"
-
-void		*ft_memset(void *b, int c, size_t len)
-{
-	char	*tmp;
-
-	tmp = b;
-	while (len && tmp)
-	{
-		*tmp = c;
-		tmp++;
-		len--;
-	}
-	return (b);
-}
+static const s_token	operators[] =
+ {
+ 	{TOK_AND, "&&", 2},
+ 	{TOK_SEPAND, "&", 1},
+ 	{TOK_OR, "||", 2},
+ 	{TOK_PIPE, "|", 1},
+ 	{TOK_SEP, ";", 1},
+ 	{TOK_DLESS, "<<", 2},
+ 	{TOK_LESS, "<", 1},
+ 	{TOK_DGREAT, ">>", 2},
+ 	{TOK_GREAT, ">", 1},
+ 	{TOK_LPAREN, "(", 1},
+ 	{TOK_RPAREN, ")", 1},
+	{TOK_NONE, NULL, 0}
+ };

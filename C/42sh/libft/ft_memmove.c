@@ -3,36 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sraccah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/25 10:51:59 by sraccah           #+#    #+#             */
-/*   Updated: 2013/11/25 10:51:59 by sraccah          ###   ########.fr       */
+/*   Created: 2013/11/24 17:49:19 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 13:37:16 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "includes/libft.h"
 
-void		*ft_memmove(void *dest, const void *src, size_t n)
+void			*ft_memmove(void *s1, const void *s2, size_t n)
 {
-	char	*d;
-	char	*s;
+	char		*tmp1;
+	const char	*tmp2;
 
-	d = dest;
-	s = (char *)src;
-	if (src != dest)
+	tmp1 = s1;
+	tmp2 = s2;
+	if ((tmp1 <= tmp2 || tmp1 >= tmp2 + n) && tmp1 && tmp2)
+		return (ft_memcpy(s1, s2, n));
+	else
 	{
-		if (src > dest)
+		n--;
+		while (tmp1[n] && tmp2[n] && tmp1 && tmp2)
 		{
-			while (n--)
-				*d++ = *s++;
-		}
-		else
-		{
-			d += n - 1;
-			s += n - 1;
-			while (n--)
-				*d-- = *s--;
+			tmp1[n] = tmp2[n];
+			n--;
 		}
 	}
-	return (dest);
+	return (s1);
 }

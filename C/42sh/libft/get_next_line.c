@@ -1,97 +1,109 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/03 16:09:35 by sraccah           #+#    #+#             */
-/*   Updated: 2014/01/03 16:09:36 by sraccah          ###   ########.fr       */
+/*   Created: 2013/12/02 17:32:20 by msarr             #+#    #+#             */
+/*   Updated: 2013/12/15 20:15:57 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "libft.h"
 
-static void			offset_adress(char *buff)
+static int				ft_is(char *str, int c)
 {
-	size_t			i;
-	size_t			j;
+	int					i;
 
 	i = 0;
-	j = 0;
-	while (buff[i] && buff[i] != '\n')
-		i++;
-	if (buff[i] == '\n')
-		i++;
-	while (buff[i])
+	while (str && *str)
 	{
-		buff[j] = buff[i];
-		j++;
+		if (*str == c)
+			return (i);
+		str++;
 		i++;
 	}
-	buff[j] = '\0';
+	return (-1);
 }
 
-static void			free_line(char **cpy, char **line, char *buff)
+static t_getline		*ft_search(t_getline *list, int fd, char **line)
 {
-	*cpy = *line;
-	*line = ft_strjoin_gnl(*line, buff);
-	free(*cpy);
-}
+	t_getline			*tmp;
 
-static int			ft_concat_buff(char **line, char *buff, int ret, int fd)
-{
-	char			*cpy;
-
-	if (!ft_strchr(buff, '\n'))
+	tmp = list;
+	while (tmp && tmp->fd != fd)
+		tmp = tmp->next;
+	if (tmp && tmp->fd == fd)
 	{
-		*line = ft_strdup_gnl(buff);
-		if ((ret = read(fd, buff, BUFF_SIZE)) == -1)
-			return (-1);
-		if (!ret)
-			return (0);
-		buff[ret] = '\0';
-		free_line(&cpy, line, buff);
-		while (!ft_strchr(buff, '\n') && ret)
+		*line = tmp->str;
+		return (tmp);
+	}
+	else
+		return (NULL);
+}
+
+static int				first(t_getline *sd, char **line)
+{
+	char				*tmp;
+	int					ret;
+
+	tmp = ft_strnew(BUFF_SIZE);
+	while ((ret = read(sd->fd, tmp, BUFF_SIZE)) > 0)
+	{
+		if ((ret = ft_is(tmp, '\n')) >= 0)
 		{
-			offset_adress(buff);
-			if ((ret = read(fd, buff, BUFF_SIZE)) == -1)
-				return (-1);
-			if (!ret)
-				return (0);
-			buff[ret] = '\0';
-			free_line(&cpy, line, buff);
+			tmp[ret] = '\0';
+			*line = ft_strjoin(*line, tmp);
+			sd->str = ft_strjoin(sd->str, &(tmp[ret + 1]));
+			tmp[ret] = '\n';
+			return (1);
 		}
-		offset_adress(buff);
+		else
+			*line = ft_strjoin(*line, tmp);
 	}
-	return (1);
+	return (ret);
 }
 
-int					ft_get_next_line(int const fd, char **line)
+static int				next(t_getline *sd, char **line)
 {
-	int				ret;
-	static char		buff[BUFF_SIZE + 1];
+	int					i;
+	int					ret;
 
-	ret = 0;
-	if (!line)
-		return (-1);
-	*line = NULL;
-	if (fd == -1)
-		return (-1);
-	if (!(*buff))
+	if (sd->str && (ret = ft_is(sd->str, '\n')) >= 0)
 	{
-		if ((ret = read(fd, buff, BUFF_SIZE)) == -1)
-			return (-1);
-		buff[ret] = '\0';
+		i = ft_strlen(sd->str);
+		*line = ft_strsub(sd->str, 0, ret);
+		i = i - ft_strlen(*line);
+		sd->str = ft_strsub(sd->str, ret + 1, i);
+		return (1);
 	}
-	if ((ret = ft_concat_buff(line, buff, ret, fd)) == -1)
-		return (-1);
-	if (!ret)
-		return (0);
-	if (!(*line))
+	else if (sd->str)
 	{
-		*line = ft_strdup_gnl(buff);
-		offset_adress(buff);
+		*line = sd->str;
+		sd->str = NULL;
 	}
-	return (1);
+	return (first(sd, line));
+}
+
+int						get_next_line(int const fd, char **line)
+{
+	static t_getline	*sd = NULL;
+	t_getline			*tmp;
+
+	tmp = ft_search(sd, fd, line);
+	if (tmp)
+		return (next(tmp, line));
+	else
+	{
+		tmp = (t_getline *)malloc(sizeof(t_getline));
+		if (tmp)
+		{
+			tmp->fd = fd;
+			tmp->str = NULL;
+			tmp->next = sd;
+			sd = tmp;
+		}
+	}
+	return (first(sd, line));
 }

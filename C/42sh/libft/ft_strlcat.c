@@ -3,38 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sraccah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/25 10:53:50 by sraccah           #+#    #+#             */
-/*   Updated: 2013/11/25 10:53:51 by sraccah          ###   ########.fr       */
+/*   Created: 2013/11/25 18:24:35 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 14:23:32 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "includes/libft.h"
 
-int					ft_strlcat(char *dest, const char *src, size_t n)
+int			ft_strlcat(char *dest, const char *src, size_t size)
 {
-	unsigned int	a;
-	unsigned int	b;
-	unsigned int	i;
-	unsigned int	destlen;
-	unsigned int	srclen;
+	size_t	tmp1;
+	size_t	tmp2;
+	size_t	i;
+	size_t	j;
+	size_t	k;
 
-	a = 0;
-	destlen = ft_strlen(dest);
-	b = destlen;
-	srclen = ft_strlen(src);
-	i = n - destlen - 1;
-	if (n > destlen)
+	tmp1 = ft_strlen(dest);
+	tmp2 = ft_strlen((char*)src);
+	i = 0;
+	j = tmp1;
+	k = size - tmp1 - 1;
+	if (size > tmp1)
 	{
-		while (a < i)
+		while (i < k)
 		{
-			dest[b] = src[a];
-			a++;
-			b++;
+			dest[j] = src[i];
+			i++;
+			j++;
 		}
-		dest[b] = '\0';
-		return (srclen + destlen);
+		dest[j] = '\0';
+		return (tmp1 + tmp2);
 	}
-	return (srclen + n);
+	return (tmp2 + size);
 }

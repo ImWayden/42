@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_list.c                                    :+:      :+:    :+:   */
+/*   ft_lstadd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sraccah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/25 10:49:39 by sraccah           #+#    #+#             */
-/*   Updated: 2013/11/25 10:49:42 by sraccah          ###   ########.fr       */
+/*   Created: 2014/03/28 13:07:45 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/28 13:07:46 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "includes/libft.h"
 
-void	ft_print_list(t_list *list)
+void			ft_lstadd(t_list **alst, t_list *new)
 {
-	while (list)
+	if (new)
 	{
-		ft_putstr(list->str);
-		list = list->next;
+		new->next = *alst;
+		*alst = new;
 	}
 }

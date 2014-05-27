@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_malloc.c                                        :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/25 10:49:39 by sraccah           #+#    #+#             */
-/*   Updated: 2014/02/05 18:21:05 by sraccah          ###   ########.fr       */
+/*   Created: 2014/03/28 13:07:07 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/28 13:07:09 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "includes/libft.h"
 
-void		*ft_mymalloc(int size)
+void		ft_lstdelone(t_list **alst, void (*del)(void *, size_t))
 {
-	void		*tmp;
-
-	tmp = (void *)malloc(size);
-	if (tmp == NULL)
-		ft_exit("Error : could not malloc.\n");
-	return (tmp);
+	if (*alst)
+	{
+		del(&(*alst)->content, (*alst)->content_size);
+		(*alst)->next = NULL;
+		ft_memdel((void **)alst);
+	}
 }

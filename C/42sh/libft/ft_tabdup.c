@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strreverse.c                                    :+:      :+:    :+:   */
+/*   ft_tabdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/19 17:54:10 by sraccah           #+#    #+#             */
-/*   Updated: 2014/01/23 23:10:12 by sraccah          ###   ########.fr       */
+/*   Created: 2014/04/27 13:34:22 by msarr             #+#    #+#             */
+/*   Updated: 2014/04/27 13:34:24 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "includes/libft.h"
 
-char		*ft_strreverse(const char *s)
+char			**ft_tabdup(char **tab)
 {
-	char	*str;
-	int		i;
-	int		len;
+	int			i;
+	char		**dup;
 
 	i = 0;
-	len = ft_strlen(s);
-	str = (char *)malloc(sizeof(*str) * (len + 1));
-	while (s[i] != '\0')
+	dup = (char **)malloc(sizeof(char *) * (ft_tablen(tab) + 1));
+	while (dup && tab && tab[i])
 	{
-		str[i] = s[len - 1];
+		dup[i] = ft_strdup(tab[i]);
 		i++;
-		len--;
 	}
-	str[i] = '\0';
-	return (str);
+	return (dup);
 }

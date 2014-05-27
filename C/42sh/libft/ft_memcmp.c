@@ -3,28 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sraccah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/25 10:51:40 by sraccah           #+#    #+#             */
-/*   Updated: 2013/11/25 10:51:40 by sraccah          ###   ########.fr       */
+/*   Created: 2013/11/25 18:15:16 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 14:05:59 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "includes/libft.h"
 
-int			ft_memcmp(const void *dest, const void *src, size_t n)
+int		ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	char	*d;
-	char	*s;
+	char	*tmp1;
+	char	*tmp2;
 
-	d = (char *)dest;
-	s = (char *)src;
-	while (n--)
+	tmp1 = (char *)s1;
+	tmp2 = (char *)s2;
+	while (n)
 	{
-		if (*d != *s)
-			return (*d - *s);
-		d++;
-		s++;
+		if (*tmp1 != *tmp2)
+			return (*tmp1 - *tmp2);
+		tmp1++;
+		tmp2++;
+		n--;
 	}
-	return (0);
+	if (n == 0)
+		return (0);
+	else
+		return (*tmp1 - *tmp2);
 }

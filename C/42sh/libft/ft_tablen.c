@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_linelen.c                                       :+:      :+:    :+:   */
+/*   ft_tablen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/19 17:54:10 by sraccah           #+#    #+#             */
-/*   Updated: 2013/12/19 17:54:10 by sraccah          ###   ########.fr       */
+/*   Created: 2014/04/27 13:36:37 by msarr             #+#    #+#             */
+/*   Updated: 2014/04/27 13:36:39 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "includes/libft.h"
 
-int			ft_linelen(char const *str)
+size_t			ft_tablen(char **tab)
 {
-	int		i;
+	size_t		i;
 
 	i = 0;
-	while (str[i] != '\n')
+	while (tab && tab[i])
 		i++;
 	return (i);
 }

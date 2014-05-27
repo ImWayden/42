@@ -3,30 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sraccah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/25 16:19:01 by sraccah           #+#    #+#             */
-/*   Updated: 2013/11/25 16:19:01 by sraccah          ###   ########.fr       */
+/*   Created: 2013/11/24 14:13:47 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 14:33:03 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "includes/libft.h"
 
-char		*ft_strnstr(const char *dest, const char *src, size_t n)
+char		*ft_strnstr(const char *s1, const char *s2, size_t n)
 {
-	int		i;
+	size_t	j;
+	size_t	i;
+	int		k;
+	char	*tmp1;
+	char	*tmp2;
 
-	if (ft_strlen(src) == 0)
-		return ((char *)dest);
-	if ((i = n - ft_strlen(src) + 1) > (int)ft_strlen(dest))
-		i = ft_strlen(dest) - ft_strlen(src) + 1;
-	if (n > ft_strlen(src))
-		n = ft_strlen(src);
-	while (i-- > 0)
+	tmp1 = (char *)s1;
+	tmp2 = (char *)s2;
+	j = ft_strlen(tmp2);
+	i = ft_strlen(tmp1);
+	if (j == 0)
+		return (tmp1);
+	if ((k = n - j + 1) > (int)i)
+		k = i - j + 1;
+	if (n > j)
+		n = j;
+	while (k > 0)
 	{
-		if (ft_strncmp(dest, src, n) == 0)
-			return ((char *)dest);
-		dest++;
+		if (ft_strncmp(tmp1, tmp2, n) == 0)
+			return (tmp1);
+		tmp1++;
+		k--;
 	}
 	return (NULL);
 }

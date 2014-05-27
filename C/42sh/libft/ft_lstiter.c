@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_open.c                                          :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/25 10:49:39 by sraccah           #+#    #+#             */
-/*   Updated: 2014/01/23 23:18:08 by sraccah          ###   ########.fr       */
+/*   Created: 2014/03/28 13:39:12 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/28 13:39:25 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include "./includes/libft.h"
+#include "includes/libft.h"
 
-int			ft_open(char *str, int args)
+void ft_lstiter(t_list *lst, void (*f)(t_list *elem))
 {
-	int		fd;
-
-	fd = open(str, args);
-	if (fd == -1)
-		ft_exit("Error : could not open\n");
-	return (fd);
+	if (lst && lst->next)
+		f(lst->next);
+	else if (lst)
+		f(lst);
 }

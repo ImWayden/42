@@ -32,7 +32,7 @@ int					ft_floatlen(float n)
 	return (ft_lintlen(av) + ft_lintlen(bv));
 }
 
-char		*ft_lintoa(long int n)
+char				*ft_lintoa(long int n)
 {
 	long int		j;
 	char			*str;
@@ -58,10 +58,10 @@ char		*ft_lintoa(long int n)
 	return (str);
 }
 
-char		*ft_dtoa(double n, size_t i)
+char				*ft_dtoa(double n, size_t i)
 {
 	long int		k;
-	double   f;
+	double			f;
 
 	k = n / 1;
 	f = n - k;

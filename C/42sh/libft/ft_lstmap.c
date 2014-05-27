@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isint.c                                         :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/21 18:13:07 by sraccah           #+#    #+#             */
-/*   Updated: 2014/01/23 23:26:02 by sraccah          ###   ########.fr       */
+/*   Created: 2014/03/28 13:07:57 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/28 13:08:00 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "includes/libft.h"
 
-int			ft_isint(char *str)
+t_list		*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	int		i;
+	t_list	*list;
 
-	i = 0;
-	while (str[i])
+	if (lst && lst->next)
 	{
-		if (!ft_isdigit(str[i]))
-			return (-1);
-		i++;
+		list = ft_lstmap(lst->next, f);
+		ft_lstadd(&list, f(lst));
+		return (list);
 	}
-	if (ft_atoi(str))
-		return (0);
+	else if (lst)
+		return (f(lst));
 	else
-		return (-1);
+		return (lst);
 }

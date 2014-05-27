@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_addlink.c                                       :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/25 10:49:39 by sraccah           #+#    #+#             */
-/*   Updated: 2014/01/23 23:27:49 by sraccah          ###   ########.fr       */
+/*   Created: 2013/11/24 12:29:08 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 13:48:08 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "includes/libft.h"
 
-t_list		*ft_addlink(t_list *list, char *str)
+char		*ft_strndup(const char *s1, size_t n)
 {
-	t_list	*new_elem;
+	int		i;
+	char	*cpy;
 
-	new_elem = (t_list *)malloc(sizeof(t_list));
-	if (new_elem)
+	cpy = ft_strnew(n);
+	i = 0;
+	while (s1[i] && n)
 	{
-		new_elem->str = str;
-		new_elem->next = list;
+		cpy[i] = s1[i];
+		i++;
+		n--;
 	}
-	return (new_elem);
+	return (cpy);
 }

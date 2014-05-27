@@ -18,9 +18,7 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 
-SRC = $(SDIR)main.c $(SDIR)ft_init.c $(SDIR)ft_get.c $(SDIR)env_builtin.c \
-		$(SDIR)cd_builtin.c $(SDIR)ft_parselex.c $(SDIR)termcap.c \
-		$(SDIR)termcap1.c $(SDIR)needed.c\
+SRC = $(SDIR)lexer.c
 
 
 OBJ = $(SRC:.c=.o)

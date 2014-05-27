@@ -1,57 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                        :+:      :+:    :+:   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/19 17:54:10 by sraccah           #+#    #+#             */
-/*   Updated: 2013/12/19 17:54:10 by sraccah          ###   ########.fr       */
+/*   Created: 2013/11/21 15:03:59 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/03 00:12:54 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "includes/libft.h"
 
-static size_t	ft_intlen(size_t n)
+int			ft_intlen(int n)
 {
-	size_t		len;
+	int		i;
 
-	len = 0;
-	if (n <= 0)
-		len++;
-	while (n)
-	{
-		n = n / 10;
-		len++;
-	}
-	return (len);
+	i = 1;
+	if (n < 0)
+		i++;
+	while ((n = n / 10))
+		i++;
+	return (i);
 }
 
-char			*ft_itoa(int n)
+char		*ft_itoa(int n)
 {
-	char		*str;
-	char		c;
-	int			i;
-	size_t		len;
+	int		j;
+	char	*str;
 
-	i = 0;
-	len = ft_intlen(n);
-	str = ft_strnew(len + 1);
-	if (n == 0)
-		str[0] = '0';
-	else if (n < 0)
-		str[len - 1] = '-';
-	while (n)
+	j = ft_intlen(n);
+	str = ft_strnew(j);
+	if (n < 0)
+		*str = '-';
+	if (!n)
+		*str = '0';
+	while (str && n && j)
 	{
-		if (n < 0)
-			c = (n % 10) * -1 + '0';
-		else
-			c = n % 10 + '0';
+		j--;
+		str[j] = (n % 10) + '0';
 		n = n / 10;
-			str[i] = c;
-			i++;
 	}
-	str = ft_strreverse(str);
-	str[len] = '\0';
 	return (str);
 }
