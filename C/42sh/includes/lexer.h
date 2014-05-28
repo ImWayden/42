@@ -15,6 +15,14 @@
 
 # include "libft.h"
 
+typedef struct 				s_node
+{
+	int 					type;
+	char					*command;
+	char					*infile;
+	char					*outfilefile;
+} 							t_node;
+
 typedef struct	 		s_lexlist
 {
 	char				*str;
