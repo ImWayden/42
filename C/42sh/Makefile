@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+         #
+#    By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/22 14:52:23 by sraccah           #+#    #+#              #
-#    Updated: 2014/02/24 11:55:22 by sraccah          ###   ########.fr        #
+#    Updated: 2014/06/02 15:58:36 by mozzie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 
-SRC = $(SDIR)lexer.c
+SRC = $(SDIR)lexer.c $(SDIR)list.c
 
 
 OBJ = $(SRC:.c=.o)

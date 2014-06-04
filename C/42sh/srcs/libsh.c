@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   libsh.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/03/27 10:29:41 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/02 15:56:12 by mozzie           ###   ########.fr       */
+/*   Created: 2014/05/27 08:30:44 by msarr             #+#    #+#             */
+/*   Updated: 2014/06/02 15:23:21 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H_
-# define PARSER_H_
+#include "42sh.h"
 
-# include "libft.h"
-# include "my_42sh.h"
-
-typedef struct	 		s_lexlist
+int						is_operator(char c)
 {
-	char				*str;
-	struct s_lexlist	*next;
-	struct s_lexlist	*prev;
-}						t_lexlist;
-
-t_lexlist			*addlist(t_lexlist *list, char *str);
-
-#endif
+	if (c == '(' || c == ')' || c == '&' || c == '<' || c == '>' || c == '|' || c == ';')
+		return (1);
+	else
+		return (0);
+}
