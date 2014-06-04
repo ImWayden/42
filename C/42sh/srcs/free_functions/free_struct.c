@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_struct.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2014/06/04 13:41:21 by msarr             #+#    #+#             */
+/*   Updated: 2014/06/04 13:41:23 by msarr            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /*
 ** free_struct.c for dsf in /u/epitech_2014/strzel_a/cu
 ** 
@@ -19,45 +31,12 @@
 
 void		free_alias(t_alias *st_alias)
 {
-  t_alias	*tmp;
-
-  while (st_alias)
-    {
-      tmp = st_alias;
-      st_alias = st_alias->next;
-      xfree(tmp->alias);
-      xfree(tmp->cmd);
-      xfree(tmp);
-    }
 }
 
 void		free_history(t_hist *st_hist)
 {
-  t_hist	*tmp;
-
-  while (st_hist)
-    {
-      tmp = st_hist;
-      st_hist = st_hist->prev;
-      xfree(tmp->line);
-      xfree(tmp);
-    }
 }
 
 void		free_hreact(t_hreact *st_hreact)
 {
-  int		i;
-  t_hreact_cmd	tmp;
-
-  i = 0;
-  while (st_hreact && st_hreact->cmd && st_hreact->cmd[i].spe_cmd)
-    {
-      tmp = st_hreact->cmd[i];
-      xfree(tmp.spe_cmd);
-      i++;
-    }
-  if (st_hreact && st_hreact->cmd)
-    xfree(st_hreact->cmd);
-  if (st_hreact)
-    xfree(st_hreact);
 }

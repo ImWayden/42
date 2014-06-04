@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_tree.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2014/06/04 13:41:35 by msarr             #+#    #+#             */
+/*   Updated: 2014/06/04 13:41:37 by msarr            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /*
 ** free_tree.c for 42sh in /u/all/jorge_d/cu/svn/42shsvn/trunk/srcs/execution
 ** 
@@ -18,13 +30,4 @@
 
 void		free_tree(t_tree *begin)
 {
-  if (begin)
-    {
-      free_tree(begin->next);
-      free_tree(begin->right);
-      free_tree(begin->left);
-      free_table(begin->args);
-      xfree(begin->full_path);
-      xfree(begin);
-    }
 }
