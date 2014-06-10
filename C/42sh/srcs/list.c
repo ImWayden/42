@@ -6,11 +6,11 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/27 08:30:44 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/02 15:55:52 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/09 15:03:52 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "my_42sh.h"
 
 static t_lexlist	*ft_listnew(char *str)
 {

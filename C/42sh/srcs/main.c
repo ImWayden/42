@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/03/27 10:29:41 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/02 15:56:12 by mozzie           ###   ########.fr       */
+/*   Created: 2014/02/23 15:07:21 by sraccah           #+#    #+#             */
+/*   Updated: 2014/06/09 15:04:20 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H_
-# define PARSER_H_
+#include "my_42sh.h"
 
-# include "libft.h"
-# include "my_42sh.h"
-
-typedef struct	 		s_lexlist
+int				main(int ac, char **av, char **envp)
 {
-	char				*str;
-	struct s_lexlist	*next;
-	struct s_lexlist	*prev;
-}						t_lexlist;
+	t_env		*envs;
 
-t_lexlist			*addlist(t_lexlist *list, char *str);
-
-#endif
+	if (ac != 1)
+		ft_putendl("Usage: ./42sh");
+	else
+	{
+		av++;
+		ft_putendl("ok");
+		envs = env_to_list(envp);
+		aff_env(envs);
+	}
+	return (0);
+}

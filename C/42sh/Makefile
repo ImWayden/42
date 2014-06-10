@@ -6,7 +6,7 @@
 #    By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/22 14:52:23 by sraccah           #+#    #+#              #
-#    Updated: 2014/06/02 15:58:36 by mozzie           ###   ########.fr        #
+#    Updated: 2014/06/08 22:02:41 by mozzie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,10 @@ CC = gcc
 RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
+BDIR = srcs/builtins/
 
-SRC = $(SDIR)lexer.c $(SDIR)list.c
+SRC = $(SDIR)lexer.c $(SDIR)list.c $(SDIR)main.c \
+	  $(BDIR)env_to_list.c $(BDIR)aff_env.c $(BDIR)my_setenv.c 
 
 
 OBJ = $(SRC:.c=.o)

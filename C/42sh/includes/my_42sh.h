@@ -6,13 +6,10 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/23 14:47:56 by sraccah           #+#    #+#             */
-/*   Updated: 2014/02/24 23:09:36 by mozzie           ###   ########.fr       */
-/*   By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/02/23 14:47:56 by sraccah           #+#    #+#             */
-/*   Updated: 2014/02/23 19:32:59 by sraccah          ###   ########.fr       */
+/*   Updated: 2014/06/08 22:07:03 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MY_42SH_H
 # define MY_42SH_H
@@ -36,6 +33,13 @@
 ** Lists and Structures
 */
 
+typedef struct	 		s_lexlist
+{
+	char				*str;
+	struct s_lexlist	*next;
+	struct s_lexlist	*prev;
+}						t_lexlist;
+
 typedef struct			s_termlist
 {
 	char				*str;
@@ -43,14 +47,12 @@ typedef struct			s_termlist
 	struct s_termlist	*next;
 }						t_termlist;
 
-typedef struct 	s_env
+typedef struct 			s_env
 {
-	char		*path;
-	char		*user;
-	char		*home;
-	char		*pwd;
-	char		*oldpwd;
-}				t_env;
+	char				*name;
+	char				*arg;
+	struct s_env		*next;
+}						t_env;
 
 /*
 ** ft_init
@@ -59,6 +61,12 @@ typedef struct 	s_env
 void			ft_help(void);
 void			ft_welcome(void);
 void			ft_prompt(char **envs);
+
+/*
+** lexer and parser functions
+*/
+
+t_lexlist			*addlist(t_lexlist *list, char *str);
 
 /*
 ** ft_get
@@ -71,12 +79,17 @@ char			**ft_getenv(char **envp);
 void			ft_getcmd(char **av, char ***envs);
 
 /*
-** ft_builtin
+** builtin functions
 */
 
-char			**setenv_builtin(char **envs, char *name, char *value);
-char			**unsetenv_builtin(char **envs, char *name);
-char			**cd_builtin(char **av, char **envs);
+t_env			*add_env_list(t_env *list, char **str);
+void			aff_env(t_env *env);
+t_env			*env_listnew(char **str);
+t_env			*env_to_list(char	**env);
+t_env			*my_setenv(t_env **env, char *line);
+char			*get_env(t_env *env, char *str);
+int				**my_unsetenv(char **envs, char *name);
+int				**my_cd(char **av, char **envs);
 
 /*
 ** termcaps

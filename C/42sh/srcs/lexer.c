@@ -6,11 +6,11 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/27 08:30:44 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/02 15:57:36 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/08 15:35:38 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "my_42sh.h"
 
 static int			is_operator(char c)
 {
@@ -50,23 +50,4 @@ t_lexlist			*lexer(char *line)
 			line += get_operator(&list, line);
 	}
 	return (list);
-}
-
-int			main()
-{
-	t_lexlist		*list;
-	char			*str;
-
-	str = NULL;
-	list = NULL;
-	while (get_next_line(1, &str))
-	{
-		list = lexer(str);
-		while (list)
-		{
-			ft_putendl(list->str);
-			list = list->next;
-		}
-	}
-	return (0);
 }

@@ -3,16 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   aff_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/06/04 13:39:31 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/04 13:39:37 by msarr            ###   ########.fr       */
+/*   Updated: 2014/06/08 15:43:55 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "my_42sh.h"
 
-#include "builtins.h"
-
-int	          aff_env(t_tree *tree)
+void			aff_env(t_env *env)
 {
+	while (env)
+	{
+		ft_putstr(env->name);
+		ft_putstr("=");
+		ft_putendl(env->arg);
+		env = env->next;
+	}
 }
