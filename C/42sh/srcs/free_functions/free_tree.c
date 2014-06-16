@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/06/04 13:41:35 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/04 13:41:37 by msarr            ###   ########.fr       */
+/*   Updated: 2014/06/15 03:15:56 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@
 #include "parserll.h"
 #include "lib.h"
 
-void		free_tree(t_tree *begin)
+void		free_tree(t_tree *tree)
 {
+	if (tree)
+	{
+		free_tree(begin->next);
+		free_tree(begin->right);
+		free_tree(begin->left);
+		tabdel(begin);
+    }
+}
 }

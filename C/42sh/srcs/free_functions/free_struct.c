@@ -3,40 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   free_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/06/04 13:41:21 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/04 13:41:23 by msarr            ###   ########.fr       */
+/*   Updated: 2014/06/15 03:35:04 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** free_struct.c for dsf in /u/epitech_2014/strzel_a/cu
-** 
-** Made by alexandre strzelewicz
-** Login   <strzel_a@epitech.net>
-** 
-** Started on  Sat May 15 11:33:52 2010 alexandre strzelewicz
-** Last update Thu May 20 23:04:49 2010 julien di-marco
-*/
+#include "grammar.h"
 
-#include <sys/types.h>
-#include <sys/uio.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <errno.h>
-#include "42sh.h"
-#include "parserll.h"
-#include "lib.h"
-
-void		free_alias(t_alias *st_alias)
+void		free_lex(t_lex **lex)
 {
+	t_lex		*tmp;
+
+	if (*lex && (*lex)->next)
+		free_lex(&(*lex)->next)
+	if (*lex)
+	{
+		ft_memdel((void **)&(lex->str));
+		ft_memdel((void **)lex);
+	}
 }
 
-void		free_history(t_hist *st_hist)
+void		lex_delfirst(t_lex **lex)
 {
+	t_lex	*tmp;
+
+	if (lex && *lex)
+	{
+		*lex = lex->next;
+		ft_memdel((void **)&(lex->prev->str));
+		ft_memdel((void **)lex->prev);
+	}
 }
 
-void		free_hreact(t_hreact *st_hreact)
-{
-}

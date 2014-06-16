@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/23 14:47:56 by sraccah           #+#    #+#             */
-/*   Updated: 2014/06/08 22:07:03 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/11 19:38:27 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 # define MY_42SH_H
 
 # include <stdio.h>
-# include "libft.h"
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <stdlib.h>
@@ -28,17 +27,11 @@
 #include <fcntl.h>
 #include <term.h>
 # include "libft.h"
+# include "grammar.h"
 
 /*
 ** Lists and Structures
 */
-
-typedef struct	 		s_lexlist
-{
-	char				*str;
-	struct s_lexlist	*next;
-	struct s_lexlist	*prev;
-}						t_lexlist;
 
 typedef struct			s_termlist
 {
@@ -63,12 +56,6 @@ void			ft_welcome(void);
 void			ft_prompt(char **envs);
 
 /*
-** lexer and parser functions
-*/
-
-t_lexlist			*addlist(t_lexlist *list, char *str);
-
-/*
 ** ft_get
 */
 
@@ -87,9 +74,11 @@ void			aff_env(t_env *env);
 t_env			*env_listnew(char **str);
 t_env			*env_to_list(char	**env);
 t_env			*my_setenv(t_env **env, char *line);
+t_env			*my_unsetenv(t_env **env, char *line);
 char			*get_env(t_env *env, char *str);
-int				**my_unsetenv(char **envs, char *name);
 int				**my_cd(char **av, char **envs);
+void			env_delone(t_env **env);
+void			free_env(t_env **envc);
 
 /*
 ** termcaps

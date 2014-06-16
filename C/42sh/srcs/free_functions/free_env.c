@@ -3,29 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   free_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/06/04 13:41:07 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/04 13:41:10 by msarr            ###   ########.fr       */
+/*   Updated: 2014/06/10 14:50:20 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
-** free_env.c for 42sh in /u/all/jorge_d/cu/svn/42shsvn/trunk/srcs
-** 
-** Made by dimitri jorge
-** Login   <jorge_d@epitech.net>
-** 
-** Started on  Fri May  7 18:11:02 2010 dimitri jorge
-** Last update Thu May 20 18:12:24 2010 julien di-marco
+
+typedef struct 			s_env
+{
+	char				*name;
+	char				*arg;
+	struct s_env		*next;
+}						t_env;
+
 */
 
-#include <sys/types.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdio.h>
-#include "42sh.h"
+#include "my_42sh.h"
 
-void	free_env(t_env *begin)
+void	env_delone(t_env **envc)
 {
+	if (*envc)
+	{
+		ft_memdel((void **)&(*envc)->name);
+		ft_memdel((void **)&(*envc)->arg);
+		ft_memdel((void **)envc);
+	}
+}
+
+void	free_env(t_env **envc)
+{
+	if (*envc && (*envc)->next)
+		free_env(&(*envc)->next);
+	else if (*envc)
+		env_delone(envc);
 }

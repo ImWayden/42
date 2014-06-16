@@ -6,7 +6,7 @@
 #    By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/22 14:52:23 by sraccah           #+#    #+#              #
-#    Updated: 2014/06/08 22:02:41 by mozzie           ###   ########.fr        #
+#    Updated: 2014/06/13 18:33:32 by mozzie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,14 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 BDIR = srcs/builtins/
+FDIR = srcs/free_functions/
+PDIR = srcs/lexer_parser/
 
-SRC = $(SDIR)lexer.c $(SDIR)list.c $(SDIR)main.c \
-	  $(BDIR)env_to_list.c $(BDIR)aff_env.c $(BDIR)my_setenv.c 
+SRC = $(SDIR)main.c \
+	  $(BDIR)env_to_list.c $(BDIR)aff_env.c $(BDIR)my_setenv.c $(BDIR)my_unsetenv.c\
+	  $(FDIR)free_env.c \
+	  $(PDIR)grammar.c $(PDIR)grammar1.c $(PDIR)redir_syntax.c $(PDIR)syntax_error.c\
+	  $(PDIR)lexer.c
 
 
 OBJ = $(SRC:.c=.o)

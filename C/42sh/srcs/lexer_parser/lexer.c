@@ -6,21 +6,29 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/27 08:30:44 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/08 15:35:38 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/15 15:16:46 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "my_42sh.h"
+#include "grammar.h"
 
-static int			is_operator(char c)
+bool				is_ope(char c)
 {
-	if (c == '(' || c == ')' || c == '&' || c == '<' || c == '>' || c == '|' || c == ';')
-		return (1);
+	if (c == '<' || c == '>' || c == '|' || c == ';' || c == '&')
+		return (TRUE);
 	else
-		return (0);
+		return(FALSE);
 }
 
-static int			get_operator(t_lexlist **list, char *str)
+bool				is_space(char c)
+{
+	if (c == ' ' || c == '\t')
+		return (TRUE);
+	else
+		return(FALSE);
+}
+
+static int			get_operator(t_lex **list, char *str)
 {
 	if ((str[0] == '>' || str[0] == '|' || str[0] == '&') && str[0] == str[1])
 	{
@@ -31,22 +39,66 @@ static int			get_operator(t_lexlist **list, char *str)
 	return (1);
 }
 
-t_lexlist			*lexer(char *line)
+
+static t_lex		*ft_listnew(char *str)
 {
-	t_lexlist		*list;
+	t_lex			*list;
+
+	if ((list = (t_lex *)malloc(sizeof(t_lex))))
+	{
+		list->str = str;
+		list->next = NULL;
+		list->prev = NULL;
+	}
+	return (list);
+}
+
+void				free_lex(t_lex **lex)
+{
+	if (lex && (*lex) && (*lex)->next)
+		free_lex(&((*lex)->next));
+	if (lex && *lex)
+	{
+		ft_memdel((void **)&(*lex)->str);
+		ft_memdel((void **)lex);
+	}
+}
+
+t_lex			*addlist(t_lex *list, char *str)
+{
+	t_lex		*tmp;
+	t_lex		*tmp1;
+
+	tmp = ft_listnew(str);
+	if (!list)
+		list = tmp;
+	else
+	{
+		tmp1 = list;
+		while (tmp1->next)
+			tmp1 = tmp1->next;
+		tmp->prev = tmp1;
+		tmp1->next = tmp;
+	}
+	return (list);
+}
+
+t_lex			*lexer(char *line)
+{
+	t_lex		*list;
 	int				i;
 
 	list = NULL;
 	while (line && *line)
 	{
-		while (*line == ' ')
+		while (is_space(*line))
 			line++;
 		i = 0;
-		while (line[i] && !is_operator(line[i]))
+		while (line[i] && !is_ope(line[i]))
 			i++;
 		if (i && (list = addlist(list, ft_strndup(line, i))))
 			line = line + i;
-		if (is_operator(*line))
+		if (is_ope(*line))
 			line += get_operator(&list, line);
 	}
 	return (list);
