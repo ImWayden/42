@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/27 08:30:44 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/16 09:03:00 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/16 16:24:27 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_lex			*separate_lex(t_lex **lex)
 	return (tmp1);
 }
 
-static t_tree		*reset(t_tree **tree)
+static t_tree		*reset(t_tree **tree, t_lex **lexem)
 {
 	if (*tree)
 		free_tree(tree);
@@ -57,36 +57,27 @@ t_tree			*make_parsing(t_lex **lexem)
 	t_tree		*res;
 	t_tree		*tmp;
 
-	t.i = 0;
 	res = NULL;
-	if ((lex = separate_lex(lexem)) && !expression(&res, lex))
-		return (reset(res));
+	ft_putendl("ok");
+	if ((lex = separate_lex(lexem)) && !expression(&res, &lex))
+		return (reset(&res, lexem));
+	ft_putendl("ok");
 	tmp = res;
-	while ((lex = separate_tree(lexem)))
+	while ((lex = separate_lex(lexem)))
 	{
-		if (!expression(&(tmp->next), lex))
-			return (reset(tmp, board, len));
+		if (!expression(&(tmp->next), &lex))
+			return (reset(&tmp, lexem));
 		tmp = tmp->next;
 	}
 	free_lex(lexem);
 	return (res);
 }
-void		lexor_and_parsor(char *old, t_shell *st_shell)
-{
-  char		*new_line;
-  char		**board;
-  t_tree	*begin;
 
-  if (check_if_line_is_valid(old) != -1)
-    {
-      begin = NULL;
-      new_line = format_line(old);
-      if (new_line && (board = check_syntax_error(new_line)) != NULL)
-	{
-	  begin = make_parsing(board);
-	  st_shell->st_tree = begin;
-	}
-       free(new_line);
-    }
-  free(old);
+t_tree			*lexor_and_parsor(char *line)
+{
+	t_lex		*lex;
+
+	if (line && (lex = syntax_error(line)) != NULL)
+		return(make_parsing(&lex));
+	return (NULL);
 }

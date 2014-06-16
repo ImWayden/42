@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/23 14:47:56 by sraccah           #+#    #+#             */
-/*   Updated: 2014/06/15 03:59:13 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/16 17:34:35 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,20 @@ typedef struct			s_tree
 }						t_tree;
 
 /*
+** Library
+*/
+
+void			free_lex(t_lex **lex);
+void			free_tree(t_tree **tree);
+void			lex_delfirst(t_lex **lex);
+
+
+/*
 ** check type
 */
 
 bool			is_ope(char c);
+bool			is_word(char *str);
 bool			is_left_redir(char *);
 bool			is_right_redir(char *);
 bool			is_pipe(char *);
@@ -94,5 +104,34 @@ int				pipe_and_or_syntax(t_lex *lex);
 t_lex			*lexer(char *line);
 t_lex			*addlist(t_lex *list, char *str);
 void			free_lex(t_lex **lex);
+
+/*
+** parsing,c
+*/
+
+bool			alloc_tree(t_tree **, t_tree **);
+t_tree			*init_tree(void);
+t_tree			*make_parsing(t_lex **);
+t_tree			*lexor_and_parsor(char *line);
+
+/*
+** BNF
+*/
+
+bool			expression(t_tree **, t_lex **);
+bool			or_exp(t_tree **, t_lex **);
+bool			and_exp(t_tree **, t_lex **);
+bool			pipe_exp(t_tree **, t_lex **);
+bool			redir_exp(t_tree **, t_lex **);
+bool			redir_left_norm(t_tree **, t_lex **);
+bool			redir_left_spe(t_tree **, t_lex **);
+bool			redir_right(t_tree **, t_lex **);
+bool			redir_right_norm(t_tree **, t_lex **);
+bool			redir_right_spe(t_tree **, t_lex **);
+bool			command_exp(t_tree **, t_lex **);
+bool			cmd_exp(t_tree **, t_lex **);
+bool			args_exp(t_tree **, t_lex **);
+bool			file_exp(t_tree **, t_lex **);
+bool			special_case(t_tree **, t_lex **);
 
 #endif /* !MY_42SH_H */

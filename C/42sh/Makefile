@@ -6,7 +6,7 @@
 #    By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/22 14:52:23 by sraccah           #+#    #+#              #
-#    Updated: 2014/06/13 18:33:32 by mozzie           ###   ########.fr        #
+#    Updated: 2014/06/16 13:06:18 by mozzie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,9 +23,10 @@ PDIR = srcs/lexer_parser/
 
 SRC = $(SDIR)main.c \
 	  $(BDIR)env_to_list.c $(BDIR)aff_env.c $(BDIR)my_setenv.c $(BDIR)my_unsetenv.c\
-	  $(FDIR)free_env.c \
-	  $(PDIR)grammar.c $(PDIR)grammar1.c $(PDIR)redir_syntax.c $(PDIR)syntax_error.c\
-	  $(PDIR)lexer.c
+	  $(FDIR)free_env.c $(FDIR)free_struct.c $(FDIR)free_tree.c\
+	  $(PDIR)grammar.c $(PDIR)grammar1.c $(PDIR)grammar2.c $(PDIR)grammar3.c \
+	  $(PDIR)grammar4.c \
+	  $(PDIR)redir_syntax.c $(PDIR)syntax_error.c $(PDIR)lexer.c $(PDIR)parser.c
 
 
 OBJ = $(SRC:.c=.o)

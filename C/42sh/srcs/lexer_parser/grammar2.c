@@ -6,23 +6,24 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/27 08:30:44 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/15 21:55:25 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/16 16:32:06 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "grammar.h"
 
-bool		expression(t_tree **tree, lex_lex **lex)
+bool		expression(t_tree **tree, t_lex **lex)
 {
 	return (or_exp(tree, lex));
 }
 
-bool		or_exp(t_tree **tree, lex_lex **lex)
+bool		or_exp(t_tree **tree, t_lex **lex)
 {
 	t_tree	*new;
 
 	if (*lex && and_exp(tree, lex))
 	{
+		ft_putendl("ok");
 		if (*lex)
 		{
 			if (!strcmp((*lex)->str, OR_BIN))
@@ -43,7 +44,7 @@ bool		or_exp(t_tree **tree, lex_lex **lex)
 	return (FALSE);
 }
 
-bool		and_exp(t_tree **tree, lex_lex **lex)
+bool		and_exp(t_tree **tree, t_lex **lex)
 {
 	t_tree	*new;
 
@@ -66,7 +67,7 @@ bool		and_exp(t_tree **tree, lex_lex **lex)
 	return (FALSE);
 }
 
-bool		pipe_exp(t_tree **tree, lex_lex **lex)
+bool		pipe_exp(t_tree **tree, t_lex **lex)
 {
 	t_tree	*new;
 
@@ -76,13 +77,13 @@ bool		pipe_exp(t_tree **tree, lex_lex **lex)
 		{
 			if (!strcmp((*lex)->str, PIPE))
 			{
-				*lex = (*lex)->next
+				*lex = (*lex)->next;
 				if (!alloc_tree(&new, tree))
 					return (FALSE);
-				new->type = IS_PIPE;
+				new->ope = IS_PIPE;
 				new->right = *tree;
 				*tree = new;
-				return (pipe_exp(&(new->left), &(lex->next)));
+				return (pipe_exp(&(new->left), &(*lex)->next));
 			}
 			return (TRUE);
 		}
@@ -90,7 +91,7 @@ bool		pipe_exp(t_tree **tree, lex_lex **lex)
 	return (FALSE);
 }
 
-bool		redir_right_spe(t_tree **tree, lex_lex **lex)
+bool		redir_right_spe(t_tree **tree, t_lex **lex)
 {
 	t_tree	*new;
 
@@ -104,7 +105,7 @@ bool		redir_right_spe(t_tree **tree, lex_lex **lex)
 			? IS_D_RIGHT : IS_RIGHT;
 			new->right = *tree;
 			*tree = new;
-			return (command_exp(&(new->left), &(lex->next)));
+			return (command_exp(&(new->left), &(*lex)->next));
 		}
 	}
 	return (FALSE);

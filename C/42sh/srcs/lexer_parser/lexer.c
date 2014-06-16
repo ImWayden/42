@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/27 08:30:44 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/15 15:16:46 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/16 16:21:14 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,6 @@ static t_lex		*ft_listnew(char *str)
 		list->prev = NULL;
 	}
 	return (list);
-}
-
-void				free_lex(t_lex **lex)
-{
-	if (lex && (*lex) && (*lex)->next)
-		free_lex(&((*lex)->next));
-	if (lex && *lex)
-	{
-		ft_memdel((void **)&(*lex)->str);
-		ft_memdel((void **)lex);
-	}
 }
 
 t_lex			*addlist(t_lex *list, char *str)
