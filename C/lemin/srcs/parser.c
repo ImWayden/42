@@ -6,65 +6,97 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/17 14:58:41 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/17 01:24:18 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lemin.h"
+#include "lemin.h"
 
-void				recuproom(char *str, t_lem *pars, int *i)
+static int				ft_is(char *str, int c)
 {
-	char			**tab;
+	int					i;
 
-	tab = ft_strsplit(str, ' ');
-	if (*i == 1 || *i == 2)
+	i = 0;
+	while (str && str[i])
 	{
-		if (*i == 1)
-			pars->start = ft_strdup(tab[0]);
-		else
-			pars->end = ft_strdup(tab[0]);
-		*i = 3;
+		if (str[i] == c)
+			return (i);
+		i++;
 	}
-	pars->tab[hash(tab[0])] = allocroom(tab[0], pars);
-	deltab(&tab);
+	return (-1);
 }
 
-void				recuptab(char *str, t_lem *pars)
-{
-	char			**tab;
 
-	tab = ft_strsplit(str, '-');
-	addroom(pars->tab[hash(tab[0])], tab[1], pars);
-	addroom(pars->tab[hash(tab[1])], tab[0], pars);
-	deltab(&tab);
+static int			is_comment(char *str)
+{
+	if (str && str[0] == '#' && str[1] != '#')
+		return (1);
+	return (0);
+}
+
+static t_getline	*addlist(t_getline *list, char *str)
+{
+	t_getline	*tmp;
+	t_getline	*tmp1;
+
+	if ((tmp = (t_getline *)malloc(sizeof(t_getline))))
+	{
+		tmp->next = NULL;
+		tmp->str = ft_strdup(str);
+		tmp1 = list;
+		while (tmp1 && tmp1->next)
+			tmp1 = tmp1->next;
+		if (tmp1)
+			tmp1->next = tmp;
+		else
+			list = tmp;
+	}
+	return (list);
+}
+
+static t_getline	*lexor()
+{
+	char			*str;
+	t_getline		*list;
+
+	str = NULL;
+	list = NULL;
+	while (get_next_line(0, &str))
+	{
+		ft_putendl(str);
+		if (is_comment(str))
+			break ;
+		else if (str && (*str == 'L' || *str == '\0'))
+			return (list);
+		else if (str)
+			list = addlist(list, str);
+	}
+	return (list);
 }
 
 t_lem				*parse()
 {
 	t_lem			*pars;
-	int				i;
-	char			*str = NULL;
+	t_getline		*list;
 
-	i = 0;
-	pars = newlem();
-	while (getnextline(0, &str) && ft_strlen(str))
+	list = NULL;
+	if ((list == lexor()) && (pars = newlem()))
 	{
-		ft_putendl(str);
-		if (!i && *str != '#' && *str != 'L')
+		if (!(pars->j = ft_atoi(list->str)))
+			return (pars);
+		while ((list = list->next))
 		{
-			pars->j = ft_atoi(str);
-			i = 3;
+			if (!ft_strcmp(list->str, "##start"))
+				pars->start = ft_strdup(list->next->str);
+			if (!ft_strcmp(list->str, "##end"))
+				pars->end = ft_strdup(list->next->str);
+			else if (ft_is(list->str, ' '))
+				get_room(list->str, pars);
+			else if (ft_is(list->str, '-'))
+				get_tab(list->str, pars);
+			list = list->next;
 		}
-		else if (!ft_strcmp(str, "##start") && i)
-			i = 1;
-		else if (!ft_strcmp(str, "##end") && i)
-			i = 2;
-		else if (*str == '#' || *str == 'L');
-		else if (ft_is(str, ' ') && i)
-			recuproom(str, pars, &i);
-		else if (ft_is(str, '-') && i)
-			recuptab(str, pars);
-		ft_memdel((void **)&str);
+		return (pars);
 	}
-	return (pars);
+	return (NULL);
 }

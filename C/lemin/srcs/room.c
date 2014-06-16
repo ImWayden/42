@@ -6,11 +6,11 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/18 23:57:31 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/17 01:21:00 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lemin.h"
+#include "lemin.h"
 
 int				tabroomlen(t_lemroom **tabroom)
 {
@@ -31,7 +31,7 @@ void			putroom(t_lemroom *room, t_lemroom *room1, int j)
 	ft_putchar(' ');
 }
 
-t_lemroom		*allocroom(char *str, t_lem *lem)
+t_lemroom		*allocroom(char *str)
 {
 	t_lemroom	*room;
 
@@ -39,10 +39,7 @@ t_lemroom		*allocroom(char *str, t_lem *lem)
 	if (room)
 	{
 		room->name = ft_strdup(str);
-		if (lem->end && lem->end && !ft_strcmp(str, lem->end))
-			room->dist = 0;
-		else
-			room->dist = 10000;
+		room->dist = 0;
 		room->lem = 0;
 		room->step = 0;
 		room->tab = NULL;
@@ -50,32 +47,20 @@ t_lemroom		*allocroom(char *str, t_lem *lem)
 	return (room);
 }
 
-void			addroom(t_lemroom *room, char *str, t_lem *lem)
+void			addroom(t_lemroom *room, char *str)
 {
 	int			i;
 	t_lemroom	**tmp;
 
-	if (room && room->dist == 10000)
+	if (room)
 	{
-		if (!ft_strcmp(str, lem->end))
-		{
-			if (room->tab)
-				deltabroom(&(room->tab));
-			room->tab = alloctabroom(1);
-			room->tab[0] = lem->tab[hash(lem->end)];
-			room->dist = 1;
-		}
-		else if (ft_strcmp(str, lem->start))
-		{
-			i = tabroomlen(room->tab);
-			tmp = alloctabroom(i + 1);
-			if (tmp)
-				tmp[i] = allocroom(str, lem);
-			while (--i >= 0)
-				tmp[i] = room->tab[i];
-			free(room->tab);
-			room->tab = tmp;
-		}
+		i = tabroomlen(room->tab);
+		if ((tmp = alloctabroom(i + 1)))
+			tmp[i] = allocroom(str);
+		while (--i >= 0)
+			tmp[i] = room->tab[i];
+		deltabroom(&room->tab);
+		room->tab = tmp;
 	}
 }
 
@@ -88,10 +73,23 @@ void			delroom(t_lemroom **room)
 	{
 		if (*room && (*room)->tab && (*room)->tab[i])
 			deltabroom(&(*room)->tab);
-		if ((*room)->name != NULL)
+		if ((*room)->name)
 			ft_memdel((void **)&((*room)->name));
-		if (*room)
-			free(*room);
+		ft_memdel((void **)room);
 		*room = NULL;
 	}
+}
+
+void			deltabroom(t_lemroom ***room)
+{
+	int			i;
+
+	i = 0;
+	while (room && *room && *room[i])
+	{
+		delroom(&(*room)[i]);
+		i++;
+	}
+	if (room && *room)
+		ft_memdel((void **)room);
 }

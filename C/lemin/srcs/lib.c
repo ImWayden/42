@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lib.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/10 14:56:02 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/10 14:56:05 by msarr            ###   ########.fr       */
+/*   Updated: 2014/06/17 01:20:27 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lemin.h"
+#include "lemin.h"
 
 t_lem				*newlem(void)
 {
@@ -22,13 +22,15 @@ t_lem				*newlem(void)
 		pars->start = NULL;
 		pars->end = NULL;
 		pars->j = 0;
+		i = 0;
+		while (pars && pars->tab && i < 1000)
+		{
+			pars->tab[i] = NULL;
+			i++;
+		}
 	}
-	i = 0;
-	while (pars && pars->tab && i < 1000)
-	{
-		pars->tab[i] = NULL;
-		i++;
-	}
+	else
+		perror("newlem function :");
 	return (pars);
 }
 

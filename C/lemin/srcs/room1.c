@@ -6,26 +6,11 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/10 15:42:44 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/17 11:34:37 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/16 23:08:12 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
-
-void			deltabroom(t_lemroom ***room)
-{
-	int			i;
-
-	i = 0;
-	if (*room && *room[i])
-	{
-		delroom(&(*room)[i]);
-		i++;
-	}
-	if (*room)
-		free(*room);
-	*room = NULL;
-}
 
 t_lemroom		**alloctabroom(int i)
 {

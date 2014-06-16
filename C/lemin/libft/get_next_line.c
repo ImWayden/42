@@ -1,112 +1,107 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/02 17:32:20 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/04 13:34:51 by mozzie           ###   ########.fr       */
+/*   Updated: 2013/12/15 20:15:57 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
+#include "get_next_line.h"
 
-int						ft_is(char *str, int c)
+static int				ft_is(char *str, int c)
 {
 	int					i;
 
 	i = 0;
-	while (str && *str)
+	while (str && str[i])
 	{
-		if (*str == c)
+		if (str[i] == c)
 			return (i);
-		str++;
 		i++;
 	}
-	return (0);
+	return (-1);
 }
 
-static t_getline		*ft_search(t_getline *list, int fd, char **line)
+static t_getline		*ft_search(t_getline *list, int fd)
 {
 	t_getline			*tmp;
 
 	tmp = list;
-	while (tmp && tmp->next && tmp->fd != fd)
+	while (tmp && tmp->fd != fd)
 		tmp = tmp->next;
 	if (tmp && tmp->fd == fd)
-	{
-		*line = tmp->str;
 		return (tmp);
-	}
 	else
 		return (NULL);
 }
 
-int		readstr(t_getline *sd, char **line)
+static int				first(t_getline *sd, char **line)
 {
-	char	*tmp;
-	char	*tmp1;
-	int		ret;
+	char				*tmp;
+	int					ret;
 
 	tmp = ft_strnew(BUFF_SIZE);
-	while (sd && (ret = read(sd->fd, tmp, BUFF_SIZE)))
+	while ((ret = read(sd->fd, tmp, BUFF_SIZE)) > 0)
 	{
-		if (!ret)
-			return (0);
-		if ((ret = ft_is(tmp, '\n')))
+		ft_putstr(tmp);
+		if ((ret = ft_is(tmp, '\n')) >= 0)
 		{
 			tmp[ret] = '\0';
-			tmp1 = *line;
 			*line = ft_strjoin(*line, tmp);
-			ft_memdel((void **)&tmp1);
-			tmp1 = sd->str;;
 			sd->str = ft_strjoin(sd->str, &(tmp[ret + 1]));
-			ft_memdel((void **)&tmp1);
 			tmp[ret] = '\n';
-			ft_memdel((void **)&tmp);
 			return (1);
 		}
 		else
-			*line = ft_strjoin(*line, tmp);
-		ft_memdel((void **)&tmp);
+		*line = ft_strjoin(*line, tmp);
 	}
+	ft_putnbr(ret);
 	return (ret);
 }
 
-int		first(t_getline *sd, char **line)
+static int				next(t_getline *sd, char **line)
 {
-	char	*tmp;
-	int		ret;
-	int		i;
+	int					i;
+	int					ret;
 
-	if (sd && sd->str && (ret = ft_is(sd->str, '\n')))
+	if (sd->str && (ret = ft_is(sd->str, '\n')) >= 0)
 	{
 		i = ft_strlen(sd->str);
-		*line = ft_strsub(sd->str , 0, ret);
+		*line = ft_strsub(sd->str, 0, ret);
 		i = i - ft_strlen(*line);
-		tmp = sd->str;
 		sd->str = ft_strsub(sd->str, ret + 1, i);
-		ft_memdel((void **)&tmp);
 		return (1);
 	}
-	else if (sd && sd->str)
+	else if (sd->str)
 	{
-		*line = ft_strdup(sd->str);
-		ft_memdel((void **)&(sd->str));
+		*line = sd->str;
+		sd->str = NULL;
 	}
-	return (readstr(sd, line));
+	return (first(sd, line));
 }
 
-int						getnextline(int const fd, char **line)
+int						get_next_line(int const fd, char **line)
 {
 	static t_getline	*sd = NULL;
 	t_getline			*tmp;
 
-	tmp = ft_search(sd, fd, line);
+	tmp = ft_search(sd, fd);
 	if (tmp)
-		return (first(tmp, line));
+		return (next(tmp, line));
 	else
-		sd = ft_addlist(sd, NULL, fd);
+	{
+		tmp = (t_getline *)malloc(sizeof(t_getline));
+		if (tmp)
+		{
+			tmp->fd = fd;
+			tmp->str = NULL;
+			tmp->next = sd;
+			sd = tmp;
+		}
+	}
 	return (first(sd, line));
 }

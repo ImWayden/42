@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/02 17:42:23 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/17 01:22:59 by mozzie           ###   ########.fr       */
+/*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
+/*   Updated: 2014/06/17 01:21:09 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef					GET_NEXT_LINE_H
-# define				GET_NEXT_LINE_H
+#include "lemin.h"
 
-# include <fcntl.h>
-# include <unistd.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include "libft.h"
-
-typedef struct			s_getline
+void				get_room(char *str, t_lem *pars)
 {
-	int					fd;
-	char				*str;
-	struct s_getline	*next;
-}						t_getline;
+	char			**tab;
 
-int						get_next_line(int const fd, char **line);
+	tab = ft_strsplit(str, ' ');
+	pars->tab[hash(tab[0])] = allocroom(tab[0]);
+	deltab(&tab);
+}
 
-#endif
+void				get_tab(char *str, t_lem *pars)
+{
+	char			**tab;
+
+	tab = ft_strsplit(str, '-');
+	addroom(pars->tab[hash(tab[0])], tab[1]);
+	addroom(pars->tab[hash(tab[1])], tab[0]);
+	deltab(&tab);
+}

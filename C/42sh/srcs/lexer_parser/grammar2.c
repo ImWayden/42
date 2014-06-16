@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/27 08:30:44 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/16 16:32:06 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/16 22:35:27 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ bool		or_exp(t_tree **tree, t_lex **lex)
 
 	if (*lex && and_exp(tree, lex))
 	{
-		ft_putendl("ok");
 		if (*lex)
 		{
 			if (!strcmp((*lex)->str, OR_BIN))
@@ -33,7 +32,8 @@ bool		or_exp(t_tree **tree, t_lex **lex)
 				new->ope = IS_OR;
 				new->left = *tree;
 				*tree = new;
-				return (or_exp(&(new->right), &(*lex)->next));
+				*lex = (*lex)->next;
+				return (or_exp(&(new->right), lex);
 			}
 			else
 				return (FALSE);
@@ -105,7 +105,8 @@ bool		redir_right_spe(t_tree **tree, t_lex **lex)
 			? IS_D_RIGHT : IS_RIGHT;
 			new->right = *tree;
 			*tree = new;
-			return (command_exp(&(new->left), &(*lex)->next));
+			*lex = (*lex)->next;
+			return (command_exp(&(new->left), lex));
 		}
 	}
 	return (FALSE);

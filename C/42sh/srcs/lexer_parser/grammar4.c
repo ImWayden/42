@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/27 08:30:44 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/16 16:34:21 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/16 22:35:22 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,7 @@ bool		redir_right_norm(t_tree **tree, t_lex **lex)
 		{
 			if (!alloc_tree(&new, tree))
 				return (FALSE);
-			new->ope = (!strcmp((*lex)->str, D_RIGHT_R))
-			? IS_D_RIGHT : IS_RIGHT;
+			new->ope = (!strcmp((*lex)->str, D_RIGHT_R)) ? IS_D_RIGHT : IS_RIGHT;
 			new->left = *tree;
 			*tree = new;
 			*lex = (*lex)->next;

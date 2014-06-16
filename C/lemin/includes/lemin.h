@@ -6,15 +6,17 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/17 12:17:10 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/17 01:19:10 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef		LEMIN_H
 # define	LEMIN_H
 
-# include "../libft/includes/libft.h"
-# include "../libft/includes/get_next_line.h"
+# include <errno.h>
+# include <stdio.h>
+# include "libft.h"
+# include "get_next_line.h"
 
 /*
 ** Lists and Strutures
@@ -53,11 +55,13 @@ void					sort(t_lemroom **tabroom);
 void					moove(t_lemroom **tab, int k);
 void					deltabroom(t_lemroom ***room);
 int						tabroomlen(t_lemroom **tabroom);
-t_lemroom				*allocroom(char *str, t_lem *lem);
+t_lemroom				*allocroom(char *str);
 void					weight(t_lemroom *room, t_lem *lem);
 void					connect(t_lemroom *room, t_lem *lem);
+void					get_room(char *str, t_lem *pars);
+void					get_tab(char *str, t_lem *pars);
 t_lemroom				**allconnect(t_lemroom **room, t_lem *lem);
-void					addroom(t_lemroom *room, char *str, t_lem *lem);
+void					addroom(t_lemroom *room, char *str);
 t_lemroom				**recupnextroom(t_lemroom **tabroom, t_lem *lem);
 void					putroom(t_lemroom *room, t_lemroom *room1, int j);
 t_lemroom				**merge(t_lemroom ***tabroom, t_lemroom **tabroom1);

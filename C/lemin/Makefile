@@ -6,7 +6,7 @@
 #    By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/22 14:52:23 by msarr             #+#    #+#              #
-#    Updated: 2014/03/18 23:53:35 by mozzie           ###   ########.fr        #
+#    Updated: 2014/06/17 01:18:10 by mozzie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = lemin
@@ -17,11 +17,11 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 
-SRC = $(SDIR)lib.c $(SDIR)parser.c $(SDIR)room.c $(SDIR)room1.c \
+SRC = $(SDIR)lib.c $(SDIR)parser.c $(SDIR)room.c $(SDIR)room1.c $(SDIR)get.c\
 	  $(SDIR)lemin.c $(SDIR)way.c $(SDIR)main.c
 
 OBJ = $(SRC:.c=.o)
-INC = -I includes -I $(LDIR)includes
+INC = -I includes -I $(LDIR)/includes
 LIB = ./libft/libft.a
 CFLAGS = -Wall -Wextra -Werror -g 
 
