@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-static int				ft_is(char *str, int c)
+int						ft_is(char *str, int c)
 {
 	int					i;
 
@@ -47,7 +47,6 @@ static int				first(t_getline *sd, char **line)
 	tmp = ft_strnew(BUFF_SIZE);
 	while ((ret = read(sd->fd, tmp, BUFF_SIZE)) > 0)
 	{
-		ft_putstr(tmp);
 		if ((ret = ft_is(tmp, '\n')) >= 0)
 		{
 			tmp[ret] = '\0';
@@ -59,7 +58,6 @@ static int				first(t_getline *sd, char **line)
 		else
 		*line = ft_strjoin(*line, tmp);
 	}
-	ft_putnbr(ret);
 	return (ret);
 }
 

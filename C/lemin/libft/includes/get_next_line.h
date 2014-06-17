@@ -27,5 +27,6 @@ typedef struct			s_getline
 }						t_getline;
 
 int						get_next_line(int const fd, char **line);
+int						ft_is(char *str, int c);
 
 #endif

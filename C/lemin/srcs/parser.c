@@ -12,21 +12,6 @@
 
 #include "lemin.h"
 
-static int				ft_is(char *str, int c)
-{
-	int					i;
-
-	i = 0;
-	while (str && str[i])
-	{
-		if (str[i] == c)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-
 static int			is_comment(char *str)
 {
 	if (str && str[0] == '#' && str[1] != '#')
@@ -39,19 +24,18 @@ static t_getline	*addlist(t_getline *list, char *str)
 	t_getline	*tmp;
 	t_getline	*tmp1;
 
-	if ((tmp = (t_getline *)malloc(sizeof(t_getline))))
+	tmp = (t_getline *)malloc(sizeof(t_getline));
+	tmp->str = ft_strdup(str);
+	if (!list)
+		return (tmp);
+	else
 	{
-		tmp->next = NULL;
-		tmp->str = ft_strdup(str);
 		tmp1 = list;
 		while (tmp1 && tmp1->next)
 			tmp1 = tmp1->next;
-		if (tmp1)
-			tmp1->next = tmp;
-		else
-			list = tmp;
+		tmp1->next = tmp;
+		return (list);
 	}
-	return (list);
 }
 
 static t_getline	*lexor()
@@ -65,11 +49,12 @@ static t_getline	*lexor()
 	{
 		ft_putendl(str);
 		if (is_comment(str))
-			break ;
+			continue ;
 		else if (str && (*str == 'L' || *str == '\0'))
 			return (list);
 		else if (str)
 			list = addlist(list, str);
+		ft_memdel((void **)&str);
 	}
 	return (list);
 }
@@ -80,21 +65,22 @@ t_lem				*parse()
 	t_getline		*list;
 
 	list = NULL;
-	if ((list == lexor()) && (pars = newlem()))
+	if ((list = lexor()))
 	{
+		pars = newlem();
 		if (!(pars->j = ft_atoi(list->str)))
+			return (pars);
+		list = list->next;
+		if (!(get_start_end(list, pars)))
 			return (pars);
 		while ((list = list->next))
 		{
-			if (!ft_strcmp(list->str, "##start"))
-				pars->start = ft_strdup(list->next->str);
-			if (!ft_strcmp(list->str, "##end"))
-				pars->end = ft_strdup(list->next->str);
-			else if (ft_is(list->str, ' '))
+			if (ft_is(list->str, ' '))
 				get_room(list->str, pars);
 			else if (ft_is(list->str, '-'))
 				get_tab(list->str, pars);
-			list = list->next;
+			else
+				return (pars);
 		}
 		return (pars);
 	}

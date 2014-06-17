@@ -12,21 +12,45 @@
 
 #include "lemin.h"
 
-void				get_room(char *str, t_lem *pars)
+int				get_room(char *str, t_lem *pars)
 {
 	char			**tab;
 
-	tab = ft_strsplit(str, ' ');
-	pars->tab[hash(tab[0])] = allocroom(tab[0]);
-	deltab(&tab);
+	if ((tab = ft_strsplit(str, ' ') && tab[0])
+	{
+		pars->tab[hash(tab[0])] = allocroom(tab[0]);
+		deltab(&tab);
+		return (1);
+	}
+	return (0);
 }
 
-void				get_tab(char *str, t_lem *pars)
+int				get_tab(char *str, t_lem *pars)
 {
 	char			**tab;
 
-	tab = ft_strsplit(str, '-');
-	addroom(pars->tab[hash(tab[0])], tab[1]);
-	addroom(pars->tab[hash(tab[1])], tab[0]);
-	deltab(&tab);
+	if ((tab = ft_strsplit(str, '-')) && tab[0] && tab[1])
+	{
+		if (ft_strcmp(pars->end, tab[0]));
+		addroom(pars->tab[hash(tab[0])], tab[1]);
+		addroom(pars->tab[hash(tab[1])], tab[0]);
+		deltab(&tab);
+		return (1);
+	}
+	return (0);
+}
+
+int					get_start_end(t_getline *list, t_lem *pars)
+{
+	while (list)
+	{
+		if (!ft_strcmp(list->str, "##start"))
+			pars->start = ft_strdup(list->next->str);
+		if (!ft_strcmp(list->str, "##end"))
+			pars->end = ft_strdup(list->next->str);
+		list = list->next;
+	}
+	if (pars->start && pars->end)
+		return (1);
+	return (0);
 }
