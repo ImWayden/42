@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/17 01:21:00 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/18 13:37:08 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,22 @@ void			putroom(t_lemroom *room, t_lemroom *room1, int j)
 	ft_putstr("-");
 	ft_putstr(room1->name);
 	ft_putchar(' ');
+}
+
+void			putroomb(t_lemroom *room)
+{
+	int		i = 0;
+
+	if (room && room->tab)
+	{
+		while ((room->tab)[i])
+		{
+			putroomb((room->tab)[i]);
+			i++;
+		}
+	}
+	if (room)
+		ft_putendl(room->name);
 }
 
 t_lemroom		*allocroom(char *str)
@@ -58,7 +74,10 @@ void			addroom(t_lemroom *room, char *str)
 		if ((tmp = alloctabroom(i + 1)))
 			tmp[i] = allocroom(str);
 		while (--i >= 0)
+		{
 			tmp[i] = room->tab[i];
+			room->tab[i] = NULL;
+		}
 		deltabroom(&room->tab);
 		room->tab = tmp;
 	}
@@ -69,14 +88,19 @@ void			delroom(t_lemroom **room)
 	int			i;
 
 	i = 0;
-	if (*room)
+	if (room && *room)
 	{
-		if (*room && (*room)->tab && (*room)->tab[i])
-			deltabroom(&(*room)->tab);
+		if ((*room)->tab)
+		{
+			while ((*room)->tab[i])
+			{
+				delroom(&((*room)->tab[i]));
+				i++;
+			}
+		}
 		if ((*room)->name)
 			ft_memdel((void **)&((*room)->name));
 		ft_memdel((void **)room);
-		*room = NULL;
 	}
 }
 
@@ -85,7 +109,7 @@ void			deltabroom(t_lemroom ***room)
 	int			i;
 
 	i = 0;
-	while (room && *room && *room[i])
+	while (room && *room && (*room)[i])
 	{
 		delroom(&(*room)[i]);
 		i++;

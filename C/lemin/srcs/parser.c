@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/17 01:24:18 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/18 13:29:23 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static t_getline	*addlist(t_getline *list, char *str)
 
 	tmp = (t_getline *)malloc(sizeof(t_getline));
 	tmp->str = ft_strdup(str);
+	tmp->next = NULL;
 	if (!list)
 		return (tmp);
 	else
@@ -65,22 +66,23 @@ t_lem				*parse()
 	t_getline		*list;
 
 	list = NULL;
-	if ((list = lexor()))
+	if ((list = lexor()) && (pars = newlem()))
 	{
-		pars = newlem();
-		if (!(pars->j = ft_atoi(list->str)))
+		if (!(pars->j = ft_atoi(list->str)) || !(list = list->next)
+			|| !(get_start_end(list, pars)))
 			return (pars);
-		list = list->next;
-		if (!(get_start_end(list, pars)))
-			return (pars);
-		while ((list = list->next))
+		while (list)
 		{
-			if (ft_is(list->str, ' '))
-				get_room(list->str, pars);
-			else if (ft_is(list->str, '-'))
+			if (!ft_strcmp(list->str, "##start")
+				|| !ft_strcmp(list->str, "##end"))
+				list = list->next;
+			else if (ft_is(list->str, ' ') != -1)
+				get_room(list->str, pars, 3);
+			else if (ft_is(list->str, '-') != -1)
 				get_tab(list->str, pars);
 			else
 				return (pars);
+			list = list->next;
 		}
 		return (pars);
 	}

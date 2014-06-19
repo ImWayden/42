@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/17 01:19:10 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/18 11:08:27 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ typedef struct 			s_lem
 	t_lemroom			*tab[1000];
 	int					j;
 	char				*start;
+	t_lemroom			*lem_start;
+	t_lemroom			*lem_end;
 	char				*end;
 }						t_lem;
 
@@ -58,12 +60,14 @@ int						tabroomlen(t_lemroom **tabroom);
 t_lemroom				*allocroom(char *str);
 void					weight(t_lemroom *room, t_lem *lem);
 void					connect(t_lemroom *room, t_lem *lem);
-void					get_room(char *str, t_lem *pars);
-void					get_tab(char *str, t_lem *pars);
+int						get_room(char *str, t_lem *pars, int flag);
+int						get_tab(char *str, t_lem *pars);
+int						get_start_end(t_getline *list, t_lem *pars);
 t_lemroom				**allconnect(t_lemroom **room, t_lem *lem);
 void					addroom(t_lemroom *room, char *str);
 t_lemroom				**recupnextroom(t_lemroom **tabroom, t_lem *lem);
 void					putroom(t_lemroom *room, t_lemroom *room1, int j);
+void					putroomb(t_lemroom *room);
 t_lemroom				**merge(t_lemroom ***tabroom, t_lemroom **tabroom1);
 
 #endif/* !LEMIN_H */

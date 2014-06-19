@@ -3,21 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   way.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/19 13:59:59 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/19 14:00:02 by msarr            ###   ########.fr       */
+/*   Updated: 2014/06/18 14:29:28 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
+
+int				has_end(t_lemroom *room, t_lem *lem)
+{
+	int			i;
+
+	i = 0;
+	while (room && room->tab && room->tab[i])
+	{
+		if (!ft_strcmp((room->tab[i])->name, lem->end))
+		{
+			deltabroom(&(room->tab));
+			room->tab = alloctabroom(1);
+			(room->tab)[0] = lem->lem_end;
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 void			connect(t_lemroom *room, t_lem *lem)
 {
 	int			i;
 	t_lemroom	*room1;
 
-	if (room && room->dist == 10000)
+	if (has_end(room, lem))
+		return ;
+	if (room)
 	{
 		i = 0;
 		while (room && room->tab && room->tab[i])
@@ -26,7 +47,6 @@ void			connect(t_lemroom *room, t_lem *lem)
 			if (lem->tab[hash(room1->name)])
 			{
 				room->tab[i] = lem->tab[hash(room1->name)];
-				lem->tab[hash(room1->name)] = NULL;
 				delroom(&room1);
 				i++;
 			}

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_.c                                   :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/02 17:32:20 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/15 20:15:57 by msarr            ###   ########.fr       */
+/*   Updated: 2014/06/17 16:21:56 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static t_getline		*ft_search(t_getline *list, int fd)
 		return (NULL);
 }
 
-static int				first(t_getline *sd, char **line)
+static int				first(t_getline *sd, char **line, int *flag)
 {
 	char				*tmp;
 	int					ret;
@@ -56,12 +56,17 @@ static int				first(t_getline *sd, char **line)
 			return (1);
 		}
 		else
-		*line = ft_strjoin(*line, tmp);
+			*line = ft_strjoin(*line, tmp);
+	}
+	if (line && *line)
+	{
+		*flag = -1;
+		return (1);
 	}
 	return (ret);
 }
 
-static int				next(t_getline *sd, char **line)
+static int				next(t_getline *sd, char **line, int *flag)
 {
 	int					i;
 	int					ret;
@@ -79,17 +84,20 @@ static int				next(t_getline *sd, char **line)
 		*line = sd->str;
 		sd->str = NULL;
 	}
-	return (first(sd, line));
+	return (first(sd, line, flag));
 }
 
 int						get_next_line(int const fd, char **line)
 {
 	static t_getline	*sd = NULL;
 	t_getline			*tmp;
+	static int			flag = 1;
 
+	if (flag == -1)
+		return (0);
 	tmp = ft_search(sd, fd);
 	if (tmp)
-		return (next(tmp, line));
+		return (next(tmp, line, &flag));
 	else
 	{
 		tmp = (t_getline *)malloc(sizeof(t_getline));
@@ -101,5 +109,5 @@ int						get_next_line(int const fd, char **line)
 			sd = tmp;
 		}
 	}
-	return (first(sd, line));
+	return (first(sd, line, &flag));
 }
