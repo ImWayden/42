@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/18 11:08:27 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/19 14:43:19 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,9 @@ int						get_start_end(t_getline *list, t_lem *pars);
 t_lemroom				**allconnect(t_lemroom **room, t_lem *lem);
 void					addroom(t_lemroom *room, char *str);
 t_lemroom				**recupnextroom(t_lemroom **tabroom, t_lem *lem);
-void					putroom(t_lemroom *room, t_lemroom *room1, int j);
+void					putroom(t_lemroom *room, t_lemroom *room1);
 void					putroomb(t_lemroom *room);
+void				send(t_lemroom *room, t_lem *pars);
 t_lemroom				**merge(t_lemroom ***tabroom, t_lemroom **tabroom1);
 
 #endif/* !LEMIN_H */

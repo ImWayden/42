@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/18 13:37:08 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/19 14:11:19 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int				tabroomlen(t_lemroom **tabroom)
 	return (i);
 }
 
-void			putroom(t_lemroom *room, t_lemroom *room1, int j)
+void			putroom(t_lemroom *room, t_lemroom *room1)
 {
 	ft_putstr("L");
-	ft_putnbr(j - room->lem + 1);
+	ft_putnbr(room->lem);
 	ft_putstr("-");
 	ft_putstr(room1->name);
 	ft_putchar(' ');
@@ -55,7 +55,7 @@ t_lemroom		*allocroom(char *str)
 	if (room)
 	{
 		room->name = ft_strdup(str);
-		room->dist = 0;
+		room->dist = 1000;
 		room->lem = 0;
 		room->step = 0;
 		room->tab = NULL;

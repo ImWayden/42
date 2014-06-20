@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/10 15:52:26 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/18 14:34:38 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/19 16:12:48 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,26 @@ void				purge(t_lemroom **tab, t_lem *lem)
 void				lemin(t_lem *lem)
 {
 	t_lemroom		*room;
-	//int				i;
-	//t_lemroom		*room1;
-	t_lemroom		**tab;//
+	t_lemroom		**tab;
 
 	ft_putstr("SENDING LEMS....\n");
 	room = lem->lem_start;
-	//room1 = lem->lem_end;
-	room->lem = lem->j;
+	room->lem = 1;
 	connect(room, lem);
 	purge(room->tab, lem);
-	tab = allconnect(room->tab, lem);
-	if (!tab)
-		purge(room->tab, lem);
+	tab = room->tab;
+	while ((tab = allconnect(tab, lem)))
+		purge(tab, lem);
+	weight(room, lem);
+	if (room->dist < 1000)
+	{
+		while (lem->lem_end->lem < lem->j)
+		{
+			send(room, lem);
+			ft_putendl(NULL);
+			sleep(5);
+		}
+	}
+	else
+		ft_putcolorstr("WRONG MAP !\n", RED);
 }
