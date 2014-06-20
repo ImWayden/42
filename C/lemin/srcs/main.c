@@ -12,27 +12,16 @@
 
 #include "../includes/lemin.h"
 
-int 				main()
+int					main(void)
 {
 	t_lem			*lem;
 
 	lem = parse();
-	if (lem && lem->start && lem->end && lem->j)
-	{
+	if (lem && lem->j && lem->lem_start && lem->lem_end)
 		lemin(lem);
-		dellem(&lem);
-	}
-	else if (lem)
-	{
-		if (lem && !lem->start)
-			ft_putcolorstr("THERE IS NO START !\n", RED);
-		else if (lem && !lem->end)
-			ft_putcolorstr("THERE IS NO END !\n", RED);
-		else if (lem && !lem->j)
-			ft_putcolorstr("NO LEM TO SEND !\n", RED);
-		dellem(&lem);
-	}
 	else
-		ft_putcolorstr("WRONG MAP !\n", RED);
+		ft_putcolorstr("ERROR\n", RED);
+	dellem(&lem);
+	sleep(30);
 	return (0);
 }

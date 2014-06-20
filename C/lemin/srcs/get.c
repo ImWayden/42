@@ -56,7 +56,7 @@ int				get_tab(char *str, t_lem *pars)
 	return (0);
 }
 
-int					get_start_end(t_getline *list, t_lem *pars)
+int				get_start_end(t_getline *list, t_lem *pars)
 {
 	while (list)
 	{

@@ -39,7 +39,7 @@ static t_getline	*addlist(t_getline *list, char *str)
 	}
 }
 
-static t_getline	*lexor()
+static t_getline	*lexor(void)
 {
 	char			*str;
 	t_getline		*list;
@@ -60,16 +60,42 @@ static t_getline	*lexor()
 	return (list);
 }
 
-t_lem				*parse()
+static	void		dellist(t_getline **list)
+{
+	if (*list && (*list)->next)
+		dellist(&((*list)->next));
+	else if (*list)
+	{
+		ft_memdel((void **)&((*list)->str));
+		ft_memdel((void **)list);
+	}
+}
+
+static int			get(t_lem *pars, t_getline **lst)
+{
+	int				i;
+	t_getline		*list;
+
+	i = 1;
+	list = *lst;
+	if (!(pars->j = ft_atoi(list->str))
+		|| !(list = list->next)
+		|| !(get_start_end(list, pars)))
+		i = 0;
+	dellist(lst);
+	return (i);
+}
+
+t_lem				*parse(void)
 {
 	t_lem			*pars;
 	t_getline		*list;
 
 	list = NULL;
-	if ((list = lexor()) && (pars = newlem()))
+	if ((list = lexor())
+		&& (pars = newlem()))
 	{
-		if (!(pars->j = ft_atoi(list->str)) || !(list = list->next)
-			|| !(get_start_end(list, pars)))
+		if (!get(pars, &list))
 			return (pars);
 		while (list)
 		{

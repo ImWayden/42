@@ -12,41 +12,6 @@
 
 #include "lemin.h"
 
-int				tabroomlen(t_lemroom **tabroom)
-{
-	int		i;
-
-	i = 0;
-	while (tabroom && tabroom[i])
-		i++;
-	return (i);
-}
-
-void			putroom(t_lemroom *room, t_lemroom *room1)
-{
-	ft_putstr("L");
-	ft_putnbr(room->lem);
-	ft_putstr("-");
-	ft_putstr(room1->name);
-	ft_putchar(' ');
-}
-
-void			putroomb(t_lemroom *room)
-{
-	int		i = 0;
-
-	if (room && room->tab)
-	{
-		while ((room->tab)[i])
-		{
-			putroomb((room->tab)[i]);
-			i++;
-		}
-	}
-	if (room)
-		ft_putendl(room->name);
-}
-
 t_lemroom		*allocroom(char *str)
 {
 	t_lemroom	*room;
@@ -61,26 +26,6 @@ t_lemroom		*allocroom(char *str)
 		room->tab = NULL;
 	}
 	return (room);
-}
-
-void			addroom(t_lemroom *room, char *str)
-{
-	int			i;
-	t_lemroom	**tmp;
-
-	if (room)
-	{
-		i = tabroomlen(room->tab);
-		if ((tmp = alloctabroom(i + 1)))
-			tmp[i] = allocroom(str);
-		while (--i >= 0)
-		{
-			tmp[i] = room->tab[i];
-			room->tab[i] = NULL;
-		}
-		deltabroom(&room->tab);
-		room->tab = tmp;
-	}
 }
 
 void			delroom(t_lemroom **room)
@@ -104,6 +49,21 @@ void			delroom(t_lemroom **room)
 	}
 }
 
+t_lemroom		**alloctabroom(int i)
+{
+	t_lemroom	**tab;
+
+	if ((tab = (t_lemroom **)malloc(sizeof(t_lemroom *) * (i + 1))))
+		tab[i] = NULL;
+	i = 0;
+	while (tab && tab[i])
+	{
+		tab[i] = NULL;
+		i++;
+	}
+	return (tab);
+}
+
 void			deltabroom(t_lemroom ***room)
 {
 	int			i;
@@ -117,3 +77,4 @@ void			deltabroom(t_lemroom ***room)
 	if (room && *room)
 		ft_memdel((void **)room);
 }
+

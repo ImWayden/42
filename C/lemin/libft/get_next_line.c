@@ -42,6 +42,7 @@ static t_getline		*ft_search(t_getline *list, int fd)
 static int				first(t_getline *sd, char **line, int *flag)
 {
 	char				*tmp;
+	char				*tmp1;
 	int					ret;
 
 	tmp = ft_strnew(BUFF_SIZE);
@@ -50,14 +51,20 @@ static int				first(t_getline *sd, char **line, int *flag)
 		if ((ret = ft_is(tmp, '\n')) >= 0)
 		{
 			tmp[ret] = '\0';
+			tmp1 = *line;
 			*line = ft_strjoin(*line, tmp);
+			ft_memdel((void **)&tmp1);
+			tmp1 = sd->str;
 			sd->str = ft_strjoin(sd->str, &(tmp[ret + 1]));
+			ft_memdel((void **)&tmp1);
 			tmp[ret] = '\n';
+			ft_memdel((void **)&tmp);
 			return (1);
 		}
 		else
 			*line = ft_strjoin(*line, tmp);
 	}
+	ft_memdel((void **)&tmp);
 	if (line && *line)
 	{
 		*flag = -1;
@@ -70,13 +77,16 @@ static int				next(t_getline *sd, char **line, int *flag)
 {
 	int					i;
 	int					ret;
+	char				*tmp;
 
 	if (sd->str && (ret = ft_is(sd->str, '\n')) >= 0)
 	{
 		i = ft_strlen(sd->str);
+		tmp = sd->str;
 		*line = ft_strsub(sd->str, 0, ret);
 		i = i - ft_strlen(*line);
 		sd->str = ft_strsub(sd->str, ret + 1, i);
+		ft_memdel((void **)&tmp);
 		return (1);
 	}
 	else if (sd->str)

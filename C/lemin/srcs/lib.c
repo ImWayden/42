@@ -36,27 +36,27 @@ t_lem				*newlem(void)
 
 void				dellem(t_lem **lem)
 {
-	t_lem 			*tmp;
-	int 			i;
+	t_lem			*tmp;
+	int				i;
 
 	i = 0;
 	tmp = *lem;
 	ft_memdel((void **)&(tmp->end));
-	while ((*lem)->tab[i])
+	while (i < 1000)
 		delroom(&(*lem)->tab[i++]);
-	ft_memdel((void **)&(tmp->start));
+	ft_memdel((void **)&(tmp->lem_start));
+	ft_memdel((void **)&(tmp->lem_end));
 	ft_memdel((void **)&tmp);
 	tmp = NULL;
 }
 
-void					moove(t_lemroom **tab, int k)
+void				moove(t_lemroom **tab, int k)
 {
 	int				i;
 
-	i = tabroomlen(tab)  - 1;
+	i = tabroomlen(tab) - 1;
 	if (tab && tab[i] && tab[k])
 		ft_swap((void **)&(tab[i]), (void **)&(tab[k]));
-	delroom(&tab[i + 1]);
 	delroom(&tab[i]);
 }
 

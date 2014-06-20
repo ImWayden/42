@@ -12,24 +12,48 @@
 
 #include "../includes/lemin.h"
 
-t_lemroom		**alloctabroom(int i)
+void			addroom(t_lemroom *room, char *str)
 {
-	t_lemroom	**tab;
+	int			i;
+	t_lemroom	**tmp;
 
-	if ((tab = (t_lemroom **)malloc(sizeof(t_lemroom *) * (i + 1))))
-		tab[i] = NULL;
-	i = 0;
-	while (tab && tab[i])
+	if (room)
 	{
-		tab[i] = NULL;
-		i++;
+		i = tabroomlen(room->tab);
+		if ((tmp = alloctabroom(i + 1)))
+			tmp[i] = allocroom(str);
+		while (--i >= 0)
+		{
+			tmp[i] = room->tab[i];
+			room->tab[i] = NULL;
+		}
+		deltabroom(&room->tab);
+		room->tab = tmp;
 	}
-	return (tab);
 }
 
-void		tabroomcpy(t_lemroom **tab, t_lemroom **tab1, t_lemroom **tab2)
+void			putroom(t_lemroom *room, t_lemroom *room1)
+{
+	ft_putstr("L");
+	ft_putnbr(room->lem);
+	ft_putstr("-");
+	ft_putstr(room1->name);
+	ft_putchar(' ');
+}
+
+int				tabroomlen(t_lemroom **tabroom)
 {
 	int		i;
+
+	i = 0;
+	while (tabroom && tabroom[i])
+		i++;
+	return (i);
+}
+
+void			tabroomcpy(t_lemroom **tab, t_lemroom **tab1, t_lemroom **tab2)
+{
+	int			i;
 
 	i = 0;
 	while (tab && tab[i])
@@ -44,7 +68,7 @@ void		tabroomcpy(t_lemroom **tab, t_lemroom **tab1, t_lemroom **tab2)
 	}
 }
 
-t_lemroom	**merge(t_lemroom ***tabroom, t_lemroom **tabroom1)
+t_lemroom		**merge(t_lemroom ***tabroom, t_lemroom **tabroom1)
 {
 	int			i;
 	int			j;
