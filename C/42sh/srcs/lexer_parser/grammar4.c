@@ -6,25 +6,31 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/27 08:30:44 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/16 22:35:22 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/22 20:37:44 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "grammar.h"
 
-bool		redir_exp(t_tree **tree, t_lex **lex)
+bool		redir_right_spe(t_tree **tree, t_lex **lex)
 {
-	t_lex		*bkup;
+	t_tree	*new;
 
-	bkup = *lex;
-	ft_putendl("ok");
-	if (!redir_left_norm(tree, lex))
+	if (*lex && is_right_redir((*lex)->str))
 	{
-		*lex = bkup;
-		if (!redir_left_spe(tree, lex))
-			return (FALSE);
+		if (file_exp(tree, lex))
+		{
+			if (!alloc_tree(&new, tree))
+				return (FALSE);
+			new->ope = (!strcmp((*lex)->prev->prev->str, D_RIGHT_R)) 
+			? IS_D_RIGHT : IS_RIGHT;
+			new->right = *tree;
+			*tree = new;
+			*lex = (*lex)->next;
+			return (command_exp(&(new->left), lex));
+		}
 	}
-	return (TRUE);
+	return (FALSE);
 }
 
 bool		redir_left_norm(t_tree **tree, t_lex **lex)

@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/27 08:30:44 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/16 22:35:27 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/22 20:37:23 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ bool		or_exp(t_tree **tree, t_lex **lex)
 {
 	t_tree	*new;
 
-	if (*lex && and_exp(tree, lex))
+	if (and_exp(tree, lex))
 	{
-		if (*lex)
+		if (lex && *lex)
 		{
 			if (!strcmp((*lex)->str, OR_BIN))
 			{
@@ -50,7 +50,7 @@ bool		and_exp(t_tree **tree, t_lex **lex)
 
 	if (pipe_exp(tree, lex))
 	{
-		if (lex)
+		if (lex && *lex)
 		{
 			if (!strcmp((*lex)->str, AND_BIN))
 			{
@@ -59,10 +59,13 @@ bool		and_exp(t_tree **tree, t_lex **lex)
 				new->ope = IS_AND;
 				new->left = *tree;
 				*tree = new;
-				return (and_exp(&(new->right), &(*lex)->next));
+				*lex = (*lex)->next;
+				return (and_exp(&(new->right), lex));
 			}
-			return (TRUE);
+			else
+				return (FALSE);
 		}
+		return (TRUE);
 	}
 	return (FALSE);
 }
@@ -73,7 +76,7 @@ bool		pipe_exp(t_tree **tree, t_lex **lex)
 
 	if (redir_exp(tree, lex))
 	{
-		if (*lex)
+		if (lex && *lex)
 		{
 			if (!strcmp((*lex)->str, PIPE))
 			{
@@ -83,7 +86,7 @@ bool		pipe_exp(t_tree **tree, t_lex **lex)
 				new->ope = IS_PIPE;
 				new->right = *tree;
 				*tree = new;
-				return (pipe_exp(&(new->left), &(*lex)->next));
+				return (pipe_exp(&(new->left), lex));
 			}
 			return (TRUE);
 		}
@@ -91,23 +94,17 @@ bool		pipe_exp(t_tree **tree, t_lex **lex)
 	return (FALSE);
 }
 
-bool		redir_right_spe(t_tree **tree, t_lex **lex)
+bool		redir_exp(t_tree **tree, t_lex **lex)
 {
-	t_tree	*new;
+	t_lex		*bkup;
 
-	if (*lex && is_right_redir((*lex)->str))
+	bkup = *lex;
+	ft_putendl("ok");
+	if (!redir_left_norm(tree, lex))
 	{
-		if (file_exp(tree, lex))
-		{
-			if (!alloc_tree(&new, tree))
-				return (FALSE);
-			new->ope = (!strcmp((*lex)->prev->prev->str, D_RIGHT_R)) 
-			? IS_D_RIGHT : IS_RIGHT;
-			new->right = *tree;
-			*tree = new;
-			*lex = (*lex)->next;
-			return (command_exp(&(new->left), lex));
-		}
+		*lex = bkup;
+		if (!redir_left_spe(tree, lex))
+			return (FALSE);
 	}
-	return (FALSE);
+	return (TRUE);
 }
