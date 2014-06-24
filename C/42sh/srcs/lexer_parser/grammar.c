@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
+#include "my_42sh.h"
 
 bool		is_left_redir(char *str)
 {

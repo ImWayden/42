@@ -35,7 +35,8 @@ int				main(int ac, char **av)
 		av++;
 		line = NULL;
 		get_next_line(1, &line);
-		tree = lexor_and_parsor(line);
+		if ((tree = lexor_and_parsor(line)))
+			ft_putendl("OK");
 		put_tree(tree);
 	}
 	return (0);

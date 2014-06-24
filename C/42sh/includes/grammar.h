@@ -10,11 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #ifndef GRAMMAR_H
 # define GRAMMAR_H
-
-# include "my_42sh.h"
 
 /*
 ** Define Redirection
@@ -49,6 +46,18 @@
 # define IS_D_LEFT 6
 # define IS_AND 7
 # define IS_OR 8
+# ifndef bool
+#  define bool _Bool
+# endif
+# ifndef TRUE
+#  define TRUE 1
+# endif
+# ifndef FALSE
+#  define FALSE 0
+# endif
+
+# include <unistd.h>
+# include <stdio.h>
 
 typedef struct	 		s_lex
 {
@@ -57,10 +66,10 @@ typedef struct	 		s_lex
 	struct s_lex		*prev;
 }						t_lex;
 
-
 typedef struct			s_tree
 {
 	int					ope;
+	int 				fd[2];
 	char				**argv;
 	struct s_tree		*left;
 	struct s_tree		*right;

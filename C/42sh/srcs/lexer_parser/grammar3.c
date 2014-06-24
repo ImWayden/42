@@ -11,60 +11,116 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
+#include "my_42sh.h"
 
-bool		command_exp(t_tree **tree, t_lex **lex)
+bool		redir_left_norm(t_tree **tree, t_lex **lex)
 {
+	bool	ret;
 	t_tree	*new;
 
-	if (*lex && is_word((*lex)->str))
+	if (redir_right(tree, lex))
 	{
-		if (!alloc_tree(&new, tree))
+		if (*lex)
+		{
+			if (is_left_redir((*lex)->str))
+			{
+				if (!alloc_tree(&new, tree))
+					return (FALSE);
+				new->ope = (!strcmp((*lex)->str, D_LEFT_R))
+				? IS_D_LEFT : IS_LEFT;
+				new->left = *tree;
+				*tree = new;
+				*lex = (*lex)->next;
+				ret = file_exp(&(new->right), lex);
+				return ((is_right_redir((*lex)->str))
+					? special_case(tree, lex) : ret);
+			}
 			return (FALSE);
-		new->ope = IS_CMD;
-		if (!(new->argv = ft_strsplit((*lex)->str, ' ')))
-			return (FALSE);
-		*lex = (*lex)->next;
-		*tree = new;
+		}
 		return (TRUE);
 	}
 	return (FALSE);
 }
 
-bool		is_word(char *str)
+bool		redir_left_spe(t_tree **tree, t_lex **lex)
 {
-	if (str && !is_redir_or_sep(str))
-		return (TRUE);
-	return (FALSE);
-}
-
-
-bool		file_exp(t_tree **tree, t_lex **lex)
-{
+	bool	ret;
 	t_tree	*new;
 
-	if (*lex && is_word((*lex)->str))
+	if (is_left_redir((*lex)->str))
 	{
-		if (!alloc_tree(&new, tree))
-			return (FALSE);
-		new->ope = IS_FILE;
-		if (!(new->argv = ft_strsplit((*lex)->str, ' ')))
-			return (FALSE);
-		*lex = (*lex)->next;
-		*tree = new;
-		return (TRUE);
+		if (*lex)
+			*lex = (*lex)->next;
+		if (file_exp(tree, lex))
+		{
+			if (!alloc_tree(&new, tree))
+				return (FALSE);
+			new->ope = (!strcmp((*lex)->prev->prev->str, D_LEFT_R))
+			? IS_D_LEFT : IS_LEFT;
+			new->right = *tree;
+			*tree = new;
+			ret = command_exp(&(new->left), lex);
+			return ((is_right_redir((*lex)->str)
+				? special_case(tree, lex) : ret));
+		}
 	}
 	return (FALSE);
 }
 
-bool		special_case(t_tree **tree, t_lex **lex)
+bool		redir_right(t_tree **tree, t_lex **lex)
+{
+	t_lex	*bkup;
+
+	bkup = *lex;
+	if (!redir_right_norm(tree, lex))
+	{
+		*lex = bkup;
+		return (redir_right_spe(tree, lex));
+	}
+	return (TRUE);
+}
+
+bool		redir_right_norm(t_tree **tree, t_lex **lex)
 {
 	t_tree	*new;
 
-	if (!alloc_tree(&new, tree))
-		return (FALSE);
-	new->ope = (!strcmp((*lex)->str, D_RIGHT_R)) ? IS_D_RIGHT : IS_RIGHT;
-	new->left = *tree;
-	*tree = new;
-	*lex = (*lex)->next;
-	return (file_exp(&(new->right), lex));
+	if (command_exp(tree, lex))
+	{
+		if (*lex && is_right_redir((*lex)->str))
+		{
+			ft_putendl("HERE");
+			if (!alloc_tree(&new, tree))
+				return (FALSE);
+			new->ope = (!strcmp((*lex)->str, D_RIGHT_R)) ? IS_D_RIGHT : IS_RIGHT;
+			ft_putnbr(new->ope);
+			new->left = *tree;
+			*tree = new;
+			*lex = (*lex)->next;
+			return (file_exp(&(new->right), lex));
+		}
+		if (!(*lex))
+			return (TRUE);
+	}
+	return (FALSE);
+}
+
+bool		redir_right_spe(t_tree **tree, t_lex **lex)
+{
+	t_tree	*new;
+
+	if (*lex && is_right_redir((*lex)->str))
+	{
+		*lex = (*lex)->next;
+		if (file_exp(tree, lex))
+		{
+			if (!alloc_tree(&new, tree))
+				return (FALSE);
+			new->ope = (!strcmp((*lex)->prev->prev->str, D_RIGHT_R)) 
+			? IS_D_RIGHT : IS_RIGHT;
+			new->right = *tree;
+			*tree = new;
+			return (command_exp(&(new->left), lex));
+		}
+	}
+	return (FALSE);
 }

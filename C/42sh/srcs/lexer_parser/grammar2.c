@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
+#include "my_42sh.h"
 
 bool		expression(t_tree **tree, t_lex **lex)
 {
@@ -33,7 +34,7 @@ bool		or_exp(t_tree **tree, t_lex **lex)
 				new->left = *tree;
 				*tree = new;
 				*lex = (*lex)->next;
-				return (or_exp(&(new->right), lex);
+				return (or_exp(&(new->right), lex));
 			}
 			else
 				return (FALSE);
@@ -80,16 +81,18 @@ bool		pipe_exp(t_tree **tree, t_lex **lex)
 		{
 			if (!strcmp((*lex)->str, PIPE))
 			{
-				*lex = (*lex)->next;
 				if (!alloc_tree(&new, tree))
 					return (FALSE);
 				new->ope = IS_PIPE;
 				new->right = *tree;
 				*tree = new;
+				*lex = (*lex)->next;
 				return (pipe_exp(&(new->left), lex));
 			}
-			return (TRUE);
+			else
+				return (FALSE);
 		}
+		return (TRUE);
 	}
 	return (FALSE);
 }
@@ -99,12 +102,10 @@ bool		redir_exp(t_tree **tree, t_lex **lex)
 	t_lex		*bkup;
 
 	bkup = *lex;
-	ft_putendl("ok");
 	if (!redir_left_norm(tree, lex))
 	{
 		*lex = bkup;
-		if (!redir_left_spe(tree, lex))
-			return (FALSE);
+		return(redir_left_spe(tree, lex));
 	}
 	return (TRUE);
 }

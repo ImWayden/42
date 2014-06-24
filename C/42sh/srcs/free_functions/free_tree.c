@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "grammar.h"
+#include "my_42sh.h"
 
 bool		alloc_tree(t_tree **new, t_tree **tree)
 {

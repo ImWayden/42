@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
+#include "my_42sh.h"
 
 static t_lex	*set_error_msg(int flag, t_lex **lex)
 {
