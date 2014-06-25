@@ -21,15 +21,18 @@ BDIR = srcs/builtins/
 FDIR = srcs/free_functions/
 PDIR = srcs/lexer_parser/
 IDIR = srcs/init/
+EDIR = srcs/execution/
 
 SRC = $(SDIR)main.c \
-	  $(BDIR)env_to_list.c $(BDIR)aff_env.c $(BDIR)my_setenv.c $(BDIR)my_unsetenv.c\
-	  $(BDIR)env_to_tab.c $(BDIR)get_env.c\
+	  $(BDIR)env_to_list.c $(BDIR)aff_env.c $(BDIR)setenv.c $(BDIR)unsetenv.c\
+	  $(BDIR)env_to_tab.c $(BDIR)get_env.c $(BDIR)builtins_center.c $(BDIR)cd.c\
 	  $(FDIR)free_env.c $(FDIR)free_struct.c $(FDIR)free_tree.c\
 	  $(PDIR)grammar.c $(PDIR)grammar1.c $(PDIR)grammar2.c $(PDIR)grammar3.c \
 	  $(PDIR)grammar4.c \
 	  $(PDIR)redir_syntax.c $(PDIR)syntax_error.c $(PDIR)lexer.c $(PDIR)parser.c \
-	  $(IDIR)ft_init.c
+	  $(IDIR)ft_init.c \
+	  $(EDIR)execution.c $(EDIR)prep_cmd.c $(EDIR)xcommand.c $(EDIR)xpipe.c \
+	  $(EDIR)xleft_redir.c $(EDIR)xpipe2.c $(EDIR)xright_redir.c
 
 
 OBJ = $(SRC:.c=.o)

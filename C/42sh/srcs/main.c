@@ -12,7 +12,7 @@
 
 #include "my_42sh.h"
 
-static void			put_tree(t_tree *tree)
+/*static void			put_tree(t_tree *tree)
 {
 	if (tree)
 	{
@@ -21,12 +21,11 @@ static void			put_tree(t_tree *tree)
 		ft_putnbr(tree->ope);
 	}
 }
-
+*/
 int				main(int ac, char **av, char **env)
 {
 	t_shell		*shell;
 	char		*line;
-	t_tree		*tree;
 
 	if (ac != 1)
 		ft_putendl("Usage: ./42sh");
@@ -37,11 +36,11 @@ int				main(int ac, char **av, char **env)
 		shell = init(env);
 		
 		re_init(shell);
-		sleep(5);
 		ft_putstr(shell->prompt);
 		get_next_line(1, &line);
-		if ((tree = lexor_and_parsor(line)))
-		put_tree(tree);
+		if ((shell->tree = lexor_and_parsor(line)))
+			ft_putendl("finish parse");
+			main_execution(shell);
 	}
 	return (0);
 }

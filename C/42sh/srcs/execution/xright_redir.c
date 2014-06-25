@@ -13,21 +13,21 @@
 #include "grammar.h"
 #include "my_42sh.h"
 
-static int	open_file(char *name, int type)
+static int	open_file(char *name, int ope)
 {
 	int		fd;
 
 	fd = -1;
-	if (type == IS_D_RIGHT)
+	if (ope == IS_D_RIGHT)
 		fd = open(name, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else if (type == IS_RIGHT)
+	else if (ope == IS_RIGHT)
 		fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 		perror("42sh : open");
 	return (fd);
 }
 
-int		execute_right_redir_spe(t_tree *tree, t_shell *st_shell)
+int		execute_right_redir_spe(t_tree *tree, t_shell *shell)
 {
 	int		fd;
 	t_tree	*file;
@@ -37,13 +37,13 @@ int		execute_right_redir_spe(t_tree *tree, t_shell *st_shell)
 	cmd = tree->left;
 	if (!file || !cmd)
 		return (EXIT_FAILURE);
-	if ((fd = _open_file(file->args[0], tree->type)) == -1)
+	if ((fd = open_file(file->argv[0], tree->ope)) == -1)
 		return (EXIT_FAILURE);
 	set_fd_out(cmd, fd);
-	return (execute_last_command(tree->left, st_shell));
+	return (execute_last_command(tree->left, shell));
 }
 
-int		right_redirection(t_tree *tree, t_shell *st_shell)
+int		right_redirection(t_tree *tree, t_shell *shell)
 {
 	int		fd;
 	t_tree	*file;
@@ -53,8 +53,8 @@ int		right_redirection(t_tree *tree, t_shell *st_shell)
 	cmd = tree->left;
 	if (!file || !cmd)
 		return (FATAL_ERROR);
-	if ((fd = _open_file(tree->right->args[0], tree->type)) == -1)
+	if ((fd = open_file(tree->right->argv[0], tree->ope)) == -1)
 		return (EXIT_FAILURE);
 	set_fd_out(tree->left, fd);
-	return (execute_it(tree->left, st_shell));
+	return (execute_it(tree->left, shell));
 }

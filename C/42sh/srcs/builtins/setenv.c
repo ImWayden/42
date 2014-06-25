@@ -12,26 +12,31 @@
 
 #include "my_42sh.h"
 
-t_env				*my_setenv(t_env **env, char *line)
+int					ft_setenv(t_shell *shell, t_tree *tree)
 {
 	t_env			*envc;
 	char			**args;
 
-	envc = *env;
-	args = ft_strsplit(line, ' ');
+	envc = shell->env;
+	args = tree->argv;
 	if (!envc)
-		return (env_listnew(args));
+		shell->env = env_listnew(args);
 	else
 	{
-		if (args && args[0] && args[1])
+		if (args && args[1] && args[2] && !args[3])
 		{
-			while (envc && envc->next && ft_strcmp(envc->name, args[0]))
+			while (envc && envc->next && ft_strcmp(envc->name, args[1]))
 				envc = envc->next;
-			if (!ft_strcmp(envc->name, args[0]))
-				envc->arg = args[0];
+			if (!ft_strcmp(envc->name, args[1]))
+				envc->arg = ft_strdup(args[0]);
 			else
 				envc->next = env_listnew(args);
 		}
-		return (*env);
+		else
+		{
+			ft_putmsg("setenv", " : wrong line format.\n");
+			return (EXIT_FAILURE);
+		}
 	}
+	return (EXIT_SUCCESS);
 }

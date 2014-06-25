@@ -12,16 +12,16 @@
 
 #include "my_42sh.h"
 
-t_env				*my_unsetenv(t_env **env, char *line)
+int					ft_unsetenv(t_shell *shell, t_tree *tree)
 {
 	t_env			*envc;
 	t_env			*tmp;
 	char			*args;
 
-	envc = *env;
+	envc = shell->env;
 	if (envc)
 	{
-		args = ft_strtrim(line);
+		args = (tree->argv)[1];
 		if (args)
 		{
 			while (envc && envc->next && ft_strcmp(envc->name, args))
@@ -33,9 +33,9 @@ t_env				*my_unsetenv(t_env **env, char *line)
 			{
 				tmp->next = envc->next;
 				env_delone(&envc);
+				return (EXIT_SUCCESS);
 			}
 		}
-		return (*env);
 	}
-	return (envc);
+	return (EXIT_FAILURE);
 }

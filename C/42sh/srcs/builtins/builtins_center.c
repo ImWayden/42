@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_cd.c                                            :+:      :+:    :+:   */
+/*   builtins_center.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,26 +12,33 @@
 
 #include "my_42sh.h"
 
-int					**my_cd(char **av, t_env *envs)
+int				is_builtin(char *cmd)
 {
-	int				i;
-	char			*buff;
-	char			*pwd;
+	if (!(ft_strcmp(cmd, "cd"))
+	|| !(ft_strcmp(cmd, "unsetenv"))
+	|| !(ft_strcmp(cmd, "setenv"))
+	|| !(ft_strcmp(cmd, "env")))
+		return (1);
+	return (0);
+}
 
-	pwd = get_env(envs, "PWD");
-	if (av[1] == NULL || !ft_strcmp(av[1], "~") || !ft_strcmp(av[1], "~/"))
-		av[1] = get_env(envs, "HOME"));
-	else if (!ft_strcmp(av[1], "-"))
-		av[1] = get_env(envs, "OLDPWD");
-	if (chdir(av[1]) == -1)
+int			builtins_center(t_shell *shell, t_tree *tree)
+{
+	char		**argv;
+	int		i;
+
+	i = 0;
+	argv = tree->argv;
+	if (argv && argv[0])
 	{
-		ft_print_error("cd : No such file or directory.");
-		return (0);
+    	if (!(ft_strcmp(argv[0], "cd")))
+			return (cd(shell, tree));
+		if (!(ft_strcmp(argv[0], "unsetenv")))
+			return (ft_unsetenv(shell, tree));
+		if (!(ft_strcmp(argv[0], "setenv")))
+			return (ft_setenv(shell, tree));
+		if (!(ft_strcmp(argv[0], "env")))
+			return (aff_env(shell, tree));
 	}
-	else
-	{
-		my_setenv(envs, "OLDPWD", pwd);
-		my_setenv(envs, "PWD", av[1]);
-	}
-	return (1);
+  	return (EXIT_FAILURE);
 }

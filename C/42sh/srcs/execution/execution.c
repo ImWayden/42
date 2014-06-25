@@ -13,37 +13,37 @@
 #include "grammar.h"
 #include "my_42sh.h"
 
-int			execute_it(t_tree *tree, t_shell *st_shell)
+int			execute_it(t_tree *tree, t_shell *shell)
 {
-	if (tree->type == IS_OR && execute_it(tree->left, st_shell) == EXIT_FAILURE)
-		return (execute_it(tree->right, st_shell));
-	if (tree->type == IS_AND && execute_it(tree->left, st_shell) == EXIT_SUCCESS)
-		return (execute_it(tree->right, st_shell));
-	else if (tree->type == IS_PIPE)
-		return (execute_pipe_start(tree, st_shell));
-	else if (tree->type == IS_CMD)
-		return (execute_simple_command(tree, st_shell));
-	else if (tree->type == IS_RIGHT || tree->type == IS_D_RIGHT)
-		return (right_redirection(tree, st_shell));
-	else if (tree->type == IS_LEFT || tree->type == IS_D_LEFT)
-		return (left_redirection(tree, st_shell));
+	if (tree->ope == IS_OR && execute_it(tree->left, shell) == EXIT_FAILURE)
+		return (execute_it(tree->right, shell));
+	if (tree->ope == IS_AND && execute_it(tree->left, shell) == EXIT_SUCCESS)
+		return (execute_it(tree->right, shell));
+	else if (tree->ope == IS_PIPE)
+		return (execute_pipe_start(tree, shell));
+	else if (tree->ope == IS_CMD)
+		return (execute_simple_command(tree, shell));
+	else if (tree->ope == IS_RIGHT || tree->ope == IS_D_RIGHT)
+		return (right_redirection(tree, shell));
+	else if (tree->ope == IS_LEFT || tree->ope == IS_D_LEFT)
+		return (left_redirection(tree, shell));
 	return (EXIT_FAILURE);
 }
 
-void		main_execution(t_shell *st_shell)
+void		main_execution(t_shell *shell)
 {
 	t_tree	*parse;
 	int		flag;
 
 	flag = 0;
-	parse = st_shell->st_tree;
+	parse = shell->tree;
 	while (flag == 0 && parse)
 	{
-		if (execute_it(parse, st_shell) == FATAL_ERROR)
+		if (execute_it(parse, shell) == FATAL_ERROR)
 		flag = 1;
 		close_trees_fd(parse);
 		parse = parse->next;
 	}
-	free_tree(st_shell->st_tree);
-	t_shell->st_tree = NULL;
+	free_tree(&shell->tree);
+	shell->tree = NULL;
 }

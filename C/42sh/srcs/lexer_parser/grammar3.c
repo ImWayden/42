@@ -86,9 +86,9 @@ bool		redir_right_norm(t_tree **tree, t_lex **lex)
 
 	if (*lex && command_exp(tree, lex))
 	{
+		ft_putendl("HERE");
 		if (*lex && is_right_redir((*lex)->str))
 		{
-			ft_putendl("HERE");
 			if (!alloc_tree(&new, tree))
 				return (FALSE);
 			new->ope = (!strcmp((*lex)->str, D_RIGHT_R)) ? IS_D_RIGHT : IS_RIGHT;

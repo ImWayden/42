@@ -15,8 +15,8 @@
 
 void		ft_putmsg(char *name, char *msg)
 {
-	write(stderr, name, ft_strlen(name));
-	write(stderr, msg, ft_strlen(msg));
+	write(STDERR_FILENO, name, ft_strlen(name));
+	write(STDERR_FILENO, msg, ft_strlen(msg));
 }
 
 static int	open_file(char *name)
@@ -37,27 +37,27 @@ static int	open_file(char *name)
 	return (fd);
 }
 
-int		spe_left(t_tree *tree, t_shell *st_shell)
+int		spe_left(t_tree *tree, t_shell *shell)
 {
 	int		fd;
 	char		**args;
 
-	(void)st_shell;
-	args = tree->right->args;
+	(void)shell;
+	args = tree->right->argv;
 	if (!args || !args[0] || (fd = open_file(args[0])) == -1)
 		return (EXIT_FAILURE);
 	set_fd_in(tree->left, fd);
 	return (EXIT_SUCCESS);
 }
 
-int		left_redirection(t_tree *tree, t_shell *st_shell)
+int		left_redirection(t_tree *tree, t_shell *shell)
 {
 	int		fd;
 	char		**args;
 
-	args = tree->right->args;
+	args = tree->right->argv;
 	if (!args || !args[0] || (fd = open_file(args[0])) == -1)
 		return (EXIT_FAILURE);
 	set_fd_in(tree->left, fd);
-	return (execute_it(tree->left, st_shell));
+	return (execute_it(tree->left, shell));
 }

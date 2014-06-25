@@ -27,7 +27,7 @@ bool		command_exp(t_tree **tree, t_lex **lex)
 			return (FALSE);
 		*tree = new;
 		*lex = (*lex)->next;
-		if (lex)
+		if (*lex)
 			ft_putendl((*lex)->str);
 		return (TRUE);
 	}

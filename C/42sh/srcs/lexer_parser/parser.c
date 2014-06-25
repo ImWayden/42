@@ -61,10 +61,10 @@ t_tree			*make_parsing(t_lex **lexem)
 	t_tree		*tmp;
 
 	res = NULL;
-	ft_putendl("ok");
 	if ((lex = separate_lex(lexem)) && !expression(&res, &lex))
 		return (reset(&res, lexem));
-	free_lex(&lex);
+	ft_putendl("ok");
+	//free_lex(&lex);
 	tmp = res;
 	while ((lex = separate_lex(lexem)))
 	{
