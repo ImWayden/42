@@ -37,7 +37,6 @@ void		main_execution(t_shell *st_shell)
 
 	flag = 0;
 	parse = st_shell->st_tree;
-	st_shell->my_env = list_to_table(gl_st.st_env);
 	while (flag == 0 && parse)
 	{
 		if (execute_it(parse, st_shell) == FATAL_ERROR)
@@ -45,8 +44,6 @@ void		main_execution(t_shell *st_shell)
 		close_trees_fd(parse);
 		parse = parse->next;
 	}
-	free(st_shell->my_env);
-	st_shell->my_env = NULL;
 	free_tree(st_shell->st_tree);
 	t_shell->st_tree = NULL;
 }

@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memdel.c                                        :+:      :+:    :+:   */
+/*   ft_deltab.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/26 12:21:31 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/02 14:56:11 by mozzie           ###   ########.fr       */
+/*   Created: 2014/06/25 12:06:00 by msarr             #+#    #+#             */
+/*   Updated: 2014/06/25 12:06:03 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/libft.h"
 
-void	ft_memdel(void **ap)
+void			ft_deltab(char ***str)
 {
-	if (ap && *ap)
+	char		**tab;
+	int			i;
+
+	if (str && *str)
 	{
-		free(*ap);
-		*ap = NULL;
+		tab = *str;
+		i = 0;
+		while (tab && tab[i])
+		{
+			//ft_putendl(tab[i]);
+			ft_memdel((void **)&(tab[i]));
+			i++;
+		}
+		ft_memdel((void **)&tab);
 	}
 }

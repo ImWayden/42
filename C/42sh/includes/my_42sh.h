@@ -53,19 +53,20 @@ typedef struct 			s_env
 
 typedef struct			s_shell
 {
-	t_tree			*tree;
-  	char			**my_env;
-  	t_env			*env;
-  	int				flag;
+	char				*prompt;
+	t_tree				*tree;
+  	char				**envc;
+  	t_env				*env;
+  	int					flag;
 }						t_shell;
 
 /*
 ** ft_init
 */
 
-void			ft_help(void);
-void			ft_welcome(void);
-void			ft_prompt(char **envs);
+t_shell				*init(char	**env);
+int					re_init(t_shell *shell);
+void				ft_prompt(char **envs);
 
 /*
 ** ft_get
@@ -84,29 +85,18 @@ void			ft_getcmd(char **av, char ***envs);
 t_env			*add_env_list(t_env *list, char **str);
 void			aff_env(t_env *env);
 t_env			*env_listnew(char **str);
-t_env			*env_to_list(char	**env);
+t_env			*env_to_list(char **env);
 t_env			*my_setenv(t_env **env, char *line);
 t_env			*my_unsetenv(t_env **env, char *line);
 char			*get_env(t_env *env, char *str);
 int				**my_cd(char **av, char **envs);
 void			env_delone(t_env **env);
 void			free_env(t_env **envc);
+char			**list_to_tab(t_env *env);
 
 /*
 ** termcaps
 */
 
-char			*ft_del(char *s1, int n);
-char			*ft_edit(t_termlist *list, char **envc);
-char			*ft_put(int i, char *str, char **envs);
-int				ft_init(struct termios *term);
-int				ft_config(struct termios *term);
-char			*ft_join(char *s1, char *s2, int i);
-int				ft_defconfig(struct termios *term);
-char			*ft_strnjoin(char *s1, char c, int n);
-t_termlist		*ft_addlist(t_termlist *list, char *str);
-t_termlist		*ft_editlist(t_termlist *list, char *str);
-void			init(char ***cmd, char **envc);
-t_termlist		*ft_choice(char *buffer, t_termlist *list, char **str, int *i);
 
 #endif /* !MY_42SH_H */

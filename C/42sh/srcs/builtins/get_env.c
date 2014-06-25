@@ -17,7 +17,7 @@ char		*get_env(t_env *env, char *str)
 	while (env)
 	{
 		if (!ft_strcmp(env->name, str))
-			return (env->arg);
+			return (ft_strdup(env->arg));
 		env = env->next;
 	}
 	return (NULL);

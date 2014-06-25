@@ -24,7 +24,8 @@ SRC = ft_atoi.c ft_bzero.c ft_dtoa.c ft_ftoa.c ft_isalnum.c ft_isalpha.c \
 	  ft_strmapi.c ft_strncat.c ft_strncmp.c ft_strncpy.c ft_strnequ.c \
 	  ft_strnew.c ft_strnstr.c ft_strrchr.c ft_strsplit.c ft_strstr.c \
 	  ft_strsub.c ft_strtrim.c ft_tolower.c ft_toupper.c ft_isalnum.c \
-	  get_next_line.c ft_tablen.c ft_tabdup.c ft_puttab.c ft_strndup.c
+	  get_next_line.c ft_tablen.c ft_tabdup.c ft_puttab.c ft_strndup.c \
+	  ft_deltab.c
 	  
 
 OBJ = $(SRC:.c=.o)

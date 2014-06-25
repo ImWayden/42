@@ -22,9 +22,9 @@ static void			put_tree(t_tree *tree)
 	}
 }
 
-int				main(int ac, char **av)
+int				main(int ac, char **av, char **env)
 {
-	//t_env		*envs;
+	t_shell		*shell;
 	char		*line;
 	t_tree		*tree;
 
@@ -34,9 +34,13 @@ int				main(int ac, char **av)
 	{
 		av++;
 		line = NULL;
+		shell = init(env);
+		
+		re_init(shell);
+		sleep(5);
+		ft_putstr(shell->prompt);
 		get_next_line(1, &line);
 		if ((tree = lexor_and_parsor(line)))
-			ft_putendl("OK");
 		put_tree(tree);
 	}
 	return (0);

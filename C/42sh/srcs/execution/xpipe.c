@@ -22,8 +22,8 @@ int	            execute_last_command(t_tree *tree, t_shell *st_shell)
         return (check_builtins(st_shell, tree));
     if ((pid = fork()) == 0)
     {
-        dup2(tree->fd_in, 0);
-        dup2(tree->fd_out, 1);
+        dup2(tree->fd[0], 0);
+        dup2(tree->fd[1], 1);
         execve(tree->args[0], tree->args, st_shell->my_env);
     }
     else if (pid > 0)
@@ -56,9 +56,9 @@ int			execute_pipe_start(t_tree *tree, t_shell *st_shell)
 
 	if ((flag = prepare_all_commands(tree, st_shell)) != EXIT_SUCCESS)
 		return (flag);
-	if ((pid = xfork()) == 0)
+	if ((pid = fork()) == 0)
 	{
-		if (xpipe(fd) == -1)
+		if (pipe(fd) == -1)
 			exit(EXIT_FAILURE);
 		reset_line(st_shell);
 		set_fd_out(tree->right, fd[1]);
@@ -74,4 +74,30 @@ int			execute_pipe_start(t_tree *tree, t_shell *st_shell)
 		return (write_statut(statut));
 	}
 	return (FATAL_ERROR);
+}
+
+void		set_fd_out(t_tree *begin, int fd)
+{
+	if (begin && begin->type != IS_CMD)
+	{
+		if (begin->right->type == IS_CMD)
+			set_fd_out(begin->right, fd);
+		else
+			set_fd_out(begin->left, fd);
+	}
+	else if (begin && begin->type == IS_CMD)
+		begin->fd[1] = fd;
+}
+
+void		set_fd_in(t_tree *begin, int fd)
+{
+	if (begin && begin->type != IS_CMD)
+	{
+		if (begin->right->type == IS_CMD)
+			set_fd_in(begin->right, fd);
+		else
+			set_fd_in(begin->left, fd);
+	}
+	else if (begin && begin->type == IS_CMD)
+		begin->fd[0] = fd;
 }

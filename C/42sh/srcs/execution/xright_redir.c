@@ -13,7 +13,7 @@
 #include "grammar.h"
 #include "my_42sh.h"
 
-static int	_open_file(char *name, int type)
+static int	open_file(char *name, int type)
 {
 	int		fd;
 

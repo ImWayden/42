@@ -25,23 +25,25 @@ static int		list_size(t_env *list)
 	return (i);
 }
 
-char		**list_to_table(t_env *env)
+char		**list_to_tab(t_env *env)
 {
 	int		i;
-	char		**tab;
+	char	**tab1;
 	int		j;
 
 	j = 0;
 	i = list_size(env);
 	if (i == 0)
 		return (NULL);
-	if (!(tab = malloc((i + 1), sizeof(*board))))
+	if (!(tab1 = (char **)malloc(sizeof(char) * (i + 1))))
     	return (NULL);
-    while (env)
+    while (env && j < i)
     {
-    	tab[j++] = env->var;
+    	tab1[j] = ft_strjoin(ft_strjoin(env->name, "="), env->arg);
+    	ft_putendl(tab1[j]);
+    	j++;
     	env = env->next;
     }
-    tab[j] = NULL;
-    return (board);
+    tab1[j] = NULL;
+    return (tab1);
 }

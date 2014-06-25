@@ -117,5 +117,6 @@ int					get_next_line(int const fd, char **line);
 char				**ft_tabdup(char **array);
 size_t				ft_tablen(char **array);
 void				ft_puttab(char **array);
+void				ft_deltab(char ***str);
 
 #endif

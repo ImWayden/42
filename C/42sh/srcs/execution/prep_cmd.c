@@ -13,55 +13,64 @@
 #include "grammar.h"
 #include "my_42sh.h"
 
-static char	*get_bin_path(char *bin)
+static void	join_path_and_bin(char *path, char *binary, int i)
+{
+	path[i++] = '/';
+	path[i] = '\0';
+	path = ft_strjoin(path, binary);
+}
+
+static char		*get_bin_path(char *bin, t_shell *shell)
 {
 	char		*path;
 
 	path = NULL;
-	if (strncmp(bin, "/", 1) == 0 || strncmp(bin, ".", 1) == 0)
-		path = get_absolute_path(bin);
+	if (ft_strncmp(bin, "/", 1) == 0 || ft_strncmp(bin, ".", 1) == 0)
+		path = ft_strdup(bin);
 	else
-	{
-		path = get_full_path(get_env_from_list("PATH"), bin);
-		if (!path)
-			path = get_full_path(get_set_from_list("PATH"), bin);
-	}
+		path = get_full_path(get_env("PATH", shell->env), bin);
 	if (!path || (path && access(path, F_OK) == -1))
-		fprintf(stderr, "%s: Command not found.\n", bin);
+		ft_putmsg(bin, ": Command not found.\n");
 	else if (access(path, X_OK) == -1 || is_directory(path))
 		fprintf(stderr, "%s: Permission denied.\n", bin);
 	else
 		return (path);
-	xfree(path);
+	free(path);
 	return (NULL);
 }
 
-static int	prepare_command_2(t_tree *cmd, t_shell *st_shell)
+char		*get_full_path(char *path, char *binary)
 {
-	if (!cmd->args)
-		return (EXIT_FAILURE);
-	remove_sequence_quote(cmd->args, cmd);
-	if ((cmd->args = expend_alias(cmd->args, st_shell->st_alias)))
+	int		i;
+	int		len;
+	char		*full_path;
+
+	i = 0;
+	full_path = NULL;
+	len = my_strlen(path) + my_strlen(binary) + 2;
+	while (path && *path)
 	{
-		if (cmd->args && cmd->args[0]
-			&& !strncmp(cmd->args[0], "unsetenv", strlen(cmd->args[0])))
-			cmd->args = operate_env_globbing(cmd->args, gl_st.st_env);
-		else if (cmd->args)
-		cmd->args = operate_globbing(cmd->args);
+		if (i == 0 && !(full_path = malloc(sizeof(*full_path) * len)))
+			return (NULL);
+		full_path[i++] = *path++;
+		if (*path == ':' || *path == '\0')
+		{
+			join_path_and_bin(full_path, binary, i);
+			if (access(full_path, F_OK) == 0)
+				return (full_path);
+			ft_memdel((void **)&full_path);
+			i = 0;
+			if (*path == ':')
+				path++;
+		}
 	}
-	else
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
 int		prepare_command(t_tree *cmd, t_shell *st_shell)
 {
 	int		flag;
 
-	if ((flag = check_var_on_env(cmd->args, cmd)) != EXIT_SUCCESS)
-		return (flag);
-	if ((flag = prepare_command_2(cmd, st_shell)) != EXIT_SUCCESS)
-		return (flag);
 	if (!is_builtin(cmd->args[0]) &&
 			!(cmd->full_path = get_bin_path(cmd->args[0])))
 		return (EXIT_FAILURE);
