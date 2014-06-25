@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/27 08:30:44 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/22 20:37:23 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/24 21:16:43 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,17 @@
 
 bool		expression(t_tree **tree, t_lex **lex)
 {
-	return (or_exp(tree, lex));
+	if (*lex)		
+		return (or_exp(tree, lex));
+	else
+		return (FALSE);
 }
 
 bool		or_exp(t_tree **tree, t_lex **lex)
 {
 	t_tree	*new;
 
-	if (and_exp(tree, lex))
+	if (*lex && and_exp(tree, lex))
 	{
 		if (lex && *lex)
 		{
@@ -49,7 +52,7 @@ bool		and_exp(t_tree **tree, t_lex **lex)
 {
 	t_tree	*new;
 
-	if (pipe_exp(tree, lex))
+	if (*lex && pipe_exp(tree, lex))
 	{
 		if (lex && *lex)
 		{
@@ -75,7 +78,7 @@ bool		pipe_exp(t_tree **tree, t_lex **lex)
 {
 	t_tree	*new;
 
-	if (redir_exp(tree, lex))
+	if (*lex && redir_exp(tree, lex))
 	{
 		if (lex && *lex)
 		{

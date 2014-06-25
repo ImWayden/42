@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/27 08:30:44 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/22 20:37:44 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/24 21:25:24 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ bool		command_exp(t_tree **tree, t_lex **lex)
 
 	if (*lex && is_word((*lex)->str))
 	{
+		ft_putendl("cmd");
 		if (!alloc_tree(&new, tree))
 			return (FALSE);
 		new->ope = IS_CMD;
@@ -26,6 +27,8 @@ bool		command_exp(t_tree **tree, t_lex **lex)
 			return (FALSE);
 		*tree = new;
 		*lex = (*lex)->next;
+		if (lex)
+			ft_putendl((*lex)->str);
 		return (TRUE);
 	}
 	return (FALSE);
@@ -51,9 +54,10 @@ bool		file_exp(t_tree **tree, t_lex **lex)
 		new->ope = IS_FILE;
 		if (!(new->argv = ft_strsplit((*lex)->str, ' ')))
 			return (FALSE);
-		ft_putendl("file");
 		*tree = new;
 		*lex = (*lex)->next;
+		if (*lex)
+		ft_putendl("TRUS");
 		return (TRUE);
 	}
 	return (FALSE);
@@ -71,11 +75,3 @@ bool		special_case(t_tree **tree, t_lex **lex)
 	*lex = (*lex)->next;
 	return (file_exp(&(new->right), lex));
 }
-
-
-
-
-
-
-
-

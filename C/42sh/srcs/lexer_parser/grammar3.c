@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/27 08:30:44 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/16 17:35:01 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/24 21:15:24 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ bool		redir_left_norm(t_tree **tree, t_lex **lex)
 	bool	ret;
 	t_tree	*new;
 
-	if (redir_right(tree, lex))
+	if (*lex && redir_right(tree, lex))
 	{
 		if (*lex)
 		{
@@ -47,7 +47,7 @@ bool		redir_left_spe(t_tree **tree, t_lex **lex)
 	bool	ret;
 	t_tree	*new;
 
-	if (is_left_redir((*lex)->str))
+	if (*lex && is_left_redir((*lex)->str))
 	{
 		if (*lex)
 			*lex = (*lex)->next;
@@ -84,7 +84,7 @@ bool		redir_right_norm(t_tree **tree, t_lex **lex)
 {
 	t_tree	*new;
 
-	if (command_exp(tree, lex))
+	if (*lex && command_exp(tree, lex))
 	{
 		if (*lex && is_right_redir((*lex)->str))
 		{

@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/27 08:30:44 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/16 16:24:27 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/06/24 22:05:02 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ t_lex			*separate_lex(t_lex **lex)
 		*lex = tmp->next;
 		lex_delfirst(&tmp);
 	}
+	else
+		*lex = NULL;
 	return (tmp1);
 }
 
@@ -62,12 +64,13 @@ t_tree			*make_parsing(t_lex **lexem)
 	ft_putendl("ok");
 	if ((lex = separate_lex(lexem)) && !expression(&res, &lex))
 		return (reset(&res, lexem));
-	ft_putendl("ok");
+	free_lex(&lex);
 	tmp = res;
 	while ((lex = separate_lex(lexem)))
 	{
 		if (!expression(&(tmp->next), &lex))
 			return (reset(&tmp, lexem));
+		free_lex(&lex);
 		tmp = tmp->next;
 	}
 	free_lex(lexem);
