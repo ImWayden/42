@@ -41,7 +41,6 @@ bool		is_word(char *str)
 	return (FALSE);
 }
 
-
 bool		file_exp(t_tree **tree, t_lex **lex)
 {
 	t_tree	*new;
@@ -56,8 +55,6 @@ bool		file_exp(t_tree **tree, t_lex **lex)
 			return (FALSE);
 		*tree = new;
 		*lex = (*lex)->next;
-		if (*lex)
-		ft_putendl("TRUS");
 		return (TRUE);
 	}
 	return (FALSE);

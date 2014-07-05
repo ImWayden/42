@@ -41,7 +41,7 @@ bool		is_redir_or_sep(char *s)
 	return (FALSE);
 }
 
-int		is_directory(char *path)
+int			is_directory(char *path)
 {
 	struct stat	buf;
 

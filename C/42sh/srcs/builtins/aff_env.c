@@ -21,7 +21,7 @@ int			aff_env(t_shell *shell, t_tree *tree)
 	{
 		write(tree->fd[1], env->name, ft_strlen(env->name));
 		write(tree->fd[1], "=", 1);
-		write(tree->fd[1], env->arg, ft_strlen(env->name));
+		write(tree->fd[1], env->arg, ft_strlen(env->arg));
 		write(tree->fd[1], "\n", 1);
 		env = env->next;
 	}

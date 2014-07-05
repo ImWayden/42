@@ -23,7 +23,7 @@ void			ft_deltab(char ***str)
 		i = 0;
 		while (tab && tab[i])
 		{
-			//ft_putendl(tab[i]);
+			ft_putendl(tab[i]);
 			ft_memdel((void **)&(tab[i]));
 			i++;
 		}

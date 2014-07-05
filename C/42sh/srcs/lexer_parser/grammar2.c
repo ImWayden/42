@@ -15,7 +15,7 @@
 
 bool		expression(t_tree **tree, t_lex **lex)
 {
-	if (*lex)		
+	if (*lex)
 		return (or_exp(tree, lex));
 	else
 		return (FALSE);
@@ -108,7 +108,7 @@ bool		redir_exp(t_tree **tree, t_lex **lex)
 	if (!redir_left_norm(tree, lex))
 	{
 		*lex = bkup;
-		return(redir_left_spe(tree, lex));
+		return (redir_left_spe(tree, lex));
 	}
 	return (TRUE);
 }

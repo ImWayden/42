@@ -13,23 +13,23 @@
 #include "grammar.h"
 #include "my_42sh.h"
 
-void		ft_putmsg(char *name, char *msg)
+void			ft_putmsg(char *name, char *msg)
 {
 	write(STDERR_FILENO, name, ft_strlen(name));
 	write(STDERR_FILENO, msg, ft_strlen(msg));
 }
 
-static int	open_file(char *name)
+static int		open_file(char *name)
 {
-	int		fd;
+	int			fd;
 
 	if (access(name, F_OK) == -1 || access(name, R_OK) == -1)
 	{
 		if (access(name, F_OK) == -1)
 			ft_putmsg(name, ": no such file or directory.\n");
-	 	else
+		else
 			ft_putmsg(name, ": don't have the permission to read file.\n");
-	 	return (-1);
+		return (-1);
 	}
 	fd = open(name, O_RDONLY);
 	if (fd == -1)
@@ -37,9 +37,9 @@ static int	open_file(char *name)
 	return (fd);
 }
 
-int		spe_left(t_tree *tree, t_shell *shell)
+int				spe_left(t_tree *tree, t_shell *shell)
 {
-	int		fd;
+	int			fd;
 	char		**args;
 
 	(void)shell;
@@ -50,9 +50,9 @@ int		spe_left(t_tree *tree, t_shell *shell)
 	return (EXIT_SUCCESS);
 }
 
-int		left_redirection(t_tree *tree, t_shell *shell)
+int				left_redirection(t_tree *tree, t_shell *shell)
 {
-	int		fd;
+	int			fd;
 	char		**args;
 
 	args = tree->right->argv;

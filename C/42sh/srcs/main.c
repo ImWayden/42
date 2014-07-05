@@ -34,13 +34,13 @@ int				main(int ac, char **av, char **env)
 		av++;
 		line = NULL;
 		shell = init(env);
-		
+
 		re_init(shell);
 		ft_putstr(shell->prompt);
 		get_next_line(1, &line);
 		if ((shell->tree = lexor_and_parsor(line)))
 			ft_putendl("finish parse");
-			main_execution(shell);
+		main_execution(shell);
 	}
 	return (0);
 }

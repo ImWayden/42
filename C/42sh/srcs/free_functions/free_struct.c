@@ -33,4 +33,3 @@ void		lex_delfirst(t_lex **lex)
 		ft_memdel((void **)lex);
 	}
 }
-

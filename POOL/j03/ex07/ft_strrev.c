@@ -1,40 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
+/*   ft_strrev.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/28 11:21:56 by msarr             #+#    #+#             */
-/*   Updated: 2014/01/28 11:21:57 by msarr            ###   ########.fr       */
+/*   Created: 2014/07/04 13:22:51 by msarr             #+#    #+#             */
+/*   Updated: 2014/07/04 13:22:53 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "my_42sh.h"
-
-
-void		ft_redir(char **av, char ***envs)
+void			ft_swap(int *a, int *b)
 {
-	pid_t		father;
-	int			fd;
-	int			j;
-	char		**cmd1;
+	int			tmp;
 
-	cmd1 = ft_strsplit(ft_strtrim(cmd), '>');
-	fd = 1;
-	father = fork();
-	if (father == 0)
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
+int				ft_strlen(char *str)
+{
+	int			i;
+
+	i = 0;
+	while (str && str[i])
+		i++;
+	return (i);
+}
+
+char			*ft_strrev(char *str)
+{
+	int			i;
+	int			j;
+
+	j = ft_strlen(str) - 1;
+	i = 0;
+	while (j >  i)
 	{
-		fd = open(ft_strtrim(cmd1[1]), O_RDWR | O_CREAT | O_TRUNC | S_IRWXU);
-		dup2(1, j);
-		dup2(fd, 1);
-		ft_getcmd(cmd1, envs);
-		exit (1);
+		ft_swap(&(str[i]), &(str[j]))
+		i++;
+		j--;
 	}
-	if (father > 0)
-	{
-		wait(NULL);
-		dup2(j, 1);
-		close(fd);
-	}	
 }

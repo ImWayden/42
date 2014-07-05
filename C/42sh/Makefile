@@ -32,7 +32,7 @@ SRC = $(SDIR)main.c \
 	  $(PDIR)redir_syntax.c $(PDIR)syntax_error.c $(PDIR)lexer.c $(PDIR)parser.c \
 	  $(IDIR)ft_init.c \
 	  $(EDIR)execution.c $(EDIR)prep_cmd.c $(EDIR)xcommand.c $(EDIR)xpipe.c \
-	  $(EDIR)xleft_redir.c $(EDIR)xpipe2.c $(EDIR)xright_redir.c
+	  $(EDIR)xleft_redir.c $(EDIR)xpipe2.c $(EDIR)xright_redir.c $(EDIR)fd.c
 
 
 OBJ = $(SRC:.c=.o)

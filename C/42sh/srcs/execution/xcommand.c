@@ -10,23 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#include <errno.h>
 #include "grammar.h"
 #include "my_42sh.h"
 
-int		write_statut(int status)
+int				write_statut(int status)
 {
-  int		i;
-
-  i = 0;
-  if (status == 0)
-    return (EXIT_SUCCESS);
-  return (EXIT_FAILURE);
+	if (status == 0)
+		return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }
 
 int				execute_simple_command(t_tree *tree, t_shell *shell)
 {
-	int     	flag;
+	int			flag;
 	int			statut;
 	pid_t		pid;
 
@@ -37,14 +34,16 @@ int				execute_simple_command(t_tree *tree, t_shell *shell)
 		return (flag);
 	if ((pid = fork()) == 0)
 	{
-	 	dup2(tree->fd[0], 0);
-		dup2(tree->fd[1], 1);
-		execve(tree->argv[0], tree->argv, shell->envc);
+		dup2(tree->fd[0], STDIN_FILENO);
+		dup2(tree->fd[1], STDOUT_FILENO);
+		if ((execve(tree->argv[0], tree->argv, shell->envc)) == -1)
+			perror(strerror(errno));
 	}
 	else if (pid > 0)
 	{
 		if (waitpid(pid, &statut, 0) == -1)
 			perror("Waitpid");
+		close(tree->fd[1]);
 		return (write_statut(statut));
 	}
 	return (FATAL_ERROR);

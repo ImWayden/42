@@ -14,7 +14,7 @@
 
 static int		list_size(t_env *list)
 {
-	int		i;
+	int			i;
 
 	i = 0;
 	while (list)
@@ -25,25 +25,24 @@ static int		list_size(t_env *list)
 	return (i);
 }
 
-char		**list_to_tab(t_env *env)
+char			**list_to_tab(t_env *env)
 {
-	int		i;
-	char	**tab1;
-	int		j;
+	int			i;
+	char		**tab1;
+	int			j;
 
 	j = 0;
 	i = list_size(env);
 	if (i == 0)
 		return (NULL);
 	if (!(tab1 = (char **)malloc(sizeof(char) * (i + 1))))
-    	return (NULL);
-    while (env && j < i)
-    {
-    	tab1[j] = ft_strjoin(ft_strjoin(env->name, "="), env->arg);
-    	ft_putendl(tab1[j]);
-    	j++;
-    	env = env->next;
-    }
-    tab1[j] = NULL;
-    return (tab1);
+		return (NULL);
+	tab1[i] = NULL;
+	while (env && tab1[j])
+	{
+		tab1[j] = ft_strjoin(ft_strjoin(env->name, "="), env->arg);
+		j++;
+		env = env->next;
+	}
+	return (tab1);
 }

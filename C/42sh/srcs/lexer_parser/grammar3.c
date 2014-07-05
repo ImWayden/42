@@ -22,18 +22,17 @@ bool		redir_left_norm(t_tree **tree, t_lex **lex)
 	{
 		if (*lex)
 		{
-			if (is_left_redir((*lex)->str))
+			if (is_left_redir((*lex)->str) || !alloc_tree(&new, tree))
 			{
-				if (!alloc_tree(&new, tree))
-					return (FALSE);
 				new->ope = (!strcmp((*lex)->str, D_LEFT_R))
 				? IS_D_LEFT : IS_LEFT;
 				new->left = *tree;
 				*tree = new;
 				*lex = (*lex)->next;
 				ret = file_exp(&(new->right), lex);
-				return ((is_right_redir((*lex)->str))
-					? special_case(tree, lex) : ret);
+				ret = is_right_redir((*lex)->str) ?
+				special_case(tree, lex) : ret;
+				return (ret);
 			}
 			return (FALSE);
 		}
@@ -60,8 +59,8 @@ bool		redir_left_spe(t_tree **tree, t_lex **lex)
 			new->right = *tree;
 			*tree = new;
 			ret = command_exp(&(new->left), lex);
-			return ((is_right_redir((*lex)->str)
-				? special_case(tree, lex) : ret));
+			ret = is_right_redir((*lex)->str) ? special_case(tree, lex) : ret;
+			return (ret);
 		}
 	}
 	return (FALSE);
@@ -86,13 +85,12 @@ bool		redir_right_norm(t_tree **tree, t_lex **lex)
 
 	if (*lex && command_exp(tree, lex))
 	{
-		ft_putendl("HERE");
 		if (*lex && is_right_redir((*lex)->str))
 		{
 			if (!alloc_tree(&new, tree))
 				return (FALSE);
-			new->ope = (!strcmp((*lex)->str, D_RIGHT_R)) ? IS_D_RIGHT : IS_RIGHT;
-			ft_putnbr(new->ope);
+			new->ope = (!strcmp((*lex)->str, D_RIGHT_R)) ?
+			IS_D_RIGHT : IS_RIGHT;
 			new->left = *tree;
 			*tree = new;
 			*lex = (*lex)->next;
@@ -115,7 +113,7 @@ bool		redir_right_spe(t_tree **tree, t_lex **lex)
 		{
 			if (!alloc_tree(&new, tree))
 				return (FALSE);
-			new->ope = (!strcmp((*lex)->prev->prev->str, D_RIGHT_R)) 
+			new->ope = (!strcmp((*lex)->prev->prev->str, D_RIGHT_R))
 			? IS_D_RIGHT : IS_RIGHT;
 			new->right = *tree;
 			*tree = new;

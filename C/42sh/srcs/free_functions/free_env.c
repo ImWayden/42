@@ -10,17 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-
-typedef struct 			s_env
-{
-	char				*name;
-	char				*arg;
-	struct s_env		*next;
-}						t_env;
-
-*/
-
 #include "my_42sh.h"
 
 void	env_delone(t_env **envc)

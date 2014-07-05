@@ -12,20 +12,13 @@
 
 #include "grammar.h"
 #include "my_42sh.h"
+
 bool				is_ope(char c)
 {
 	if (c == '<' || c == '>' || c == '|' || c == ';' || c == '&')
 		return (TRUE);
 	else
-		return(FALSE);
-}
-
-bool				is_space(char c)
-{
-	if (c == ' ' || c == '\t')
-		return (TRUE);
-	else
-		return(FALSE);
+		return (FALSE);
 }
 
 static int			get_operator(t_lex **list, char *str)
@@ -38,7 +31,6 @@ static int			get_operator(t_lex **list, char *str)
 	*list = addlist(*list, ft_strndup(str, 1));
 	return (1);
 }
-
 
 static t_lex		*ft_listnew(char *str)
 {
@@ -53,10 +45,10 @@ static t_lex		*ft_listnew(char *str)
 	return (list);
 }
 
-t_lex			*addlist(t_lex *list, char *str)
+t_lex				*addlist(t_lex *list, char *str)
 {
-	t_lex		*tmp;
-	t_lex		*tmp1;
+	t_lex			*tmp;
+	t_lex			*tmp1;
 
 	tmp = ft_listnew(str);
 	if (!list)
@@ -72,15 +64,15 @@ t_lex			*addlist(t_lex *list, char *str)
 	return (list);
 }
 
-t_lex			*lexer(char *line)
+t_lex				*lexer(char *line)
 {
-	t_lex		*list;
+	t_lex			*list;
 	int				i;
 
 	list = NULL;
 	while (line && *line)
 	{
-		while (is_space(*line))
+		while (*line == ' ' || *line == '\t')
 			line++;
 		i = 0;
 		while (line[i] && !is_ope(line[i]))

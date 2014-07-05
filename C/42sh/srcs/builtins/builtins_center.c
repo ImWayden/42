@@ -22,16 +22,14 @@ int				is_builtin(char *cmd)
 	return (0);
 }
 
-int			builtins_center(t_shell *shell, t_tree *tree)
+int				builtins_center(t_shell *shell, t_tree *tree)
 {
 	char		**argv;
-	int		i;
 
-	i = 0;
 	argv = tree->argv;
 	if (argv && argv[0])
 	{
-    	if (!(ft_strcmp(argv[0], "cd")))
+		if (!(ft_strcmp(argv[0], "cd")))
 			return (cd(shell, tree));
 		if (!(ft_strcmp(argv[0], "unsetenv")))
 			return (ft_unsetenv(shell, tree));
@@ -40,5 +38,5 @@ int			builtins_center(t_shell *shell, t_tree *tree)
 		if (!(ft_strcmp(argv[0], "env")))
 			return (aff_env(shell, tree));
 	}
-  	return (EXIT_FAILURE);
+	return (EXIT_FAILURE);
 }

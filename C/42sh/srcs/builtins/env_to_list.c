@@ -57,7 +57,7 @@ t_env			*env_to_list(char **env)
 	{
 		args = ft_strsplit(env[i], '=');
 		list = add_env_list(list, args);
-		i++; 
+		i++;
 	}
-	return (list);	
+	return (list);
 }

@@ -41,14 +41,11 @@ t_shell				*init(char	**env)
 	return (shell);
 }
 
-
 int					re_init(t_shell *shell)
 {
 	if (shell && shell->env)
 	{
-		//sleep(5);
-		//ft_deltab(&(shell->envc));
-		//sleep(5);
+		ft_deltab(&(shell->envc));
 		shell->envc = list_to_tab(shell->env);
 		ft_memdel((void **)&(shell->prompt));
 		if (!(shell->prompt = get_env(shell->env, "PWD")))

@@ -39,7 +39,7 @@ static char		*get_bin_path(char *bin, t_shell *shell)
 	else
 		return (path);
 	free(path);
-	return(path);
+	return (path);
 }
 
 char			*get_full_path(char *path, char *binary)
@@ -50,7 +50,6 @@ char			*get_full_path(char *path, char *binary)
 
 	i = 0;
 	full_path = NULL;
-	ft_putendl(path);
 	len = ft_strlen(path) + ft_strlen(binary) + 2;
 	while (path && *path)
 	{
@@ -60,7 +59,6 @@ char			*get_full_path(char *path, char *binary)
 		if (*path == ':' || *path == '\0')
 		{
 			join_path_and_bin(&full_path, binary, i);
-			ft_putendl(full_path);
 			if (access(full_path, F_OK) == 0)
 				return (full_path);
 			ft_memdel((void **)&full_path);

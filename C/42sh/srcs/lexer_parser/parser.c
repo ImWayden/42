@@ -13,9 +13,9 @@
 #include "grammar.h"
 #include "my_42sh.h"
 
-t_tree			*init_tree(void)
+t_tree				*init_tree(void)
 {
-	t_tree		*tree;
+	t_tree			*tree;
 
 	if ((tree = (t_tree *)malloc(sizeof(t_tree))))
 	{
@@ -23,14 +23,16 @@ t_tree			*init_tree(void)
 		tree->left = NULL;
 		tree->next = NULL;
 		tree->argv = NULL;
+		tree->fd[0] = 0;
+		tree->fd[1] = 1;
 	}
 	return (tree);
 }
 
-t_lex			*separate_lex(t_lex **lex)
+t_lex				*separate_lex(t_lex **lex)
 {
-	t_lex		*tmp;
-	t_lex		*tmp1;
+	t_lex			*tmp;
+	t_lex			*tmp1;
 
 	tmp = *lex;
 	tmp1 = *lex;
@@ -54,17 +56,15 @@ static t_tree		*reset(t_tree **tree, t_lex **lexem)
 	return (NULL);
 }
 
-t_tree			*make_parsing(t_lex **lexem)
+t_tree				*make_parsing(t_lex **lexem)
 {
-	t_lex		*lex;
-	t_tree		*res;
-	t_tree		*tmp;
+	t_lex			*lex;
+	t_tree			*res;
+	t_tree			*tmp;
 
 	res = NULL;
 	if ((lex = separate_lex(lexem)) && !expression(&res, &lex))
 		return (reset(&res, lexem));
-	ft_putendl("ok");
-	//free_lex(&lex);
 	tmp = res;
 	while ((lex = separate_lex(lexem)))
 	{
@@ -77,11 +77,13 @@ t_tree			*make_parsing(t_lex **lexem)
 	return (res);
 }
 
-t_tree			*lexor_and_parsor(char *line)
+t_tree				*lexor_and_parsor(char *line)
 {
-	t_lex		*lex;
+	t_lex			*lex;
 
 	if (line && (lex = syntax_error(line)) != NULL)
-		return(make_parsing(&lex));
+	{
+		return (make_parsing(&lex));
+	}
 	return (NULL);
 }

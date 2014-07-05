@@ -40,7 +40,7 @@ void		main_execution(t_shell *shell)
 	while (flag == 0 && parse)
 	{
 		if (execute_it(parse, shell) == FATAL_ERROR)
-		flag = 1;
+			flag = 1;
 		close_trees_fd(parse);
 		parse = parse->next;
 	}

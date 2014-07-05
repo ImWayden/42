@@ -12,6 +12,27 @@
 
 #include "my_42sh.h"
 
+static int			s_setenv(t_env **envs, char *name, char **arg)
+{
+	t_env			*envc;
+	char			**args;
+
+	envc = *envs;
+	args = arg;
+	if (envc)
+	{
+		if (args && args[0])
+		{
+			while (envc && envc->next && ft_strcmp(envc->name, name))
+				envc = envc->next;
+			if (!ft_strcmp(envc->name, name))
+				envc->arg = ft_strdup(args[0]);
+			return (EXIT_SUCCESS);
+		}
+	}
+	return (EXIT_FAILURE);
+}
+
 int					cd(t_shell *shell, t_tree *tree)
 {
 	t_env			*envs;
@@ -27,13 +48,13 @@ int					cd(t_shell *shell, t_tree *tree)
 		av[1] = get_env(envs, "OLDPWD");
 	if (chdir(av[1]) == -1)
 	{
-		ft_putmsg(av[1],": cd : No such file or directory.");
+		ft_putmsg(av[1], ": cd : No such file or directory.");
 		return (EXIT_FAILURE);
 	}
-	//else
-	//{
-	//	ft_setenv(, pwd);
-	//	ft_setenv(envs, "PWD", av[1]);
-	//}
+	else
+	{
+		s_setenv(&envs, "OLDPWD", &pwd);
+		s_setenv(&envs, "PWD", &av[1]);
+	}
 	return (EXIT_SUCCESS);
 }
