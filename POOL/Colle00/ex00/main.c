@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar.c                                       :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: rkhabche <rkhabche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/07/05 12:27:49 by msarr             #+#    #+#             */
-/*   Updated: 2014/07/05 12:27:52 by msarr            ###   ########.fr       */
+/*   Created: 2014/07/05 15:33:47 by rkhabche          #+#    #+#             */
+/*   Updated: 2014/07/06 16:46:27 by rkhabche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+void	colle(char c, char d);
 
-void				ft_putchar(char c)
+int		main(void)
 {
-	write(1, &c, 1);
+	colle(5, 5);
+	return (0);
 }
