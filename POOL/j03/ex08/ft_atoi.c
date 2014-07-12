@@ -27,12 +27,12 @@ int				ft_atoi(const char *str)
 	s = 1;
 	while (*str == ' ' || *str == '\f' || *str == '\r' || *str == '\v'
 		|| *str == '\n' || *str == '\t')
-	str++;
+		str++;
 	if (*str == '-')
 	{
 		s = -1;
 		str++;
-	}	
+	}
 	else if (*str == '+')
 		str++;
 	while (*str && ft_isdigit(*str))

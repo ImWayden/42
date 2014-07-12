@@ -10,15 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-void			ft_swap(int *a, int *b)
-{
-	int			tmp;
-
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
-}
-
 int				ft_strlen(char *str)
 {
 	int			i;
@@ -33,12 +24,15 @@ char			*ft_strrev(char *str)
 {
 	int			i;
 	int			j;
+	char		swap;
 
 	j = ft_strlen(str) - 1;
 	i = 0;
-	while (j >  i)
+	while (j > i)
 	{
-		ft_swap(&(str[i]), &(str[j]))
+		swap = str[i];
+		str[i] = str[j];
+		str[j] = swap;
 		i++;
 		j--;
 	}
