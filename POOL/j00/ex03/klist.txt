@@ -1,0 +1,5 @@
+Credentials cache: API:9E1EF369-6B7C-4CE2-AFEE-8167982370A4
+        Principal: msarr@42.FR
+
+  Issued                Expires               Principal
+Jul  1 12:01:45 2014  Jul  8 12:01:45 2014  krbtgt/42.FR@42.FR
