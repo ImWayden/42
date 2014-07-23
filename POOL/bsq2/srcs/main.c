@@ -13,21 +13,28 @@
 #include "parser.h"
 #include "bsq.h"
 
-void		ft_puttab(char **str, t_list *list, int c)
+void		ft_puttab(t_bsq *bsq, t_bsq_list *list, int c)
 {
 	int		i;
 	int		j;
+	t_bsq_list	*tmp;
 
 	i = 0;
-	while (str[i])
+	tmp = bsq->list;
+	while (i < bsq->l_max)
 	{
 		j = 0;
-		while (str[i][j])
+		while (j < bsq->c_max)
 		{
 			if (i >= list->i && i < list->i + c && j >= list->j && j < list->j + c)
-				ft_putchar('x');
+				ft_putchar(bsq->str[2]);
+			else if (tmp && (i == tmp->i && j == tmp->j))
+			{
+				ft_putchar(bsq->str[1]);
+				tmp = tmp->next;
+			}
 			else
-				ft_putchar(str[i][j]);
+				ft_putchar(bsq->str[0]);
 			j++;
 		}
 		ft_putchar ('\n');
@@ -39,22 +46,22 @@ int			main(int argc, char **argv)
 {
 	int		i;
 	int		k;
-	char	**str;
-	t_list	*list;
-	t_list	*rslt;
+	t_bsq	*bsq;
+	t_bsq_list	*rslt;
 
 	if (argc > 1)
 	{
 		i = 1;
 		while (argv[i])
 		{
-			list = NULL;
-			if ((str = parser(argv[i], &list)))
+			bsq = NULL;
+			if ((bsq = parser(argv[i])))
 			{
-				k = ft_atoi(str[0]);
-				while (!(rslt = bsq(list, 0, 0, k, str)))
+				bsq->list->prev->next = NULL;
+				k = (bsq->l_max > bsq->c_max) ? bsq->c_max : bsq->l_max;
+				while (!(rslt = ft_bsq(0, 0, k, bsq)))
 					k--;
-				ft_puttab(&str[1], rslt, k);
+				ft_puttab(bsq, rslt, k);
 			}
 			else
 				ft_putendl("Map Error");

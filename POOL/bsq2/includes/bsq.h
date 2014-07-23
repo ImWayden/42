@@ -16,17 +16,22 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-typedef struct			s_list
+typedef struct			s_bsq_list
 {
 	int					i;
 	int					j;
-	struct s_list		*next;
-}						t_list;
+	struct s_bsq_list	*next;
+	struct s_bsq_list	*prev;
+}						t_bsq_list;
 
-void					ft_putchar(char c);
-void					ft_putnbr(int n);
-void					ft_putstr(char *str);
-void					ft_putendl(char *str);
-t_list					*bsq(t_list *list, int i, int j, int c, char **tab);
+typedef struct			s_bsq
+{
+	char				*str;
+	int					l_max;
+	int					c_max;
+	t_bsq_list			*list;
+}						t_bsq;
+
+t_bsq_list				*ft_bsq(int i, int j, int c, t_bsq *bsq);
 
 #endif

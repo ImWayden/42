@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bsq.h                                              :+:      :+:    :+:   */
+/*   deltab.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/07/22 13:15:25 by msarr             #+#    #+#             */
-/*   Updated: 2014/07/22 13:15:26 by msarr            ###   ########.fr       */
+/*   Created: 2014/03/14 01:47:23 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/14 01:47:26 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef					BSQ_H
-# define				BSQ_H
+#include "includes/libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-
-typedef struct			s_list
+void				deltab(char ***str)
 {
-	int					i;
-	int					j;
-	struct s_list		*next;
-}						t_list;
+	int 			i;
+	char			**tab;
 
-void					ft_putchar(char c);
-void					ft_putnbr(int n);
-void					ft_putstr(char *str);
-void					ft_putendl(char *str);
-t_list					*bsq(t_list *list, int i, int j, int c, char **tab);
-
-#endif
+	tab = *str;
+	i = 0;
+	while (tab && tab[i])
+	{
+		ft_memdel((void **)&(tab[i]));
+		i++;
+	}
+	ft_memdel((void **)&(*str));
+	*str = NULL;
+}

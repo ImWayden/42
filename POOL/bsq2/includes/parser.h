@@ -17,23 +17,10 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include "bsq.h"
+# include "libft.h"
 
-# define BUFF_SIZE 120000
-
-typedef struct			s_getline
-{
-	int					fd;
-	char				*str;
-	struct s_getline	*next;
-}						t_getline;
-
-int						ft_strlen(char *str);
-int						ft_atoi(char *str);
-char					**parser(char *file, t_list **list);
-char					*ft_strnew(size_t size);
-char					*ft_strjoin(char *s1, char *s2);
-t_list					*addlist(t_list *list, int i, int j);
-char					*ft_strsub(char *s, unsigned int start, size_t len);
+t_bsq					*parser(char *file);
+t_bsq_list				*addlist(t_bsq_list *list, int i, int j);
 int						get_next_line(int fd, char **line);
 
 #endif

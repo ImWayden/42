@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bsq.h                                              :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/07/22 13:15:25 by msarr             #+#    #+#             */
-/*   Updated: 2014/07/22 13:15:26 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/19 12:15:45 by msarr             #+#    #+#             */
+/*   Updated: 2013/11/19 14:07:23 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef					BSQ_H
-# define				BSQ_H
+#include "includes/libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-
-typedef struct			s_list
+void		*ft_memset(void *b, int c, size_t len)
 {
-	int					i;
-	int					j;
-	struct s_list		*next;
-}						t_list;
+	char	*tmp;
 
-void					ft_putchar(char c);
-void					ft_putnbr(int n);
-void					ft_putstr(char *str);
-void					ft_putendl(char *str);
-t_list					*bsq(t_list *list, int i, int j, int c, char **tab);
-
-#endif
+	tmp = b;
+	while (len && tmp)
+	{
+		*tmp = c;
+		tmp++;
+		len--;
+	}
+	return (b);
+}

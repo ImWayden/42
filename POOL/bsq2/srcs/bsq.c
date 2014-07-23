@@ -13,27 +13,25 @@
 #include "parser.h"
 #include "bsq.h"
 
-
-
-t_list			*bsq(t_list *list, int i, int j, int c, char **tab)
+t_bsq_list			*ft_bsq(int i, int j, int c, t_bsq *bsq)
 {
-	t_list		*tmp;
+	t_bsq_list		*tmp;
 
-	if (i == ft_atoi(tab[0]))
+	if (i == bsq->l_max)
 		return (0);
-	if (ft_atoi(tab[0]) - i < c || ft_strlen(tab[1]) - j < c)
+	if (bsq->l_max - i < c || bsq->c_max - j < c)
 		return (0);
 	else
 	{
-		tmp = list;
-		while (tmp)
+		tmp = bsq->list;
+		while (tmp && tmp->next)
 		{
 			if (tmp->i >= i && tmp->i < i + c && tmp->j >= j && tmp->j < j + c)
 			{
-				if (j == ft_strlen(tab[1]) - 1)
-					return (bsq(list, ++i, 0, c, tab));
+				if (j == bsq->c_max - 1)
+					return (ft_bsq(++i, 0, c, bsq));
 				else
-					return (bsq(list, i, ++j, c, tab));
+					return (ft_bsq(i, ++j, c, bsq));
 			}
 			tmp = tmp->next;
 		}

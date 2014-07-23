@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bsq.h                                              :+:      :+:    :+:   */
+/*   hashcode.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/07/22 13:15:25 by msarr             #+#    #+#             */
-/*   Updated: 2014/07/22 13:15:26 by msarr            ###   ########.fr       */
+/*   Created: 2014/03/10 14:57:16 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/10 14:57:19 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef					BSQ_H
-# define				BSQ_H
+#include "includes/libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-
-typedef struct			s_list
+int					hash(char *str)
 {
-	int					i;
-	int					j;
-	struct s_list		*next;
-}						t_list;
+	int				code;
+	int				len;
+	int				i;
 
-void					ft_putchar(char c);
-void					ft_putnbr(int n);
-void					ft_putstr(char *str);
-void					ft_putendl(char *str);
-t_list					*bsq(t_list *list, int i, int j, int c, char **tab);
-
-#endif
+	len = ft_strlen(str);
+	code = 7;
+	i = 0;
+	while (i < len)
+	{
+		code = str[i] + 31 * code;
+		i++;
+	}
+	return (code % 1000);
+}
