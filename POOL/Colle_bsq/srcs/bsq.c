@@ -3,19 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   bsq.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: sigeisma <sigeisma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/07/22 18:00:29 by msarr             #+#    #+#             */
-/*   Updated: 2014/07/22 18:00:31 by msarr            ###   ########.fr       */
+/*   Created: 2014/07/24 22:43:46 by sigeisma          #+#    #+#             */
+/*   Updated: 2014/07/24 22:44:07 by sigeisma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "bsq.h"
 
+int				ft_verif(t_bsq_list *tmp, int *i, int *j, int c, t_bsq *bsq)
+{
+	if (tmp->i >= *i && tmp->i < *i + c && tmp->j >= *j && tmp->j < *j + c)
+	{
+		*j = tmp->j + 1;
+		if (*j >= bsq->c_max)
+		{
+			*j = 0;
+			*i = tmp->i + 1;
+		}
+		else if (*j + c > bsq->c_max)
+		{
+			*j = 0;
+			*i = tmp->i + 1;
+		}
+		return (1);
+	}
+	return (0);
+}
+
 void			delbsq(t_bsq **bsq)
 {
 	t_bsq_list	*tmp;
+
 	if (bsq && *bsq)
 	{
 		ft_memdel((void **)&((*bsq)->str));
@@ -67,10 +88,12 @@ void			before_bsq(t_bsq **bsq)
 	if ((*bsq)->list)
 		(*bsq)->list->prev->next = NULL;
 	k = ((*bsq)->l_max > (*bsq)->c_max) ? (*bsq)->c_max : (*bsq)->l_max;
-	while (k > 1 && !(rslt = ft_bsq(0, 0, k, *bsq)))
+	while (k >= 1 && !(rslt = ft_bsq(0, 0, k, *bsq)))
 		k--;
-	if (k != 1)
+	if (k >= 1)
 		ft_puttab(*bsq, rslt, k);
+	else
+		write(2, "Map Error\n", 10);
 	delbsq(bsq);
 }
 
@@ -78,26 +101,30 @@ t_bsq_list		*ft_bsq(int i, int j, int c, t_bsq *bsq)
 {
 	t_bsq_list	*tmp;
 
-	if (i == bsq->l_max)
-		return (0);
-	if (bsq->l_max - i < c || bsq->c_max - j < c)
+	while (42)
 	{
-		if (j == bsq->c_max - 1)
-			return (ft_bsq(++i, 0, c, bsq));
+		if (i >= bsq->l_max || (bsq->l_max - i <= c))
+			return (0);
 		else
-			return (ft_bsq(i, ++j, c, bsq));
-	}
-	tmp = bsq->list;
-	while (tmp && tmp->next)
-	{
-		if (tmp->i >= i && tmp->i < i + c && tmp->j >= j && tmp->j < j + c)
 		{
-			if (j == bsq->c_max - 1)
-				return (ft_bsq(++i, 0, c, bsq));
-			else
-				return (ft_bsq(i, ++j, c, bsq));
+			tmp = bsq->list;
+			while (tmp)
+			{
+				if (tmp->i >= i && tmp->i < i + c
+					&& tmp->j >= j && tmp->j < j + c)
+				{
+					j = tmp->j + 1;
+					if (j + c > bsq->c_max || j >= bsq->c_max)
+					{
+						j = 0;
+						i = tmp->i + 1;
+					}
+					break ;
+				}
+				tmp = tmp->next;
+			}
+			if (!tmp)
+				return (addlist(NULL, i, j));
 		}
-		tmp = tmp->next;
 	}
-	return (addlist(NULL, i, j));
 }
