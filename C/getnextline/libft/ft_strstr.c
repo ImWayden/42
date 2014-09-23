@@ -14,7 +14,7 @@
 
 char		*ft_strstr(const char *s1, const char *s2)
 {
-	size_t	j;
+	int		j;
 	char	*tmp1;
 	char	*tmp2;
 

@@ -21,12 +21,12 @@
 
 # define BUFF_SIZE 1
 
-typedef struct			s_getline
+typedef struct			s_line
 {
 	int					fd;
 	char				*str;
-	struct s_getline	*next;
-}						t_getline;
+	struct s_line	*next;
+}						t_line;
 
 int						get_next_line(int const fd, char **line);
 
