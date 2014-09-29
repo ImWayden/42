@@ -15,6 +15,7 @@
 static int			ft_recup(t_line *sd, char *str, char **line)
 {
 	int				i;
+	char			*tmp;
 
 	i = 0;
 	while (str && str[i])
@@ -23,7 +24,9 @@ static int			ft_recup(t_line *sd, char *str, char **line)
 		{
 			str[i] = '\0';
 			ft_join(line, str);
-			ft_join(&(sd->str), &(str[i + 1]));
+			tmp = ft_strdup(&(str[i + 1]));
+			ft_memdel((void **)&(sd->str));
+			sd->str = tmp;
 			return (1);
 		}
 		i++;
@@ -45,7 +48,7 @@ static int			ft_read(t_line *sd, char **line)
 		tmp[ret] = '\0';
 		if (ft_recup(sd, tmp, line))
 			return (1);
-		if (!ret && *line)
+		if (!ret && *line && **line)
 			return (1);
 		else if (!ret)
 			return (0);

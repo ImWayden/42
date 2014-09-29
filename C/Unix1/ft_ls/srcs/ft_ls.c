@@ -50,8 +50,7 @@ void				ft_ls(char *line, t_dir *dir, struct stat dirstat)
 	if ((list = ft_getdirlist(line, dir->hiden)))
 	{
 		list = ft_sortlist(&list, dir->sort_type, dir->sort_mod);
-		if (line[ft_strlen(line) - 1] != '/')
-			line = ft_strjoin(line, "/");
+		line = ft_strjoin(line, "/");
 		while (list)
 		{
 			str = ft_strjoin(line, list->str);
@@ -65,6 +64,8 @@ void				ft_ls(char *line, t_dir *dir, struct stat dirstat)
 			list = ft_delelmt(list);
 		}
 	}
+	else if (S_ISDIR(dirstat.st_mode))
+		perror(line);
 	else
 		ft_putdir(line, dir->infos, dirstat);
 }

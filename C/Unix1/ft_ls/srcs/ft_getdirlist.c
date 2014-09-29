@@ -31,6 +31,7 @@ t_dirlist				*ft_getdirlist(char *dir, int h)
 							time((time_t *)&test.st_mtime));
 			}
 		}
+		closedir(dp);
 	}
 	return (dirlist);
 }

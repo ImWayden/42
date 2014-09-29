@@ -33,6 +33,7 @@ static void		ft_error(char c)
 {
 	ft_putstr("ft_ls : illegal option -- ");
 	ft_putchar(c);
+	ft_putchar('\n');
 	ft_putendl("usage: ./ft_ls [-Ralrt] [file ...]");
 	exit (1);
 }
