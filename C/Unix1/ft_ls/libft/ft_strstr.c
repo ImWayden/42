@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/21 13:08:18 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/02 14:31:08 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/02 14:31:08 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char		*ft_strstr(const char *s1, const char *s2)
 {
-	size_t	j;
+	int		j;
 	char	*tmp1;
 	char	*tmp2;
 

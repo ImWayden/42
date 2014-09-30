@@ -24,6 +24,7 @@ static t_dir	*allocdir(void)
 		dir->sort_type = 0;
 		dir->sort_mod = 0;
 		dir->hiden = 0;
+		dir->error = 0;
 		dir->dirlist = NULL;
 	}
 	return (dir);

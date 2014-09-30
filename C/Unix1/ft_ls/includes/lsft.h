@@ -41,17 +41,19 @@ typedef struct			s_dir
 	int					sort_type;
 	int					sort_mod;
 	int					hiden;
+	int					error;
 	t_dirlist			*dirlist;
 }						t_dir;
 
 t_dirlist				*ft_addlist(t_dirlist *list, char *str, time_t atime);
 void					ft_putattr(struct stat sb);
-t_dirlist				*ft_getdirlist(char *dir, int h);
+t_dirlist				*ft_getdirlist(char *dir, t_dir *test);
 t_dirlist				*ft_arecupdir(char *dir);
 t_dirlist				*ft_sortlist(t_dirlist **list, int i, int j);
-void					ft_ls(char *line, t_dir *dir, struct stat dirstat);
+void					ft_ls(char *line, t_dir *dir);
 void					ft_put_s(const char *s);
 void					ft_acceserror(char *str, char **argv, int argc);
+void					ft_putdir(char *str, t_dir *dir, struct stat test);
 void					ft_putinfos(struct stat test);
 t_dir					*ft_parse(int argc, char **argv);
 

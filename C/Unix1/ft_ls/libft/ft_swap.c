@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdel.c                                        :+:      :+:    :+:   */
+/*   ft_swap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/03/28 13:07:29 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/28 13:07:31 by msarr            ###   ########.fr       */
+/*   Created: 2013/09/13 05:47:17 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/08 01:40:08 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/libft.h"
 
-void		ft_lstdel(t_list **alst, void (*del)(void *, size_t))
+void			ft_swap(void **a, void **b)
 {
-	if (alst && *alst && (*alst)->next)
-		ft_lstdel(&((*alst)->next), del);
-	else if (alst && *alst)
-	{
-		del((void *)(*alst)->content, (*alst)->content_size);
-		free(*alst);
-		*alst = NULL;
-	}
+	void		*c;
+
+	c = *a;
+	*a = *b;
+	*b = c;
 }

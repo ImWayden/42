@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/27 14:25:10 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/03 00:09:57 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/03 00:09:57 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static char		**ft_array(char *s, char c)
 		while (*s && *s != c)
 			s++;
 	}
-	split = (char **)ft_memalloc(j + 1);
+	if ((split = (char **)malloc(sizeof(*split) * (j + 1))))
+		split[j] = NULL;
 	return (split);
 }
 
@@ -44,20 +45,22 @@ char			*ft_split(char *str, int *c)
 	return (str);
 }
 
-char			**ft_strsplit(char const *s, char c)
+char			**ft_strsplit(char const *s, int c)
 {
 	char		**split;
+	char		*str;
 	int			j;
 	int			i;
 
 	i = 0;
-	split = ft_array((char *)s, c);
-	while (split && s && *s)
+	str = (char *)s;
+	split = ft_array((char *)str, c);
+	while (split && str && *str)
 	{
 		j = c;
-		s = ft_split((char *)s, &j);
-		split[i] = ft_strsub(s, 0, j);
-		s = s + j;
+		str = ft_split((char *)str, &j);
+		split[i] = ft_strsub(str, 0, j);
+		str = str + j;
 		i++;
 	}
 	return (split);

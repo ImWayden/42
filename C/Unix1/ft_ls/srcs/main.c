@@ -24,17 +24,16 @@ int					main(int argc, char **argv)
 	{
 		while (dir->dir && dir->dir[i])
 		{
-			if (!stat(dir->dir[i], &test))
-				ft_ls(dir->dir[i], dir, test);
+			if (!stat(dir->dir[i], &test) && (S_ISDIR(test.st_mode)))
+				ft_ls(dir->dir[i], dir);
+			else if (!stat(dir->dir[i], &test))
+				ft_putdir(dir->dir[i], dir, test);
 			else
 				perror(dir->dir[i]);
 			i++;
 		}
 		if (!i)
-		{
-			stat(".", &test);
-			ft_ls(".", dir, test);
-		}
+			ft_ls(".", dir);
 	}
 	return (0);
 }

@@ -19,6 +19,8 @@ void					ft_putinfos(struct stat test)
 	char				*s;
 
 	ft_putattr(test);
+	ft_putnbr((int)test.st_nlink);
+	ft_putchar(' ');
 	tmp = getpwuid(test.st_uid);
 	ft_put_s(tmp->pw_name);
 	tmp1 = getgrgid(test.st_gid);

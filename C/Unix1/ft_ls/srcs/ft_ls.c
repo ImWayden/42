@@ -12,22 +12,32 @@
 
 #include "lsft.h"
 
-static void			ft_putdir(char *str, int infos, struct stat test)
+void			ft_putdir(char *str, t_dir *dir, struct stat test)
 {
-	if (infos)
+	if (dir->infos)
 		ft_putinfos(test);
 	ft_putendl(str);
 }
 
-static void			ft_rls(char *str, char *str1, t_dir *dir, struct stat test)
+static void			ft_rls(char *str, t_dir *dir, struct stat test)
 {
+	DIR 			*dp;
+
 	if (dir->recursive && (S_ISDIR(test.st_mode)))
 	{
-		ft_putdir(str, dir->infos, test);
-		ft_ls(str, dir, test);
+		ft_putendl(NULL);
+		if ((dp = opendir(str)))
+		{
+			closedir(dp);
+			if (dir->infos)
+				ft_putinfos(test);
+			ft_putstr(str);
+			ft_putendl(" :");
+			ft_ls(str, dir);
+		}
+		else
+			perror(str);
 	}
-	else
-		ft_putdir(str1, dir->infos, test);
 }
 
 static t_dirlist	*ft_delelmt(t_dirlist *list)
@@ -41,31 +51,45 @@ static t_dirlist	*ft_delelmt(t_dirlist *list)
 	return (list);
 }
 
-void				ft_ls(char *line, t_dir *dir, struct stat dirstat)
+static void			ft_putlist(t_dirlist *list, t_dir *dir, char *line)
+{
+	struct stat		test;
+	char			*str;
+
+	str = NULL;
+	while (list)
+	{
+		str = ft_strjoin(line, list->str);
+		if (!stat(str, &test))
+			ft_putdir(list->str, dir, test);
+		else
+			perror(str);
+			list = list->next;
+	}
+}
+
+void				ft_ls(char *line, t_dir *dir)
 {
 	t_dirlist		*list;
 	struct stat		test;
 	char			*str;
 
-	if ((list = ft_getdirlist(line, dir->hiden)))
+	if ((list = ft_getdirlist(line, dir)))
 	{
 		list = ft_sortlist(&list, dir->sort_type, dir->sort_mod);
 		line = ft_strjoin(line, "/");
+		ft_putlist(list, dir, line);
 		while (list)
 		{
 			str = ft_strjoin(line, list->str);
-			if (!stat(str, &test) && ft_strcmp(list->str, ".")
-				&& ft_strcmp(list->str, ".."))
-				ft_rls(str, list->str, dir, test);
-			else if (!ft_strcmp(list->str, ".") || !ft_strcmp(list->str, ".."))
-				ft_putdir(list->str, dir->infos, test);
+			if (!stat(str, &test))
+			{
+				if (ft_strcmp(list->str, ".") && ft_strcmp(list->str, ".."))
+					ft_rls(str, dir, test);
+			}
 			else
 				perror(str);
 			list = ft_delelmt(list);
 		}
 	}
-	else if (S_ISDIR(dirstat.st_mode))
-		perror(line);
-	else
-		ft_putdir(line, dir->infos, dirstat);
 }

@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memccpy.c                                       :+:      :+:    :+:   */
+/*   ft_join.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/24 15:55:56 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/02 19:25:57 by mozzie           ###   ########.fr       */
+/*   Created: 2014/07/24 14:48:29 by msarr             #+#    #+#             */
+/*   Updated: 2014/07/24 14:48:31 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/libft.h"
 
-void			*ft_memccpy(void *s1, const void *s2, int c, size_t n)
+void				ft_join(char **str1, char *str2)
 {
-	char		*tmp1;
-	const char	*tmp2;
+	char			*tmp;
 
-	tmp1 = s1;
-	tmp2 = s2;
-	while (*tmp1 && *tmp2 && n-- && *(tmp2 - 1) != c)
-		*tmp1++ = *tmp2++;
-	if (*(tmp2 - 1) != c)
-		return (NULL);
-	return (tmp1);
+	tmp = *str1;
+	*str1 = ft_strjoin(*str1, str2);
+	ft_memdel((void **)&tmp);
 }

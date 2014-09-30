@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/25 18:24:35 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/02 14:23:32 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/03/02 14:23:32 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 int			ft_strlcat(char *dest, const char *src, size_t size)
 {
-	size_t	tmp1;
-	size_t	tmp2;
+	size_t	t_dest;
+	size_t	t_src;
 	size_t	i;
 	size_t	j;
 	size_t	k;
 
-	tmp1 = ft_strlen(dest);
-	tmp2 = ft_strlen((char*)src);
+	t_dest = ft_strlen(dest);
+	t_src = ft_strlen((char*)src);
 	i = 0;
-	j = tmp1;
-	k = size - tmp1 - 1;
-	if (size > tmp1)
+	j = t_dest;
+	k = size - t_dest - 1;
+	if (size > t_dest)
 	{
 		while (i < k)
 		{
@@ -34,7 +34,7 @@ int			ft_strlcat(char *dest, const char *src, size_t size)
 			j++;
 		}
 		dest[j] = '\0';
-		return (tmp1 + tmp2);
+		return (t_dest + t_src);
 	}
-	return (tmp2 + size);
+	return (t_src + size);
 }
