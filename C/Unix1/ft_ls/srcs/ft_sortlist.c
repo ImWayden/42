@@ -25,12 +25,12 @@ static void				ft_listswap(t_dirlist *tmp, t_dirlist *tmp1)
 	tmp1->atime = atime;
 }
 
-t_dirlist				*ft_sortlist(t_dirlist **list, int i, int j)
+t_dirlist				*ft_sortlist(t_dirlist *list, int i, int j)
 {
 	t_dirlist			*tmp;
 	t_dirlist			*tmp1;
 
-	tmp = *list;
+	tmp = list;
 	while (tmp && tmp->next)
 	{
 		tmp1 = tmp->next;
@@ -48,5 +48,5 @@ t_dirlist				*ft_sortlist(t_dirlist **list, int i, int j)
 		}
 		tmp = tmp->next;
 	}
-	return (*list);
+	return (list);
 }

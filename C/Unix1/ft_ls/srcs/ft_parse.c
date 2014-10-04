@@ -18,14 +18,13 @@ static t_dir	*allocdir(void)
 
 	if ((dir = (t_dir *)malloc(sizeof(t_dir))))
 	{
-		dir->dir = 0;
+		dir->dir = NULL;
 		dir->recursive = 0;
 		dir->infos = 0;
 		dir->sort_type = 0;
 		dir->sort_mod = 0;
 		dir->hiden = 0;
 		dir->error = 0;
-		dir->dirlist = NULL;
 	}
 	return (dir);
 }
@@ -56,6 +55,28 @@ static int		ft_choice(int c, t_dir *dir)
 	return (1);
 }
 
+static	t_dirlist	*ver(char **argv, t_dir *dir)
+{
+	struct stat		test;
+	int				i;
+	t_dirlist		*list;
+
+	i = 0;
+	list = NULL;
+	while (argv && argv[i])
+	{
+		if (!stat(argv[i], &test))
+			list = ft_addlist(list, argv[i], time((time_t *)&test.st_mtime));
+		else
+		{
+			ft_perror(argv[i]);
+			dir->error = 1;
+		}
+		i++;
+	}
+	return (list);
+}
+
 t_dir			*ft_parse(int argc, char **argv)
 {
 	t_dir		*dir;
@@ -77,6 +98,6 @@ t_dir			*ft_parse(int argc, char **argv)
 			ft_error(*str);
 	}
 	if (argc)
-		dir->dir = argv;
+		dir->dir = ft_sortlist(ver(argv, dir), dir->sort_type, dir->sort_mod);
 	return (dir);
 }

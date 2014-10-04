@@ -34,6 +34,6 @@ t_dirlist				*ft_getdirlist(char *dir, t_dir *dir1)
 		closedir(dp);
 	}
 	else
-		perror(dir);
+		ft_perror(dir);
 	return (dirlist);
 }

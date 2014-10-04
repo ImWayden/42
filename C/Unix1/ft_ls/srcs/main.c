@@ -16,24 +16,27 @@ int					main(int argc, char **argv)
 {
 	struct stat		test;
 	t_dir			*dir;
-	int				i;
 
-	i = 0;
 	dir = NULL;
 	if ((dir = ft_parse(--argc, ++argv)))
 	{
-		while (dir->dir && dir->dir[i])
-		{
-			if (!stat(dir->dir[i], &test) && (S_ISDIR(test.st_mode)))
-				ft_ls(dir->dir[i], dir);
-			else if (!stat(dir->dir[i], &test))
-				ft_putdir(dir->dir[i], dir, test);
-			else
-				perror(dir->dir[i]);
-			i++;
-		}
-		if (!i)
+		if (!dir->dir && !dir->error)
 			ft_ls(".", dir);
+		while (dir->dir)
+		{
+			if (dir->error || dir->dir->next)
+			{
+				ft_putstr(dir->dir->str);
+				ft_putstr(":\n");
+			}
+			if (!stat(dir->dir->str, &test) && (S_ISDIR(test.st_mode)))
+				ft_ls(dir->dir->str, dir);
+			else if (!stat(dir->dir->str, &test))
+				ft_putdir(dir->dir->str, dir, test);
+			if ((dir->dir = ft_delelmt(dir->dir)))
+				ft_putendl(NULL);
+			dir->error = 1;
+		}
 	}
 	return (0);
 }

@@ -12,6 +12,15 @@
 
 #include "lsft.h"
 
+void			ft_perror(char *str)
+{
+	char		*str1;
+
+	str1 = ft_strjoin("ft_ls: ", str);
+	perror(str1);
+	free(str1);
+}
+
 void			ft_putdir(char *str, t_dir *dir, struct stat test)
 {
 	if (dir->infos)
@@ -29,18 +38,16 @@ static void			ft_rls(char *str, t_dir *dir, struct stat test)
 		if ((dp = opendir(str)))
 		{
 			closedir(dp);
-			if (dir->infos)
-				ft_putinfos(test);
 			ft_putstr(str);
 			ft_putendl(" :");
 			ft_ls(str, dir);
 		}
 		else
-			perror(str);
+			ft_perror(str);
 	}
 }
 
-static t_dirlist	*ft_delelmt(t_dirlist *list)
+t_dirlist			*ft_delelmt(t_dirlist *list)
 {
 	t_dirlist		*list1;
 
@@ -63,7 +70,7 @@ static void			ft_putlist(t_dirlist *list, t_dir *dir, char *line)
 		if (!stat(str, &test))
 			ft_putdir(list->str, dir, test);
 		else
-			perror(str);
+			ft_perror(str);
 			list = list->next;
 	}
 }
@@ -76,7 +83,7 @@ void				ft_ls(char *line, t_dir *dir)
 
 	if ((list = ft_getdirlist(line, dir)))
 	{
-		list = ft_sortlist(&list, dir->sort_type, dir->sort_mod);
+		list = ft_sortlist(list, dir->sort_type, dir->sort_mod);
 		line = ft_strjoin(line, "/");
 		ft_putlist(list, dir, line);
 		while (list)
@@ -88,7 +95,7 @@ void				ft_ls(char *line, t_dir *dir)
 					ft_rls(str, dir, test);
 			}
 			else
-				perror(str);
+				ft_perror(str);
 			list = ft_delelmt(list);
 		}
 	}
