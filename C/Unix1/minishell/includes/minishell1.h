@@ -27,20 +27,35 @@
 
 # define BUFFSIZE 1000
 
-typedef struct	s_env
+typedef struct		s_env
 {
-	char		*envc;
-	char		*path;
-}				t_env;
+	char			*name;
+	char			*arg;
+	char			**cmd;
+	struct s_env 	*next;
+}					t_env;
 
-void			ft_changepwd(char **envc, char *pwd);
-int				ft_is(char *str, int c);
-void			shell(char **env);
-void			ft_env(char **env);
-int				ft_isenv(char **env, char *str);
-char			**ft_unsetenv(char **env, char *str);
-void			ft_cd(char **env, char *path);
-char			*ft_getenv(char **env, char *str);
-char			**ft_setenv(char **env, char *str);
+typedef struct 		t_shell
+{
+	t_env			*env;
+	char			**path;
+	char			*prompt;
+	int				flag;
+}					t_shell;
+
+/*
+** builtin functions
+*/
+
+t_env					*add_env_list(t_env *list, char **str);
+int						aff_env(t_shell *shell);
+int						is_builtin(char *cmd);
+t_env					*env_listnew(char **str);
+t_env					*env_to_list(char **env);
+int						ft_setenv(t_shell *shell);
+int						ft_unsetenv(t_shell *shell);
+char					*get_env(t_env *env, char *str);
+int						cd(t_shell *shell, t_tree *tree);
+int						builtins_center(t_shell *shell);
 
 #endif

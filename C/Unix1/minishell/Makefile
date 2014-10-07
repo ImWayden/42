@@ -12,15 +12,20 @@
 
 NAME = ft_minishell1
 
+NAME = 42sh
+
 MAKE = make
 CC = gcc
 RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
+BDIR = srcs/builtins/
+IDIR = srcs/init/
 
-SRC = $(SDIR)ft_strrealloc.c $(SDIR)getenv.c $(SDIR)setenv.c $(SDIR)isenv.c \
-	  $(SDIR)unsetenv.c $(SDIR)minishell1.c $(SDIR)pwd.c $(SDIR)cd.c \
-	  $(SDIR)setenv.c $(SDIR)main.c 
+SRC = $(SDIR)main.c \
+	  $(BDIR)env_to_list.c $(BDIR)aff_env.c $(BDIR)setenv.c $(BDIR)unsetenv.c\
+	  $(BDIR)get_env.c $(BDIR)builtins_center.c $(BDIR)cd.c\
+	  $(IDIR)ft_init.c \
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes

@@ -12,35 +12,36 @@
 
 #include "minishell1.h"
 
-static char		*ft_access(char **path, char *cmd)
+static char		*ft_access(t_shell *shell)
 {
 	char		*str;
 	struct stat	tmp;
 	int			i;
 
 	i = 0;
-	if (cmd && *cmd == '/')
+	if (shell->cmd && shell->cmd[0])
 	{
-		if (!stat(cmd, &tmp))
-			return (cmd);
+		if (shell->cmd[0][0] == '/' || shell->cmd[0][0] == '.')
+			if (stat(cmd, &tmp))
+				return (0);
 		else
-			return (NULL);
-	}
 	while (path && path[i])
 	{
 		str = ft_strjoin(ft_strjoin(path[i], "/"), cmd);
 		if (!stat(str, &tmp))
-			return (str);
-		else
-			ft_memdel((void **)&str);
+		{
+			ft_memdel((void **)&shell->cmd[0]);
+			shell->cmd[0] = str;
+			break;
+		}
+		ft_memdel((void **)&str);
 		i++;
 	}
-	return (NULL);
+	return (1);
 }
 
-static	void	process(char **path, char **cmd, char **envc)
+static	void	exec_cmd(t_shel *shell)
 {
-	char		*str;
 	pid_t		process;
 
 	process = fork();
@@ -48,62 +49,27 @@ static	void	process(char **path, char **cmd, char **envc)
 		wait(NULL);
 	if (process == 0)
 	{
-		if ((str = ft_access(path, cmd[0])))
-			execve(str, cmd, envc);
-		else
-		{
-			ft_putstr(cmd[0]);
-			ft_putendl(": command not found.");
-		}
+		if ((ft_access(shell)))
+			execv(shell->cmd[0], shell->cmd);
 		exit(0);
 	}
 	if (process == -1)
 		ft_putendl("Fork error : retry !");
 }
 
-static void		ft_exec(char *cmd, char ***envc, char **path)
-{
-	char		**cmd1;
-
-	if ((cmd1 = ft_strsplit(cmd, ' ')) && cmd1[0])
-	{
-		if (!ft_strcmp(cmd1[0], "env"))
-			ft_puttab(*envc);
-		else if (!ft_strcmp(cmd1[0], "cd"))
-			ft_cd(*envc, cmd1[1]);
-		else if (!ft_strcmp(cmd1[0], "unsetenv"))
-			*envc = ft_unsetenv(*envc, cmd1[1]);
-		else if (!ft_strcmp(cmd1[0], "setenv"))
-			*envc = ft_setenv(*envc, cmd1[1]);
-		else if (cmd1[0])
-			process(path, cmd1, *envc);
-	}
-}
-
 void			shell(char **env)
 {
-	char		**path;
 	char		*cmd;
-	char		**envc;
+	char		*cmd1;
+	t_shell		*shell;
 
-	if (env && env[0])
+	shell = init(env);
+	while (shell)
 	{
-		envc = ft_tabdup(env);
-		if (!(path = ft_strsplit(ft_getenv(envc, "PATH"), ':')))
-			ft_putendl("NO var PATH : You need to give the bin's path.");
-		cmd = NULL;
-	}
-	else
-		envc = NULL;
-	while (42)
-	{
-		write(1, "$>", 2);
+		ft_putstr(shell->prompt);
 		get_next_line(0, &cmd);
-		cmd = ft_strtrim(cmd);
-		if (!ft_strcmp(cmd, "exit"))
-			exit (1);
-		if (envc)
-			ft_exec(cmd, &envc, path);
+		shell->cmd = ft_strsplit(cmd, ' ');
+		ft_exec(shell);
 		ft_memdel((void **)&cmd);
 	}
 }
