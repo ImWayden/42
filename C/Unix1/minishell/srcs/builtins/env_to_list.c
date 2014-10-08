@@ -6,11 +6,11 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/06/04 13:39:31 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/08 15:46:58 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/10/08 18:12:12 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "my_42sh.h"
+#include "minishell1.h"
 
 t_env			*env_listnew(char **str)
 {

@@ -6,11 +6,11 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/23 19:03:35 by sraccah           #+#    #+#             */
-/*   Updated: 2014/06/08 15:37:18 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/10/08 18:38:39 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "my_42sh.h"
+#include "minishell1.h"
 
 static int			s_setenv(t_env **envs, char *name, char **arg)
 {
@@ -40,7 +40,7 @@ int					cd(t_shell *shell)
 	char			*pwd;
 
 	envs = shell->env;
-	av = tree->argv;
+	av = shell->cmd;
 	pwd = get_env(envs, "PWD");
 	if (av[1] == NULL || !ft_strcmp(av[1], "~") || !ft_strcmp(av[1], "~/"))
 		av[1] = get_env(envs, "HOME");

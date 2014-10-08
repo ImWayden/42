@@ -6,51 +6,71 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/04/27 13:30:21 by msarr             #+#    #+#             */
-/*   Updated: 2014/04/27 13:30:25 by msarr            ###   ########.fr       */
+/*   Updated: 2014/10/08 19:02:53 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell1.h"
 
-static char		*ft_access(t_shell *shell)
+char			*get_full_path(char **path, char *binary)
 {
-	char		*str;
-	struct stat	tmp;
 	int			i;
+	char		*str;
+	char		*full_path;
 
 	i = 0;
-	if (shell->cmd && shell->cmd[0])
-	{
-		if (shell->cmd[0][0] == '/' || shell->cmd[0][0] == '.')
-			if (stat(cmd, &tmp))
-				return (0);
-		else
+	full_path = NULL;
 	while (path && path[i])
 	{
-		str = ft_strjoin(ft_strjoin(path[i], "/"), cmd);
-		if (!stat(str, &tmp))
-		{
-			ft_memdel((void **)&shell->cmd[0]);
-			shell->cmd[0] = str;
-			break;
-		}
+		str = ft_strjoin(path[i], "/");
+		full_path = ft_strjoin(str, binary);
+		if (access(full_path, F_OK) == 0)
+			return (full_path);
+		ft_memdel((void **)&full_path);
 		ft_memdel((void **)&str);
 		i++;
 	}
-	return (1);
+	return (NULL);
 }
 
-static	void	exec_cmd(t_shel *shell)
+static char		*get_bin_path(char *bin, t_shell *shell)
+{
+	char		*path;
+
+	path = NULL;
+	if (ft_strncmp(bin, "/", 1) == 0 || ft_strncmp(bin, ".", 1) == 0)
+		path = ft_strdup(bin);
+	else
+		path = get_full_path(shell->path, bin);
+	if (!path || (path && access(path, F_OK) == -1))
+	{
+		ft_putstr(bin);
+		ft_putstr(": Command not found.\n");
+	}
+	else if (access(path, X_OK) == -1)
+	{
+		ft_putstr(path);
+		ft_putstr(" : Permission denied.\n");
+	}
+	else
+		return (path);
+	ft_memdel((void **)&path);
+	return (path);
+}
+
+static void		exec_cmd(t_shell *shell)
 {
 	pid_t		process;
+	char		*path;
 
 	process = fork();
+	path = NULL;
 	if (process > 0)
 		wait(NULL);
 	if (process == 0)
 	{
-		if ((ft_access(shell)))
-			execv(shell->cmd[0], shell->cmd);
+		if ((path = get_bin_path((shell->cmd)[0], shell)))
+			execve(path, shell->cmd, shell->envc);
 		exit(0);
 	}
 	if (process == -1)
@@ -59,8 +79,7 @@ static	void	exec_cmd(t_shel *shell)
 
 void			shell(char **env)
 {
-	char		*cmd;
-	char		*cmd1;
+	char		*cmd = NULL;
 	t_shell		*shell;
 
 	shell = init(env);
@@ -68,8 +87,13 @@ void			shell(char **env)
 	{
 		ft_putstr(shell->prompt);
 		get_next_line(0, &cmd);
-		shell->cmd = ft_strsplit(cmd, ' ');
-		ft_exec(shell);
+		if ((shell->cmd = ft_strsplit(cmd, ' ')))
+		{
+			if (is_builtin((shell->cmd)[0]))
+				builtins_center(shell);
+			else
+				exec_cmd(shell);
+		}
 		ft_memdel((void **)&cmd);
 	}
 }

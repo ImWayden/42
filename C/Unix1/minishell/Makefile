@@ -6,13 +6,11 @@
 #    By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/22 14:52:23 by sraccah           #+#    #+#              #
-#    Updated: 2014/02/24 11:55:22 by sraccah          ###   ########.fr        #
+#    Updated: 2014/10/08 19:48:49 by msarr            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_minishell1
-
-NAME = 42sh
 
 MAKE = make
 CC = gcc
@@ -22,7 +20,7 @@ SDIR = srcs/
 BDIR = srcs/builtins/
 IDIR = srcs/init/
 
-SRC = $(SDIR)main.c \
+SRC = $(SDIR)main.c  $(SDIR)minishell1.c \
 	  $(BDIR)env_to_list.c $(BDIR)aff_env.c $(BDIR)setenv.c $(BDIR)unsetenv.c\
 	  $(BDIR)get_env.c $(BDIR)builtins_center.c $(BDIR)cd.c\
 	  $(IDIR)ft_init.c \

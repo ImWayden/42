@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/27 14:25:10 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/03 00:09:57 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/10/08 19:02:25 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static char		**ft_array(char *s, char c)
 	char		**split;
 
 	j = 0;
+	split = NULL;
 	while (s && *s)
 	{
 		while (*s && *s == c)
@@ -27,8 +28,11 @@ static char		**ft_array(char *s, char c)
 		while (*s && *s != c)
 			s++;
 	}
-	split = (char **)malloc(sizeof(char *) * (j + 1));
-	split[j] = NULL;
+	if (j)
+	{
+		split = (char **)malloc(sizeof(char *) * (j + 1));
+		split[j] = NULL;
+	}
 	return (split);
 }
 

@@ -6,11 +6,11 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/06/04 13:40:17 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/10 14:52:04 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/10/08 18:32:23 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "my_42sh.h"
+#include "minishell1.h"
 
 int					ft_setenv(t_shell *shell)
 {
@@ -21,7 +21,7 @@ int					ft_setenv(t_shell *shell)
 	args = shell->cmd;
 	if (args && args[1] && args[2] && !args[3])
 	{
-		while (envc)
+		while (shell->env && envc)
 		{
 			if (!ft_strcmp(envc->name, args[1]))
 			{
@@ -29,12 +29,15 @@ int					ft_setenv(t_shell *shell)
 				envc->arg = ft_strdup(args[2]);
 				break;
 			}
+			if (!envc->next)
+			{
+				envc->next = env_listnew(&args[1]);
+				break;
+			}
 			envc = envc->next;
 		}
-		if (!envc)
-			envc = env_listnew(&args[]);
 	}
 	else
-		ft_putendl("setenv", " : wrong line format.\n");
+		ft_putendl("setenv : wrong line format.\n");
 	return (1);
 }

@@ -6,11 +6,11 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/23 19:03:35 by sraccah           #+#    #+#             */
-/*   Updated: 2014/06/08 15:37:18 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/10/08 18:11:26 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "my_42sh.h"
+#include "minishell1.h"
 
 int				is_builtin(char *cmd)
 {
