@@ -12,6 +12,17 @@
 
 #include "lsft.h"
 
+t_dirlist				*ft_delelmt(t_dirlist *list)
+{
+	t_dirlist			*list1;
+
+	list1 = list;
+	list = list->next;
+	free(list1->str);
+	free(list1);
+	return (list);
+}
+
 static void				ft_listswap(t_dirlist *tmp, t_dirlist *tmp1)
 {
 	time_t				atime;

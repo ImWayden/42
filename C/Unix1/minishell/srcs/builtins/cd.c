@@ -25,12 +25,41 @@ static int			s_setenv(t_env **envs, char *name, char **arg)
 		{
 			while (envc && envc->next && ft_strcmp(envc->name, name))
 				envc = envc->next;
-			if (!ft_strcmp(envc->name, name))
+			if (envc && !ft_strcmp(envc->name, name))
+			{
+				ft_memdel((void **)&envc->arg);
 				envc->arg = ft_strdup(args[0]);
+			}
 			return (EXIT_SUCCESS);
 		}
 	}
 	return (EXIT_FAILURE);
+}
+
+static void			cd_get_path(char **av, char **path, char *pwd, char *str)
+{
+	char			*str1;
+
+	if (!av[1])
+		*path = ft_strdup(str);
+	else if (!ft_strncmp(av[1], "~", 1))
+		*path = ft_strjoin(str, &(av[1][1]));
+	else if (!ft_strncmp(av[1], "/", 1))
+		*path = ft_strdup(av[1]);
+	else if (!ft_strcmp(av[1], "-"))
+		*path = NULL;
+	else if (!ft_strcmp(av[1], ".") || !ft_strcmp(av[1], ".."))
+	{
+		*path = ft_strdup(pwd);
+		if (!ft_strcmp(av[1], ".."))
+			(ft_strrchr(*path, '/'))[1] = '\0';
+	}
+	else
+	{
+		str1 = ft_strjoin(pwd, "/");
+		*path = ft_strjoin(str1, av[1]);
+		ft_memdel((void **)&str1);
+	}
 }
 
 int					cd(t_shell *shell)
@@ -38,20 +67,25 @@ int					cd(t_shell *shell)
 	t_env			*envs;
 	char			**av;
 	char			*pwd;
+	char			*path;
+	char			*home;
 
 	envs = shell->env;
 	av = shell->cmd;
 	pwd = get_env(envs, "PWD");
-	if (av[1] == NULL || !ft_strcmp(av[1], "~") || !ft_strcmp(av[1], "~/"))
-		av[1] = get_env(envs, "HOME");
-	else if (!ft_strcmp(av[1], "-"))
-		av[1] = get_env(envs, "OLDPWD");
-	if (chdir(av[1]) == -1)
+	home = get_env(envs, "HOME");
+	cd_get_path(av, &path, pwd, home);
+	if (!path)
+		path = get_env(envs, "OLDPWD");
+	if (chdir(path) == -1)
 		ft_putendl(": cd : No such file or directory.");
 	else
 	{
 		s_setenv(&envs, "OLDPWD", &pwd);
-		s_setenv(&envs, "PWD", &av[1]);
+		s_setenv(&envs, "PWD", &path);
 	}
+	ft_memdel((void **)&path);
+	ft_memdel((void **)&pwd);
+	ft_memdel((void **)&home);
 	return (EXIT_SUCCESS);
 }

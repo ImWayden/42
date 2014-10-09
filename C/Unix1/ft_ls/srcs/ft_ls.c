@@ -12,16 +12,16 @@
 
 #include "lsft.h"
 
-void			ft_perror(char *str)
+void				ft_perror(char *str)
 {
-	char		*str1;
+	char			*str1;
 
 	str1 = ft_strjoin("ft_ls: ", str);
 	perror(str1);
 	free(str1);
 }
 
-void			ft_putdir(char *str, t_dir *dir, struct stat test)
+void				ft_putdir(char *str, t_dir *dir, struct stat test)
 {
 	if (dir->infos)
 		ft_putinfos(test);
@@ -30,9 +30,9 @@ void			ft_putdir(char *str, t_dir *dir, struct stat test)
 
 static void			ft_rls(char *str, t_dir *dir, struct stat test)
 {
-	DIR 			*dp;
+	DIR				*dp;
 
-	if (dir->recursive && (S_ISDIR(test.st_mode)))
+	if ((S_ISDIR(test.st_mode)))
 	{
 		ft_putendl(NULL);
 		if ((dp = opendir(str)))
@@ -40,22 +40,17 @@ static void			ft_rls(char *str, t_dir *dir, struct stat test)
 			closedir(dp);
 			ft_putstr(str);
 			ft_putendl(" :");
+			if (dir->infos)
+			{
+				ft_putstr("total ");
+				ft_putnbr((int)test.st_nlink);
+				ft_putendl(NULL);
+			}
 			ft_ls(str, dir);
 		}
 		else
 			ft_perror(str);
 	}
-}
-
-t_dirlist			*ft_delelmt(t_dirlist *list)
-{
-	t_dirlist		*list1;
-
-	list1 = list;
-	list = list->next;
-	free(list1->str);
-	free(list1);
-	return (list);
 }
 
 static void			ft_putlist(t_dirlist *list, t_dir *dir, char *line)
@@ -71,7 +66,7 @@ static void			ft_putlist(t_dirlist *list, t_dir *dir, char *line)
 			ft_putdir(list->str, dir, test);
 		else
 			ft_perror(str);
-			list = list->next;
+		list = list->next;
 	}
 }
 
@@ -86,7 +81,7 @@ void				ft_ls(char *line, t_dir *dir)
 		list = ft_sortlist(list, dir->sort_type, dir->sort_mod);
 		line = ft_strjoin(line, "/");
 		ft_putlist(list, dir, line);
-		while (list)
+		while (list && dir->recursive)
 		{
 			str = ft_strjoin(line, list->str);
 			if (!stat(str, &test))

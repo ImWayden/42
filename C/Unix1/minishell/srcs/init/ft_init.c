@@ -27,6 +27,8 @@ static t_shell		*shellnew(void)
 	return (shell);
 }
 
+
+
 t_shell				*init(char	**env)
 {
 	t_shell			*shell;
@@ -35,10 +37,12 @@ t_shell				*init(char	**env)
 	if ((shell = shellnew()))
 	{
 		shell->env = env_to_list(env);
-		shell->envc = env;
-		shell->prompt = ft_strdup("~>");
+		shell->envc = list_to_tab(shell->env);
+		if (!(shell->prompt = get_env(shell->env, "LOGNAME")))
+			shell->prompt = ft_strdup("~>");
 		str = get_env(shell->env, "PATH");
 		shell->path = ft_strsplit(str, ':');
+		ft_memdel((void **)&str);
 		return (shell);
 	}
 	return (shell);

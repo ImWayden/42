@@ -12,31 +12,55 @@
 
 #include "lsft.h"
 
-int					main(int argc, char **argv)
+void				main2(t_dir *dir)
 {
 	struct stat		test;
+
+	while (dir->dir)
+	{
+		if (dir->error || dir->dir->next)
+		{
+			ft_putstr(dir->dir->str);
+			ft_putstr(":\n");
+		}
+		if (dir->infos)
+		{
+			ft_putstr("total ");
+			ft_putnbr((int)test.st_nlink);
+			ft_putendl(NULL);
+		}
+		if (!stat(dir->dir->str, &test) && (S_ISDIR(test.st_mode)))
+			ft_ls(dir->dir->str, dir);
+		else if (!stat(dir->dir->str, &test))
+			ft_putdir(dir->dir->str, dir, test);
+		if ((dir->dir = ft_delelmt(dir->dir)))
+			ft_putendl(NULL);
+		dir->error = 1;
+	}
+}
+
+int					main(int argc, char **argv)
+{
 	t_dir			*dir;
+	struct stat		test;
 
 	dir = NULL;
 	if ((dir = ft_parse(--argc, ++argv)))
 	{
 		if (!dir->dir && !dir->error)
-			ft_ls(".", dir);
-		while (dir->dir)
 		{
-			if (dir->error || dir->dir->next)
+			stat(".", &test);
+			if (dir->infos)
 			{
-				ft_putstr(dir->dir->str);
-				ft_putstr(":\n");
-			}
-			if (!stat(dir->dir->str, &test) && (S_ISDIR(test.st_mode)))
-				ft_ls(dir->dir->str, dir);
-			else if (!stat(dir->dir->str, &test))
-				ft_putdir(dir->dir->str, dir, test);
-			if ((dir->dir = ft_delelmt(dir->dir)))
+				ft_putstr("total ");
+				ft_putnbr((int)test.st_nlink);
 				ft_putendl(NULL);
-			dir->error = 1;
+			}
+			ft_ls(".", dir);
 		}
+		else
+			main2(dir);
+		free(dir);
 	}
 	return (0);
 }

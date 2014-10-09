@@ -12,9 +12,9 @@
 
 #include "lsft.h"
 
-static t_dir	*allocdir(void)
+static t_dir		*allocdir(void)
 {
-	t_dir		*dir;
+	t_dir			*dir;
 
 	if ((dir = (t_dir *)malloc(sizeof(t_dir))))
 	{
@@ -29,7 +29,7 @@ static t_dir	*allocdir(void)
 	return (dir);
 }
 
-static void		ft_error(char c)
+static void			ft_error(char c)
 {
 	ft_putstr("ft_ls : illegal option -- ");
 	ft_putchar(c);
@@ -38,7 +38,7 @@ static void		ft_error(char c)
 	exit (1);
 }
 
-static int		ft_choice(int c, t_dir *dir)
+static int			ft_choice(int c, t_dir *dir)
 {
 	if (c == 'r')
 		dir->sort_type = 1;
@@ -77,11 +77,11 @@ static	t_dirlist	*ver(char **argv, t_dir *dir)
 	return (list);
 }
 
-t_dir			*ft_parse(int argc, char **argv)
+t_dir				*ft_parse(int argc, char **argv)
 {
-	t_dir		*dir;
-	int			i;
-	char		*str;
+	t_dir			*dir;
+	int				i;
+	char			*str;
 
 	dir = allocdir();
 	while (argc && argv && *argv && **argv == '-')

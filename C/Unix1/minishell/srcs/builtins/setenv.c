@@ -38,6 +38,6 @@ int					ft_setenv(t_shell *shell)
 		}
 	}
 	else
-		ft_putendl("setenv : wrong line format.\n");
+		ft_putendl("setenv : wrong line format.");
 	return (1);
 }

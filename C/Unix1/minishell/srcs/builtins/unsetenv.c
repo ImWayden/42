@@ -21,17 +21,24 @@ int					ft_unsetenv(t_shell *shell)
 	envc = shell->env;
 	if ((args = (shell->cmd)[1]))
 	{
-		while (envc && envc->next && ft_strcmp(envc->name, args))
+		if (!ft_strcmp(envc->name, args))
+		{
+			tmp = shell->env;
+			shell->env = shell->env->next;
+			env_delone(&tmp);
+			return (1);
+		}
+		while (envc && envc->next)
 		{
 			tmp = envc;
 			envc = envc->next;
-		}
-		if (!ft_strcmp(envc->name, args))
-		{
-			tmp->next = envc->next;
-			//env_delone(&envc);
-			return (EXIT_SUCCESS);
+			if (!ft_strcmp(envc->name, args))
+			{
+				tmp->next = envc->next;
+				env_delone(&envc);
+				break;
+			}
 		}
 	}
-	return (EXIT_FAILURE);
+	return (1);
 }

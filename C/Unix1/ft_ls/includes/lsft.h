@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef		 		LSFT_H
-# define			LSFT_H
+#ifndef LSFT_H
+# define LSFT_H
 
 # include <unistd.h>
 # include <stdio.h>

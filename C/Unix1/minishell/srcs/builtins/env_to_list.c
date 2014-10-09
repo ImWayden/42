@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/06/04 13:39:31 by msarr             #+#    #+#             */
-/*   Updated: 2014/10/08 18:12:12 by msarr            ###   ########.fr       */
+/*   Updated: 2014/06/08 15:46:58 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ t_env			*env_listnew(char **str)
 
 	if ((list = (t_env *)malloc(sizeof(t_env))))
 	{
-		if (str && str[0])
+		if (str)
+		{
 			list->name = ft_strdup(str[0]);
-		if (str && str[1])
 			list->arg = ft_strdup(str[1]);
+		}
 		list->next = NULL;
 	}
 	return (list);
@@ -55,8 +56,11 @@ t_env			*env_to_list(char **env)
 	list = NULL;
 	while (env && env[i])
 	{
-		args = ft_strsplit(env[i], '=');
-		list = add_env_list(list, args);
+		if ((args = ft_strsplit(env[i], '=')))
+		{
+			list = add_env_list(list, args);
+			ft_deltab(&args);
+		}
 		i++;
 	}
 	return (list);
