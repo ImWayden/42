@@ -1,41 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/24 15:14:37 by msarr             #+#    #+#             */
-/*   Updated: 2014/10/08 18:21:50 by msarr            ###   ########.fr       */
+/*   Created: 2014/10/10 19:20:56 by msarr             #+#    #+#             */
+/*   Updated: 2014/10/10 19:20:58 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef		FDF_H
-# define	FDF_H
+#include "fdf.h"
 
-# include <mlx.h>
-# include <math.h>
-# include <fcntl.h>
-# include "libft.h"
-
-typedef struct s_coord
+void			fake_expose(t_env env)
 {
-	float			x;
-	float			y;
-	float			z;
-}				t_coord;
-
-typedef	struct	s_env
-{
-	void		*ptr;
-	void		*win;
-	char		*file;
+	int			i;
+	int			j;
 	t_coord		**tab;
-}				t_env;
 
-int			transform(t_coord **tab, int pad);
-int			init(t_env *env);
-void		fake_expose(t_env env);
-
-
-#endif
+	tab = env.tab;
+	i = 0;
+	while(tab[i])
+	{
+		j = 0;
+		while (tab[i][j].z != -1)
+		{
+			mlx_pixel_put(env.ptr, env.win, tab[i][j].x, tab[i][j].y, 0xFFFFFF);
+			j++;
+		}
+		i++;
+	}
+}

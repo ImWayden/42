@@ -10,28 +10,18 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_minishell1
+NAME = fdf
 
 MAKE = make
 CC = gcc
 RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
-BDIR = srcs/builtins/
-IDIR = srcs/init/
-EDIR = srcs/execution/
-FDIR = srcs/free_functions/
 
-SRC = $(SDIR)shell.c \
-	  $(EDIR)execution.c \
-	  $(BDIR)env_to_list.c $(BDIR)aff_env.c $(BDIR)setenv.c $(BDIR)unsetenv.c\
-	  $(BDIR)get_env.c $(BDIR)builtins_center.c $(BDIR)cd.c $(BDIR)env_to_tab.c\
-	  $(BDIR)exit.c\
-	  $(IDIR)ft_init.c \
-	  $(FDIR)free_env.c $(FDIR)free_shell.c \
+SRC = $(SDIR)get_file.c $(SDIR)transform.c $(SDIR)mlx.c $(SDIR)main.c \
 
 OBJ = $(SRC:.c=.o)
-INC = -I includes -I $(LDIR)includes
+INC = -I includes -I $(LDIR)includes -L /opt/X11/lib -lmlx -lXext -lX11
 LIB = ./libft/libft.a
 CFLAGS = -Wall -Wextra -Werror
 

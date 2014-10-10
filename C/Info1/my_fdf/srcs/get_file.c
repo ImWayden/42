@@ -10,18 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "fdf.h"
 
-int						ft_get_file(char *file, t_list **list)
+
+static int			ft_get_file(char *file, t_list **list)
 {
-	int					fd;
-	t_list				*lst;
-	int					i;
-	char				*str;
+	int				fd;
+	t_list			*lst;
+	int				i;
+	char			*str;
 	i = 0;
-	if ((fd = open(file, O_RDONLY) != -1))
+	fd = open(file, O_RDONLY);
+	if (fd != -1)
 	{
 		while((get_next_line(fd, &str)))
 		{
+			ft_putendl(str);
 			if ((lst = (t_list *)malloc(sizeof(t_list))))
 			{
 				lst->content = str;
@@ -36,7 +40,45 @@ int						ft_get_file(char *file, t_list **list)
 	return (i);
 }
 
-int			int main(int argc, char *argv[])
+static int	ft_get_tab(t_list **list, t_coord **tab, int i)
 {
+	int		j;
+	char	**str;
+
+	
+	while (*list)
+	{
+		j = 0;
+		str = ft_strsplit((*list)->content, ' ');
+		tab[i] = (t_coord *)malloc(sizeof(t_coord) * ((*list)->content_size + 1));
+		tab[i][(*list)->content_size].z = -1;
+		while (str[j])
+		{
+			tab[i][j].x = j;
+			tab[i][j].y = i;
+			tab[i][j].z = ft_atoi(str[j]);
+			j++;
+		}
+		*list = (*list)->next;
+		i--;
+	}
+	return (1);
+}
+
+int			init(t_env *env)
+{
+	int		i;
+	t_list	*list;
+	t_coord	**tab;
+
+	list = NULL;
+	i = ft_get_file(env->file, &list);
+	if ((tab = (t_coord **)malloc(sizeof(t_coord *) * (i + 1))))
+	{
+		tab[i] = NULL;
+		ft_get_tab(&list, tab, i - 1);
+		transform(tab, i * 15);
+		env->tab = tab;
+	}
 	return 0;
 }
