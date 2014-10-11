@@ -6,7 +6,7 @@
 /*   By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/04/27 17:43:29 by sraccah           #+#    #+#             */
-/*   Updated: 2014/04/27 22:31:17 by sraccah          ###   ########.fr       */
+/*   Updated: 2014/10/10 11:51:33 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ void			fake_expose(t_env env)
 		if (env.count < 191)
 			ft_put_line2(env.width1, env.height1, env.width3, env.height3, env);
 		mlx_pixel_put(env.ptr, env.win, env.width1, env.height1, 0xFFFFFF);
+		//sleep(1);
 	}
 }

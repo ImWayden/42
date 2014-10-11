@@ -6,13 +6,13 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/10/10 18:44:13 by msarr             #+#    #+#             */
-/*   Updated: 2014/10/10 18:44:15 by msarr            ###   ########.fr       */
+/*   Updated: 2014/10/11 23:04:52 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int			transform(t_coord **tab, int pad)
+int			transform(t_coord **tab, int pad1, int pad2)
 {
 	int		i;
 	int		j;
@@ -24,15 +24,16 @@ int			transform(t_coord **tab, int pad)
 	while(tab[i])
 	{
 		j = 0;
-		while (tab[i][j].z != -1)
+		while (tab[i][j].z != -2)
 		{
 			x = tab[i][j].x;
 			y = tab[i][j].y;
 			ft_putnbr(tab[i][j].x);
 			ft_putnbr(tab[i][j].y);
-			ft_putnbr(tab[i][j].z);
-			tab[i][j].x = 15 * 0.71 * (x - y) + pad;
-			tab[i][j].y = 15 * ((0.41 * (x + y) - 0.82 * tab[i][j].z)) + pad;
+			if (tab[i][j].z)
+				tab[i][j].z = 0.5;
+			tab[i][j].x = 20 * 0.71 * (x - y) + pad1;
+			tab[i][j].y = 20 * (-0.82 * tab[i][j].z + 0.41 * (x + y)) + pad2;
 			ft_putnbr(tab[i][j].x);
 			ft_putnbr(tab[i][j].y);
 			j++;

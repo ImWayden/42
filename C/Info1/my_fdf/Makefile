@@ -6,7 +6,7 @@
 #    By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/22 14:52:23 by sraccah           #+#    #+#              #
-#    Updated: 2014/10/08 19:48:49 by msarr            ###   ########.fr        #
+#    Updated: 2014/10/10 23:48:25 by msarr            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,10 @@ SDIR = srcs/
 SRC = $(SDIR)get_file.c $(SDIR)transform.c $(SDIR)mlx.c $(SDIR)main.c \
 
 OBJ = $(SRC:.c=.o)
-INC = -I includes -I $(LDIR)includes -L /opt/X11/lib -lmlx -lXext -lX11
+INC = -I includes -I $(LDIR)includes
 LIB = ./libft/libft.a
+DIR_LIBS = /opt/X11/lib
+LDFLAGS += -L$(DIR_LIBS) -lmlx -lXext -lX11
 CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
@@ -35,8 +37,7 @@ $(NAME): $(OBJ)
 	@echo "\033[31;1m"
 	@echo -n '---> Compilation in progress... <---'
 	@echo "\033[0m"
-	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LIB)
-	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LIB)
+	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LDFLAGS) $(LIB)
 	@echo "\033[1;32m"
 	@echo -n '---> DONE ! <---'
 	@echo "\033[0m"

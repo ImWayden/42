@@ -6,14 +6,14 @@
 /*   By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/03 16:09:35 by sraccah           #+#    #+#             */
-/*   Updated: 2014/04/27 22:31:35 by sraccah          ###   ########.fr       */
+/*   Updated: 2014/10/09 22:02:45 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# define PADDING 30
+# define PADDING 15
 
 # include <mlx.h>
 # include <math.h>

@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/10/09 16:54:09 by msarr             #+#    #+#             */
-/*   Updated: 2014/10/09 16:54:11 by msarr            ###   ########.fr       */
+/*   Updated: 2014/10/11 22:52:00 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,18 @@ static int	ft_get_tab(t_list **list, t_coord **tab, int i)
 {
 	int		j;
 	char	**str;
+	int 	k;
 
 	
 	while (*list)
 	{
 		j = 0;
+		k = 0;
 		str = ft_strsplit((*list)->content, ' ');
-		tab[i] = (t_coord *)malloc(sizeof(t_coord) * ((*list)->content_size + 1));
-		tab[i][(*list)->content_size].z = -1;
+		while (str[k])
+			k++;
+		tab[i] = (t_coord *)malloc(sizeof(t_coord) * (k + 1));
+		tab[i][k].z = -2;
 		while (str[j])
 		{
 			tab[i][j].x = j;
@@ -62,12 +66,13 @@ static int	ft_get_tab(t_list **list, t_coord **tab, int i)
 		*list = (*list)->next;
 		i--;
 	}
-	return (1);
+	return (k);
 }
 
 int			init(t_env *env)
 {
 	int		i;
+	int		j;
 	t_list	*list;
 	t_coord	**tab;
 
@@ -76,8 +81,8 @@ int			init(t_env *env)
 	if ((tab = (t_coord **)malloc(sizeof(t_coord *) * (i + 1))))
 	{
 		tab[i] = NULL;
-		ft_get_tab(&list, tab, i - 1);
-		transform(tab, i * 15);
+		j = ft_get_tab(&list, tab, i - 1);
+		transform(tab, ++j *15, ++i * 15);
 		env->tab = tab;
 	}
 	return 0;
