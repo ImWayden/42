@@ -26,6 +26,7 @@ SRC = $(SDIR)shell.c \
 	  $(EDIR)execution.c \
 	  $(BDIR)env_to_list.c $(BDIR)aff_env.c $(BDIR)setenv.c $(BDIR)unsetenv.c\
 	  $(BDIR)get_env.c $(BDIR)builtins_center.c $(BDIR)cd.c $(BDIR)env_to_tab.c\
+	  $(BDIR)pwd.c\
 	  $(BDIR)exit.c\
 	  $(IDIR)ft_init.c \
 	  $(FDIR)free_env.c $(FDIR)free_shell.c \

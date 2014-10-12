@@ -27,9 +27,7 @@ static t_shell		*shellnew(void)
 	return (shell);
 }
 
-
-
-t_shell				*init(char	**env)
+t_shell				*init(char **env)
 {
 	t_shell			*shell;
 	char			*str;

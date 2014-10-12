@@ -45,11 +45,12 @@ int				main(int ac, char **av)
 		init(&env);
 		if ((env.ptr = mlx_init()) == NULL)
 			return (EXIT_FAILURE);
-		if ((env.win = mlx_new_window(env.ptr, 640, 480, "fdf")) == NULL)
+		if ((env.win = mlx_new_window(env.ptr, env.x++ * env.pad * 2
+			, env.y++ * env.pad * 2, "fdf")) == NULL)
 			return (EXIT_FAILURE);
 		mlx_key_hook(env.win, ft_key_hook, &env);
 		mlx_mouse_hook(env.win, ft_mouse_hook, &env);
-		fake_expose(env);
+		mlx_expose_hook(env.win, fake_expose, &env);
 		mlx_loop(env.ptr);
 	}
 	return (EXIT_SUCCESS);

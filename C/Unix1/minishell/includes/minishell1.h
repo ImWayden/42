@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef		MINISHELL1_H
-# define	MINISHELL1_H
+#ifndef MINISHELL1_H
+# define MINISHELL1_H
 
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -31,10 +31,10 @@ typedef struct		s_env
 {
 	char			*name;
 	char			*arg;
-	struct s_env 	*next;
+	struct s_env	*next;
 }					t_env;
 
-typedef struct 		t_shell
+typedef struct		s_shell
 {
 	t_env			*env;
 	char			**cmd;
@@ -48,23 +48,24 @@ typedef struct 		t_shell
 ** builtin functions
 */
 
-t_env					*add_env_list(t_env *list, char **str);
-int						aff_env(t_shell *shell);
-int						is_builtin(char *cmd);
-t_env					*env_listnew(char **str);
-t_env					*env_to_list(char **env);
-char					**list_to_tab(t_env *env);
-int						ft_setenv(t_shell *shell);
-int						ft_unsetenv(t_shell *shell);
-char					*get_env(t_env *env, char *str);
-int						cd(t_shell *shell);
-int						builtins_center(t_shell **shell);
-t_shell					*init(char	**env);
-void					shell(char **env);
-void					exec_cmd(t_shell *shell);
-void					free_env(t_env **envc);
-void					free_shell(t_shell **shell);
-void					env_delone(t_env **envc);
-int						ft_exit(t_shell **shell);
+t_env				*add_env_list(t_env *list, char **str);
+int					aff_env(t_shell *shell);
+int					is_builtin(char *cmd);
+t_env				*env_listnew(char **str);
+t_env				*env_to_list(char **env);
+char				**list_to_tab(t_env *env);
+int					ft_setenv(t_shell *shell);
+int					ft_unsetenv(t_shell *shell);
+char				*get_env(t_env *env, char *str);
+int					cd(t_shell *shell);
+int					builtins_center(t_shell **shell);
+t_shell				*init(char	**env);
+void				shell(char **env);
+void				exec_cmd(t_shell *shell);
+void				free_env(t_env **envc);
+void				free_shell(t_shell **shell);
+void				env_delone(t_env **envc);
+int					ft_exit(t_shell **shell);
+int					ft_pwd(t_shell *shell);
 
 #endif

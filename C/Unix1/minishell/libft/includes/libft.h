@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef				LIBFT_H
-# define 			LIBFT_H
+#ifndef LIBFT_H
+# define LIBFT_H
 
 # include <unistd.h>
 # include <string.h>
@@ -32,19 +32,19 @@
 ** Lists and Strutures
 */
 
-typedef struct			s_line
+typedef struct		s_line
 {
-	int					fd;
-	char				*str;
-	struct s_line		*next;
-}						t_line;
+	int				fd;
+	char			*str;
+	struct s_line	*next;
+}					t_line;
 
-typedef struct			s_list
+typedef struct		s_list
 {
-	char				*content;
-	size_t				content_size;
-	struct s_list		*next;
-}						t_list;
+	char			*content;
+	size_t			content_size;
+	struct s_list	*next;
+}					t_list;
 
 /*
 ** Functions for Lists and Strutures

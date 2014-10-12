@@ -21,12 +21,11 @@ int					ft_unsetenv(t_shell *shell)
 	envc = shell->env;
 	if ((args = (shell->cmd)[1]))
 	{
-		if (!ft_strcmp(envc->name, args))
+		if (!ft_strcmp(envc->name, args) && (envc = NULL))
 		{
 			tmp = shell->env;
 			shell->env = shell->env->next;
 			env_delone(&tmp);
-			return (1);
 		}
 		while (envc && envc->next)
 		{
@@ -36,7 +35,6 @@ int					ft_unsetenv(t_shell *shell)
 			{
 				tmp->next = envc->next;
 				env_delone(&envc);
-				break;
 			}
 		}
 	}

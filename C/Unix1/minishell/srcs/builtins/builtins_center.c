@@ -40,6 +40,8 @@ int				builtins_center(t_shell **shell)
 			return (aff_env(*shell));
 		if (!(ft_strcmp(argv[0], "exit")))
 			ft_exit(shell);
+		if (!(ft_strcmp(argv[0], "pwd")))
+			ft_pwd(*shell);
 	}
 	return (EXIT_FAILURE);
 }

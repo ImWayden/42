@@ -10,15 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef		FDF_H
-# define	FDF_H
+#ifndef FDF_H
+# define FDF_H
 
 # include <mlx.h>
 # include <math.h>
 # include <fcntl.h>
 # include "libft.h"
 
-typedef struct s_coord
+typedef struct	s_coord
 {
 	float			x;
 	float			y;
@@ -31,11 +31,13 @@ typedef	struct	s_env
 	void		*win;
 	char		*file;
 	t_coord		**tab;
+	int			x;
+	int			y;
+	int			pad;
 }				t_env;
 
-int			transform(t_coord **tab, int pad1, int pad2);
-int			init(t_env *env);
-void		fake_expose(t_env env);
-
+int				transform(t_coord **tab, int pad, int pad1, int pad2);
+int				init(t_env *env);
+int				fake_expose(t_env *envc);
 
 #endif

@@ -37,7 +37,7 @@ char			*ft_split(char *str, int *c)
 {
 	int			i;
 
-	while (str && *str == *c)
+	while (str && *str && *str == *c)
 		str++;
 	i = 0;
 	while (str && str[i] && str[i] != *c)
@@ -60,7 +60,8 @@ char			**ft_strsplit(char const *s, int c)
 	{
 		j = c;
 		str = ft_split((char *)str, &j);
-		split[i] = ft_strsub(str, 0, j);
+		if (j)
+			split[i] = ft_strsub(str, 0, j);
 		str = str + j;
 		i++;
 	}

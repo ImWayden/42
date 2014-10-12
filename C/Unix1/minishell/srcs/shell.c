@@ -12,7 +12,7 @@
 
 #include "minishell1.h"
 
-static void			ft_prompt(t_shell *shell)
+static void		ft_prompt(t_shell *shell)
 {
 	char		*str;
 	char		*str1;
@@ -30,27 +30,34 @@ static void			ft_prompt(t_shell *shell)
 
 void			shell(char **env)
 {
-	char		*cmd = NULL;
+	char		*cmd;
 	t_shell		*shell;
 
 	shell = init(env);
+	cmd = NULL;
 	while (shell)
 	{
 		ft_prompt(shell);
 		get_next_line(0, &cmd);
-		if (shell->env && (shell->cmd = ft_strsplit(cmd, ' ')))
+		shell->cmd = ft_strsplit(cmd, ' ');
+		if (shell->env && shell->cmd)
 		{
 			if (is_builtin((shell->cmd)[0]))
 				builtins_center(&shell);
 			else
 				exec_cmd(shell);
 		}
+		else if (shell->cmd && !ft_strcmp(shell->cmd[0], "exit"))
+		{
+			ft_memdel((void **)&cmd);
+			ft_exit(&shell);
+		}
 		ft_memdel((void **)&cmd);
 		ft_deltab(&(shell->cmd));
 	}
 }
 
-int					main(int argc, char **argv, char **env)
+int				main(int argc, char **argv, char **env)
 {
 	if (argc == 1)
 		shell(env);

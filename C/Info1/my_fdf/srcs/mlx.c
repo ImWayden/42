@@ -12,51 +12,53 @@
 
 #include "fdf.h"
 
-void ligne(t_env env, float xi,float yi,float xf,float yf)
+void		line(t_env env, t_coord pi, t_coord pf)
 {
-	double x,y ;
-	double a,b ;
+	double	x;
+	double	y;
+	double	a;
+	double	b;
+	int		color;
 
-	if (xi >  xf)
+	if (!pi.z && !pf.z)
+		color = 0x7FFF00;
+	else if (pi.z != pf.z)
+		color = 0x8B4513;
+	else
+		color = 0xFFFAFA;
+	a = (pf.y - pi.y) / (pf.x - pi.x);
+	b = pi.y - a * pi.x;
+	x = pi.x;
+	while (x <= pf.x)
 	{
-		a = xi;
-		b = yi;
-		xi = xf;
-		yi = yf;
-		xf = a;
-		yf = b;
+		y = (a * x + b);
+		mlx_pixel_put(env.ptr, env.win, x, y, color);
+		x += 1;
 	}
-	a = (yf-yi)/(xf-xi) ;
-	b = yi - a * xi ;
-	x = xi;
-	while (x <= xf)
-	{
-		y = (a * x + b) ;
-		mlx_pixel_put(env.ptr, env.win, x, y, 0x66CC66);
-		x += 0.004;
-   }
 }
 
-void			fake_expose(t_env env)
+int			fake_expose(t_env *envc)
 {
-	int			i;
-	int			j;
-	t_coord		**tab;
+	int		i;
+	int		j;
+	t_env	env;
+	t_coord	**tab;
 
+	env = *envc;
 	tab = env.tab;
 	i = 0;
-
-	while(tab[i])
+	while (tab[i])
 	{
 		j = 0;
 		while (tab[i][j].z != -2)
 		{
 			if (tab[i][j + 1].z != -2)
-				ligne(env,tab[i][j].x, tab[i][j].y,tab[i][j + 1].x, tab[i][j + 1].y);
+				line(env, tab[i][j], tab[i][j + 1]);
 			if (tab[i + 1])
-				ligne(env,tab[i][j].x, tab[i][j].y,tab[i + 1][j].x, tab[i + 1][j].y);
+				line(env, tab[i + 1][j], tab[i][j]);
 			j++;
 		}
 		i++;
 	}
+	return (0);
 }

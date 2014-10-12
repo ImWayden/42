@@ -62,30 +62,37 @@ static void			cd_get_path(char **av, char **path, char *pwd, char *str)
 	}
 }
 
+static void			ft_del(char **path, char **pwd, char **home)
+{
+	ft_memdel((void **)path);
+	ft_memdel((void **)pwd);
+	ft_memdel((void **)home);
+}
+
 int					cd(t_shell *shell)
 {
-	t_env			*envs;
-	char			**av;
 	char			*pwd;
 	char			*path;
 	char			*home;
+	int				i;
 
-	envs = shell->env;
-	av = shell->cmd;
-	pwd = get_env(envs, "PWD");
-	home = get_env(envs, "HOME");
-	cd_get_path(av, &path, pwd, home);
+	pwd = get_env(shell->env, "PWD");
+	home = get_env(shell->env, "HOME");
+	cd_get_path(shell->cmd, &path, pwd, home);
 	if (!path)
-		path = get_env(envs, "OLDPWD");
+	{
+		path = get_env(shell->env, "OLDPWD");
+		ft_putendl(path);
+	}
 	if (chdir(path) == -1)
-		ft_putendl(": cd : No such file or directory.");
+		ft_putendl("cd : No such file or directory.");
 	else
 	{
-		s_setenv(&envs, "OLDPWD", &pwd);
-		s_setenv(&envs, "PWD", &path);
+		while ((i = ft_strlen(path)) && path[i - 1] == '/')
+			path[i - 1] = '\0';
+		s_setenv(&(shell->env), "OLDPWD", &pwd);
+		s_setenv(&(shell->env), "PWD", &path);
 	}
-	ft_memdel((void **)&path);
-	ft_memdel((void **)&pwd);
-	ft_memdel((void **)&home);
+	ft_del(&path, &pwd, &home);
 	return (EXIT_SUCCESS);
 }

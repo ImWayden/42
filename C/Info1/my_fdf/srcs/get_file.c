@@ -12,18 +12,18 @@
 
 #include "fdf.h"
 
-
-static int			ft_get_file(char *file, t_list **list)
+static int		ft_get_file(char *file, t_list **list)
 {
-	int				fd;
-	t_list			*lst;
-	int				i;
-	char			*str;
+	int			fd;
+	t_list		*lst;
+	int			i;
+	char		*str;
+
 	i = 0;
 	fd = open(file, O_RDONLY);
 	if (fd != -1)
 	{
-		while((get_next_line(fd, &str)))
+		while ((get_next_line(fd, &str)))
 		{
 			ft_putendl(str);
 			if ((lst = (t_list *)malloc(sizeof(t_list))))
@@ -40,13 +40,12 @@ static int			ft_get_file(char *file, t_list **list)
 	return (i);
 }
 
-static int	ft_get_tab(t_list **list, t_coord **tab, int i)
+static int		ft_get_tab(t_list **list, t_coord **tab, int i)
 {
-	int		j;
-	char	**str;
-	int 	k;
+	int			j;
+	char		**str;
+	int			k;
 
-	
 	while (*list)
 	{
 		j = 0;
@@ -69,12 +68,13 @@ static int	ft_get_tab(t_list **list, t_coord **tab, int i)
 	return (k);
 }
 
-int			init(t_env *env)
+int				init(t_env *env)
 {
-	int		i;
-	int		j;
-	t_list	*list;
-	t_coord	**tab;
+	int			i;
+	int			j;
+	int			pad;
+	t_list		*list;
+	t_coord		**tab;
 
 	list = NULL;
 	i = ft_get_file(env->file, &list);
@@ -82,8 +82,15 @@ int			init(t_env *env)
 	{
 		tab[i] = NULL;
 		j = ft_get_tab(&list, tab, i - 1);
-		transform(tab, ++j *15, ++i * 15);
+		if (j < 100)
+			pad = 20;
+		else
+			pad = 5;
+		env->x = j;
+		env->y = i;
+		env->pad = pad;
+		transform(tab, pad, j * pad, i);
 		env->tab = tab;
 	}
-	return 0;
+	return (0);
 }
