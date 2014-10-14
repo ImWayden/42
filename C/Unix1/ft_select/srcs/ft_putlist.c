@@ -6,51 +6,31 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/15 13:57:59 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/15 14:57:01 by msarr            ###   ########.fr       */
+/*   Updated: 2014/10/13 22:18:26 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-void				ft_putlist(t_selectlist *list)
+void				ft_sendlist(t_select *list)
 {
-	t_selectlist	*tmp;
+	t_select		*tmp;
+	int				i;
 
-	tmp = list;
-	if (tmp)
-	{
-		ft_putstr(tmp->str);
-		write(1, "\n", 1);
-		tmp = tmp->next;
-		while (tmp != list)
-		{
-			ft_putstr(tmp->str);
-			write(1, "\n", 1);
-			tmp = tmp->next;
-		}
-	}
-}
-
-void				ft_sendlist(t_selectlist *list)
-{
-	t_selectlist	*tmp;
-
+	i = 0;
 	ft_putstr(tgetstr("cl", NULL));
 	ft_putstr(tgetstr("me", NULL));
 	tmp = list;
-	if (tmp && tmp->select == 'y')
+	while (tmp)
 	{
-		write(1, tmp->str, ft_strlen(tmp->str));
-		write(1, " ", 1);
-		tmp = tmp->next;
-		while (tmp && tmp != list)
+		if (tmp->select == 'y')
 		{
-			if (tmp->select == 'y')
-				write(1, tmp->str, ft_strlen(tmp->str));
-			if (tmp->select == 'y')
+			if (i)
 				write(1, " ", 1);
-			tmp = tmp->next;
+			ft_putstr(tmp->str);
+			i = 1;
 		}
-		ft_putstr(tgetstr("le", NULL));
+		if ((tmp = tmp->next) == list)
+			break ;
 	}
 }

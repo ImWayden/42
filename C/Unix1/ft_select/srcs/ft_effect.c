@@ -6,96 +6,98 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/03 14:51:19 by msarr             #+#    #+#             */
-/*   Updated: 2014/01/03 14:51:22 by msarr            ###   ########.fr       */
+/*   Updated: 2014/10/14 00:22:25 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-static void				*uf_get_instance(void)
+static void			*uf_get_instance(void)
 {
-	static t_bar		*instance = NULL;
+	static t_bar	*instance = NULL;
 
 	if (instance == NULL)
 		instance = malloc(sizeof(*instance));
 	return (instance);
 }
 
-static	void			mywinch(int i)
+static	void		mywinch(int i)
 {
-	t_selectlist		*list;
+	t_select		*list;
+	int				argc;
 
 	i++;
 	list = ((t_bar *)uf_get_instance())->list;
-	ft_putstr(tgetstr("cl", NULL));
+	argc = ((t_bar *)uf_get_instance())->argc;
+	list = ft_setlist(list, argc);
 	ft_effect2(list);
-	while (list->curseur != 'y')
-		list = list->next;
-	list = ft_setlist(list);
 	ft_putstr(tgoto(tgetstr("cm", NULL), list->col, list->row));
 	return ;
 }
 
-static void				delcenter(t_selectlist **list, t_selectlist **tmp)
+static void 			moove(t_select *list)
 {
-	if (!ft_strcmp((*tmp)->str, (*list)->str))
+	if (list && list->pos < list->next->pos)
 	{
-		*list = (*list)->next;
-		*tmp = (*tmp)->next;
-		(*tmp)->curseur = 'y';
-		*list = ft_dellistelmt(list, (*tmp)->prev->str);
-	}
-	else
-	{
-		(*tmp) = (*tmp)->next;
-		(*tmp)->curseur = 'y';
-		*list = ft_dellistelmt(list, (*tmp)->prev->str);
+		moove(list->next);
+		list->next->pos = list->pos;
+		list->next->col = list->col;
+		list->next->row = list->row;
 	}
 }
 
-static	void			choice(t_selectlist **tmp, char *buffer,
-						t_selectlist **list)
+static int			delcenter(t_select **list, int argc)
 {
-	if (buffer[0] == 27 && tmp && *tmp)
+	moove(*list);
+	*list = (*list)->next;
+	(*list)->curseur = 'y';
+	ft_dellistelmt(&(*list)->prev);
+	return (--argc);
+}
+
+static	int		choice(t_select **tmp, char *buf, int argc)
+{
+	if (buf[0] == 27 && tmp && *tmp)
 	{
 		(*tmp)->curseur = 'n';
-		if (buffer[1] == 91 && buffer[2] == 'B')
-			(*tmp) = (*tmp)->next;
-		if (buffer[1] == 91 && buffer[2] == 'A')
-			(*tmp) = (*tmp)->prev;
+		if (buf[1] == 91 && buf[2] == 'B')
+			*tmp = (*tmp)->next;
+		if (buf[1] == 91 && buf[2] == 'A')
+			*tmp = (*tmp)->prev;
 		(*tmp)->curseur = 'y';
 	}
-	else if (buffer[0] == ' ' && tmp && *tmp)
+	else if (buf[0] == ' ' && tmp && *tmp)
 	{
 		if ((*tmp)->select == 'y')
 			(*tmp)->select = 'n';
 		else
 			(*tmp)->select = 'y';
-		(*tmp) = (*tmp)->next;
+		*tmp = (*tmp)->next;
 	}
-	else if ((buffer[0] == 8 || buffer[0] == 127) && tmp && *tmp && *list)
-		delcenter(list, tmp);
+	else if (buf[0] == 8 || buf[0] == 127)
+		return (delcenter(tmp, argc));
+	return (argc);
 }
 
-int						ft_effect(t_selectlist **list)
+int						ft_effect(t_select **list, int argc)
 {
-	char				*buffer;
-	t_selectlist		*tmp;
+	char				*buf;
 
-	tmp = *list;
-	while (1 && *list)
+	*list = ft_setlist(*list, argc);
+	while (*list && argc)
 	{
 		((t_bar *)uf_get_instance())->list = *list;
-		signal(SIGWINCH, mywinch);
-		*list = ft_setlist(*list);
+		((t_bar *)uf_get_instance())->argc = argc;
+		//signal(SIGWINCH, mywinch);
 		ft_effect2(*list);
-		ft_putstr(tgoto(tgetstr("cm", NULL), tmp->col, tmp->row));
-		buffer = ft_strnew(3);
-		read(0, buffer, 3);
-		choice(&tmp, buffer, list);
-		if (buffer[0] == 10)
+		ft_putstr(tgoto(tgetstr("cm", NULL), (*list)->col, (*list)->row));
+		buf = ft_strnew(3);
+		signal(SIGWINCH, mywinch);
+		read(0, buf, 3);
+		argc = choice(list, buf, argc);
+		if (buf[0] == 10)
 			return (0);
-		if (buffer[0] == 27 && buffer[1] == 1)
+		if (buf[0] == 27 && buf[1] == 1)
 			return (1);
 	}
 	return (1);

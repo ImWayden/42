@@ -6,43 +6,19 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/22 14:41:15 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/22 14:41:19 by msarr            ###   ########.fr       */
+/*   Updated: 2014/10/13 21:42:31 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-int						ft_selectlistlen(t_selectlist *list)
+t_select			*ft_addlist(t_select *list, char *str, int pos)
 {
-	t_selectlist		*tmp;
-	int					i;
+	t_select		*tmp;
 
-	i = 0;
-	tmp = list;
-	if (tmp)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	while (tmp != list)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	return (i);
-}
-
-t_selectlist			*ft_addlist(t_selectlist *list, char *str)
-{
-	t_selectlist		*tmp;
-
-	tmp = ft_listnew(str);
+	tmp = ft_listnew(str, pos);
 	if (!list)
-	{
-		tmp->next = tmp;
-		tmp->prev = tmp;
-		list = tmp;
-	}
+		return (tmp);
 	else
 	{
 		tmp->prev = list->prev;

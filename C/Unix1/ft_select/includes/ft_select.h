@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/03 15:00:45 by msarr             #+#    #+#             */
-/*   Updated: 2014/01/03 15:00:48 by msarr            ###   ########.fr       */
+/*   Updated: 2014/10/13 23:03:10 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,38 +20,39 @@
 # include <sys/ioctl.h>
 # include <signal.h>
 # include <fcntl.h>
+# include <curses.h>
 # include <term.h>
 # include "libft.h"
 
-typedef struct				s_selectlist
+typedef struct				s_select
 {
 	char					*str;
 	int 					curseur;
 	int 					select;
 	int 					row;
 	int 					col;
-	struct s_selectlist		*next;
-	struct s_selectlist		*prev;
-}							t_selectlist;
+	int 					pos;
+	struct s_select			*next;
+	struct s_select			*prev;
+}							t_select;
 
 typedef struct				s_bar
 {
-	t_selectlist			*list;
+	t_select				*list;
+	int						argc;
 }							t_bar;
 
-int							ft_effect(t_selectlist **list);
-int							ft_selectlistlen(t_selectlist *list);;
-int							ft_effect2(t_selectlist *list);
+int							ft_effect(t_select **list, int argc);
+int							ft_effect2(t_select *list);
 int							ft_init(struct termios *term);
 int							ft_config(struct termios *term);
-void						ft_putlist(t_selectlist *list);
-void						ft_sendlist(t_selectlist *list);
-t_selectlist				*ft_setlist(t_selectlist *list);
-int							ft_recup(char **str, t_selectlist **list);
-t_selectlist				*ft_addlist(t_selectlist *list, char *str);
+void						ft_sendlist(t_select *list);
+t_select					*ft_setlist(t_select *list, int argc);
+int							ft_recup(char **str, t_select **list);
+t_select					*ft_addlist(t_select *list, char *str, int pos);
 int							ft_defconfig(struct termios *term);
-t_selectlist				*ft_add_list(t_selectlist *list, char *str);
-t_selectlist				*ft_dellistelmt(t_selectlist **list, char *str);
-t_selectlist				*ft_listnew(char *str);
+t_select					*ft_add_list(t_select *list, char *str);
+void						ft_dellistelmt(t_select **list);
+t_select					*ft_listnew(char *str, int pos);
 
 #endif

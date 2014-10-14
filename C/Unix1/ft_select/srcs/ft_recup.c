@@ -6,13 +6,13 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/22 14:42:27 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/22 14:42:38 by msarr            ###   ########.fr       */
+/*   Updated: 2014/10/13 22:19:18 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-int			ft_recup(char **str, t_selectlist **list)
+int			ft_recup(char **str, t_select **list)
 {
 	int		i;
 
@@ -20,9 +20,10 @@ int			ft_recup(char **str, t_selectlist **list)
 	i = 0;
 	while (str && str[i])
 	{
-		*list = ft_addlist(*list, str[i]);
+		*list = ft_addlist(*list, str[i], i);
 		i++;
 	}
-	(*list)->curseur = 'y';
+	if (*list)
+		(*list)->curseur = 'y';
 	return (i);
 }

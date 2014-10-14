@@ -6,42 +6,38 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/22 14:41:15 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/22 14:41:19 by msarr            ###   ########.fr       */
+/*   Updated: 2014/10/14 00:27:19 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-static t_selectlist		*settinglist(t_selectlist *list, int j,
-									struct winsize mywin)
+static void			settinglist(t_select *list, int j, struct winsize mywin)
 {
-	int					i;
-	int					k;
-	t_selectlist		*tmp;
+	int				i;
+	int				k;
+	t_select		*tmp;
 
 	k = 0;
-	i = 0;
+	while (list && list->prev->pos < list->pos)
+		list = list->prev;
 	tmp = list;
-	tmp->row = k;
-	tmp->col = k;
-	i++;
-	tmp = tmp->next;
-	while (tmp && tmp != list)
+	while (tmp)
 	{
-		while (i < mywin.ws_row && tmp != list)
+		i = 0;
+		while (i < mywin.ws_row)
 		{
 			tmp->row = i;
 			tmp->col = k * mywin.ws_col / j;
-			tmp = tmp->next;
+			if ((tmp = tmp->next) == list)
+				return ;
 			i++;
 		}
-		i = 0;
 		k++;
 	}
-	return (list);
 }
 
-t_selectlist			*ft_setlist(t_selectlist *list)
+t_select				*ft_setlist(t_select *list, int argc)
 {
 	int					j;
 	struct winsize		mywin;
@@ -50,12 +46,12 @@ t_selectlist			*ft_setlist(t_selectlist *list)
 	if (list)
 	{
 		ioctl(STDOUT_FILENO, TIOCGWINSZ, &mywin);
-		i = ft_selectlistlen(list);
+		i = argc;
 		j = 1;
 		if (i > mywin.ws_row)
 			while ((j * mywin.ws_row) < i && mywin.ws_row)
 				j++;
-		return (settinglist(list, j, mywin));
+		settinglist(list, j, mywin);
 	}
 	return (list);
 }
