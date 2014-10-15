@@ -48,6 +48,7 @@ t_select				*ft_setlist(t_select *list, int argc)
 		ioctl(STDOUT_FILENO, TIOCGWINSZ, &mywin);
 		i = argc;
 		j = 1;
+		mywin.ws_row--;
 		if (i > mywin.ws_row)
 			while ((j * mywin.ws_row) < i && mywin.ws_row)
 				j++;

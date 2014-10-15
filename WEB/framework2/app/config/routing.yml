@@ -1,0 +1,4 @@
+fw1_platform:
+    resource: "@FW1PlatformBundle/Resources/config/routing.yml"
+    prefix:   /
+

@@ -83,7 +83,8 @@ int						ft_effect(t_select **list, int argc)
 {
 	char				*buf;
 
-	*list = ft_setlist(*list, argc);
+	if ((*list = ft_setlist(*list, argc)))
+		(*list)->curseur = 'y';
 	while (*list && argc)
 	{
 		((t_bar *)uf_get_instance())->list = *list;
