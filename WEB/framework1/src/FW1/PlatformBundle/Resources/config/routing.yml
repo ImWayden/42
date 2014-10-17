@@ -1,3 +1,0 @@
-fw1_platform_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: FW1PlatformBundle:Default:index }

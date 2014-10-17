@@ -1,5 +1,0 @@
-_assetic:
-    resource: .
-    type: assetic
-_app:
-    resource: /Volumes/Data/nfs/zfs-student-3/users/2013/msarr/Rendu/Web/framework1/app/config/routing_dev.yml
