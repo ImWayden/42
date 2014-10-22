@@ -1,0 +1,5 @@
+_assetic:
+    resource: .
+    type: assetic
+_app:
+    resource: /Users/admin/Home/Web/42project/app/config/routing_dev.yml
