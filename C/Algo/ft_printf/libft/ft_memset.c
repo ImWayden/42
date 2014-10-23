@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_hexa.c                                          :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/22 20:20:57 by msarr             #+#    #+#             */
-/*   Updated: 2014/10/22 15:33:48 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/19 12:15:45 by msarr             #+#    #+#             */
+/*   Updated: 2013/11/19 14:07:23 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "includes/libft.h"
 
-char		*ft_hexa(size_t n)
+void		*ft_memset(void *b, int c, size_t len)
 {
-	char		*str;
-	int			i;
-	size_t		len;
-	char		*str1;
+	char	*tmp;
 
-	i = 0;
-	len = ft_intlen(n);
-	str = ft_strnew(len + 1);
-	str1 = "0123456789abcdef";
-	if (n == 0)
-		str[0] = '0';
-	while (n != 0)
+	tmp = b;
+	while (len && tmp)
 	{
-		str[i] = str1[(n % 16)];
-		n = n / 16;
-		i++;
+		*tmp = c;
+		tmp++;
+		len--;
 	}
-	str[len] = '\0';
-	str = ft_strreverse(str);
-	str[len] = '\0';
-	return (str);
+	return (b);
 }

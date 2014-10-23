@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/20 15:38:28 by msarr             #+#    #+#             */
-/*   Updated: 2013/11/20 16:48:11 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/20 14:51:15 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 19:22:59 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "includes/libft.h"
 
-int		ft_isalpha(int c)
+int		ft_isascii(int c)
 {
-	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+	if (c >= 0x0 && c <= 0x7f)
 		return (1);
 	else
 		return (0);

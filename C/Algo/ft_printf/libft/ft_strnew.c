@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_verif.c                                         :+:      :+:    :+:   */
+/*   ft_strnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/22 14:42:51 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/22 14:42:55 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/26 13:20:04 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 17:56:11 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "includes/libft.h"
 
-void		ft_verif(char **str , t_list **list)
+char		*ft_strnew(size_t size)
 {
-	if (**str && ft_isoption(*str, *list))
-	{
-		while (!ft_isalpha(**str))
-			(*str)++;
-		(*str)++;
-		*list = (*list)->next;
-	}
+	char	*str;
+
+	if ((str = (char *)malloc(sizeof(char) * (size + 1))))
+		ft_bzero((void *)str, (size + 1));
+	return (str);
 }

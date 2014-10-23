@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/26 13:20:04 by msarr             #+#    #+#             */
-/*   Updated: 2013/11/26 13:20:14 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/21 12:53:24 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 17:59:35 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "includes/libft.h"
 
-char	*ft_strnew(size_t size)
+int			ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	char	*str;
-	char	*tmp;
-
-	str = NULL;
-	str = (char *) malloc(sizeof(char) * (size + 1));
-	if (str)
+	while (s1 && s2 && *s1 && *s2 && n && *s1 == *s2)
 	{
-		str[size + 1] = '\0';
-		tmp = str;
-		ft_bzero(tmp, size);
-		return (str);
+		s1++;
+		s2++;
+		n--;
 	}
+	if (!n && s1 && s2)
+		return (0);
 	else
-		return (str);
+		return (*s1 - *s2);
 }

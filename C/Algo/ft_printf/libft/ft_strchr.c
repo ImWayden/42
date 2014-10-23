@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isoption.c                                      :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/22 14:41:39 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/22 14:41:43 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/24 14:41:55 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 18:00:30 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "includes/libft.h"
 
-int		ft_isoption(char *str, t_list *list)
+char		*ft_strchr(const char *s, int c)
 {
-	if (list && *str != '%')
+	while (s && *s != c)
 	{
-		while (!ft_isalpha(*str))
-			str++;
-		if (list->name == *str)
-			return (1);
+		if (!(*s))
+			return (NULL);
+		s++;
 	}
-	return (0);
+	return ((char *)s);
 }

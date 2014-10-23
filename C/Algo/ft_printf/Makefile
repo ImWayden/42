@@ -6,11 +6,11 @@
 #    By: msarr <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/12/22 14:12:32 by msarr             #+#    #+#              #
-#    Updated: 2013/12/22 14:12:35 by msarr            ###   ########.fr        #
+#    Updated: 2014/10/22 15:29:58 by msarr            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libftprintf.a
+NAME = printf.a
 
 SRC = ft_addlist.c ft_isoption.c ft_isalpha.c ft_itoa.c ft_put.c ft_putstr.c \
 	  ft_recup.c ft_strnew.c ft_strreverse.c ft_verif.c ft_strlen.c \

@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/21 15:48:45 by msarr             #+#    #+#             */
-/*   Updated: 2013/11/25 17:36:29 by msarr            ###   ########.fr       */
+/*   Created: 2013/11/24 15:13:48 by msarr             #+#    #+#             */
+/*   Updated: 2014/03/02 14:12:53 by mozzie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "includes/libft.h"
 
-void	ft_bzero(void *s, size_t n)
+char		*ft_strncat(char *s1, char *s2, size_t n)
 {
-	char	*tmp;
+	int		i;
 
-	tmp = s;
-	while (n)
+	i = ft_strlen(s1);
+	while (*s2 && n)
 	{
-		*tmp++ = '\0';
+		s1[i] = *s2++;
+		i++;
 		n--;
 	}
+	s1[i] = '\0';
+	return (s1);
 }
