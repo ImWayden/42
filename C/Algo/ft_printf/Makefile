@@ -3,36 +3,66 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: msarr <marvin@42.fr>                       +#+  +:+       +#+         #
+#    By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2013/12/22 14:12:32 by msarr             #+#    #+#              #
-#    Updated: 2014/10/22 15:29:58 by msarr            ###   ########.fr        #
+#    Created: 2014/01/22 14:52:23 by msarr             #+#    #+#              #
+#    Updated: 2014/06/17 01:18:10 by mozzie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+NAME = lexer_test
 
-NAME = printf.a
+MAKE = make
+CC = gcc
+RM = /bin/rm
+LDIR = libft/
+SDIR = srcs/
 
-SRC = ft_addlist.c ft_isoption.c ft_isalpha.c ft_itoa.c ft_put.c ft_putstr.c \
-	  ft_recup.c ft_strnew.c ft_strreverse.c ft_verif.c ft_strlen.c \
-	  ft_bzero.c ft_octal.c ft_putnbr.c ft_putchar.c ft_hexa.c ft_strjoin.c \
-	  ft_printf.c
+SRC = $(SDIR)ft_lexer.c $(SDIR)ft_printf.c $(SDIR)main.c
 
-HEAD = ft_printf.h
-
-OBJS = $(SRC:.c=.o) 
-
-FLAGS = -Werror -Wall -Wextra
+OBJ = $(SRC:.c=.o)
+INC = -I includes -I $(LDIR)/includes
+LIB = ./libft/libft.a
+CFLAGS = -Wall -Wextra -Werror -g 
 
 all: $(NAME)
 
-$(NAME):
-	gcc $(FLAGS) -c $(HEAD) $(SRC)
-	ar rc $(NAME) $(OBJS)
+$(NAME): $(OBJ)
+	@echo "\033[31;1m"
+	@echo -n '---> Creating the Libft... <---'
+	@echo "\033[0m"
+	$(MAKE) re -C $(LDIR)
+	@echo "\033[31;1m"
+	@echo -n '---> Compilation in progress... <---'
+	@echo "\033[0m"
+	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LIB)
+	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LIB)
+	@echo "\033[1;32m"
+	@echo -n '---> DONE ! <---'
+	@echo "\033[0m"
 
-fclean: clean
-	/bin/rm -f $(NAME) ft_printf.h.gch
+%.o:%.c
+	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 clean:
-	/bin/rm -f	$(OBJS)
+	@echo "\033[31;1m"
+	@echo -n '---> Clean : <---'
+	@echo "\033[0m"
+	$(RM) -rf $(OBJ)
+	$(MAKE) clean -C $(LDIR)
+	@echo "\033[1;32m"
+	@echo -n '---> DONE ! <---'
+	@echo "\033[0m"
+
+fclean: clean
+	@echo "\033[31;1m"
+	@echo -n '---> FClean : <---'
+	@echo "\033[0m"
+	$(RM) -rf $(NAME)
+	$(MAKE) fclean -C $(LDIR)
+	@echo "\033[1;32m"
+	@echo -n '---> DONE ! <---'
+	@echo "\033[0m"
 
 re: fclean all
+
+.PHONY: all name clean fclean re

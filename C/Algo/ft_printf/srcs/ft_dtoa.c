@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_dtoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,46 +12,29 @@
 
 #include "ft_printf.h"
 
-static size_t	ft_intlen(int n)
+void	ft_dtoa(double x)
 {
-	size_t		len;
+	int		y;
+	int		z;
+	char	*str;
+	char	*str1;
+	char	*str2;
 
-	len = 0;
-	if (n <= 0)
-		len++;
-	while (n)
+	y = (int )x;
+	x -= y;
+	z = 0;
+	while (x > 0 && z <= 214748362)
 	{
-		n = n / 10;
-		len++;
+		x = x * 10;
+		z = (z * 10) + (int)x;
+		x = x - (int)x;
 	}
-	return (len);
-}
-
-char			*ft_itoa(int n)
-{
-	char		*str;
-	char		c;
-	int			i;
-	size_t		len;
-
-	i = 0;
-	len = ft_intlen(n);
-	str = ft_strnew(len + 1);
-	if (n == 0)
-		str[0] = '0';
-	else if (n < 0)
-		str[len - 1] = '-';
-	while (n)
-	{
-		if (n < 0)
-			c = (n % 10) * -1 + '0';
-		else
-			c = n % 10 + '0';
-		n = n / 10;
-			str[i] = c;
-			i++;
-	}
-	str = ft_strreverse(str);
-	str[len] = '\0';
+	str = ft_itoa(y);
+	str1 = ft_itoa(z);
+	str2 = ft_strjoin(str, ".");
+	ft_memdel(&str);
+	str = ft_strjoin(str2, str1);
+	ft_memdel(&str2);
+	ft_memdel(&str1);
 	return (str);
 }

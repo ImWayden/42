@@ -1,50 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_octal.c                                         :+:      :+:    :+:   */
+/*   ft_changebase.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/12/22 18:20:48 by msarr             #+#    #+#             */
-/*   Updated: 2013/12/22 18:20:51 by msarr            ###   ########.fr       */
+/*   Created: 2013/12/22 14:05:49 by msarr             #+#    #+#             */
+/*   Updated: 2013/12/22 14:05:53 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static size_t	ft_intlen(long n)
+int			ft_changebase(char **str, size_t i, int base, int len)
 {
-	size_t		len;
+	char	*str1;
 
-	len = 0;
-	if (n <= 0)
-		len++;
-	while (n)
+	str1 = "0123456789abcdef";
+	if (i >= base)
 	{
-		n = n / 10;
-		len++;
+		len = ft_changebase(str, i/base, base, len + 1);
+		i = i % base;
 	}
-	return (len);
-}
-
-char		*ft_octal(long n)
-{
-	char		*str;
-	int			i;
-	size_t		len;
-
-	i = 0;
-	len = ft_intlen(n);
-	str = ft_strnew(len + 1);
-	if (n == 0)
-		str[0] = '0';
-	while (n)
+	if (!(*str))
 	{
-		str[i] = ((n % 8) + '0');
-		n = n / 8;
-		i++;
+		*str = ft_strnew(len);
+		len = 0;
 	}
-	str = ft_strreverse(str);
-	str[i] = '\0';
-	return (str);
+	(*str)[len] = str1[i];
+	return (len + 1);
 }

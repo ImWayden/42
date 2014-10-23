@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int		ft_put(t_list *list, char *str, ...)
+/*int		ft_put(t_list *list, char *str, ...)
 {
 	va_list va;
 	int		i;
@@ -76,21 +76,28 @@ void ft_simplify(va_list va, int *i, char **str, t_list *list)
 		ft_putstr("%");
 		(*i)++;
 	}
-}
+}*/
 
 int		ft_printf(char *str, ...)
 {
 	va_list va;
-   	t_list		*list;
+   	t_lex		*list;
+   	t_lex		*tmp;
    	int 	i;
 
    	i = 0;
    	va_start (va, str);
-	list = ft_recup(str);
-	while (*str)
+	list = lexer(str);
+	tmp = list;
+	while (list)
 	{
-		ft_simplify(va, &i, &str, list);
-		ft_verif(&str, &list);
+		if (tmp->name[0] != '%' || !ft_strcmp(tmp->name, "%"))
+		{
+			ft_putstr(tmp->name);
+			i += ft_strlen(tmp->name);
+		}
+		if ((tmp = tmp->next) == list)
+			break;
 	}
 	va_end (va);
 	return (i);
