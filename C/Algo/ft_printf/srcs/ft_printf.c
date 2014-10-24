@@ -12,54 +12,20 @@
 
 #include "ft_printf.h"
 
-/*int		ft_put(t_list *list, char *str, ...)
+int		c_option(int c)
 {
-	va_list va;
-	int		i;
-	char	*tmp;
-
-	va_start (va, str);
-	if ((*list).name == 's')
-		tmp = va_arg(va, char *);
-	else if ((*list).name == 'c')
-	{
-		tmp = ft_strnew(1);
-		*tmp = (char)(va_arg(va, int));
-	}
-	else if ((*list).name == 'o')
-		tmp = ft_octal((int )va_arg(va, size_t));
-	else if ((*list).name == 'x')
-		tmp = ft_hexa(va_arg(va, size_t));
-	else if ((*list).name == 'p')
-		tmp = ft_strjoin("0x", ft_hexa(va_arg(va, size_t)));
-	else
-		tmp = ft_itoa(va_arg(va, int));
-	i = ft_strlen(tmp);
-	ft_putstr(tmp);
-	va_end(va);
-	return (i);
+	ft_putchar(c);
+	return (1);
 }
 
-int		ft_putnstr(char **str , char c)
+int			print_center(va_list va, t_lex *list)
 {
-	int		i;
+	int		j;
 
-	i = 0;
-	while (**str && **str != c)
-	{
-		write(1, *str, 1);
-		(*str)++;
-		i++;
-	}
-	if (**str)
-		(*str)++;
-	return (i);
-}
-
-void ft_simplify(va_list va, int *i, char **str, t_list *list)
-{
-	*i = *i + ft_putnstr(str, '%');
-	if (ft_isoption(*str, list) && (*list).name == 's')
+	j = ft_strlen(list->name) - 1;
+	if (list->name[j] == 'c')
+		return (c_option(va_arg (va, int)));
+	if (list->name == 's')
 		*i = *i + ft_put(list, *str, va_arg (va, char *));
 	else if (ft_isoption(*str, list) && (*list).name == 'c')
 		*i = *i + ft_put(list, *str, va_arg (va, int));
@@ -71,22 +37,17 @@ void ft_simplify(va_list va, int *i, char **str, t_list *list)
 		*i = *i + ft_put(list, *str, va_arg (va, size_t));
 	else if (ft_isoption(*str, list) && (*list).name == 'o')
 		*i = *i + ft_put(list, *str, va_arg (va, size_t));
-	else if (**str == '%' && *(*str - 1) == '%')
-	{
-		ft_putstr("%");
-		(*i)++;
-	}
-}*/
+}
 
 int		ft_printf(char *str, ...)
 {
 	va_list va;
-   	t_lex		*list;
-   	t_lex		*tmp;
-   	int 	i;
+	t_lex		*list;
+	t_lex		*tmp;
+	int 		i;
 
-   	i = 0;
-   	va_start (va, str);
+	i = 0;
+	va_start (va, str);
 	list = lexer(str);
 	tmp = list;
 	while (list)
@@ -96,6 +57,8 @@ int		ft_printf(char *str, ...)
 			ft_putstr(tmp->name);
 			i += ft_strlen(tmp->name);
 		}
+		else
+			i += print_center(va, tmp);
 		if ((tmp = tmp->next) == list)
 			break;
 	}

@@ -18,8 +18,8 @@ int main()
 {
 	int	i;
 	int	j;
-	i = ft_printf("premier test %%%i predf\n");
-	j = printf("premier test %% predf\n");
+	i = ft_printf("premier test %%c %c predf\n", 4000);
+	j = printf("premier test %%c %c predf\n", 4000);
 	printf("%i %i\n", i, j);
 	return 0;
 }
