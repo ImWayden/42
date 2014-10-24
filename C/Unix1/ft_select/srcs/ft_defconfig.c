@@ -12,7 +12,7 @@
 
 #include "ft_select.h"
 
-int		ft_defconfig(struct termios *term)
+int		ft_defconfig(t_termios *term)
 {
 	ft_putstr(tgetstr("cl", NULL));
 	(*term).c_lflag = (ICANON | ECHO);

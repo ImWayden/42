@@ -37,11 +37,11 @@ static void			settinglist(t_select *list, int j, struct winsize mywin)
 	}
 }
 
-t_select				*ft_setlist(t_select *list, int argc)
+t_select			*ft_setlist(t_select *list, int argc)
 {
-	int					j;
-	struct winsize		mywin;
-	int					i;
+	int				j;
+	struct winsize	mywin;
+	int				i;
 
 	if (list)
 	{

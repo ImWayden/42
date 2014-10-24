@@ -9,7 +9,7 @@
 #    Updated: 2014/06/17 01:18:10 by mozzie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-NAME = lexer_test
+NAME = libprintf.a
 
 MAKE = make
 CC = gcc
@@ -17,7 +17,8 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 
-SRC = $(SDIR)ft_lexer.c $(SDIR)ft_printf.c $(SDIR)main.c
+SRC = $(SDIR)ft_lexer.c $(SDIR)ft_printf.c $(SDIR)dell_list.c \
+	  $(SDIR)ft_changebase.c \
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)/includes
@@ -34,8 +35,8 @@ $(NAME): $(OBJ)
 	@echo "\033[31;1m"
 	@echo -n '---> Compilation in progress... <---'
 	@echo "\033[0m"
-	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LIB)
-	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LIB)
+	@ar rc $(NAME) $(OBJ)
+	@ranlib $(NAME)
 	@echo "\033[1;32m"
 	@echo -n '---> DONE ! <---'
 	@echo "\033[0m"

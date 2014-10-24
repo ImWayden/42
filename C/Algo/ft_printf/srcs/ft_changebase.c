@@ -12,14 +12,14 @@
 
 #include "ft_printf.h"
 
-int			ft_changebase(char **str, size_t i, int base, int len)
+int			ft_changebase(char **str, size_t i, size_t base, int len)
 {
 	char	*str1;
 
 	str1 = "0123456789abcdef";
 	if (i >= base)
 	{
-		len = ft_changebase(str, i/base, base, len + 1);
+		len = ft_changebase(str, i / base, base, len + 1);
 		i = i % base;
 	}
 	if (!(*str))

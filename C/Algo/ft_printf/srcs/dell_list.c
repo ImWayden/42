@@ -1,40 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dtoa.c                                          :+:      :+:    :+:   */
+/*   dell_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/21 15:03:59 by msarr             #+#    #+#             */
-/*   Updated: 2013/11/21 15:04:13 by msarr            ###   ########.fr       */
+/*   Created: 2014/10/24 18:17:40 by msarr             #+#    #+#             */
+/*   Updated: 2014/10/24 18:17:42 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_dtoa(double x)
+void		dell_list(t_lex **lex)
 {
-	int		y;
-	int		z;
-	char	*str;
-	char	*str1;
-	char	*str2;
+	t_lex		*tmp;
 
-	y = (int )x;
-	x -= y;
-	z = 0;
-	while (x > 0 && z <= 214748362)
-	{
-		x = x * 10;
-		z = (z * 10) + (int)x;
-		x = x - (int)x;
-	}
-	str = ft_itoa(y);
-	str1 = ft_itoa(z);
-	str2 = ft_strjoin(str, ".");
-	ft_memdel(&str);
-	str = ft_strjoin(str2, str1);
-	ft_memdel(&str2);
-	ft_memdel(&str1);
-	return (str);
+	tmp = *lex;
+	*lex = (*lex)->next;
+	tmp->prev->next = *lex;
+	(*lex)->prev = tmp->prev;
+	ft_memdel((void **)&tmp->name);
+	if (tmp != *lex)
+		ft_memdel((void **)&tmp);
+	else
+		ft_memdel((void **)lex);
 }

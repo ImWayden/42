@@ -12,7 +12,7 @@
 
 #include "ft_select.h"
 
-int			ft_init(struct termios *term)
+int			ft_init(t_termios *term)
 {
 	char	*termname;
 

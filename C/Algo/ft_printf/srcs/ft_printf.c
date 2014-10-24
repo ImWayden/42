@@ -12,45 +12,77 @@
 
 #include "ft_printf.h"
 
-int		c_option(int c)
+static int		c_option(int c)
 {
-	ft_putchar(c);
+	ft_putchar((unsigned char)c);
 	return (1);
 }
 
-int			print_center(va_list va, t_lex *list)
+static int		s_option(char *str)
 {
-	int		j;
-
-	j = ft_strlen(list->name) - 1;
-	if (list->name[j] == 'c')
-		return (c_option(va_arg (va, int)));
-	if (list->name == 's')
-		*i = *i + ft_put(list, *str, va_arg (va, char *));
-	else if (ft_isoption(*str, list) && (*list).name == 'c')
-		*i = *i + ft_put(list, *str, va_arg (va, int));
-	else if	(ft_isoption(*str, list)
-			&& ((*list).name == 'd'|| (*list).name == 'i'))
-		*i = *i + ft_put(list, *str, va_arg (va, int));
-	else if (ft_isoption(*str, list)
-			&& ((*list).name == 'x' || (*list).name == 'p'))
-		*i = *i + ft_put(list, *str, va_arg (va, size_t));
-	else if (ft_isoption(*str, list) && (*list).name == 'o')
-		*i = *i + ft_put(list, *str, va_arg (va, size_t));
+	ft_putstr(str);
+	return (ft_strlen(str));
 }
 
-int		ft_printf(char *str, ...)
+static int		dioux_option(int i, char c)
 {
-	va_list va;
+	char		*str;
+	char		*str1;
+
+	str = NULL;
+	str1 = NULL;
+	if (c == 'i' || c == 'd' || c == 'u')
+		str = ft_itoa(i);
+	else if (c == 'o')
+	{
+		ft_changebase(&str1, (unsigned int)i, 8, 1);
+		str = ft_strjoin("0", str1);
+	}
+	else if (c == 'x' || c == 'X')
+	{
+		ft_changebase(&str1, (unsigned int)i, 16, 1);
+		str = ft_strjoin("0x", str1);
+	}
+	ft_putstr(str);
+	i = ft_strlen(str);
+	ft_memdel((void **)&str);
+	ft_memdel((void **)&str1);
+	return (i);
+}
+
+static int		print_center(va_list va, t_lex *list)
+{
+	int			j;
+	char		c;
+
+	j = ft_strlen(list->name) - 1;
+	c = list->name[j];
+	if (c == 'c')
+		return (c_option(va_arg (va, int)));
+	else if (c == 's')
+		return (s_option(va_arg (va, char *)));
+	else if (c == 'i' || c == 'd' || c == 'u' || c == 'o' || c == 'x'
+		|| c == 'X')
+		return (dioux_option(va_arg (va, int), list->name[j]));
+	else
+	{
+		ft_putchar(c);
+		return (1);
+	}
+}
+
+int				ft_printf(char *str, ...)
+{
+	va_list		va;
 	t_lex		*list;
 	t_lex		*tmp;
-	int 		i;
+	int			i;
 
 	i = 0;
 	va_start (va, str);
 	list = lexer(str);
 	tmp = list;
-	while (list)
+	while (tmp)
 	{
 		if (tmp->name[0] != '%' || !ft_strcmp(tmp->name, "%"))
 		{
@@ -59,10 +91,8 @@ int		ft_printf(char *str, ...)
 		}
 		else
 			i += print_center(va, tmp);
-		if ((tmp = tmp->next) == list)
-			break;
+		dell_list(&tmp);
 	}
 	va_end (va);
 	return (i);
 }
-

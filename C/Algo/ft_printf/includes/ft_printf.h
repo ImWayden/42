@@ -13,17 +13,19 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-#include <stdarg.h>
-#include "libft.h"
+# include <stdarg.h>
+# include "libft.h"
 
-typedef struct			s_lex
+typedef struct		s_lex
 {
-	char				*name;
-	struct s_lex		*next;
-	struct s_lex		*prev;
-}						t_lex;
+	char			*name;
+	struct s_lex	*next;
+	struct s_lex	*prev;
+}					t_lex;
 
-int						ft_printf(char *str, ...);
-t_lex					*lexer(char *line);
+int					ft_printf(char *str, ...);
+t_lex				*lexer(char *line);
+void				dell_list(t_lex **lex);
+int					ft_changebase(char **str, size_t i, size_t base, int len);
 
-#endif /* !FT_PRINTF_H */
+#endif

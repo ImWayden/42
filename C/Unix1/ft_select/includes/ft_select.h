@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef 					FTSELECT_H
-# define 					FTSELECT_H
+#ifndef FT_SELECT_H
+# define FT_SELECT_H
 
 # include <stdlib.h>
 # include <termios.h>
@@ -27,11 +27,11 @@
 typedef struct				s_select
 {
 	char					*str;
-	int 					curseur;
-	int 					select;
-	int 					row;
-	int 					col;
-	int 					pos;
+	int						curseur;
+	int						select;
+	int						row;
+	int						col;
+	int						pos;
 	struct s_select			*next;
 	struct s_select			*prev;
 }							t_select;
@@ -42,6 +42,8 @@ typedef struct				s_bar
 	int						argc;
 }							t_bar;
 
+typedef struct termios		t_termios;
+
 int							ft_effect(t_select **list, int argc);
 int							ft_effect2(t_select *list);
 int							ft_init(struct termios *term);
@@ -50,6 +52,7 @@ void						ft_sendlist(t_select *list);
 t_select					*ft_setlist(t_select *list, int argc);
 int							ft_recup(char **str, t_select **list);
 t_select					*ft_addlist(t_select *list, char *str, int pos);
+int							delcenter(t_select **list, int argc);
 int							ft_defconfig(struct termios *term);
 t_select					*ft_add_list(t_select *list, char *str);
 void						ft_dellistelmt(t_select **list);

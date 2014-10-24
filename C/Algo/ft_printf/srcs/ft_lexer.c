@@ -42,7 +42,7 @@ static t_lex		*addlist(t_lex *list, char *str)
 	return (list);
 }
 
-static int		get_args(t_lex **list, char *line, int i)
+static int			get_args(t_lex **list, char *line, int i)
 {
 	int				j;
 
@@ -50,24 +50,18 @@ static int		get_args(t_lex **list, char *line, int i)
 	i++;
 	while (line[i] && !ft_isalpha(line[i]))
 		i++;
-	if (line[i] == 's'|| line[i] == 'i' || line[i] == 'd'
-		|| line[i] == 'c' || line[i] == 'x' || line[i] == 'o'
-		|| line[i] == 'p')
-	{
-		*list = addlist(*list, ft_strsub(line, j, i - j + 1));
-		return (i - j + 1);
-	}
-	return (0);
+	*list = addlist(*list, ft_strsub(line, j, i - j + 1));
+	return (i - j + 1);
 }
 
 t_lex				*lexer(char *line)
 {
-	int		i;
-	t_lex	*list;
+	int				i;
+	t_lex			*list;
 
 	list = NULL;
 	while (line[0])
-	{ 
+	{
 		i = 0;
 		while (line[i] && line[i] != '%')
 			i++;
