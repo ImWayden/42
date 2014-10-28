@@ -76,7 +76,11 @@ t_lex				*lexer(char *line)
 			line++;
 		i = 0;
 		while (line[i] && !is_ope(line[i]))
+		{
+			if (line[i] == '\t')
+				line[i] = ' ';
 			i++;
+		}
 		if (i && (list = addlist(list, ft_strndup(line, i))))
 			line = line + i;
 		if (is_ope(*line))

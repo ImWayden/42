@@ -18,6 +18,7 @@ bool		redir_left_norm(t_tree **tree, t_lex **lex)
 	bool	ret;
 	t_tree	*new;
 
+	new = NULL;
 	if (*lex && redir_right(tree, lex))
 	{
 		if (*lex)

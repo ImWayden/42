@@ -66,7 +66,6 @@ typedef struct			s_shell
 
 t_shell					*init(char	**env);
 int						re_init(t_shell *shell);
-void					ft_prompt(char **envs);
 
 /*
 ** ft_get

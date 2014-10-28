@@ -12,14 +12,30 @@
 
 #include "my_42sh.h"
 
+static void		ft_prompt(t_shell *shell)
+{
+	char		*str;
+	char		*str1;
+
+	ft_putstr(shell->prompt);
+	ft_putstr(":");
+	if ((str = get_env(shell->env, "PWD")))
+	{
+		str1 = &((ft_strrchr(str, '/'))[1]);
+		ft_putstr(str1);
+		ft_memdel((void *)&str);
+	}
+	ft_putstr("$ ");
+}
+
 static void			put_tree(t_tree *tree)
 {
 	if (tree)
 	{
 		put_tree(tree->left);
 		put_tree(tree->right);
-		ft_putnbr(tree->ope);
 		ft_puttab(tree->argv);
+		put_tree(tree->next);
 	}
 }
 
@@ -38,14 +54,14 @@ int				main(int ac, char **av, char **env)
 		while (42)
 		{
 			re_init(shell);
-			ft_putstr(shell->prompt);
+			ft_prompt(shell);
 			get_next_line(1, &line);
 			if ((shell->tree = lexor_and_parsor(line)))
 			{
 				put_tree(shell->tree);
+				ft_memdel((void **)&line);
 				main_execution(shell);
 			}
-			line = NULL;
 		}
 	}
 	return (0);

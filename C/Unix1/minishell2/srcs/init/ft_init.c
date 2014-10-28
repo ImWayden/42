@@ -34,7 +34,7 @@ t_shell				*init(char	**env)
 	{
 		if ((shell->env = env_to_list(env)))
 			shell->envc = list_to_tab(shell->env);
-		if (!(shell->prompt = get_env(shell->env, "PATH")))
+		if (!(shell->prompt = get_env(shell->env, "USER")))
 			shell->prompt = "~>";
 		return (shell);
 	}
@@ -48,7 +48,7 @@ int					re_init(t_shell *shell)
 		ft_deltab(&(shell->envc));
 		shell->envc = list_to_tab(shell->env);
 		ft_memdel((void **)&(shell->prompt));
-		if (!(shell->prompt = get_env(shell->env, "PWD")))
+		if (!(shell->prompt = get_env(shell->env, "USER")))
 			shell->prompt = "~>";
 		return (1);
 	}

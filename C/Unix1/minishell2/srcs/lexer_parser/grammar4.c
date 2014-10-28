@@ -22,7 +22,6 @@ bool		command_exp(t_tree **tree, t_lex **lex)
 		if (!alloc_tree(&new, tree))
 			return (FALSE);
 		new->ope = IS_CMD;
-		ft_putendl((*lex)->str);
 		if (!(new->argv = ft_strsplit((*lex)->str, ' ')))
 			return (FALSE);
 		*tree = new;

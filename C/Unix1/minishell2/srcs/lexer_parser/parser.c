@@ -41,7 +41,11 @@ t_lex				*separate_lex(t_lex **lex)
 	if (tmp && is_semi_colon(tmp->str))
 	{
 		*lex = tmp->next;
-		lex_delfirst(&tmp);
+		tmp->prev->next = NULL;
+		if (*lex)
+		(*lex)->prev = NULL;
+		//ft_memdel((void **)&tmp);
+		//lex_delfirst(&tmp);
 	}
 	else
 		*lex = NULL;
@@ -63,7 +67,8 @@ t_tree				*make_parsing(t_lex **lexem)
 	t_tree			*tmp;
 
 	res = NULL;
-	if ((lex = separate_lex(lexem)) && !expression(&res, &lex))
+	lex = separate_lex(lexem); 
+	if (!expression(&res, &lex))
 		return (reset(&res, lexem));
 	tmp = res;
 	while ((lex = separate_lex(lexem)))
