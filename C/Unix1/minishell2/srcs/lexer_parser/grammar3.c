@@ -23,8 +23,10 @@ bool		redir_left_norm(t_tree **tree, t_lex **lex)
 	{
 		if (*lex)
 		{
-			if (is_left_redir((*lex)->str) || !alloc_tree(&new, tree))
+			if (is_left_redir((*lex)->str))
 			{
+				if (!alloc_tree(&new, tree))
+					return (FALSE);
 				new->ope = (!strcmp((*lex)->str, D_LEFT_R))
 				? IS_D_LEFT : IS_LEFT;
 				new->left = *tree;
@@ -35,7 +37,6 @@ bool		redir_left_norm(t_tree **tree, t_lex **lex)
 				special_case(tree, lex) : ret;
 				return (ret);
 			}
-			return (FALSE);
 		}
 		return (TRUE);
 	}
@@ -97,8 +98,7 @@ bool		redir_right_norm(t_tree **tree, t_lex **lex)
 			*lex = (*lex)->next;
 			return (file_exp(&(new->right), lex));
 		}
-		if (!(*lex))
-			return (TRUE);
+		return (TRUE);
 	}
 	return (FALSE);
 }

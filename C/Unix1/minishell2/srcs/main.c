@@ -58,6 +58,7 @@ int				main(int ac, char **av, char **env)
 			get_next_line(1, &line);
 			if ((shell->tree = lexor_and_parsor(line)))
 			{
+				ft_putendl("parse ok");
 				put_tree(shell->tree);
 				ft_memdel((void **)&line);
 				main_execution(shell);

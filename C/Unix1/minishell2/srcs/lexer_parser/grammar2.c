@@ -15,10 +15,7 @@
 
 bool		expression(t_tree **tree, t_lex **lex)
 {
-	if (*lex)
-		return (or_exp(tree, lex));
-	else
-		return (FALSE);
+	return (or_exp(tree, lex));
 }
 
 bool		or_exp(t_tree **tree, t_lex **lex)
@@ -66,8 +63,6 @@ bool		and_exp(t_tree **tree, t_lex **lex)
 				*lex = (*lex)->next;
 				return (and_exp(&(new->right), lex));
 			}
-			else
-				return (FALSE);
 		}
 		return (TRUE);
 	}
@@ -92,8 +87,6 @@ bool		pipe_exp(t_tree **tree, t_lex **lex)
 				*lex = (*lex)->next;
 				return (pipe_exp(&(new->left), lex));
 			}
-			else
-				return (FALSE);
 		}
 		return (TRUE);
 	}

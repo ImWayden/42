@@ -69,7 +69,10 @@ t_tree				*make_parsing(t_lex **lexem)
 	res = NULL;
 	lex = separate_lex(lexem); 
 	if (!expression(&res, &lex))
+	{
+		ft_putendl("no expression");
 		return (reset(&res, lexem));
+	}
 	tmp = res;
 	while ((lex = separate_lex(lexem)))
 	{
@@ -88,6 +91,7 @@ t_tree				*lexor_and_parsor(char *line)
 
 	if (line && (lex = syntax_error(line)) != NULL)
 	{
+		ft_putendl("syntax ok");
 		return (make_parsing(&lex));
 	}
 	return (NULL);
