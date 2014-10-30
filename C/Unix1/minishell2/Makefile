@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = 42sh
+NAME = ft_minishell2
 
 MAKE = make
 CC = gcc
@@ -38,7 +38,7 @@ SRC = $(SDIR)main.c \
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes
 LIB = ./libft/libft.a
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 all: $(NAME)
 
@@ -50,8 +50,7 @@ $(NAME): $(OBJ)
 	@echo "\033[31;1m"
 	@echo -n '---> Compilation in progress... <---'
 	@echo "\033[0m"
-	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LIB)
-	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LIB) -ltermcap
+	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LIB) 
 	@echo "\033[1;32m"
 	@echo -n '---> DONE ! <---'
 	@echo "\033[0m"

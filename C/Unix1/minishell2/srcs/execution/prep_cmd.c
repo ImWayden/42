@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "my_42sh.h"
+#include "minishell2.h"
 
 static void		join_path_and_bin(char **path, char *binary, int i)
 {

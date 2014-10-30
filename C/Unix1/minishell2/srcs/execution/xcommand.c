@@ -12,7 +12,7 @@
 
 #include <errno.h>
 #include "grammar.h"
-#include "my_42sh.h"
+#include "minishell2.h"
 
 int				write_statut(int status)
 {

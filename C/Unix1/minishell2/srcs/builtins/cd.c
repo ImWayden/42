@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "my_42sh.h"
+#include "minishell2.h"
 
 static int			s_setenv(t_env **envs, char *name, char **arg)
 {

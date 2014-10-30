@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "my_42sh.h"
+#include "minishell2.h"
 
 char		*get_env(t_env *env, char *str)
 {

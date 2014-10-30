@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "my_42sh.h"
+#include "minishell2.h"
 
 t_tree				*init_tree(void)
 {
@@ -41,11 +41,12 @@ t_lex				*separate_lex(t_lex **lex)
 	if (tmp && is_semi_colon(tmp->str))
 	{
 		*lex = tmp->next;
-		tmp->prev->next = NULL;
+		if (tmp->prev)
+			tmp->prev->next = NULL;
 		if (*lex)
-		(*lex)->prev = NULL;
-		//ft_memdel((void **)&tmp);
-		//lex_delfirst(&tmp);
+			(*lex)->prev = NULL;
+		ft_memdel((void **)&(tmp->str));
+		ft_memdel((void **)&tmp);
 	}
 	else
 		*lex = NULL;
@@ -69,10 +70,7 @@ t_tree				*make_parsing(t_lex **lexem)
 	res = NULL;
 	lex = separate_lex(lexem); 
 	if (!expression(&res, &lex))
-	{
-		ft_putendl("no expression");
 		return (reset(&res, lexem));
-	}
 	tmp = res;
 	while ((lex = separate_lex(lexem)))
 	{
@@ -90,9 +88,6 @@ t_tree				*lexor_and_parsor(char *line)
 	t_lex			*lex;
 
 	if (line && (lex = syntax_error(line)) != NULL)
-	{
-		ft_putendl("syntax ok");
 		return (make_parsing(&lex));
-	}
 	return (NULL);
 }

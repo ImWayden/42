@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "my_42sh.h"
+#include "minishell2.h"
 
 int					ft_setenv(t_shell *shell, t_tree *tree)
 {

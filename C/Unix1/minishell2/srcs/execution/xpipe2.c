@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "my_42sh.h"
+#include "minishell2.h"
 
 int				execute_simple_pipe(t_tree *tree, t_shell *shell)
 {

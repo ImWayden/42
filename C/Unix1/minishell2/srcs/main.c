@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "my_42sh.h"
+#include "minishell2.h"
 
 static void		ft_prompt(t_shell *shell)
 {
@@ -28,7 +28,7 @@ static void		ft_prompt(t_shell *shell)
 	ft_putstr("$ ");
 }
 
-static void			put_tree(t_tree *tree)
+/*static void			put_tree(t_tree *tree)
 {
 	if (tree)
 	{
@@ -37,7 +37,7 @@ static void			put_tree(t_tree *tree)
 		ft_puttab(tree->argv);
 		put_tree(tree->next);
 	}
-}
+}*/
 
 int				main(int ac, char **av, char **env)
 {
@@ -58,8 +58,6 @@ int				main(int ac, char **av, char **env)
 			get_next_line(1, &line);
 			if ((shell->tree = lexor_and_parsor(line)))
 			{
-				ft_putendl("parse ok");
-				put_tree(shell->tree);
 				ft_memdel((void **)&line);
 				main_execution(shell);
 			}
