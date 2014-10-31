@@ -35,7 +35,7 @@ void		ft_ss(t_lex *lista, t_lex *listb)
 	a = ft_s(lista);
 	b = ft_s(listb);
 	if (a && !b)
-		write(1, "a", 1);
+		write(1, "a ", 2);
 	if (!a && b)
-		write(1, "b", 1);
+		write(1, "b ", 2);
 }

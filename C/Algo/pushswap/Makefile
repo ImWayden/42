@@ -18,7 +18,10 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 
-SRC = $(SDIR)main.c $(SDIR)ft_get.c $(SDIR)ft_putlist.c $(SDIR)ft_s.c $(SDIR)ft_p.c
+SRC = $(SDIR)ft_get.c $(SDIR)ft_putlist.c $(SDIR)ft_p.c $(SDIR)ft_r.c \
+	  $(SDIR)ft_rr.c $(SDIR)ft_s.c $(SDIR)ft_p.c $(SDIR)ft_sortlist.c\
+	  $(SDIR)main.c \
+
 
 
 OBJ = $(SRC:.c=.o)

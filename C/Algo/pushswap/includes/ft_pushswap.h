@@ -30,6 +30,11 @@ t_lex		*ft_get(char **str);
 int			ft_s(t_lex *list);
 void		ft_p(t_lex **list1, t_lex **list2, char c);
 void		ft_ss(t_lex *lista, t_lex *listb);
+int			ft_rr(t_lex **list);
+int			ft_r(t_lex **list);
+void		ft_r_r(t_lex **lista, t_lex **listb);
+void		ft_rrr(t_lex **lista, t_lex **listb);
+void		ft_sortlist(t_lex **list);
 
 #endif
 

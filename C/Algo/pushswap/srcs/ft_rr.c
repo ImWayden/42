@@ -12,18 +12,18 @@
 
 #include "ft_pushswap.h"
 
-void		ft_rr(t_lex **list)
+int			ft_rr(t_lex **list)
 {
 	if (list && *list && *list != (*list)->next)
 	{
 		*list = (*list)->prev;
-		write(1, "rr", 1);
+		write(1, "rr", 2);
 		return (1);
 	}
 	return (0);
 }
 
-void		ft_rrr(t_lex *lista, t_lex *listb)
+void		ft_rrr(t_lex **lista, t_lex **listb)
 {	
 	int		a;
 	int		b;
@@ -31,10 +31,10 @@ void		ft_rrr(t_lex *lista, t_lex *listb)
 	a = ft_rr(lista);
 	b = ft_rr(listb);
 	if (a && !b)
-		write(1, "a", 1);
+		write(1, "a ", 2);
 	else if (!a && b)
-		write(1, "b", 1);
+		write(1, "b ", 2);
 	else
-		write(1, "\r", 1);
+		write(1, "\r ", 2);
 
 }

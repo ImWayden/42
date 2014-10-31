@@ -43,5 +43,6 @@ void		ft_p(t_lex **list1, t_lex **list2, char c)
 		}
 		write(1, "p", 1);
 		write(1, &c, 1);
+		write(1, " ", 1);
 	}
 }

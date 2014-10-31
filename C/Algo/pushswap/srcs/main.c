@@ -15,21 +15,11 @@
 int main(int argc, char **argv)
 {
 	t_lex	*lista;
-	t_lex	*listb = NULL;
 
 	if (argc > 1)
 	{
 		if ((lista = ft_get(&argv[1])))
-		{
-			while (lista)
-			{
-				ft_p(&lista, &listb, 'b');
-				ft_putchar('\n');
-				ft_putlist(lista);
-				ft_putlist(listb);
-				sleep(1);
-			}
-		}
+			ft_sortlist(&lista);
 	}
 	return 0;
 }

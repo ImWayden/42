@@ -46,6 +46,8 @@ static int		ft_isnumeric(char *str)
 	int			i;
 
 	i = 0;
+	if (str && (str[0] == '-' || str[0] == '+'))
+		i++;
 	while (str && str[i])
 	{
 		if (!ft_isdigit(str[i]))
