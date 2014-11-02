@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_pushswap
+NAME = push_swap
 
 MAKE = make
 CC = gcc
@@ -20,7 +20,7 @@ SDIR = srcs/
 
 SRC = $(SDIR)ft_get.c $(SDIR)ft_putlist.c $(SDIR)ft_p.c $(SDIR)ft_r.c \
 	  $(SDIR)ft_rr.c $(SDIR)ft_s.c $(SDIR)ft_p.c $(SDIR)ft_sortlist.c\
-	  $(SDIR)main.c \
+	  $(SDIR)ft_sort.c $(SDIR)main.c \
 
 
 

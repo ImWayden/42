@@ -26,6 +26,6 @@ void			ft_deltab(char ***str)
 			ft_memdel((void **)&(tab[i]));
 			i++;
 		}
-		ft_memdel((void **)&tab);
+		ft_memdel((void **)str);
 	}
 }

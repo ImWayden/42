@@ -29,5 +29,7 @@ void		free_tree(t_tree **tree)
 		free_tree(&(*tree)->next);
 		free_tree(&(*tree)->right);
 		free_tree(&(*tree)->left);
+		ft_deltab(&(*tree)->argv);
+		ft_memdel((void **)tree);
 	}
 }

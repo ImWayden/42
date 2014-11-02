@@ -13,7 +13,7 @@
 #include "grammar.h"
 #include "minishell2.h"
 
-int				execute_last_command(t_tree *tree, t_shell *shell)
+int				execute_last_command(t_tree *tree, t_shell **shell)
 {
 	int			statut;
 	pid_t		pid;
@@ -24,7 +24,7 @@ int				execute_last_command(t_tree *tree, t_shell *shell)
 	{
 		dup2(tree->fd[0], STDIN_FILENO);
 		dup2(tree->fd[1], STDOUT_FILENO);
-		execve(tree->argv[0], tree->argv, shell->envc);
+		execve(tree->argv[0], tree->argv, (*shell)->envc);
 	}
 	else if (pid > 0)
 	{
@@ -36,7 +36,7 @@ int				execute_last_command(t_tree *tree, t_shell *shell)
 	return (FATAL_ERROR);
 }
 
-int				execution_chain(t_tree *tree, t_shell *shell)
+int				execution_chain(t_tree *tree, t_shell **shell)
 {
 	if (tree->ope == IS_PIPE)
 		return (execute_simple_pipe(tree, shell));
@@ -47,14 +47,14 @@ int				execution_chain(t_tree *tree, t_shell *shell)
 	return (0);
 }
 
-int				execute_pipe_start(t_tree *tree, t_shell *shell)
+int				execute_pipe_start(t_tree *tree, t_shell **shell)
 {
 	int			flag;
 	int			statut;
 	int			fd[2];
 	pid_t		pid;
 
-	if ((flag = prepare_all_commands(tree, shell)) != EXIT_SUCCESS)
+	if ((flag = prepare_all_commands(tree, *shell)) != EXIT_SUCCESS)
 		return (flag);
 	if ((pid = fork()) == 0)
 	{

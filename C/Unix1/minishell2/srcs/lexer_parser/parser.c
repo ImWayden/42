@@ -53,30 +53,35 @@ t_lex				*separate_lex(t_lex **lex)
 	return (tmp1);
 }
 
-static t_tree		*reset(t_tree **tree, t_lex **lexem)
+static t_tree		*reset(t_tree **tree, t_lex **lexem, t_lex **lex)
 {
 	if (*tree)
 		free_tree(tree);
 	free_lex(lexem);
+	free_lex(lex);
 	return (NULL);
 }
 
 t_tree				*make_parsing(t_lex **lexem)
 {
 	t_lex			*lex;
+	t_lex			*lex1;
 	t_tree			*res;
 	t_tree			*tmp;
 
 	res = NULL;
-	lex = separate_lex(lexem); 
+	lex = separate_lex(lexem);
+	lex1 = lex;
 	if (!expression(&res, &lex))
-		return (reset(&res, lexem));
+		return (reset(&res, lexem, &lex1));
+	free_lex(&lex1);
 	tmp = res;
 	while ((lex = separate_lex(lexem)))
 	{
+		lex1 = lex;
 		if (!expression(&(tmp->next), &lex))
-			return (reset(&tmp, lexem));
-		free_lex(&lex);
+			return (reset(&tmp, lexem, &lex1));
+		free_lex(&lex1);
 		tmp = tmp->next;
 	}
 	free_lex(lexem);

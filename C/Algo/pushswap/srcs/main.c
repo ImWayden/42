@@ -21,7 +21,10 @@ int main(int argc, char **argv)
 	if (argc > 1)
 	{
 		if ((lista = ft_get(&argv[1], flag)))
+		{
 			ft_sortlist(&lista);
+			dell_list(&lista);
+		}
 	}
-	return 0;
+	return (0);
 }

@@ -28,17 +28,6 @@ static void		ft_prompt(t_shell *shell)
 	ft_putstr("$ ");
 }
 
-/*static void			put_tree(t_tree *tree)
-{
-	if (tree)
-	{
-		put_tree(tree->left);
-		put_tree(tree->right);
-		ft_puttab(tree->argv);
-		put_tree(tree->next);
-	}
-}*/
-
 int				main(int ac, char **av, char **env)
 {
 	t_shell		*shell;
@@ -59,7 +48,7 @@ int				main(int ac, char **av, char **env)
 			if ((shell->tree = lexor_and_parsor(line)))
 			{
 				ft_memdel((void **)&line);
-				main_execution(shell);
+				main_execution(&shell);
 			}
 		}
 	}

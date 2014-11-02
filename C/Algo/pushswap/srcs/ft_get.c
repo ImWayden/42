@@ -19,6 +19,7 @@ static t_lex	*ft_listnew(int nbr, int flag)
 	if ((list = (t_lex *)malloc(sizeof(t_lex))))
 	{
 		list->nbr = nbr;
+		list->name = 'a';
 		list->flag = flag;
 		list->next = list;
 		list->prev = list;
@@ -42,6 +43,7 @@ static t_lex	*ft_addlist(t_lex *list, int nbr, int flag)
 	}
 	return (list);
 }
+
 static int		ft_isnumeric(char *str)
 {
 	int			i;

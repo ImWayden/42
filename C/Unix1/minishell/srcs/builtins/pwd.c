@@ -18,5 +18,6 @@ int			ft_pwd(t_shell *shell)
 
 	str = get_env(shell->env, "PWD");
 	ft_putendl(str);
+	ft_memdel((void **)&str);
 	return (0);
 }

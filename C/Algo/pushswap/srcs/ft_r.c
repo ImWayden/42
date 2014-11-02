@@ -24,14 +24,17 @@ int			ft_r(t_lex **list)
 }
 
 void		ft_r_r(t_lex **lista, t_lex **listb)
-{	
+{
 	int		a;
 	int		b;
 
+	if ((lista && *lista && get_flag(*lista))
+		|| (listb && *listb && get_flag(*listb)))
+		write(1, " ", 1);
 	a = ft_r(lista);
 	b = ft_r(listb);
 	if (a && !b)
-		write(1, "a ", 2);
-	if (!a && b)
-		write(1, "b ", 2);
+		write(1, "a", 1);
+	else if (!a && b)
+		write(1, "b", 1);
 }

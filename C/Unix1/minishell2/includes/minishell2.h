@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MY_42SH_H
-# define MY_42SH_H
+#ifndef MINISHELL2_H
+# define MINISHELL2_H
 
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -54,6 +54,7 @@ typedef struct			s_env
 typedef struct			s_shell
 {
 	char				*prompt;
+	char				**path;
 	t_tree				*tree;
 	char				**envc;
 	t_env				*env;
@@ -92,8 +93,11 @@ char					*get_env(t_env *env, char *str);
 int						cd(t_shell *shell, t_tree *tree);
 void					env_delone(t_env **env);
 void					free_env(t_env **envc);
+void					free_shell(t_shell **shell);
+int						ft_pwd(t_shell *shell);
+int						ft_exit(t_shell **shell);
 char					**list_to_tab(t_env *env);
-int						builtins_center(t_shell *shell, t_tree *tree);
+int						builtins_center(t_shell **shell, t_tree *tree);
 
 /*
 ** execution
@@ -105,24 +109,25 @@ void					close_trees_fd(t_tree *begin);
 int						is_directory(char *path);
 int						write_statut(int status);
 void					ft_putmsg(char *name, char *msg);
-int						spe_left(t_tree *tree, t_shell *st_shell);
-int						left_redirection(t_tree *tree, t_shell *st_shell);
-char					*get_full_path(char *path, char *binary);
-void					main_execution(t_shell *st_shell);
-int						execute_it(t_tree *tree, t_shell *st_shell);
+int						spe_left(t_tree *tree, t_shell **st_shell);
+int						left_redirection(t_tree *tree, t_shell **st_shell);
+char					*get_full_path(char **path, char *binary);
+void					main_execution(t_shell **st_shell);
+int						execute_it(t_tree *tree, t_shell **st_shell);
 int						prepare_command(t_tree *cmd, t_shell *st_shell);
 int						prepare_all_commands(t_tree *tree, t_shell *st_shell);
-int						execute_simple_command(t_tree *tree, t_shell *st_shell);
-int						execute_last_command(t_tree *tree, t_shell *st_shell);
-int						execute_pipe_start(t_tree *tree, t_shell *st_shell);
-int						execution_chain(t_tree *tree, t_shell *st_shell);
+int						execute_simple_command(t_tree *tree,
+						t_shell **st_shell);
+int						execute_last_command(t_tree *tree, t_shell **st_shell);
+int						execute_pipe_start(t_tree *tree, t_shell **st_shell);
+int						execution_chain(t_tree *tree, t_shell **st_shell);
 int						execute_right_redir_spe(t_tree *tree,
-						t_shell *st_shell);
-int						execute_simple_pipe(t_tree *tree, t_shell *st_shell);
-int						right_redirection(t_tree *tree, t_shell *st_shell);
-void					init_first_pipe(t_tree *tree, t_shell *st_shell,
+						t_shell **st_shell);
+int						execute_simple_pipe(t_tree *tree, t_shell **st_shell);
+int						right_redirection(t_tree *tree, t_shell **st_shell);
+void					init_first_pipe(t_tree *tree, t_shell **st_shell,
 						int *fd);
-void					init_first_pipe_spe(t_tree *tree, t_shell *st_shell,
+void					init_first_pipe_spe(t_tree *tree, t_shell **st_shell,
 						int *fd);
 
 #endif

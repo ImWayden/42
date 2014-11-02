@@ -12,30 +12,61 @@
 
 #include "ft_pushswap.h"
 
-void	ft_putlist(t_lex *list)
+int			get_flag(t_lex *lex)
+{
+	static int		i = -1;
+
+	if (lex->flag)
+		i = -1;
+	i++;
+	return (i);
+}
+
+void		ft_putlist(t_lex *list)
 {
 	t_lex	*tmp;
-	
+
 	tmp = list;
 	while (tmp)
 	{
 		ft_putnbr(tmp->nbr);
-		ft_putstr(" ");
 		if ((tmp = tmp->next) == list)
-			break;
+			break ;
+		else
+			ft_putstr(" ");
 	}
 	ft_putendl(NULL);
 }
 
-void	ft_debug(t_lex *l_a, t_lex *l_b)
+void		ft_debug(t_lex *l_a, t_lex *l_b)
 {
-	int	i;
-
-	i = 8;
-	write(1, &i, 1);
-	write(1, "\n", 1);
+	ft_putendl(NULL);
 	ft_putstr ("l_a : ");
-	ft_putlist(l_a);
+	if (l_a && l_a->name == 'a')
+		ft_putlist(l_a);
+	else if (l_b && l_b->name == 'a')
+		ft_putlist(l_b);
+	else
+		ft_putendl(NULL);
 	ft_putstr ("l_b : ");
-	ft_putlist(l_b);
+	if (l_a && l_a->name == 'b')
+		ft_putlist(l_a);
+	else if (l_b && l_b->name == 'b')
+		ft_putlist(l_b);
+	else
+		ft_putendl(NULL);
+}
+
+void		dell_list(t_lex **lex)
+{
+	t_lex	*tmp;
+
+	tmp = *lex;
+	*lex = (*lex)->next;
+	tmp->prev->next = *lex;
+	(*lex)->prev = tmp->prev;
+	if (tmp != *lex)
+		ft_memdel((void **)&tmp);
+	else
+		ft_memdel((void **)lex);
 }

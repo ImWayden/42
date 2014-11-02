@@ -69,6 +69,16 @@ static void			ft_del(char **path, char **pwd, char **home)
 	ft_memdel((void **)home);
 }
 
+static	int			cd_error(char **path, char *bin)
+{
+	if (access(*path, F_OK) == -1)
+		ft_putmsg(bin, ":cd : No such file or directory.");
+	else
+		ft_putmsg(bin, ":cd : permission denied.");
+	ft_memdel((void **)path);
+	return (EXIT_FAILURE);
+}
+
 int					cd(t_shell *shell, t_tree *tree)
 {
 	char			*pwd;
@@ -85,10 +95,7 @@ int					cd(t_shell *shell, t_tree *tree)
 		ft_putendl(path);
 	}
 	if (chdir(path) == -1)
-	{
-		ft_putmsg(tree->argv[1], ":cd : No such file or directory.");
-		return (EXIT_FAILURE);
-	}
+		return (cd_error(&path, tree->argv[1]));
 	else
 	{
 		while ((i = ft_strlen(path)) && path[i - 1] == '/')

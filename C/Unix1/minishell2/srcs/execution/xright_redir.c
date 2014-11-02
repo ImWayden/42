@@ -27,7 +27,7 @@ static int	open_file(char *name, int ope)
 	return (fd);
 }
 
-int			execute_right_redir_spe(t_tree *tree, t_shell *shell)
+int			execute_right_redir_spe(t_tree *tree, t_shell **shell)
 {
 	int		fd;
 	t_tree	*file;
@@ -43,7 +43,7 @@ int			execute_right_redir_spe(t_tree *tree, t_shell *shell)
 	return (execute_last_command(tree->left, shell));
 }
 
-int			right_redirection(t_tree *tree, t_shell *shell)
+int			right_redirection(t_tree *tree, t_shell **shell)
 {
 	int		fd;
 	t_tree	*file;

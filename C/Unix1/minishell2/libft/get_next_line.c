@@ -63,6 +63,7 @@ int					get_next_line(int const fd, char **line)
 	t_line			*tmp;
 
 	tmp = sd;
+	*line = NULL;
 	while (tmp && tmp->fd != fd)
 		tmp = tmp->next;
 	if (!tmp && (tmp = (t_line *)malloc(sizeof(t_line))))

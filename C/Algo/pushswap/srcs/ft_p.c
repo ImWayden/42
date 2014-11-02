@@ -36,7 +36,10 @@ void		ft_p(t_lex **list1, t_lex **list2, char c)
 
 	if (*list1)
 	{
+		if (get_flag(*list1))
+			write(1, " ", 1);
 		tmp = *list1;
+		tmp->name = c;
 		if (*list1 == (*list1)->next)
 			*list1 = NULL;
 		else
@@ -48,6 +51,5 @@ void		ft_p(t_lex **list1, t_lex **list2, char c)
 		ft_pp(list2, tmp);
 		write(1, "p", 1);
 		write(1, &c, 1);
-		write(1, " ", 1);
 	}
 }

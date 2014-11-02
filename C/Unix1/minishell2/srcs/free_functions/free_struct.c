@@ -14,22 +14,16 @@
 
 void		free_lex(t_lex **lex)
 {
-	if (*lex && (*lex)->next)
-		free_lex(&(*lex)->next);
-	if (*lex)
-	{
-		ft_memdel((void **)&(*lex)->str);
-		ft_memdel((void **)lex);
-	}
-}
+	t_lex	*tmp;
 
-void		lex_delfirst(t_lex **lex)
-{
-	if (lex && *lex)
+	while (*lex)
 	{
-		(*lex)->next = NULL;
-		(*lex)->prev = NULL;
-		ft_memdel((void **)&(*lex)->str);
-		ft_memdel((void **)lex);
+		tmp = *lex;
+		*lex = (*lex)->next;
+		ft_memdel((void **)&(tmp->str));
+		if (*lex == tmp)
+			ft_memdel((void **)lex);
+		else
+			ft_memdel((void **)&tmp);
 	}
 }

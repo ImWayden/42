@@ -33,9 +33,8 @@ bool		redir_left_norm(t_tree **tree, t_lex **lex)
 				*tree = new;
 				*lex = (*lex)->next;
 				ret = file_exp(&(new->right), lex);
-				ret = is_right_redir((*lex)->str) ?
-				special_case(tree, lex) : ret;
-				return (ret);
+				return (is_right_redir((*lex)->str) ?
+				special_case(tree, lex) : ret);
 			}
 		}
 		return (TRUE);

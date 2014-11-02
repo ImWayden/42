@@ -13,11 +13,25 @@
 #include "grammar.h"
 #include "minishell2.h"
 
-static void		join_path_and_bin(char **path, char *binary, int i)
+char			*get_full_path(char **path, char *binary)
 {
-	(*path)[i++] = '/';
-	(*path)[i] = '\0';
-	*path = ft_strjoin(*path, binary);
+	int			i;
+	char		*str;
+	char		*full_path;
+
+	i = 0;
+	full_path = NULL;
+	while (path && path[i])
+	{
+		str = ft_strjoin(path[i], "/");
+		full_path = ft_strjoin(str, binary);
+		ft_memdel((void **)&str);
+		if (access(full_path, F_OK) == 0)
+			return (full_path);
+		ft_memdel((void **)&full_path);
+		i++;
+	}
+	return (NULL);
 }
 
 static char		*get_bin_path(char *bin, t_shell *shell)
@@ -28,53 +42,37 @@ static char		*get_bin_path(char *bin, t_shell *shell)
 	if (ft_strncmp(bin, "/", 1) == 0 || ft_strncmp(bin, ".", 1) == 0)
 		path = ft_strdup(bin);
 	else
-		path = get_full_path(get_env(shell->env, "PATH"), bin);
+		path = get_full_path(shell->path, bin);
 	if (!path || (path && access(path, F_OK) == -1))
-		ft_putmsg(bin, ": Command not found.\n");
-	else if (access(path, X_OK) == -1 || is_directory(path))
 	{
-		ft_putendl(path);
-		ft_putmsg(bin, " : Permission denied.\n");
+		ft_putstr(bin);
+		ft_putstr(": Command not found.\n");
+	}
+	else if (access(path, X_OK) == -1)
+	{
+		ft_putstr(path);
+		ft_putstr(" : Permission denied.\n");
 	}
 	else
 		return (path);
-	free(path);
+	ft_memdel((void **)&path);
 	return (path);
-}
-
-char			*get_full_path(char *path, char *binary)
-{
-	int			i;
-	int			len;
-	char		*full_path;
-
-	i = 0;
-	full_path = NULL;
-	len = ft_strlen(path) + ft_strlen(binary) + 2;
-	while (path && *path)
-	{
-		if (i == 0 && !(full_path = malloc(sizeof(*full_path) * len)))
-			return (NULL);
-		full_path[i++] = *path++;
-		if (*path == ':' || *path == '\0')
-		{
-			join_path_and_bin(&full_path, binary, i);
-			if (access(full_path, F_OK) == 0)
-				return (full_path);
-			ft_memdel((void **)&full_path);
-			i = 0;
-			if (*path == ':')
-				path++;
-		}
-	}
-	return (0);
 }
 
 int				prepare_command(t_tree *cmd, t_shell *shell)
 {
-	if (!is_builtin(cmd->argv[0]) &&
-			!(cmd->argv[0] = get_bin_path(cmd->argv[0], shell)))
-		return (EXIT_FAILURE);
+	char		*str;
+
+	if (!is_builtin(cmd->argv[0]))
+	{
+		if ((str = get_bin_path(cmd->argv[0], shell)))
+		{
+			ft_memdel((void **)&cmd->argv[0]);
+			cmd->argv[0] = str;
+		}
+		else
+			return (EXIT_FAILURE);
+	}
 	return (0);
 }
 

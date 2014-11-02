@@ -37,7 +37,7 @@ static int		open_file(char *name)
 	return (fd);
 }
 
-int				spe_left(t_tree *tree, t_shell *shell)
+int				spe_left(t_tree *tree, t_shell **shell)
 {
 	int			fd;
 	char		**args;
@@ -50,7 +50,7 @@ int				spe_left(t_tree *tree, t_shell *shell)
 	return (EXIT_SUCCESS);
 }
 
-int				left_redirection(t_tree *tree, t_shell *shell)
+int				left_redirection(t_tree *tree, t_shell **shell)
 {
 	int			fd;
 	char		**args;

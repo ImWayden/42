@@ -28,16 +28,16 @@ int			ft_s(t_lex *list)
 }
 
 void		ft_ss(t_lex *lista, t_lex *listb)
-{	
+{
 	int		a;
 	int		b;
 
+	if ((lista && get_flag(lista)) || (listb && get_flag(listb)))
+		write(1, " ", 1);
 	a = ft_s(lista);
 	b = ft_s(listb);
 	if (a && !b)
-		write(1, "a ", 2);
+		write(1, "a", 1);
 	else if (!a && b)
-		write(1, "b ", 2);
-	else
-		write(1, " ", 1);
+		write(1, "b", 1);
 }

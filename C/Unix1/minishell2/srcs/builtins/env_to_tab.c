@@ -29,6 +29,7 @@ char			**list_to_tab(t_env *env)
 {
 	int			i;
 	char		**tab1;
+	char		*str1;
 	int			j;
 
 	j = 0;
@@ -40,7 +41,9 @@ char			**list_to_tab(t_env *env)
 	tab1[i] = NULL;
 	while (env && j < i)
 	{
-		tab1[j] = ft_strjoin(ft_strjoin(env->name, "="), env->arg);
+		str1 = ft_strjoin(env->name, "=");
+		tab1[j] = ft_strjoin(str1, env->arg);
+		ft_memdel((void **)&str1);
 		j++;
 		env = env->next;
 	}
