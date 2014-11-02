@@ -35,6 +35,9 @@ void		ft_rrr(t_lex **lista, t_lex **listb)
 	else if (!a && b)
 		write(1, "b ", 2);
 	else
-		write(1, "\r ", 2);
-
+	{
+		a = 8;
+		write(1, &a, 1);
+		write(1, " ", 1);
+	}
 }

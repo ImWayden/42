@@ -15,10 +15,12 @@
 int main(int argc, char **argv)
 {
 	t_lex	*lista;
+	int		flag;
 
+	flag = 0;
 	if (argc > 1)
 	{
-		if ((lista = ft_get(&argv[1])))
+		if ((lista = ft_get(&argv[1], flag)))
 			ft_sortlist(&lista);
 	}
 	return 0;

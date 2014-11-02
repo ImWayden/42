@@ -12,24 +12,25 @@
 
 #include "ft_pushswap.h"
 
-static t_lex	*ft_listnew(int nbr)
+static t_lex	*ft_listnew(int nbr, int flag)
 {
 	t_lex		*list;
 
 	if ((list = (t_lex *)malloc(sizeof(t_lex))))
 	{
 		list->nbr = nbr;
+		list->flag = flag;
 		list->next = list;
 		list->prev = list;
 	}
 	return (list);
 }
 
-static t_lex	*ft_addlist(t_lex *list, int nbr)
+static t_lex	*ft_addlist(t_lex *list, int nbr, int flag)
 {
 	t_lex		*tmp;
 
-	tmp = ft_listnew(nbr);
+	tmp = ft_listnew(nbr, flag);
 	if (!list)
 		return (tmp);
 	else
@@ -57,17 +58,22 @@ static int		ft_isnumeric(char *str)
 	return (1);
 }
 
-t_lex			*ft_get(char **argv)
+t_lex			*ft_get(char **argv, int flag)
 {
 	t_lex		*list;
 	int			i;
 
 	i = 0;
 	list = NULL;
+	if (!ft_strcmp(argv[0], "-v"))
+	{
+		flag = 1;
+		i++;
+	}
 	while (argv[i])
 	{
 		if (ft_isnumeric(argv[i]))
-			list = ft_addlist(list, ft_atoi(argv[i]));
+			list = ft_addlist(list, ft_atoi(argv[i]), flag);
 		else
 		{
 			ft_putendl("ERROR");

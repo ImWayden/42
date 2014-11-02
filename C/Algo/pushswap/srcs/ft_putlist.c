@@ -26,3 +26,16 @@ void	ft_putlist(t_lex *list)
 	}
 	ft_putendl(NULL);
 }
+
+void	ft_debug(t_lex *l_a, t_lex *l_b)
+{
+	int	i;
+
+	i = 8;
+	write(1, &i, 1);
+	write(1, "\n", 1);
+	ft_putstr ("l_a : ");
+	ft_putlist(l_a);
+	ft_putstr ("l_b : ");
+	ft_putlist(l_b);
+}

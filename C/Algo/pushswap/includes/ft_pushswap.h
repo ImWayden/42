@@ -20,13 +20,14 @@
 
 typedef struct			s_lex
 {
+	int					flag;
 	int					nbr;
 	struct s_lex		*next;
 	struct s_lex		*prev;
 }						t_lex;
 
 void		ft_putlist(t_lex *list);
-t_lex		*ft_get(char **str);
+t_lex		*ft_get(char **str, int flag);
 int			ft_s(t_lex *list);
 void		ft_p(t_lex **list1, t_lex **list2, char c);
 void		ft_ss(t_lex *lista, t_lex *listb);
@@ -35,6 +36,7 @@ int			ft_r(t_lex **list);
 void		ft_r_r(t_lex **lista, t_lex **listb);
 void		ft_rrr(t_lex **lista, t_lex **listb);
 void		ft_sortlist(t_lex **list);
+void		ft_debug(t_lex *l_a, t_lex *l_b);
 
 #endif
 
