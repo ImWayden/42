@@ -63,6 +63,7 @@ void			ft_sortlist(t_lex **list)
 		if (l_a->flag)
 			ft_debug(l_a, l_b);
 	}
+			ft_debug(l_a, l_b);
 	if (!l_a->flag)
 		ft_putendl(NULL);
 }
