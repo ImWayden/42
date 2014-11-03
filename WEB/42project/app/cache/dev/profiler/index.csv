@@ -1,0 +1,5 @@
+a6db69,::1,GET,http://localhost:8080/42project/app_dev.php/,1415010583,
+e35c64,::1,GET,http://localhost:8080/42project/app_dev.php/login,1415010590,
+2b30b6,::1,GET,http://localhost:8080/42project/app_dev.php/login,1415010602,
+4ba9fe,::1,GET,http://localhost:8080/42project/app_dev.php/logout,1415010616,
+0bd177,::1,GET,http://localhost:8080/42project/app_dev.php/,1415010617,

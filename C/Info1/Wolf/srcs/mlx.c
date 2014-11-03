@@ -12,6 +12,50 @@
 
 #include "fdf.h"
 
+int				main(int ac, char **av)
+{
+	t_env		env;
+
+	while (ac == 2)
+	{
+		env.file = av[1];
+		init(&env);
+		if ((env.ptr = mlx_init()) == NULL)
+			return (EXIT_FAILURE);
+		if ((env.win = mlx_new_window(env.ptr, env.x++ * env.pad * 2
+			, env.y++ * env.pad * 2, "fdf")) == NULL)
+			return (EXIT_FAILURE);
+		mlx_key_hook(env.win, ft_key_hook, &env);
+		mlx_mouse_hook(env.win, ft_mouse_hook, &env);
+		mlx_expose_hook(env.win, fake_expose, &env);
+		mlx_loop(env.ptr);
+	}
+	return (EXIT_SUCCESS);
+}
+
+int				ft_key_hook(int keycode)
+{
+	ft_putstr("key : ");
+	ft_putnbr(keycode);
+	ft_putchar('\n');
+	if (keycode == 65307)
+		exit(0);
+	return (0);
+}
+
+int				ft_mouse_hook(int button, int x, int y)
+{
+	ft_putstr("mouse : ");
+	ft_putnbr(button);
+	ft_putstr(" (");
+	ft_putnbr(x);
+	ft_putstr(" : ");
+	ft_putnbr(y);
+	ft_putchar(')');
+	ft_putchar('\n');
+	return (0);
+}
+
 void		line(t_env env, t_coord pi, t_coord pf)
 {
 	double	x;
