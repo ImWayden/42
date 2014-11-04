@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   Wolf.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/24 15:14:37 by msarr             #+#    #+#             */
-/*   Updated: 2014/10/11 21:14:49 by msarr            ###   ########.fr       */
+/*   Created: 2014/11/04 11:41:52 by msarr             #+#    #+#             */
+/*   Updated: 2014/11/04 11:41:56 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,33 @@
 # include <fcntl.h>
 # include "libft.h"
 
-typedef struct	s_coord
-{
-	float			x;
-	float			y;
-	float			z;
-}				t_coord;
+# define WHITE_2	 	0xFFFFF0
+# define RED_2			0xCC0000
+# define GREEN_2		0x00CC00
+# define YELLOW_2    	0xCCFF00
+# define BLUE_2      	0x000066
+# define PURPLE_2   	0x330000
+# define CYAN_2      	0x00FFFF
+# define GREY_2			0x808080
+# define screenWidth 	512
+# define screenHeight	384
+# define mapWidth 		24
+# define mapHeight 		24
 
 typedef	struct	s_env
 {
 	void		*ptr;
 	void		*win;
-	char		*file;
-	t_coord		**tab;
-	int			x;
-	int			y;
-	int			pad;
+	double		posX;
+	double		posY;
+	double		dirX;
+	double		dirY;
+	double		planeX;
+	double		planeY;
+	int			texture[8];
+	int			**worldMap;
 }				t_env;
 
-int				transform(t_coord **tab, int pad, int pad1, int pad2);
-int				init(t_env *env);
-int				fake_expose(t_env *envc);
+int					raycaster(t_env *env);
 
 #endif

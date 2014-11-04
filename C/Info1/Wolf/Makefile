@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fdf
+NAME = Wolf
 
 MAKE = make
 CC = gcc
@@ -18,7 +18,7 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 
-SRC = $(SDIR)get_file.c $(SDIR)transform.c $(SDIR)mlx.c $(SDIR)main.c \
+SRC = $(SDIR)main.c $(SDIR)raycaster.c\
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes
