@@ -108,14 +108,27 @@ int					raycaster(t_env *env)
 			color = env->texture[texNum];
 			if (side == 1)
 				color = color >> 1;
+			int in;
 			for (y = 0; y < h; y++)
 			{
+				
 				if (y >= drawStart && y < drawEnd)
-					mlx_pixel_put(env->ptr, env->win, x, y, color);
+				{
+					in = (env->bpp >> 3) * ((y * (env->sizel >> 2)) + x);
+					env->data[in] = color & 0xff;
+					env->data[in + 1] = (color & 0xff00) >> 8;
+					env->data[in + 2] = (color & 0xff0000) >> 16;
+				}
 				else
-					mlx_pixel_put(env->ptr, env->win, x, y, WHITE_2);
+				{
+					in = (env->bpp >> 3) * ((y * (env->sizel >> 2)) + x);
+					env->data[in] = WHITE_2 & 0xff;
+					env->data[in + 1] = (WHITE_2 & 0xff00) >> 8;
+					env->data[in + 2] = (WHITE_2 & 0xff0000) >> 16;
+				}
 			}
 		}
 	}
+	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
 	return (1);
 }

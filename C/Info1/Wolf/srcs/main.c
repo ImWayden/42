@@ -44,9 +44,9 @@ int		get_map(int **tab, char *file)
 int					ft_key_hook(int keycode, t_env *env)
 {
 	double			oldDirX;
-	double			oldPlaneX;
+	double			oldPlaneX;			
 	static double	moveSpeed = 0.5;
-	static double	rotSpeed = 0.3;
+	static double	rotSpeed = 0.05;
 
 	ft_putstr("key : ");
 	ft_putnbr(keycode);
@@ -55,17 +55,21 @@ int					ft_key_hook(int keycode, t_env *env)
 		exit(0);
 	if (keycode == 65362)
 	{
-		if (!env->worldMap[(int)(env->posX + env->dirX * moveSpeed)][(int)(env->posY)])
+		if (!env->worldMap[(int)(env->posX + env->dirX * moveSpeed)][(int)(env->posY)]
+		&& !env->worldMap[(int)(env->posX)][(int)(env->posY + env->dirY * moveSpeed)])
+		{
 			env->posX += env->dirX * moveSpeed;
-		if (!env->worldMap[(int)(env->posX)][(int)(env->posY + env->dirY * moveSpeed)])
 			env->posY += env->dirY * moveSpeed;
+		}
 	}
 	if (keycode == 65364)
 	{
-		if (!env->worldMap[(int)(env->posX - env->dirX * moveSpeed)][(int)(env->posY)])
+		if (!env->worldMap[(int)(env->posX - env->dirX * moveSpeed)][(int)(env->posY)]
+	  		&& !env->worldMap[(int)(env->posX)][(int)(env->posY - env->dirY * moveSpeed)])
+		{
 	  		env->posX -= env->dirX * moveSpeed;
-	  	if(env->worldMap[(int)(env->posX)][(int)(env->posY - env->dirY * moveSpeed)])
 	  		env->posY -= env->dirY * moveSpeed;
+	  	}
 	}
 	if (keycode == 65363)
 	{
@@ -78,6 +82,7 @@ int					ft_key_hook(int keycode, t_env *env)
 	}
 	if (keycode == 65361)
 	{
+		oldDirX = env->dirX;
 		env->dirX = env->dirX * cos(rotSpeed) - env->dirY * sin(rotSpeed);
 		env->dirY = oldDirX * sin(rotSpeed) + env->dirY * cos(rotSpeed);
 		oldPlaneX = env->planeX;
@@ -111,6 +116,10 @@ int main(int ac, char **argv)
 			return (0);
 	if ((env.win = mlx_new_window(env.ptr, screenWidth,screenHeight, "Raycaster")) == NULL)
 			return (0);
+	if (!(env.img = mlx_new_image(env.ptr, screenWidth, screenHeight)))
+		return (0);
+	if (!(env.data = mlx_get_data_addr(env.img, &(env.bpp), &(env.sizel), &(env.endian))))
+		return (0);
 	env.texture[0] = WHITE_2;
 	env.texture[1] = RED_2;
 	env.texture[2] = GREEN_2;
@@ -131,6 +140,7 @@ int main(int ac, char **argv)
 		mlx_key_hook(env.win, ft_key_hook, &env);
 		mlx_mouse_hook(env.win, ft_mouse_hook, &env);
 		mlx_expose_hook(env.win, raycaster, &env);
+
 		mlx_loop(env.ptr);
 	}
 	return (0);

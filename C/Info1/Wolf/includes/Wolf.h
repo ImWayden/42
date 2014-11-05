@@ -35,6 +35,12 @@ typedef	struct	s_env
 {
 	void		*ptr;
 	void		*win;
+	void		*img;
+	char		*data;
+	int			sizel;
+	int			endian;
+	int			bpp;
+
 	double		posX;
 	double		posY;
 	double		dirX;
@@ -43,6 +49,8 @@ typedef	struct	s_env
 	double		planeY;
 	int			texture[8];
 	int			**worldMap;
+	int			time;
+	int			oldTime;
 }				t_env;
 
 int					raycaster(t_env *env);
