@@ -12,7 +12,7 @@
 
 #include "Wolf.h"
 
-int		get_map(int **tab, char *file)
+int		get_map(int ***tab, char *file)
 {
 	char	*s;
 	char	*tmp;
@@ -22,16 +22,17 @@ int		get_map(int **tab, char *file)
 
 	fd = open(file, O_RDONLY);
 	i = 0;
-	while (get_next_line(fd, &s))
+	*tab = (int **)malloc(sizeof(int *) * 24);
+	while (get_next_line(fd, &s) && i < 24)
 	{
 		j = 0;
 		tmp = s;
-		tab[i] = (int *)malloc(sizeof(int) * 24);
-		while (*tmp)
+		(*tab)[i] = (int *)malloc(sizeof(int) * 24);
+		while (j < 24)
 		{
 			if (ft_isdigit(*tmp))
 			{
-				tab[i][j] = *tmp - 48;
+				(*tab)[i][j] = *tmp - 48;
 				j++;
 			}
 			tmp++;
@@ -41,54 +42,52 @@ int		get_map(int **tab, char *file)
   return (0);
 }
 
-int					ft_key_hook(int keycode, t_env *env)
+int				ft_key_press(int keycode, t_env *env)
 {
-	double			oldDirX;
-	double			oldPlaneX;			
-	static double	moveSpeed = 0.5;
-	static double	rotSpeed = 0.05;
-
 	ft_putstr("key : ");
 	ft_putnbr(keycode);
 	ft_putchar('\n');
+	if (keycode == UP)
+		env->forward = 1;
+	if (keycode == DOWN)
+		env->back = 1;
+	if (keycode == LEFT)
+		env->left = 1;
+	if (keycode == RIGHT)
+		env->right = 1;
 	if (keycode == 65307)
 		exit(0);
-	if (keycode == 65362)
-	{
-		if (!env->worldMap[(int)(env->posX + env->dirX * moveSpeed)][(int)(env->posY)]
-		&& !env->worldMap[(int)(env->posX)][(int)(env->posY + env->dirY * moveSpeed)])
-		{
-			env->posX += env->dirX * moveSpeed;
-			env->posY += env->dirY * moveSpeed;
-		}
-	}
-	if (keycode == 65364)
-	{
-		if (!env->worldMap[(int)(env->posX - env->dirX * moveSpeed)][(int)(env->posY)]
-	  		&& !env->worldMap[(int)(env->posX)][(int)(env->posY - env->dirY * moveSpeed)])
-		{
-	  		env->posX -= env->dirX * moveSpeed;
-	  		env->posY -= env->dirY * moveSpeed;
-	  	}
-	}
-	if (keycode == 65363)
-	{
-		oldDirX = env->dirX;
-		env->dirX = env->dirX * cos(-rotSpeed) - env->dirY * sin(-rotSpeed);
-		env->dirY = oldDirX * sin(-rotSpeed) + env->dirY * cos(-rotSpeed);
-		oldPlaneX = env->planeX;
-		env->planeX = env->planeX * cos(-rotSpeed) - env->planeY * sin(-rotSpeed);
-		env->planeY = oldPlaneX * sin(-rotSpeed) + env->planeY * cos(-rotSpeed);
-	}
-	if (keycode == 65361)
-	{
-		oldDirX = env->dirX;
-		env->dirX = env->dirX * cos(rotSpeed) - env->dirY * sin(rotSpeed);
-		env->dirY = oldDirX * sin(rotSpeed) + env->dirY * cos(rotSpeed);
-		oldPlaneX = env->planeX;
-		env->planeX = env->planeX * cos(rotSpeed) - env->planeY * sin(rotSpeed);
-		env->planeY = oldPlaneX * sin(rotSpeed) + env->planeY * cos(rotSpeed);
-	}
+	return (0);
+}
+
+int					ft_key_release(int keycode, t_env *env)
+{
+	if (keycode == UP)
+		env->forward = 0;
+	if (keycode == DOWN)
+		env->back= 0;
+	if (keycode == LEFT)
+		env->left = 0;
+	if (keycode == RIGHT)
+		env->right = 0;
+	if (keycode == 65307)
+		exit(0);
+	return (0);
+}
+
+int					ft_key_hook(t_env *env)
+{		
+	static double	moveSpeed = 0.05;
+	static double	rotSpeed = 0.05;
+	
+	if (env->forward)
+		forward(env, moveSpeed);
+	if (env->back)
+		back(env, moveSpeed);
+	if (env->right)
+		turn_right(env, rotSpeed);
+	if (env->left)
+		turn_left(env, rotSpeed);
 	raycaster(env);
 	return (0);
 }
@@ -134,15 +133,14 @@ int main(int ac, char **argv)
 	env.dirY = 0.0;
 	env.planeX = 0.0;
 	env.planeY = 0.66;
-	get_map(env.worldMap, argv[1]);
-	while (42)
-	{
-		mlx_key_hook(env.win, ft_key_hook, &env);
-		mlx_mouse_hook(env.win, ft_mouse_hook, &env);
+	get_map(&env.worldMap, argv[1]);
 		mlx_expose_hook(env.win, raycaster, &env);
-
+		mlx_do_key_autorepeatoff(env.ptr);
+		mlx_hook(env.win, KeyPress, KeyPressMask, ft_key_press, &env);
+		mlx_hook(env.win, KeyRelease, KeyReleaseMask, ft_key_release, &env);
+		mlx_mouse_hook(env.win, ft_mouse_hook, &env);
+		mlx_loop_hook(env.ptr, ft_key_hook, &env);
 		mlx_loop(env.ptr);
-	}
 	return (0);
 }
 		

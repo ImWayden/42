@@ -14,6 +14,7 @@
 # define FDF_H
 
 # include <mlx.h>
+# include </usr/X11/include/X11/X.h>
 # include <math.h>
 # include <fcntl.h>
 # include "libft.h"
@@ -30,6 +31,10 @@
 # define screenHeight	384
 # define mapWidth 		24
 # define mapHeight 		24
+# define UP				65362
+# define DOWN			65364
+# define LEFT			65361
+# define RIGHT			65363
 
 typedef	struct	s_env
 {
@@ -71,9 +76,19 @@ typedef	struct	s_env
 	int			texNum;
 	int			mapX;
 	int			mapY;
+
+	int			back;
+	int			forward;
+	int			left;
+	int			right;
 }				t_env;
 
 int					raycaster(t_env *env);
-void			draw(t_env *env, int x);
+
+int					back(t_env *env, double moveSpeed);
+int					forward(t_env *env, double moveSpeed);
+int 				turn_right(t_env *env, double rotSpeed);
+int 				turn_left(t_env *env, double rotSpeed);
+void				draw(t_env *env, int x);
 
 #endif

@@ -18,7 +18,7 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 
-SRC = $(SDIR)main.c $(SDIR)draw.c $(SDIR)raycaster.c\
+SRC = $(SDIR)main.c $(SDIR)draw.c $(SDIR)moove.c $(SDIR)raycaster.c\
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes
