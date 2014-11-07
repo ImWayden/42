@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 11:41:52 by msarr             #+#    #+#             */
-/*   Updated: 2014/11/04 11:41:56 by msarr            ###   ########.fr       */
+/*   Updated: 2014/11/06 21:42:06 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,29 @@ typedef	struct	s_env
 	int			**worldMap;
 	int			time;
 	int			oldTime;
+	double		cameraX;    
+	double		rayPosX;
+	double		rayPosY;
+	double		rayDirX;
+	double		rayDirY;
+	double		sideDistX;
+	double		sideDistY;
+	double		deltaDistX;
+	double		deltaDistY;
+	double		perpWallDist;
+	int			stepX;
+	int			stepY;
+	int			hit;
+	int			side;
+	int			lineHeight;
+	int			drawStart;
+	int			drawEnd;
+	int			texNum;
+	int			mapX;
+	int			mapY;
 }				t_env;
 
 int					raycaster(t_env *env);
+void			draw(t_env *env, int x);
 
 #endif

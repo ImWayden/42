@@ -6,128 +6,103 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 12:20:01 by msarr             #+#    #+#             */
-/*   Updated: 2014/11/04 12:20:03 by msarr            ###   ########.fr       */
+/*   Updated: 2014/11/06 21:44:13 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Wolf.h"
 
+void				ray_init(t_env *env)
+{
+	env->rayPosX = env->posX;
+	env->rayPosY = env->posY;
+	env->rayDirX = env->dirX + env->planeX * env->cameraX;
+	env->rayDirY = env->dirY + env->planeY * env->cameraX;
+	env->mapX = (int)env->rayPosX;
+	env->mapY = (int)env->rayPosY;
+	env->deltaDistX = sqrt(1 + (env->rayDirY * env->rayDirY) /
+		(env->rayDirX * env->rayDirX));
+	env->deltaDistY = sqrt(1 + (env->rayDirX * env->rayDirX) /
+		(env->rayDirY * env->rayDirY));
+}
+
+void				ray_hit(t_env *env)
+{
+	int 			hit;
+
+	hit = 0;
+	while (hit == 0)
+	{
+		if (env->sideDistX < env->sideDistY)
+		{
+			env->sideDistX += env->deltaDistX;
+			env->mapX += env->stepX;
+			env->side = 0;
+		}
+		else
+		{
+			env->sideDistY += env->deltaDistY;
+			env->mapY += env->stepY;
+			env->side = 1;
+		}
+		if (env->worldMap[env->mapX][env->mapY] > 0)
+			hit = 1;
+	}
+}
+
+void				ray_draw_coord(t_env *env)
+{
+	if (env->side == 0)
+		env->perpWallDist = fabs((env->mapX - env->rayPosX + (1 - env->stepX) / 2) / env->rayDirX);
+	else
+		env->perpWallDist = fabs((env->mapY - env->rayPosY + (1 - env->stepY) / 2) / env->rayDirY);
+	env->lineHeight = abs((int )(screenHeight/ env->perpWallDist));
+	env->drawStart = -env->lineHeight / 2 + screenHeight/ 2;
+	if (env->drawStart < 0)
+		env->drawStart = 0;
+	env->drawEnd = env->lineHeight / 2 + screenHeight/ 2;
+	if (env->drawEnd >= screenHeight)
+		env->drawEnd = screenHeight- 1;
+}
+
+void				ray_dir(t_env *env)
+{
+	if (env->rayDirX < 0)
+	{
+		env->stepX = -1;
+		env->sideDistX = (env->rayPosX - env->mapX) * env->deltaDistX;
+	}
+	else
+	{
+		env->stepX = 1;
+		env->sideDistX = (env->mapX + 1.0 - env->rayPosX) * env->deltaDistX;
+	}
+	if (env->rayDirY < 0)
+	{
+		env->stepY = -1;
+		env->sideDistY = (env->rayPosY - env->mapY) * env->deltaDistY;
+	}
+	else
+	{
+		env->stepY = 1;
+		env->sideDistY = (env->mapY + 1.0 - env->rayPosY) * env->deltaDistY;
+	}
+}
+
 int					raycaster(t_env *env)
 {
-	double cameraX;    
-	double rayPosX;
-	double rayPosY;
-	double rayDirX;
-	double rayDirY;
-	double sideDistX;
-	double sideDistY;
-	double deltaDistX;
-	double deltaDistY;
-	double perpWallDist;
-	int stepX;
-	int stepY;
-	int hit = 0;
-	int side;
-	int lineHeight;
-	int drawStart;
-	int drawEnd;
-	int texNum;
-	int mapX;
-	int mapY;
 	int x;
-	int y;
 	int w;
-	int h;
-	int color;
 
-	
 	w = screenWidth;
-	h = screenHeight;
 	for(x = 0; x < w; x++)
 	{
-		cameraX = 2 * x / (double)(w) - 1;    
-		rayPosX = env->posX;
-		rayPosY = env->posY;
-		rayDirX = env->dirX + env->planeX * cameraX;
-		rayDirY = env->dirY + env->planeY * cameraX;
-		mapX = (int)rayPosX;
-		mapY = (int)rayPosY;
-		deltaDistX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX));
-		deltaDistY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY));
-		if (rayDirX < 0)
-		{
-			stepX = -1;
-			sideDistX = (rayPosX - mapX) * deltaDistX;
-		}
-		else
-		{
-			stepX = 1;
-			sideDistX = (mapX + 1.0 - rayPosX) * deltaDistX;
-		}
-		if (rayDirY < 0)
-		{
-			stepY = -1;
-			sideDistY = (rayPosY - mapY) * deltaDistY;
-		}
-		else
-		{
-			stepY = 1;
-			sideDistY = (mapY + 1.0 - rayPosY) * deltaDistY;
-		}
-		hit = 0;
-		while (hit == 0)
-		{
-			if (sideDistX < sideDistY)
-			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
-				side = 0;
-			}
-			else
-			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
-				side = 1;
-			}
-			if (env->worldMap[mapX][mapY] > 0)
-				hit = 1;
-		}
-		if (side == 0)
-			perpWallDist = fabs((mapX - rayPosX + (1 - stepX) / 2) / rayDirX);
-		else
-			perpWallDist = fabs((mapY - rayPosY + (1 - stepY) / 2) / rayDirY);
-		lineHeight = abs((int )(h / perpWallDist));
-		drawStart = -lineHeight / 2 + h / 2;
-		if (drawStart < 0)
-			drawStart = 0;
-		drawEnd = lineHeight / 2 + h / 2;
-		if (drawEnd >= h)
-			drawEnd = h - 1;
-		if ((texNum = env->worldMap[mapX][mapY]) >= 0)
-		{
-			color = env->texture[texNum];
-			if (side == 1)
-				color = color >> 1;
-			int in;
-			for (y = 0; y < h; y++)
-			{
-				
-				if (y >= drawStart && y < drawEnd)
-				{
-					in = (env->bpp >> 3) * ((y * (env->sizel >> 2)) + x);
-					env->data[in] = color & 0xff;
-					env->data[in + 1] = (color & 0xff00) >> 8;
-					env->data[in + 2] = (color & 0xff0000) >> 16;
-				}
-				else
-				{
-					in = (env->bpp >> 3) * ((y * (env->sizel >> 2)) + x);
-					env->data[in] = WHITE_2 & 0xff;
-					env->data[in + 1] = (WHITE_2 & 0xff00) >> 8;
-					env->data[in + 2] = (WHITE_2 & 0xff0000) >> 16;
-				}
-			}
-		}
+		env->cameraX = 2 * x / (double)(w) - 1;
+		ray_init(env);   
+		ray_dir(env);	
+		ray_hit(env);	
+		ray_draw_coord(env);
+		draw(env, x);
 	}
 	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
 	return (1);

@@ -6,7 +6,7 @@
 #    By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/22 14:52:23 by sraccah           #+#    #+#              #
-#    Updated: 2014/10/10 23:48:25 by msarr            ###   ########.fr        #
+#    Updated: 2014/11/06 21:44:36 by msarr            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,13 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 
-SRC = $(SDIR)main.c $(SDIR)raycaster.c\
+SRC = $(SDIR)main.c $(SDIR)draw.c $(SDIR)raycaster.c\
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes
 LIB = ./libft/libft.a
 DIR_LIBS = /opt/X11/lib
-LDFLAGS += -L$(DIR_LIBS) -lmlx -lXext -lX11
+LDFLAGS += -L$(DIR_LIBS) -lmlx -lXext -lX11 -lm
 CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
