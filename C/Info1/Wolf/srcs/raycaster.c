@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 12:20:01 by msarr             #+#    #+#             */
-/*   Updated: 2014/11/06 21:44:13 by msarr            ###   ########.fr       */
+/*   Updated: 2014/11/09 02:17:54 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,6 @@ int					raycaster(t_env *env)
 		ray_draw_coord(env);
 		draw(env, x);
 	}
-	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
+	mlx_put_image_to_window(env->ptr, env->win, env->img[10]->img, 0, 0);
 	return (1);
 }

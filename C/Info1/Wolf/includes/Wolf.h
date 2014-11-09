@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 11:41:52 by msarr             #+#    #+#             */
-/*   Updated: 2014/11/06 21:42:06 by msarr            ###   ########.fr       */
+/*   Updated: 2014/11/09 02:32:08 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define FDF_H
 
 # include <mlx.h>
-# include </usr/X11/include/X11/X.h>
+//# include </etc/X11/include/X11/X.h>
+#include <X11/Xlib.h>
 # include <math.h>
 # include <fcntl.h>
 # include "libft.h"
@@ -36,23 +37,26 @@
 # define LEFT			65361
 # define RIGHT			65363
 
-typedef	struct	s_env
+typedef struct s_img
 {
-	void		*ptr;
-	void		*win;
 	void		*img;
 	char		*data;
 	int			sizel;
 	int			endian;
 	int			bpp;
+}				t_img;
 
+typedef	struct	s_env
+{
+	void		*ptr;
+	void		*win;
+	t_img		*img[11];
 	double		posX;
 	double		posY;
 	double		dirX;
 	double		dirY;
 	double		planeX;
 	double		planeY;
-	int			texture[8];
 	int			**worldMap;
 	int			time;
 	int			oldTime;
