@@ -82,11 +82,11 @@ int					ft_key_hook(t_env *env)
 	
 	if (env->forward)
 		forward(env, moveSpeed);
-	if (env->back)
+	else if (env->back)
 		back(env, moveSpeed);
-	if (env->right)
+	else if (env->right)
 		turn_right(env, rotSpeed);
-	if (env->left)
+	else if (env->left)
 		turn_left(env, rotSpeed);
 	raycaster(env);
 	return (0);
@@ -117,25 +117,40 @@ int		ft_create_img(t_env *env)
 	return (1);
 }
 
+void		ft_init(t_env *env)
+{
+	env->posX = 22;
+	env->posY = 11.5;
+	env->dirX = -1.0;
+	env->dirY = 0.0;
+	env->planeX = 0.0;
+	env->planeY = 0.66;
+	env->forward = 0;
+	env->back = 0;
+	env->left = 0;
+	env->right = 0;
+}
+
 int 		ft_get_tex(t_env *env)
 {
 	t_img *img;
 	int i;
-	char	*tab[4];
+	char	*tab[9];
 	int			x2;
 	int			y2;
 
 	tab[0] = "map/SKY4.xpm";
-	tab[1] = "map/Brownweave1.xpm";
-	tab[2] = "map/Brownweave2.xpm";
-	//tab[3] = "map/wall1.xpm";
-	/*tab[4] = "map/wall4.xpm";
-	tab[5] = "map/Rocky.xpm";
-	tab[6] = "map/tomb.xpm";
-	tab[7] = "map/wall2.xpm";
-	tab[8] = "map/wall5.xpm";*/
+	tab[1] = "map/colorstone.xpm";
+	tab[2] = "map/bluestone.xpm";
+	tab[3] = "map/greystone.xpm";
+	tab[4] = "map/redbrick.xpm";
+	tab[5] = "map/wood.xpm";
+	tab[6] = "map/pillar.xpm";
+	tab[7] = "map/mossy.xpm";
+	tab[8] = "map/eagle.xpm";
+	tab[9] = "map/Rocky.xpm";
 	i = 0;
-	while (i < 3)
+	while (i < 10)
 	{
 		x2 = 0;
 		y2 = 0;
@@ -163,32 +178,16 @@ int main(int ac, char **argv)
 	if ((env.win = mlx_new_window(env.ptr, screenWidth,screenHeight, "Raycaster")) == NULL)
 			return (0);
 	ft_create_img(&env);
-	ft_putendl("img ok");
 	ft_get_tex(&env);
-	ft_putendl("texture ok");
-	ft_putendl("texture ok");
-	env.posX = 22;
-	ft_putendl("texture 1");
-	env.posY = 11.5;
-	ft_putendl("texture 2");
-	env.dirX = -1.0;
-	ft_putendl("texture 3");
-	env.dirY = 0.0;
-	ft_putendl("texture 4");
-	env.planeX = 0.0;
-	ft_putendl("texture 5");
-	env.planeY = 0.66;
-	ft_putendl("texture 6");
-	ft_putendl("get_start");		
-	get_map(&env.worldMap, argv[1]);
-	ft_putendl("get");		
+	ft_init(&env);
+	get_map(&env.worldMap, argv[1]);	
 	mlx_expose_hook(env.win, raycaster, &env);
-		mlx_do_key_autorepeatoff(env.ptr);
-		mlx_hook(env.win, KeyPress, KeyPressMask, ft_key_press, &env);
-		mlx_hook(env.win, KeyRelease, KeyReleaseMask, ft_key_release, &env);
-		mlx_mouse_hook(env.win, ft_mouse_hook, &env);
-		mlx_loop_hook(env.ptr, ft_key_hook, &env);
-		mlx_loop(env.ptr);
+	mlx_do_key_autorepeatoff(env.ptr);
+	mlx_hook(env.win, KeyPress, KeyPressMask, ft_key_press, &env);
+	mlx_hook(env.win, KeyRelease, KeyReleaseMask, ft_key_release, &env);
+	mlx_mouse_hook(env.win, ft_mouse_hook, &env);
+	mlx_loop_hook(env.ptr, ft_key_hook, &env);
+	mlx_loop(env.ptr);
 	return (0);
 }
 		

@@ -14,8 +14,8 @@
 # define FDF_H
 
 # include <mlx.h>
-//# include </etc/X11/include/X11/X.h>
-#include <X11/Xlib.h>
+# include </usr/X11/include/X11/X.h>
+//#include <X11/Xlib.h>
 # include <math.h>
 # include <fcntl.h>
 # include "libft.h"
@@ -77,7 +77,6 @@ typedef	struct	s_env
 	int			lineHeight;
 	int			drawStart;
 	int			drawEnd;
-	int			texNum;
 	int			mapX;
 	int			mapY;
 
@@ -85,6 +84,11 @@ typedef	struct	s_env
 	int			forward;
 	int			left;
 	int			right;
+
+	double		wallX;
+	int			texX;
+	int			texY;
+	int 		texNum;
 }				t_env;
 
 int					raycaster(t_env *env);
