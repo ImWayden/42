@@ -10,12 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#ifndef WOLF_H
+# define WOLF_H
 
 # include <mlx.h>
 # include </usr/X11/include/X11/X.h>
-//#include <X11/Xlib.h>
 # include <math.h>
 # include <fcntl.h>
 # include "libft.h"
@@ -28,10 +27,10 @@
 # define PURPLE_2   	0x330000
 # define CYAN_2      	0x00FFFF
 # define GREY_2			0x808080
-# define screenWidth 	512
-# define screenHeight	384
-# define mapWidth 		24
-# define mapHeight 		24
+# define SCREENWIDTH 	512
+# define SCREENHEIGHT	384
+# define MAPWIDTH		24
+# define MAPHEIGHT 		24
 # define UP				65362
 # define DOWN			65364
 # define LEFT			65361
@@ -51,52 +50,69 @@ typedef	struct	s_env
 	void		*ptr;
 	void		*win;
 	t_img		*img[11];
-	double		posX;
-	double		posY;
-	double		dirX;
-	double		dirY;
-	double		planeX;
-	double		planeY;
-	int			**worldMap;
+	double		posx;
+	double		posy;
+	double		dirx;
+	double		diry;
+	double		planex;
+	double		planey;
+	int			**worldmap;
 	int			time;
 	int			oldTime;
-	double		cameraX;    
-	double		rayPosX;
-	double		rayPosY;
-	double		rayDirX;
-	double		rayDirY;
-	double		sideDistX;
-	double		sideDistY;
-	double		deltaDistX;
-	double		deltaDistY;
-	double		perpWallDist;
-	int			stepX;
-	int			stepY;
+	double		camerax;    
+	double		rayposx;
+	double		rayposy;
+	double		raydirx;
+	double		raydiry;
+	double		sidedistx;
+	double		sidedisty;
+	double		deltadistx;
+	double		deltadisty;
+	double		perpwalldist;
+	int			stepx;
+	int			stepy;
 	int			hit;
 	int			side;
-	int			lineHeight;
-	int			drawStart;
-	int			drawEnd;
-	int			mapX;
-	int			mapY;
+	int			lineheight;
+	int			drawstart;
+	int			drawend;
+	int			mapx;
+	int			mapy;
 
 	int			back;
 	int			forward;
 	int			left;
 	int			right;
 
-	double		wallX;
-	int			texX;
-	int			texY;
-	int 		texNum;
+	double		wallx;
+	int			texx;
+	int			texy;
+	int 		texnum;
+
+	double		floorxwall;
+	double		floorywall;
+	double		distwall;
+	double		distplayer;
+	double		currentdist;
+	double		weight;
+	double 		currentfloorx;
+	double 		currentfloory;
+	int 		floortexx;
+	int 		floortexy;
 }				t_env;
 
 int					raycaster(t_env *env);
-
 int					back(t_env *env, double moveSpeed);
 int					forward(t_env *env, double moveSpeed);
 int 				turn_right(t_env *env, double rotSpeed);
 int 				turn_left(t_env *env, double rotSpeed);
+int					ft_key_hook(t_env *env);
+int					ft_key_release(int keycode, t_env *env);
+int					ft_key_press(int keycode, t_env *env);
+int					get_map(int ***tab, char *file);
+void				drawing_floor(t_env *env, int x, int z);
+void				drawing_sky(t_env *env, int x, int z);
+int 				ft_get_tex(t_env *env);
 void				draw(t_env *env, int x);
 
 #endif

@@ -14,38 +14,38 @@
 
 void				ray_init(t_env *env)
 {
-	env->rayPosX = env->posX;
-	env->rayPosY = env->posY;
-	env->rayDirX = env->dirX + env->planeX * env->cameraX;
-	env->rayDirY = env->dirY + env->planeY * env->cameraX;
-	env->mapX = (int)env->rayPosX;
-	env->mapY = (int)env->rayPosY;
-	env->deltaDistX = sqrt(1 + (env->rayDirY * env->rayDirY) /
-		(env->rayDirX * env->rayDirX));
-	env->deltaDistY = sqrt(1 + (env->rayDirX * env->rayDirX) /
-		(env->rayDirY * env->rayDirY));
+	env->rayposx = env->posx;
+	env->rayposy = env->posy;
+	env->raydirx = env->dirx + env->planex * env->camerax;
+	env->raydiry = env->diry + env->planey * env->camerax;
+	env->mapx = (int)env->rayposx;
+	env->mapy = (int)env->rayposy;
+	env->deltadistx = sqrt(1 + (env->raydiry * env->raydiry) /
+		(env->raydirx * env->raydirx));
+	env->deltadisty = sqrt(1 + (env->raydirx * env->raydirx) /
+		(env->raydiry * env->raydiry));
 }
 
 void				ray_hit(t_env *env)
 {
-	int 			hit;
+	int				hit;
 
 	hit = 0;
 	while (hit == 0)
 	{
-		if (env->sideDistX < env->sideDistY)
+		if (env->sidedistx < env->sidedisty)
 		{
-			env->sideDistX += env->deltaDistX;
-			env->mapX += env->stepX;
+			env->sidedistx += env->deltadistx;
+			env->mapx += env->stepx;
 			env->side = 0;
 		}
 		else
 		{
-			env->sideDistY += env->deltaDistY;
-			env->mapY += env->stepY;
+			env->sidedisty += env->deltadisty;
+			env->mapy += env->stepy;
 			env->side = 1;
 		}
-		if (env->worldMap[env->mapX][env->mapY] > 0)
+		if (env->worldmap[env->mapx][env->mapy] > 0)
 			hit = 1;
 	}
 }
@@ -53,56 +53,60 @@ void				ray_hit(t_env *env)
 void				ray_draw_coord(t_env *env)
 {
 	if (env->side == 0)
-		env->perpWallDist = fabs((env->mapX - env->rayPosX + (1 - env->stepX) / 2) / env->rayDirX);
+		env->perpwalldist = fabs((env->mapx - env->rayposx
+			+ (1 - env->stepx) / 2) / env->raydirx);
 	else
-		env->perpWallDist = fabs((env->mapY - env->rayPosY + (1 - env->stepY) / 2) / env->rayDirY);
-	env->lineHeight = abs((int )(screenHeight/ env->perpWallDist));
-	env->drawStart = -env->lineHeight / 2 + screenHeight/ 2;
-	if (env->drawStart < 0)
-		env->drawStart = 0;
-	env->drawEnd = env->lineHeight / 2 + screenHeight/ 2;
-	if (env->drawEnd >= screenHeight)
-		env->drawEnd = screenHeight- 1;
+		env->perpwalldist = fabs((env->mapy - env->rayposy
+			+ (1 - env->stepy) / 2) / env->raydiry);
+	env->lineheight = abs((int)(SCREENHEIGHT / env->perpwalldist));
+	env->drawstart = -env->lineheight / 2 + SCREENHEIGHT / 2;
+	if (env->drawstart < 0)
+		env->drawstart = 0;
+	env->drawend = env->lineheight / 2 + SCREENHEIGHT / 2;
+	if (env->drawend >= SCREENHEIGHT)
+		env->drawend = SCREENHEIGHT - 1;
 }
 
 void				ray_dir(t_env *env)
 {
-	if (env->rayDirX < 0)
+	if (env->raydirx < 0)
 	{
-		env->stepX = -1;
-		env->sideDistX = (env->rayPosX - env->mapX) * env->deltaDistX;
+		env->stepx = -1;
+		env->sidedistx = (env->rayposx - env->mapx) * env->deltadistx;
 	}
 	else
 	{
-		env->stepX = 1;
-		env->sideDistX = (env->mapX + 1.0 - env->rayPosX) * env->deltaDistX;
+		env->stepx = 1;
+		env->sidedistx = (env->mapx + 1.0 - env->rayposx) * env->deltadistx;
 	}
-	if (env->rayDirY < 0)
+	if (env->raydiry < 0)
 	{
-		env->stepY = -1;
-		env->sideDistY = (env->rayPosY - env->mapY) * env->deltaDistY;
+		env->stepy = -1;
+		env->sidedisty = (env->rayposy - env->mapy) * env->deltadisty;
 	}
 	else
 	{
-		env->stepY = 1;
-		env->sideDistY = (env->mapY + 1.0 - env->rayPosY) * env->deltaDistY;
+		env->stepy = 1;
+		env->sidedisty = (env->mapy + 1.0 - env->rayposy) * env->deltadisty;
 	}
 }
 
 int					raycaster(t_env *env)
 {
-	int x;
-	int w;
+	int				x;
+	int				w;
 
-	w = screenWidth;
-	for(x = 0; x < w; x++)
+	w = SCREENWIDTH;
+	x = 0;
+	while (x < w)
 	{
-		env->cameraX = 2 * x / (double)(w) - 1;
-		ray_init(env);   
-		ray_dir(env);	
-		ray_hit(env);	
+		env->camerax = 2 * x / (double)(w) - 1;
+		ray_init(env);
+		ray_dir(env);
+		ray_hit(env);
 		ray_draw_coord(env);
 		draw(env, x);
+		x++;
 	}
 	mlx_put_image_to_window(env->ptr, env->win, env->img[10]->img, 0, 0);
 	return (1);

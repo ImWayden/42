@@ -12,62 +12,62 @@
 
 #include "Wolf.h"
 
-int			forward(t_env *env, double moveSpeed)
+int				forward(t_env *env, double movespeed)
 {
-	int  	i;
-	int  	j;
+	int			i;
+	int			j;
 
-	i = (int)(env->posX + env->dirX * moveSpeed);
-	j = (int)env->posY;
-	if (!env->worldMap[i][j])
-		env->posX += env->dirX * moveSpeed;
-	i = (int)(env->posX);
-	j = (int)(env->posY + env->dirY * moveSpeed);
-	if (!env->worldMap[i][j])
-		env->posY += env->dirY * moveSpeed;
+	i = (int)(env->posx + env->dirx * movespeed);
+	j = (int)env->posy;
+	if (!env->worldmap[i][j])
+		env->posx += env->dirx * movespeed;
+	i = (int)(env->posx);
+	j = (int)(env->posy + env->diry * movespeed);
+	if (!env->worldmap[i][j])
+		env->posy += env->diry * movespeed;
 	return (1);
 }
 
-int			back(t_env *env, double moveSpeed)
+int				back(t_env *env, double movespeed)
 {
-	int  	i;
-	int  	j;
+	int			i;
+	int			j;
 
-	i = (int)(env->posX - env->dirX * moveSpeed);
-	j = (int)env->posY;
-	if (!env->worldMap[i][j])
-		env->posX -= env->dirX * moveSpeed;
-	i = (int)(env->posX);
-	j = (int)(env->posY - env->dirY * moveSpeed);
-	if (!env->worldMap[i][j])
-		env->posY -= env->dirY * moveSpeed;
+	i = (int)(env->posx - env->dirx * movespeed);
+	j = (int)env->posy;
+	if (!env->worldmap[i][j])
+		env->posx -= env->dirx * movespeed;
+	i = (int)(env->posx);
+	j = (int)(env->posy - env->diry * movespeed);
+	if (!env->worldmap[i][j])
+		env->posy -= env->diry * movespeed;
 	return (1);
 }
 
-int 			turn_right(t_env *env, double rotSpeed)
+int				turn_right(t_env *env, double rotspeed)
 {
-	double		oldDirX;
-	double		oldPlaneX;
+	double		olddirx;
+	double		oldplanex;
 
-	oldDirX = env->dirX;
-	env->dirX = env->dirX * cos(-rotSpeed) - env->dirY * sin(-rotSpeed);
-	env->dirY = oldDirX * sin(-rotSpeed) + env->dirY * cos(-rotSpeed);
-	oldPlaneX = env->planeX;
-	env->planeX = env->planeX * cos(-rotSpeed) - env->planeY * sin(-rotSpeed);
-	env->planeY = oldPlaneX * sin(-rotSpeed) + env->planeY * cos(-rotSpeed);
+	olddirx = env->dirx;
+	env->dirx = env->dirx * cos(-rotspeed) - env->diry * sin(-rotspeed);
+	env->diry = olddirx * sin(-rotspeed) + env->diry * cos(-rotspeed);
+	oldplanex = env->planex;
+	env->planex = env->planex * cos(-rotspeed) - env->planey * sin(-rotspeed);
+	env->planey = oldplanex * sin(-rotspeed) + env->planey * cos(-rotspeed);
 	return (1);
 }
 
-int 			turn_left(t_env *env, double rotSpeed)
+int				turn_left(t_env *env, double rotspeed)
 {
-	double		oldDirX;
-	double		oldPlaneX;
+	double		olddirx;
+	double		oldplanex;
 
-	oldDirX = env->dirX;
-	env->dirX = env->dirX * cos(rotSpeed) - env->dirY * sin(rotSpeed);
-	env->dirY = oldDirX * sin(rotSpeed) + env->dirY * cos(rotSpeed);
-	oldPlaneX = env->planeX;
-	env->planeX = env->planeX * cos(rotSpeed) - env->planeY * sin(rotSpeed);
-	env->planeY = oldPlaneX * sin(rotSpeed) + env->planeY * cos(rotSpeed);
+	olddirx = env->dirx;
+	env->dirx = env->dirx * cos(rotspeed) - env->diry * sin(rotspeed);
+	env->diry = olddirx * sin(rotspeed) + env->diry * cos(rotspeed);
+	oldplanex = env->planex;
+	env->planex = env->planex * cos(rotspeed) - env->planey * sin(rotspeed);
+	env->planey = oldplanex * sin(rotspeed) + env->planey * cos(rotspeed);
 	return (1);
-}		
+}
