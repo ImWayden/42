@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Wolf.h"
+#include "wolf.h"
 
 int				forward(t_env *env, double movespeed)
 {

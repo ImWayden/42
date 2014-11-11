@@ -10,21 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Wolf.h"
+#include "wolf.h"
 
 void			floor_calcul(t_env *env)
 {
-	if(env->side == 0 && env->raydirx > 0)
+	if (env->side == 0 && env->raydirx > 0)
 	{
 		env->floorxwall = env->mapx;
 		env->floorywall = env->mapy + env->wallx;
 	}
-	else if(env->side == 0 && env->raydirx < 0)
+	else if (env->side == 0 && env->raydirx < 0)
 	{
 		env->floorxwall = env->mapx + 1.0;
 		env->floorywall = env->mapy + env->wallx;
 	}
-	else if(env->side == 1 && env->raydiry > 0)
+	else if (env->side == 1 && env->raydiry > 0)
 	{
 		env->floorxwall = env->mapx + env->wallx;
 		env->floorywall = env->mapy;
@@ -33,26 +33,30 @@ void			floor_calcul(t_env *env)
 	{
 		env->floorxwall = env->mapx + env->wallx;
 		env->floorywall = env->mapy + 1.0;
-	} 
+	}
 	env->distwall = env->perpwalldist;
 	env->distplayer = 0.0;
+	if (env->drawend < 0)
+		env->drawend = SCREENHEIGHT;
 }
 
 void			drawing_floor(t_env *env, int x, int z)
 {
-	int 		in;
-	int 		in1;
-	int 		y;
-	
+	int			in;
+	int			in1;
+	int			y;
+
 	floor_calcul(env);
-	if (env->drawend < 0)
-		env->drawend = SCREENHEIGHT;
-	for(y = env->drawend + 1; y < SCREENHEIGHT; y++)
+	y = env->drawend;
+	while (++y < SCREENHEIGHT)
 	{
 		env->currentdist = SCREENHEIGHT / (2.0 * y - SCREENHEIGHT);
-		env->weight = (env->currentdist - env->distplayer) / (env->distwall - env->distplayer);
-		env->currentfloorx = env->weight * env->floorxwall + (1.0 - env->weight) * env->posx;
-		env->currentfloory = env->weight * env->floorywall + (1.0 - env->weight) * env->posy;
+		env->weight = (env->currentdist - env->distplayer)
+			/ (env->distwall - env->distplayer);
+		env->currentfloorx = env->weight * env->floorxwall
+			+ (1.0 - env->weight) * env->posx;
+		env->currentfloory = env->weight * env->floorywall
+			+ (1.0 - env->weight) * env->posy;
 		env->floortexx = (int)(env->currentfloorx * 64) % 64;
 		env->floortexy = (int)(env->currentfloory * 64) % 64;
 		in1 = (env->img[z]->bpp >> 3)

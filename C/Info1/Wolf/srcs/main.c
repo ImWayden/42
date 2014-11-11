@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Wolf.h"
+#include "wolf.h"
 
 int				ft_mouse_hook(int button, int x, int y)
 {
@@ -61,9 +61,9 @@ int				main(int ac, char **argv)
 		return (0);
 	if ((env.ptr = mlx_init()) == NULL)
 		return (0);
-	if ((env.win = mlx_new_window(env.ptr, SCREENWIDTH,SCREENHEIGHT
+	if ((env.win = mlx_new_window(env.ptr, SCREENWIDTH, SCREENHEIGHT
 		, "Raycaster")) == NULL)
-			return (0);
+		return (0);
 	ft_create_img(&env);
 	ft_get_tex(&env);
 	ft_init(&env);

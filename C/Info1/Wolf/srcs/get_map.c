@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Wolf.h"
+#include "wolf.h"
 
-static int 		ft_open(char *str)
+static int		ft_open(char *str)
 {
-	int 	fd;
+	int			fd;
 
 	fd = open(str, O_RDONLY);
 	if (fd == -1)
@@ -36,12 +36,12 @@ static int		ft_malloc(int ***tab)
 	return (0);
 }
 
-static int 	ft_getfile(int fd, int **tab)
+static int		ft_getfile(int fd, int **tab)
 {
-	int 	i;
-	int 	j;
-	char	*s;
-	char	*tmp;
+	int			i;
+	int			j;
+	char		*s;
+	char		*tmp;
 
 	i = 0;
 	while (get_next_line(fd, &s) && i < 24)
@@ -64,12 +64,12 @@ static int 	ft_getfile(int fd, int **tab)
 	return (0);
 }
 
-int			get_map(int ***tab, char *file)
+int				get_map(int ***tab, char *file)
 {
-	int 	fd;
+	int			fd;
 
 	fd = ft_open(file);
 	ft_malloc(tab);
 	ft_getfile(fd, *tab);
-    return (0);
+	return (0);
 }

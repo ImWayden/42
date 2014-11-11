@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Wolf.h"
+#include "wolf.h"
 
 static void		tex(char **tab)
 {
@@ -26,7 +26,7 @@ static void		tex(char **tab)
 	tab[9] = "map/Rocky.xpm";
 }
 
-int 			ft_get_tex(t_env *env)
+int				ft_get_tex(t_env *env)
 {
 	t_img		*img;
 	int			i;

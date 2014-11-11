@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Wolf.h"
+#include "wolf.h"
 
-int				ft_key_press(int keycode, t_env *env)
+int					ft_key_press(int keycode, t_env *env)
 {
 	ft_putstr("key : ");
 	ft_putnbr(keycode);
@@ -35,7 +35,7 @@ int					ft_key_release(int keycode, t_env *env)
 	if (keycode == UP)
 		env->forward = 0;
 	if (keycode == DOWN)
-		env->back= 0;
+		env->back = 0;
 	if (keycode == LEFT)
 		env->left = 0;
 	if (keycode == RIGHT)
@@ -46,10 +46,10 @@ int					ft_key_release(int keycode, t_env *env)
 }
 
 int					ft_key_hook(t_env *env)
-{		
+{
 	static double	movespeed = 0.005;
 	static double	rotspeed = 0.005;
-	
+
 	if (env->forward)
 		forward(env, movespeed);
 	else if (env->back)

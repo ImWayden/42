@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Wolf.h                                             :+:      :+:    :+:   */
+/*   wolf.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -36,83 +36,82 @@
 # define LEFT			65361
 # define RIGHT			65363
 
-typedef struct s_img
+typedef struct			s_img
 {
-	void		*img;
-	char		*data;
-	int			sizel;
-	int			endian;
-	int			bpp;
-}				t_img;
+	void				*img;
+	char				*data;
+	int					sizel;
+	int					endian;
+	int					bpp;
+}						t_img;
 
-typedef	struct	s_env
+typedef	struct			s_env
 {
-	void		*ptr;
-	void		*win;
-	t_img		*img[11];
-	double		posx;
-	double		posy;
-	double		dirx;
-	double		diry;
-	double		planex;
-	double		planey;
-	int			**worldmap;
-	int			time;
-	int			oldTime;
-	double		camerax;    
-	double		rayposx;
-	double		rayposy;
-	double		raydirx;
-	double		raydiry;
-	double		sidedistx;
-	double		sidedisty;
-	double		deltadistx;
-	double		deltadisty;
-	double		perpwalldist;
-	int			stepx;
-	int			stepy;
-	int			hit;
-	int			side;
-	int			lineheight;
-	int			drawstart;
-	int			drawend;
-	int			mapx;
-	int			mapy;
+	void				*ptr;
+	void				*win;
+	t_img				*img[11];
+	double				posx;
+	double				posy;
+	double				dirx;
+	double				diry;
+	double				planex;
+	double				planey;
+	int					**worldmap;
+	int					time;
+	double				camerax;
+	double				rayposx;
+	double				rayposy;
+	double				raydirx;
+	double				raydiry;
+	double				sidedistx;
+	double				sidedisty;
+	double				deltadistx;
+	double				deltadisty;
+	double				perpwalldist;
+	int					stepx;
+	int					stepy;
+	int					hit;
+	int					side;
+	int					lineheight;
+	int					drawstart;
+	int					drawend;
+	int					mapx;
+	int					mapy;
 
-	int			back;
-	int			forward;
-	int			left;
-	int			right;
+	int					back;
+	int					forward;
+	int					left;
+	int					right;
 
-	double		wallx;
-	int			texx;
-	int			texy;
-	int 		texnum;
+	double				wallx;
+	int					texx;
+	int					texy;
+	int					texnum;
 
-	double		floorxwall;
-	double		floorywall;
-	double		distwall;
-	double		distplayer;
-	double		currentdist;
-	double		weight;
-	double 		currentfloorx;
-	double 		currentfloory;
-	int 		floortexx;
-	int 		floortexy;
-}				t_env;
+	double				floorxwall;
+	double				floorywall;
+	double				distwall;
+	double				distplayer;
+	double				currentdist;
+	double				weight;
+	double				currentfloorx;
+	double				currentfloory;
+	int					floortexx;
+	int					floortexy;
+}						t_env;
 
-int					raycaster(t_env *env);
-int					back(t_env *env, double moveSpeed);
-int					forward(t_env *env, double moveSpeed);
-int 				turn_right(t_env *env, double rotSpeed);
-int 				turn_left(t_env *env, double rotSpeed);
-int					ft_key_hook(t_env *env);
-int					ft_key_release(int keycode, t_env *env);
-int					ft_key_press(int keycode, t_env *env);
-int					get_map(int ***tab, char *file);
-void				drawing_floor(t_env *env, int x, int z);
-void				drawing_sky(t_env *env, int x, int z);
-int 				ft_get_tex(t_env *env);
-void				draw(t_env *env, int x);
+int						raycaster(t_env *env);
+int						back(t_env *env, double movespeed);
+int						forward(t_env *env, double movespeed);
+int						turn_right(t_env *env, double rotspeed);
+int						turn_left(t_env *env, double rotspeed);
+int						ft_key_hook(t_env *env);
+int						ft_key_release(int keycode, t_env *env);
+int						ft_key_press(int keycode, t_env *env);
+int						get_map(int ***tab, char *file);
+void					drawing_floor(t_env *env, int x, int z);
+void					drawing_sky(t_env *env, int x, int z);
+int						ft_get_tex(t_env *env);
+void					draw(t_env *env, int x);
 
 #endif
