@@ -26,6 +26,7 @@
 # include "libft.h"
 # include "grammar.h"
 
+
 # define FATAL_ERROR	-3
 
 /*
@@ -61,12 +62,16 @@ typedef struct			s_shell
 	int					flag;
 }						t_shell;
 
+# include "getline.h"
+
 /*
 ** ft_init
 */
 
 t_shell					*init(char	**env);
 int						re_init(t_shell *shell);
+void					ft_prompt(t_shell *shell);
+
 
 /*
 ** ft_get

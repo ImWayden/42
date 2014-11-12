@@ -12,7 +12,7 @@
 
 #include "minishell2.h"
 
-static void		ft_prompt(t_shell *shell)
+void			ft_prompt(t_shell *shell)
 {
 	char		*str;
 	char		*str1;
@@ -43,8 +43,7 @@ int				main(int ac, char **av, char **env)
 		while (42)
 		{
 			re_init(shell);
-			ft_prompt(shell);
-			get_next_line(1, &line);
+			line = get_line(shell);
 			if ((shell->tree = lexor_and_parsor(line)))
 			{
 				ft_memdel((void **)&line);

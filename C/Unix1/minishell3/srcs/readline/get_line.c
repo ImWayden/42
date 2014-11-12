@@ -12,25 +12,23 @@
 
 #include "getline.h"
 
-char						*get_line(void)
+char						*get_line(t_shell *shell)
 {
 	struct termios			term;
-	int						i;
 	char					*str;
 
 	str = ft_strnew(255);
-	while (ft_strlen(str) < 255)
+	if (!ft_init(&term))
 	{
-		if (ft_init(&term))
+		if (!ft_config(&term))
 		{
-			if (ft_config(&term))
-				break ;
-			ft_term(&str);
+			ft_term(shell, &str);
+			ft_putstr(tgetstr("ve", NULL));
 			if (ft_defconfig(&term))
 				exit (0);
 			return (str);
 		}
-		get_next_line(1, &sstr);
 	}
+	get_next_line(1, &str);
 	return (str);
 }

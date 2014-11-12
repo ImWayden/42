@@ -22,6 +22,7 @@ FDIR = srcs/free_functions/
 PDIR = srcs/lexer_parser/
 IDIR = srcs/init/
 EDIR = srcs/execution/
+RDIR = srcs/readline/
 
 SRC = $(SDIR)main.c \
 	  $(BDIR)env_to_list.c $(BDIR)aff_env.c $(BDIR)setenv.c $(BDIR)unsetenv.c\
@@ -33,7 +34,8 @@ SRC = $(SDIR)main.c \
 	  $(PDIR)redir_syntax.c $(PDIR)syntax_error.c $(PDIR)lexer.c $(PDIR)parser.c \
 	  $(IDIR)ft_init.c \
 	  $(EDIR)execution.c $(EDIR)prep_cmd.c $(EDIR)xcommand.c $(EDIR)xpipe.c \
-	  $(EDIR)xleft_redir.c $(EDIR)xpipe2.c $(EDIR)xright_redir.c $(EDIR)fd.c
+	  $(EDIR)xleft_redir.c $(EDIR)xpipe2.c $(EDIR)xright_redir.c $(EDIR)fd.c \
+	  $(RDIR)get_line.c $(RDIR)utils.c $(RDIR)ft_term.c \
 
 
 OBJ = $(SRC:.c=.o)
@@ -51,7 +53,7 @@ $(NAME): $(OBJ)
 	@echo "\033[31;1m"
 	@echo -n '---> Compilation in progress... <---'
 	@echo "\033[0m"
-	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LIB) 
+	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LIB) -ltermcap
 	@echo "\033[1;32m"
 	@echo -n '---> DONE ! <---'
 	@echo "\033[0m"

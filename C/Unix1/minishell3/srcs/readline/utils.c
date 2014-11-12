@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init.c                                          :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/03 14:52:08 by msarr             #+#    #+#             */
-/*   Updated: 2014/01/03 14:52:10 by msarr            ###   ########.fr       */
+/*   Created: 2014/11/12 15:12:00 by msarr             #+#    #+#             */
+/*   Updated: 2014/11/12 15:12:02 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,37 @@ int			ft_init(t_termios *term)
 	if (tcgetattr(0, term) == -1)
 		return (-1);
 	return (0);
+}
+
+int			ft_config(t_termios *term)
+{
+	(*term).c_lflag &= ~(ICANON);
+	(*term).c_lflag &= ~(ECHO);
+	(*term).c_cc[VMIN] = 1;
+	(*term).c_cc[VTIME] = 0;
+	if (tcsetattr(0, TCSADRAIN, term) == -1)
+		return (-1);
+	return (0);
+}
+
+int			ft_defconfig(t_termios *term)
+{
+	(*term).c_lflag = (ICANON | ECHO);
+	if (tcsetattr(0, TCSADRAIN, term) == -1)
+		return (-1);
+	return (0);
+}
+
+void		ft_termcaps(void)
+{
+	ft_putstr(tgetstr("rc", NULL));
+	ft_putstr(tgetstr("vi", NULL));
+	ft_putstr(tgetstr("dl", NULL));
+}
+
+void		ft_cursor(char c)
+{
+	ft_putstr(tgetstr("mr", NULL));
+	ft_putchar(c);
+	ft_putstr(tgetstr("me", NULL));
 }
