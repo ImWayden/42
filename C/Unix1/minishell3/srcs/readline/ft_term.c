@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/11 15:00:54 by msarr             #+#    #+#             */
-/*   Updated: 2014/11/11 15:00:56 by msarr            ###   ########.fr       */
+/*   Updated: 2014/11/13 21:36:46 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,32 @@
 
 int					ft_put(t_shell *shell, char *str, int i)
 {
-	int				j;
-
-	j = 0;
 	if (i < 0)
 		i = 0;
 	if (i > ft_strlen(str))
 		i = ft_strlen(str);
 	ft_termcaps();
 	ft_prompt(shell);
-	while (str[j])
-	{
-		if (j == i)
-			ft_cursor(str[j]);
-		else
-			ft_putchar(str[j]);
-		j++;
-	}
-	if (j == i)
-		ft_cursor(' ');
+	ft_putstr(str);
 	return (i);
 }
 
-int					term_center(char *str)
+int					term_center(char *str, int j, int len)
 {
 	if (str[0] == '\t')
 		str[0] = ' ';
 	else if (str[0] == 27)
 	{
-		if (str[1] == 91 && str[2] == 'C')
-			return (1);
-		if (str[1] == 91 && str[2] == 'D')
+		if (str[1] == 91 && str[2] == 'C' && j > 0)
+		{
+			ft_putstr(tgetstr("nd", NULL));
 			return (-1);
+		}
+		if (str[1] == 91 && str[2] == 'D' && j < len - 3)
+		{
+			ft_putstr(tgetstr("le", NULL));
+			return (1);
+		}
 	}
 	return (0); 
 }
@@ -61,15 +55,15 @@ int					ft_term(t_shell *shell, char **str)
 	ft_prompt(shell);
 	while ((read(0, buf, 4)))
 	{
-		if (ft_isprint(buf[0]))
+		if (ft_isprint(buf[0]) && buf[0] != '^')
 		{
+			ft_putchar(*buf);
 			buf += 1;
 			*buf = '\0';
-			j++;
 		}
 		else if (buf[0] != '\n')
 		{
-			j += term_center(&(buf[0]));
+			j += term_center(&(buf[0]), j, ft_strlen(*str));
 			buf[0] = '\0';
 		}
 		else
@@ -78,7 +72,7 @@ int					ft_term(t_shell *shell, char **str)
 			ft_putendl(NULL);
 			return (1);
 		}
-		j = ft_put(shell, *str, j);
+		//j = ft_put(shell, *str, j);
 	}
 	return (1);
 }

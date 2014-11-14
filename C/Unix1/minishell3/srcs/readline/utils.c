@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/12 15:12:00 by msarr             #+#    #+#             */
-/*   Updated: 2014/11/12 15:12:02 by msarr            ###   ########.fr       */
+/*   Updated: 2014/11/12 21:01:08 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,5 @@ int			ft_defconfig(t_termios *term)
 void		ft_termcaps(void)
 {
 	ft_putstr(tgetstr("rc", NULL));
-	ft_putstr(tgetstr("vi", NULL));
 	ft_putstr(tgetstr("dl", NULL));
-}
-
-void		ft_cursor(char c)
-{
-	ft_putstr(tgetstr("mr", NULL));
-	ft_putchar(c);
-	ft_putstr(tgetstr("me", NULL));
 }

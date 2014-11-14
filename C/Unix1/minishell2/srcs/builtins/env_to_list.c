@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/06/04 13:39:31 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/08 15:46:58 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/11/10 20:23:00 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ t_env			*env_listnew(char **str)
 
 	if ((list = (t_env *)malloc(sizeof(t_env))))
 	{
-		if (str && str[0])
+		if (str)
 			list->name = ft_strdup(str[0]);
-		if (str && str[1])
+		if (str)
 			list->arg = ft_strdup(str[1]);
 		list->next = NULL;
 	}
