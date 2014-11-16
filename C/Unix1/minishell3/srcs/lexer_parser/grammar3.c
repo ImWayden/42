@@ -11,11 +11,10 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "minishell2.h"
+#include "minishell3.h"
 
 bool		redir_left_norm(t_tree **tree, t_lex **lex)
 {
-	bool	ret;
 	t_tree	*new;
 
 	new = NULL;
@@ -32,9 +31,7 @@ bool		redir_left_norm(t_tree **tree, t_lex **lex)
 				new->left = *tree;
 				*tree = new;
 				*lex = (*lex)->next;
-				ret = file_exp(&(new->right), lex);
-				return (is_right_redir((*lex)->str) ?
-				special_case(tree, lex) : ret);
+				return (file_exp(&(new->right), lex));
 			}
 		}
 		return (TRUE);

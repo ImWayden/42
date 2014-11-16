@@ -44,8 +44,13 @@ int			ft_defconfig(t_termios *term)
 	return (0);
 }
 
-void		ft_termcaps(void)
+int			print_promt(t_shell *shell, char *str, int j)
 {
-	ft_putstr(tgetstr("rc", NULL));
-	ft_putstr(tgetstr("dl", NULL));
+	ft_putchar('\r');
+	ft_putstr(tgetstr("ce", NULL));
+	ft_prompt(shell);
+	ft_putstr(str);
+	while (j--)
+		ft_putstr(tgetstr("le", NULL));
+	return (1);
 }

@@ -10,7 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell2.h"
+#include "minishell3.h"
+
+static void			del_env(t_env *envc, t_env *tmp, t_shell *shell)
+{
+	if (envc == shell->env)
+		shell->env = envc->next;
+	else
+		tmp->next = envc->next;
+}
 
 int					ft_unsetenv(t_shell *shell, t_tree *tree)
 {
@@ -31,10 +39,7 @@ int					ft_unsetenv(t_shell *shell, t_tree *tree)
 			}
 			if (!ft_strcmp(envc->name, args))
 			{
-				if (envc == shell->env)
-					shell->env = envc->next;
-				else
-					tmp->next = envc->next;
+				del_env(envc, tmp, shell);
 				env_delone(&envc);
 				return (EXIT_SUCCESS);
 			}

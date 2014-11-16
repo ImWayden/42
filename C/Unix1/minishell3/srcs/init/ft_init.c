@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell2.h"
+#include "minishell3.h"
 
 static t_shell		*shellnew(void)
 {
@@ -20,6 +20,7 @@ static t_shell		*shellnew(void)
 	{
 		shell->env = NULL;
 		shell->prompt = NULL;
+		shell->hist = NULL;
 		shell->path = NULL;
 		shell->envc = NULL;
 		shell->tree = NULL;

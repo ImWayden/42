@@ -10,40 +10,86 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "getline.h"
+#include "minishell3.h"
 
-t_line			*setlist(t_line *list)
+void				replace_word(t_line *list, char **str, int len)
 {
-	t_line		*tmp;
-	struct winsize	mywin;
 	int				i;
 	int				j;
-	int				k;
+	char			*str1;
 
-	tmp = list;
-	i = 0;
-	while (tmp)
+	i = ft_strlen(*str) - 1 - len;
+	j = 0;
+	if (i >= 0)
+		str1 = ft_strdup(&(*str)[i + 1]);
+	while (i >= 0 && ft_isalnum((*str)[i]))
 	{
-		if (i < ft_strlen(tmp->str))
-			i = ft_strlen(tmp->str);
-		tmp = tmp->next;
+		i--;
+		j++;
 	}
-	i += 2;
+	if (j)
+		(*str)[++i] = '\0';
+	ft_join(str, list->str);
+	if (!str1 || !*str1)
+		ft_join(str, " ");
+	else
+		ft_join(str, str1);
+}
+
+void				put_word(t_line *list, int i)
+{
+	int				k;
+	int				j;
+	struct winsize	mywin;
+
+	ft_putendl(NULL);
+	j = 0;
 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &mywin);
 	while (list)
 	{
 		k = ft_strlen(list->str);
 		ft_putstr(list->str);
-		while (k < i)
+		while (k < i && list->next)
 		{
 			ft_putchar(' ');
 			k++;
 		}
 		j += k;
-		if (j + i > mywin.ws_col && !(j = 0))
+		if ((j + i > mywin.ws_col && !(j = 0)) || !list->next)
 			ft_putendl(NULL);
 		list = list->next;
 		k = 0;
 	}
-	return (list);
+}
+
+int					big_word(t_line *list)
+{
+	int				i;
+
+	i = 0;
+	while (list)
+	{
+		if (i < ft_strlen(list->str))
+			i = ft_strlen(list->str);
+		list = list->next;
+	}
+	return (i);
+}
+
+void				setlist(t_line **list, char **str, int len)
+{
+	t_line			*tmp;
+	int				i;
+
+	tmp = *list;
+	i = big_word(tmp) + 2;
+	if (tmp && !tmp->next)
+	{
+		replace_word(tmp, str, len);
+		ft_putchar('\r');
+	}
+	else if (tmp)
+	{
+		put_word(tmp, i);
+	}
 }

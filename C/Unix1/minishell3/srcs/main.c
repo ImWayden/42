@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell2.h"
+#include "minishell3.h"
+#include "getline.h"
 
 void			ft_prompt(t_shell *shell)
 {

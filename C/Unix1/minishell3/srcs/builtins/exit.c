@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell2.h"
+#include "minishell3.h"
 
 int			ft_exit(t_shell **shell)
 {

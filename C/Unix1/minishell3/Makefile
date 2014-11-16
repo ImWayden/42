@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_minishell2
+NAME = ft_minishell3
 
 MAKE = make
 CC = gcc
@@ -27,7 +27,7 @@ RDIR = srcs/readline/
 SRC = $(SDIR)main.c \
 	  $(BDIR)env_to_list.c $(BDIR)aff_env.c $(BDIR)setenv.c $(BDIR)unsetenv.c\
 	  $(BDIR)env_to_tab.c $(BDIR)get_env.c $(BDIR)builtins_center.c $(BDIR)cd.c\
-	  $(BDIR)pwd.c $(BDIR)exit.c\
+	  $(BDIR)pwd.c $(BDIR)exit.c $(BDIR)cd_utils.c\
 	  $(FDIR)free_env.c $(FDIR)free_struct.c $(FDIR)free_tree.c $(FDIR)free_shell.c\
 	  $(PDIR)grammar.c $(PDIR)grammar1.c $(PDIR)grammar2.c $(PDIR)grammar3.c \
 	  $(PDIR)grammar4.c \

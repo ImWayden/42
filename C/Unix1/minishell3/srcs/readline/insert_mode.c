@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "getline.h"
+#include "minishell3.h"
 
 void				insert_mode(char **str, int j, char c)
 {
@@ -19,9 +19,6 @@ void				insert_mode(char **str, int j, char c)
 	char			*str2;
 
 	i = ft_strlen(*str) - j;
-	ft_putstr(tgetstr("im", NULL));
-	ft_putchar(c);
-	ft_putstr(tgetstr("ei", NULL));
 	str1 = *str;
 	str2 = ft_strdup(&(str1[i]));
 	str1[i] = c;

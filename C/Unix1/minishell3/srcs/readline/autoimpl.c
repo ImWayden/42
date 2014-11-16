@@ -12,10 +12,32 @@
 
 #include "getline.h"
 
-t_line			*addline(t_line *list, char *str)
+void				insert(t_line *tmp2, t_line *tmp, char *str)
 {
-	t_line		*tmp;
-	t_line		*tmp2;
+	while (tmp2)
+	{
+		if (ft_strcmp(str, tmp2->str) < 0)
+		{
+			tmp->next = tmp2;
+			tmp2->prev->next = tmp;
+			tmp->prev = tmp2->prev;
+			tmp2->prev = tmp;
+			break ;
+		}
+		if (!tmp2->next)
+		{
+			tmp2->next = tmp;
+			tmp->prev = tmp2;
+			break ;
+		}
+		tmp2 = tmp2->next;
+	}
+}
+
+t_line				*addline(t_line *list, char *str)
+{
+	t_line			*tmp;
+	t_line			*tmp2;
 
 	tmp = (t_line *)malloc(sizeof(t_line));
 	tmp->str = ft_strdup(str);
@@ -31,24 +53,7 @@ t_line			*addline(t_line *list, char *str)
 		return (list);
 	}
 	tmp2 = list;
-	while (tmp2)
-	{
-		if (ft_strcmp(str, tmp2->str) < 0)
-		{
-			tmp->next = tmp2;
-			tmp2->prev->next = tmp;
-			tmp->prev = tmp2->prev;
-			tmp2->prev = tmp;
-			break;
-		}
-		if (!tmp2->next)
-		{
-			tmp2->next = tmp;
-			tmp->prev = tmp2;
-			break;
-		}
-		tmp2 = tmp2->next;
-	}
+	insert(tmp2, tmp, str);
 	return (list);
 }
 
@@ -57,7 +62,6 @@ t_line				*getlist(t_line *list, char *token, char *dir, int i)
 	DIR				*dp;
 	struct dirent	*entry;
 
-	//ft_putendl(dir);
 	if (dir && (dp = opendir(token)))
 	{
 		while ((entry = readdir(dp)))
@@ -68,9 +72,9 @@ t_line				*getlist(t_line *list, char *token, char *dir, int i)
 	return (list);
 }
 
-char			*word(char *word, int start)
+char				*word(char *word, int start)
 {
-	int			j;
+	int				j;
 
 	j = 0;
 	while (start >= 0 && ft_isalnum(word[start]))
@@ -84,13 +88,13 @@ char			*word(char *word, int start)
 		return (NULL);
 }
 
-int				autoimpl(char **str, t_shell *shell, int j)
+int					autoimpl(char **str, t_shell *shell, int j)
 {
-	char		**path;
-	t_line		*list;
-	char		*tmp;
-	char		*dir;
-	int			i;
+	char			**path;
+	t_line			*list;
+	char			*tmp;
+	char			*dir;
+	int				i;
 
 	list = NULL;
 	path = shell->path;
@@ -98,10 +102,12 @@ int				autoimpl(char **str, t_shell *shell, int j)
 	i = ft_strlen(*str) - 1 - j;
 	if ((tmp = word(*str, i)))
 	{
-		list = getlist(list, dir, tmp, ft_strlen(tmp));
+		if (dir)
+			list = getlist(list, dir, tmp, ft_strlen(tmp));
 		while (path && *path)
 			list = getlist(list, *path++, tmp, ft_strlen(tmp));
-		setlist(list);
+		if (list)
+			setlist(&list, str, j);
 	}
 	return (1);
 }

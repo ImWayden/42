@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell2.h                                       :+:      :+:    :+:   */
+/*   minishell3.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL2_H
-# define MINISHELL2_H
+#ifndef MINISHELL3_H
+# define MINISHELL3_H
 
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -25,7 +25,6 @@
 # include <term.h>
 # include "libft.h"
 # include "grammar.h"
-
 
 # define FATAL_ERROR	-3
 
@@ -57,12 +56,11 @@ typedef struct			s_shell
 	char				*prompt;
 	char				**path;
 	t_tree				*tree;
+	t_line				*hist;
 	char				**envc;
 	t_env				*env;
 	int					flag;
 }						t_shell;
-
-# include "getline.h"
 
 /*
 ** ft_init
@@ -71,7 +69,6 @@ typedef struct			s_shell
 t_shell					*init(char	**env);
 int						re_init(t_shell *shell);
 void					ft_prompt(t_shell *shell);
-
 
 /*
 ** ft_get
@@ -96,6 +93,9 @@ int						ft_setenv(t_shell *shell, t_tree *tree);
 int						ft_unsetenv(t_shell *shell, t_tree *tree);
 char					*get_env(t_env *env, char *str);
 int						cd(t_shell *shell, t_tree *tree);
+int						cd_needed(t_shell *shell, t_tree *tree, char **pwd
+						, char **home);
+int						s_setenv(t_env **envs, char *name, char **arg);
 void					env_delone(t_env **env);
 void					free_env(t_env **envc);
 void					free_shell(t_shell **shell);
