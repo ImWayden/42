@@ -6,7 +6,7 @@
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/21 13:57:05 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/08 23:10:01 by msarr            ###   ########.fr       */
+/*   Updated: 2014/11/15 13:27:41 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct		s_list
 	char			*content;
 	size_t			content_size;
 	struct s_list	*next;
+	struct s_list	*prev;
 }					t_list;
 
 /*

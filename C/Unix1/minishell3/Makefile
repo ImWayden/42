@@ -6,7 +6,7 @@
 #    By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/22 14:52:23 by sraccah           #+#    #+#              #
-#    Updated: 2014/06/16 13:06:18 by mozzie           ###   ########.fr        #
+#    Updated: 2014/11/15 22:46:57 by msarr            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ SRC = $(SDIR)main.c \
 	  $(IDIR)ft_init.c \
 	  $(EDIR)execution.c $(EDIR)prep_cmd.c $(EDIR)xcommand.c $(EDIR)xpipe.c \
 	  $(EDIR)xleft_redir.c $(EDIR)xpipe2.c $(EDIR)xright_redir.c $(EDIR)fd.c \
-	  $(RDIR)get_line.c $(RDIR)utils.c $(RDIR)ft_term.c \
+	  $(RDIR)get_line.c $(RDIR)utils.c $(RDIR)ft_term.c $(RDIR)delete_mode.c \
+	  $(RDIR)insert_mode.c $(RDIR)autoimpl.c $(RDIR)select.c 
 
 
 OBJ = $(SRC:.c=.o)

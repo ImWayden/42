@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/03 15:00:45 by msarr             #+#    #+#             */
-/*   Updated: 2014/10/13 23:03:10 by msarr            ###   ########.fr       */
+/*   Updated: 2014/11/15 22:46:16 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <fcntl.h>
 # include <curses.h>
 # include <term.h>
+# include <dirent.h>
 # include "libft.h"
 # include "minishell2.h"
 
@@ -30,9 +31,13 @@ typedef struct termios		t_termios;
 
 void						ft_termcaps(void);
 void						ft_cursor(char c);
+t_line						*setlist(t_line *list);
 char						*get_line(t_shell *shell);
-int							ft_term(t_shell *shell, char **str);
+int							autoimpl(char **str, t_shell *shell, int j);
+int							ft_term(char **str, t_shell *shell);
 int							ft_init(struct termios *term);
+void						insert_mode(char **str, int j, char c);
+int							delete_mode(char **str, char *buf, int j);
 int							ft_config(struct termios *term);
 int							ft_defconfig(struct termios *term);
 

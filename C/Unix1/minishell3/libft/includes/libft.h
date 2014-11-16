@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/21 13:57:05 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/08 23:10:01 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/11/15 13:33:45 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct		s_line
 	int				fd;
 	char			*str;
 	struct s_line	*next;
+	struct s_line	*prev;
 }					t_line;
 
 typedef struct		s_list

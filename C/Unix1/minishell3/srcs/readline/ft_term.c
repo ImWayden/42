@@ -6,36 +6,22 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/11 15:00:54 by msarr             #+#    #+#             */
-/*   Updated: 2014/11/13 21:36:46 by msarr            ###   ########.fr       */
+/*   Updated: 2014/11/15 22:02:15 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "getline.h"
 
-int					ft_put(t_shell *shell, char *str, int i)
-{
-	if (i < 0)
-		i = 0;
-	if (i > ft_strlen(str))
-		i = ft_strlen(str);
-	ft_termcaps();
-	ft_prompt(shell);
-	ft_putstr(str);
-	return (i);
-}
-
 int					term_center(char *str, int j, int len)
 {
-	if (str[0] == '\t')
-		str[0] = ' ';
-	else if (str[0] == 27)
+	if (str[0] == 27)
 	{
 		if (str[1] == 91 && str[2] == 'C' && j > 0)
 		{
 			ft_putstr(tgetstr("nd", NULL));
 			return (-1);
 		}
-		if (str[1] == 91 && str[2] == 'D' && j < len - 3)
+		if (str[1] == 91 && str[2] == 'D' && j < len)
 		{
 			ft_putstr(tgetstr("le", NULL));
 			return (1);
@@ -44,35 +30,36 @@ int					term_center(char *str, int j, int len)
 	return (0); 
 }
 
-int					ft_term(t_shell *shell, char **str)
+int					ft_term(char **str, t_shell *shell)
 {
 	int				j;
-	char			*buf;
+	char			buf[4];
 
-	buf = *str;
 	j = 0;
-	ft_putstr(tgetstr("sc", NULL));
-	ft_prompt(shell);
+	ft_bzero(buf, 4);
 	while ((read(0, buf, 4)))
 	{
-		if (ft_isprint(buf[0]) && buf[0] != '^')
+		if (buf[0] == '\t')
+			autoimpl(str, shell, j);
+		else if (ft_isprint(buf[0]) && buf[0] != '^' && j > 0)
+			insert_mode(str, j, buf[0]);
+		else if (buf[0] == 127)
+			delete_mode(str, buf, j + 1);
+		else if (buf[0] == 27 && buf[1] == 91 && buf[2] == '3')
+			j += delete_mode(str, buf, j - 1);
+		else if (ft_isprint(buf[0]) && buf[0] != '^')
 		{
 			ft_putchar(*buf);
-			buf += 1;
-			*buf = '\0';
+			*str = ft_strjoin(*str, buf);
 		}
 		else if (buf[0] != '\n')
-		{
 			j += term_center(&(buf[0]), j, ft_strlen(*str));
-			buf[0] = '\0';
-		}
 		else
 		{
-			buf[0] = '\0';
 			ft_putendl(NULL);
 			return (1);
 		}
-		//j = ft_put(shell, *str, j);
+		ft_bzero(buf, 4);
 	}
 	return (1);
 }

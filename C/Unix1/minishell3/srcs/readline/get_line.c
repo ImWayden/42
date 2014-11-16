@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/03 14:52:29 by msarr             #+#    #+#             */
-/*   Updated: 2014/10/13 23:04:12 by msarr            ###   ########.fr       */
+/*   Updated: 2014/11/15 12:09:19 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,12 @@ char						*get_line(t_shell *shell)
 	struct termios			term;
 	char					*str;
 
-	str = ft_strnew(255);
-	if (!ft_init(&term))
+	str = NULL;
+	if (shell && shell->env && !ft_init(&term))
 	{
 		if (!ft_config(&term))
 		{
-			ft_term(shell, &str);
-			ft_putstr(tgetstr("ve", NULL));
+			ft_term(&str, shell);
 			if (ft_defconfig(&term))
 				exit (0);
 			return (str);

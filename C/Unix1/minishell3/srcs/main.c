@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/23 15:07:21 by sraccah           #+#    #+#             */
-/*   Updated: 2014/06/16 12:35:04 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/11/15 12:08:13 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int				main(int ac, char **av, char **env)
 		while (42)
 		{
 			re_init(shell);
+			ft_prompt(shell);
 			line = get_line(shell);
 			if ((shell->tree = lexor_and_parsor(line)))
 			{
