@@ -1,0 +1,278 @@
+// Trillian Astra OS X default chat CSS
+// Now with even more 'I am not a web designer' suck!
+//
+
+body {
+    font-family: Helvetica, sans-serif;
+    font-size: 12px;
+    text-rendering: optimizeLegibility;
+    margin: 0;
+    padding: 0;
+    -webkit-user-select: none;
+}
+
+.incoming_typing {
+	clear: both;
+	margin-top: 4px;
+	margin-bottom: 2px;
+	margin-left: -4px;
+	position: relative;
+	left: 0px;
+	height: 15px;
+	float: left;
+}
+
+.incoming_normal {
+	clear: both;
+	position: relative;
+	margin-top: 0px;
+	margin-bottom: -4px;
+	max-width: 80%;
+	padding-left: -1px;
+	left: -4px;
+}
+
+.incoming_normal .avatar {
+	width: 32px;
+	height: 32px;
+	float: left;   
+	background: #EFEFEF;
+	border: 1px solid #AFAFAF;
+	margin-right: 7px;
+	padding-bottom: -3px;
+}
+
+.incoming_normal_bubble {
+	position: relative;
+	min-width: 40px;
+	float: left;
+	font-family: Helvetica, sans-serif;
+	font-size: 12px;
+	text-align: left;
+	left: -11px;
+	overflow: hidden;
+	display: block;
+	text-overflow: ellipsis;
+}
+
+.incoming_normal_bubble .background {
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+
+	-webkit-border-image: url('bubble-remote.png') 16 17 13 23 stretch stretch;
+	border-width: 16 17 13 23;
+}
+
+.incoming_normal_bubble .single {
+	padding: 2px 4px 2px 4px;
+	margin-left: 12px;
+	margin-right: 6px;
+
+	margin-top: 4px;
+	margin-bottom: 8px;
+}
+
+
+.incoming_normal_bubble .first {
+	padding: 2px 4px 2px 4px;
+	margin-left: 12px;
+	margin-right: 6px;
+
+	margin-top: 4px;
+	margin-bottom: 0px;
+}
+
+.incoming_normal_bubble .middle {
+	padding: 2px 4px 2px 4px;
+	margin-left: 12px;
+	margin-right: 6px;
+
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.incoming_normal_bubble .divider {  
+	-webkit-border-image: url('Separator_Remote.png') 0 0 2 0;
+	border-width: 0 0 2 0;
+}
+
+.incoming_normal_bubble .last {
+	padding: 2px 4px 2px 4px;
+	margin-left: 12px;
+	margin-right: 6px;
+
+	margin-top: 0px;
+	margin-bottom: 8px;
+}
+
+.outgoing_typing {
+	clear: both;
+	margin-top: 4px;
+	margin-bottom: 2px;
+	position: relative;
+	right: 0px;
+	height: 15px;
+	float: right;
+}
+
+
+.outgoing_normal {
+	clear: both;
+	position: relative;
+	max-width: 80% !important;
+	margin-top: 0px;
+	margin-bottom: -4px;
+	padding: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	right: -9px;
+}
+
+.outgoing_normal .avatar {
+	width: 32px;
+	height: 32px;
+	float: right;
+	background: #EFEFEF;
+	border: 1px solid #AFAFAF;
+	margin-left: 2px;
+	padding-bottom: -3px;
+	margin-right: 5px;
+}
+
+.outgoing_normal_bubble {
+	position: relative;
+	float: right;
+	min-width: 40px;
+	font-family: Helvetica, sans-serif;
+	font-size: 12px;
+	text-align: right;
+	left: 6px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.outgoing_normal_bubble .background {
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+
+	-webkit-border-image: url('bubble-local.png') 13 17 16 23 stretch stretch;
+	border-width: 13 17 16 23;
+}
+
+.outgoing_normal_bubble .single {
+	padding: 2px 4px 2px 4px;
+	margin-left: 6px;
+	margin-right: 12px;
+
+	margin-top: 4px;
+	margin-bottom: 8px;
+}
+
+
+.outgoing_normal_bubble .first {
+	padding: 2px 4px 2px 4px;
+	margin-left: 6px;
+	margin-right: 12px;
+
+	margin-top: 4px;
+	margin-bottom: 0px;
+}
+
+.outgoing_normal_bubble .middle {
+	padding: 2px 4px 2px 4px;
+	margin-left: 6px;
+	margin-right: 12px;
+
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.outgoing_normal_bubble .divider {
+	-webkit-border-image: url('Separator_Local.png') 0 0 2 0;
+	border-width: 0 0 2 0;
+	z-index: 11;
+}
+
+.outgoing_normal_bubble .last {
+	padding: 2px 4px 2px 4px;
+	margin-left: 6px;
+	margin-right: 12px;
+
+	margin-top: 0px;
+	margin-bottom: 8px;
+	max-width: 100%;
+}
+
+.action {
+	clear: both;
+	font-family: Helvetica, sans-serif;
+	font-size: 11px;
+	text-align: center;
+	float: center;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding-top: 2px;
+    -webkit-user-select: text;
+}
+
+.action_name {
+	font-weight: bolder;
+}
+
+.info {
+	clear: both;
+	font-family: Helvetica, sans-serif;
+	font-size: 11px;
+	text-align: center;
+	float: center;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding-top: 2px;
+    -webkit-user-select: text;
+}
+
+div.timestamp {
+	clear: both;
+	font-family: Helvetica, sans-serif;
+	font-size: 10.5px;
+	text-align: center;
+	float: center;
+	padding-top: 5px;
+	padding-bottom: 3px;
+    -webkit-user-select: text;
+}
+
+span.timestamp_relative {
+	color: #000000;
+//	font-weight: bold;
+	padding: 2px 6px;
+}                        
+
+span.text {
+	position: relative;
+	top: 1px;    
+	line-height: 1.3;
+	word-break: break-word;
+    -webkit-user-select: text;
+}
+
+span.text.historical {
+	opacity: 0.5;
+}
+
+.historical {
+	opacity: 0.75;
+}
+
+body {
+	-webkit-user-select: none;
+}
+

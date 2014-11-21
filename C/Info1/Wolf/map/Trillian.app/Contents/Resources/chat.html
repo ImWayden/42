@@ -1,0 +1,631 @@
+<html> 
+	<head> 
+		<title>Chat Style: Default</title> 
+		<link rel="stylesheet" type="text/css" href="Default.css" id="ss" /> 
+		<script type="text/javascript" language="JavaScript1.4"><!--
+			var lastType = 'emptiness';
+			var counter = 0;
+			var oldIncomingAvatarParent = 0;
+			var oldOutgoingAvatarParent = 0;
+			var incomingAvatarEnclosure = 0;
+			var outgoingAvatarEnclosure = 0;
+			var recordedMessageBuffer = [];
+			var recordedMessageLock = false;
+
+			// Resize code
+                        var resizeMode=0; function Resize() { if (resizeMode) { if ((document.body.scrollTop+window.innerHeight)*1.1 + 100 > document.body.scrollHeight) document.body.scrollTop = document.body.scrollHeight; } else { document.body.scrollTop = document.body.scrollHeight; } } window.addEventListener("resize", Resize, false); setTimeout(function(){ resizeMode=1 }, 10000);
+
+			// This function allows a chat style to set the typing indicators in a
+			// style-specific unique way.  They will be set to 'true' if the typing
+			// indicator is presently on, and 'false' if not.
+			//
+			// Parameters:
+			//		type		'incoming' or 'outgoing'.
+			//		active		'true' or 'false'.
+			//		avatar		base64 of the appropriate avatar.
+			//
+			function SetTyping( type, active, avatar ) 
+			{
+					//console.log("SetTyping " + " type=" + type + " active=" + active + " avatar=" + l_avatar_debug);
+					var chat = document.getElementById('chat');
+					
+					var bubbletype = type + '_typing';
+					var bubble = document.getElementById(bubbletype);
+					
+					var bubbleimg;
+					if (type == 'incoming') 
+					{
+						bubbleimg = 'typing-remote.png';
+					}
+					else 
+					{
+						bubbleimg = 'typing-local.png';
+					}
+					
+					var checkType = type + '_normal';
+					
+					if (active == 'true') 
+					{
+						if (!bubble) 
+						{
+							bubble = document.createElement('div');
+							bubble.setAttribute('class',bubbletype);
+							bubble.setAttribute('id',bubbletype);
+							bubble.innerHTML = '<img src=\'' + bubbleimg + '\'/>';
+						}
+						
+						if (checkType == lastType) 
+						{
+							containerId = 'container' + counter;
+							container = document.getElementById(containerId);
+							container.parentNode.appendChild(bubble);
+							
+							if (type == 'incoming') 
+								incomingAvatarEnclosure = 0;
+							else 
+								outgoingAvatarEnclosure = 0;							
+						}
+						else 
+						{				
+ 
+							var align;
+							
+							if (type == 'incoming') 
+								align = 'left';
+							else 
+								align = 'right';
+							
+ 							parent = document.createElement('table');
+							parent.setAttribute('class',checkType);
+							parent.setAttribute('align',align);
+							parent.setAttribute('width','80%');
+							
+							if (type == 'incoming') 
+								incomingAvatarEnclosure = parent;
+							else 
+								outgoingAvatarEnclosure = parent;
+							
+							tr = document.createElement('tr');
+							parent.appendChild(tr);
+							
+							avatarTd = document.createElement('td');
+							avatarTd.setAttribute('valign','bottom');
+							contentTd = document.createElement('td');
+							contentTd.setAttribute('valign','bottom');
+							contentTd.setAttribute('width','100%');
+							contentTd.appendChild(bubble);
+							
+							avatarImg = document.getElementById(type + '_avatar');
+							if (!avatarImg) 
+							{
+								avatarImg = document.createElement('img');
+								avatarImg.setAttribute('id',type + '_avatar');
+								avatarImg.setAttribute('class','avatar');
+							}
+							else 
+							{
+								if (type == 'incoming') 
+									oldIncomingAvatarParent = avatarImg.parentNode;
+								else 
+									oldOutgoingAvatarParent = avatarImg.parentNode;
+							}
+ 
+							avatarImg.setAttribute('src',avatar);
+							
+							avatarTd.appendChild(avatarImg);
+							contentTd.appendChild(bubble);
+ 
+							if (type == 'incoming') 
+							{
+								parent.appendChild(avatarTd);
+								parent.appendChild(contentTd);
+							}
+							else 
+							{
+								parent.appendChild(contentTd);							
+								parent.appendChild(avatarTd);
+							}
+ 
+							chat.appendChild(parent);
+						}
+					}
+					else if (bubble) 
+					{
+						avatarImg = document.getElementById(type + '_avatar');
+						if ((type == 'incoming') && incomingAvatarEnclosure) 
+						{
+							if (oldIncomingAvatarParent && avatarImg)
+								oldIncomingAvatarParent.appendChild(avatarImg);
+							chat.removeChild(incomingAvatarEnclosure);
+							incomingAvatarEnclosure = 0;
+						}
+						else if ((type == 'outgoing') && outgoingAvatarEnclosure) 
+						{
+							if (oldOutgoingAvatarParent && avatarImg)
+								oldOutgoingAvatarParent.appendChild(avatarImg);
+							chat.removeChild(outgoingAvatarEnclosure);
+							outgoingAvatarEnclosure = 0;
+						}
+						else 
+						{
+							bubble.parentNode.removeChild(bubble);
+						}
+					}
+					
+			}
+			// RecordMessage records a message in auto-history buffer so that we can display
+			// them at a future time all at once, sorted.
+			//
+			// Parameters:
+			//		type			'info', 'action', or 'normal'
+			//		incoming		BOOL
+			//		avatar			URL of user's avatar
+			//		displayname		displayname of user
+			//		timestamp		timestamp in UTC format
+			//		text			actual message, in HTML format
+			function RecordMessage( type, incoming, avatar, displayname, timestamp, text, sorted, historical, guid ) {
+				//console.log("RecordMessage " + " type=" + type + " incoming=" + incoming + " displayname=" + displayname + " timestamp=" + timestamp + " text(%-12s)=" + String(text).substr(0,12) +  " text.length=" + text.length + " sorted=" + sorted + " historical=" + historical + " guid=" + guid);
+				recordedMessageBuffer.push({
+					i: -1,
+					mode: "message",
+					historical: historical,
+					guid: (guid==null||typeof(guid)=='undefined'?false:guid),
+					type: type,
+					incoming: incoming,
+					avatar: avatar,
+					displayname: displayname,
+					timestamp: timestamp,
+					text: text,
+					sorted: true,
+					dynamic: null
+				});
+			}
+			// PlayMessages plays back the auto-history buffer all at once.  sorts first.
+			//
+			// Parameters:
+			//		None
+			function PlayMessages() {
+				if (recordedMessageLock) 
+					return setTimeout(PlayMessages, 100); 
+				recordedMessageLock=true;
+				var chat = document.getElementById('chat');
+				var incoming_avatar = document.getElementById("incoming_avatar");
+				var outgoing_avatar = document.getElementById("outgoing_avatar");
+				var elements = document.getElementsByTagName("div");
+				var noDelay = recordedMessageBuffer.length==1;
+				if (elements.length) 
+				{
+					if (recordedMessageBuffer.length==1 && !recordedMessageBuffer[0].guid)
+					{
+						if (recordedMessageBuffer[0].timestamp > elements[elements.length-1].getAttribute('timestamp')) 
+						{
+							// This message is newer than the last message on the screen, so print then exit
+							
+							with (recordedMessageBuffer.shift()) 
+							{
+								switch (mode)
+								{
+									case "timestamp":
+										PrintTimestamp(timestamp, dynamic, historical, guid);
+										break;
+									case "message":
+										PrintMessage(type, incoming, avatar, displayname, timestamp, text, sorted, historical, guid);
+										if (!incoming || document.body.scrollTop + window.innerHeight + 100 > document.body.scrollHeight) 
+											document.body.scrollTop = document.body.scrollHeight;
+										break;
+								}
+							}
+							if (document.getElementById("outgoing_avatar")) 
+								document.getElementById("outgoing_avatar").setAttribute("src", document.getElementById("outgoing_avatar").getAttribute("rel"));
+							if (document.getElementById("incoming_avatar")) 
+								document.getElementById("incoming_avatar").setAttribute("src", document.getElementById("incoming_avatar").getAttribute("rel"));
+							recordedMessageLock=false;
+							return;					
+						}
+					}
+					// scan for guids that we're replacing
+					var ignore_these_guids = [];
+					for (var g=0;g<recordedMessageBuffer.length;g++)
+					{
+						if (recordedMessageBuffer[g].guid)
+						{
+							ignore_these_guids.push(recordedMessageBuffer[g].guid);
+						}
+					}
+					for(var i=0;i<elements.length;i++)
+				  	{
+						var guid = elements[i].getAttribute('guid');
+						var ignoring = 0;
+						if (guid && ignore_these_guids.length)
+						{
+							// scan to make sure we're not replacing this
+						
+							if (ignore_these_guids.indexOf(guid)>-1) 
+							{
+								continue;
+							}
+						}
+						if (ignoring) 
+							continue;
+						if (elements[i].getAttribute('class') == "action" || elements[i].getAttribute('class') == "info" )
+						{
+
+							recordedMessageBuffer.push({
+								mode: "message",
+								order: i,
+								historical: (elements[i].childNodes[0].getAttribute("class").match("historical")?true:false),
+								guid: elements[i].getAttribute('guid'),
+								type: elements[i].getAttribute('class'),
+								incoming: (elements[i].parentElement.getAttribute("class").match("incoming")?"true":null),
+								avatar: null,
+								displayname: null,
+								timestamp: elements[i].getAttribute("timestamp"),
+								text: elements[i].childNodes[0].innerHTML,
+								sorted: true
+
+								});
+						}
+						else if(elements[i].getAttribute('timestamp') > 0) 
+						{
+							recordedMessageBuffer.push({
+								mode: "message",
+								order: i,
+								historical: (elements[i].childNodes[0].getAttribute("class").match("historical")?true:false),
+								guid: elements[i].childNodes[0].getAttribute("guid"),
+								type: "normal",
+								incoming: (elements[i].parentElement.getAttribute("class").match("incoming")?"true":null),
+								avatar: (elements[i].parentElement.getAttribute("class").match("incoming")?(incoming_avatar?incoming_avatar.getAttribute("src"):""):(outgoing_avatar?outgoing_avatar.getAttribute("src"):"")),
+								displayname: null,
+								timestamp: elements[i].getAttribute("timestamp"),
+								text: elements[i].childNodes[0].innerHTML,
+								sorted: true
+
+							});
+						}
+
+					}
+				}
+				var elements = document.getElementsByTagName("span");
+				if (elements) 
+				{
+					for(var i=0;i<elements.length;i++)
+				  	{
+						if(elements[i].getAttribute('timestamp') > 0) 
+						{
+							if (elements[i].parentElement.getAttribute("class").match("timestamp"))
+							{
+								recordedMessageBuffer.push({
+									mode: "timestamp",
+									order: i,
+									historical: (elements[i].parentElement.getAttribute("class").match("historical")?true:false),
+									guid: elements[i].getAttribute("guid"),
+									timestamp: elements[i].getAttribute("timestamp"),
+									dynamic: (elements[i].parentElement.getAttribute("class").match("dynamic")?"true":"")
+								});
+
+							}
+						}
+					}
+				}
+				recordedMessageBuffer.sort(function(a,b) 
+				{
+					if (a.timestamp < b.timestamp) 
+						return -1;
+					if (a.timestamp > b.timestamp) 
+						return 1;
+					if (a.mode == "timestamp" && b.mode == "message") 
+						return -1;
+					if (a.mode == "message" && b.mode == "timestamp") 
+						return 1;
+					if (a.order < b.order) 
+						return -1;
+					if (a.order > b.order) 
+						return 1;
+					return 0;
+				});
+				document.getElementById("chat").innerHTML = "";
+				lastType = 'emptiness';
+				counter = 0;
+				chat.style.display = "none";
+				while (recordedMessageBuffer.length) 
+				{
+					with (recordedMessageBuffer.shift()) 
+					{
+						switch (mode)
+						{
+							case "timestamp":
+								PrintTimestamp(timestamp, dynamic, historical, guid);
+								break;
+							case "message":
+								PrintMessage(type, incoming, avatar, displayname, timestamp, text, sorted, historical, guid);
+								break;
+						}
+					}
+				}
+				if (document.getElementById("outgoing_avatar")) 
+					document.getElementById("outgoing_avatar").setAttribute("src", document.getElementById("outgoing_avatar").getAttribute("rel"));
+				if (document.getElementById("incoming_avatar")) 
+					document.getElementById("incoming_avatar").setAttribute("src", document.getElementById("incoming_avatar").getAttribute("rel"));
+				if (noDelay)
+				{
+					document.getElementById("chat").style.display = "block"; 
+					document.body.scrollTop = document.body.scrollHeight;
+				}
+				else
+					setTimeout(function(){ document.getElementById("chat").style.display = "block"; document.body.scrollTop = document.body.scrollHeight; }, 100);
+				recordedMessageLock=false;
+ 			}
+			function AddMessages( a_msgArray )
+			{
+				for ( l_msg in a_msgArray )
+				{
+					with (a_msgArray[l_msg])
+					{
+						RecordMessage( type, incoming, avatar, displayname, timestamp, text, sorted, historical, guid );
+					}
+				}
+				PlayMessages();
+			}
+			function AddMessage( type, incoming, avatar, displayname, timestamp, text, sorted, historical, guid )
+			{
+				RecordMessage( type, incoming, avatar, displayname, timestamp, text, sorted, historical, guid );
+				PlayMessages();
+			}
+			// PrintMessage is the main guts of our chat view.  This takes several
+			// parameters, and can add them to the HTML view however the page sees fit.
+			// 
+			// Parameters:
+			//		type			'info', 'action', or 'normal'
+			//		incoming		BOOL
+			//		avatar			URL of user's avatar
+			//		displayname		displayname of user
+			//		timestamp		timestamp in UTC format
+			//		text			actual message, in HTML format
+			//		sorted
+			//		historical		different set of colors for auto-history items
+			//		guid			unique identifier
+			//
+			function PrintMessage( type, incoming, avatar, displayname, timestamp, text, sorted, historical, guid ) {
+					var chat = document.getElementById('chat');
+					var message = document.createElement('div');
+					var direction = 'unknown';
+					if (incoming == 'true') 
+					{
+						direction = 'incoming';
+					}
+					else {
+						direction = 'outgoing';
+					}
+					var thisType = direction + '_' + type;
+					var containerType = direction + '_' + type;
+					
+					message.setAttribute('class',type);
+					message.setAttribute('guid', guid);
+					var span = document.createElement('span');
+					message.appendChild(span);
+					
+					var finalMessage = text;
+					var container;
+
+					span.innerHTML = finalMessage.replace(/  /g, " &nbsp;");
+					span.setAttribute('title', trillian.absoluteTimestamp(timestamp));
+					span.setAttribute('class','text');
+					if (historical) span.setAttribute('class', span.getAttribute('class')+' historical');
+					span.setAttribute('guid', guid);
+					SetTyping(direction,'false',avatar);
+					
+					if (type == 'normal') 
+					{
+						var myClass = message.getAttribute('class');
+						message.setAttribute('class',myClass + ' last');
+						message.setAttribute('timestamp',timestamp);
+						
+						var containerId;
+						if (containerType == lastType) 
+						{
+							containerId = 'container' + counter;
+							container = document.getElementById(containerId);
+							
+							var previous = container.childNodes[container.childNodes.length - 1];
+							var previousClass = previous.getAttribute('class');
+							
+							previousClass = previousClass.replace('single','first');
+							previousClass = previousClass.replace('last','') + ' divider';
+							if (!previousClass.match('first')) 
+							{
+								previousClass = previousClass + ' middle';
+							}
+							previous.setAttribute('class',previousClass);
+						}
+						else 
+						{
+							counter++;
+							
+							var align;
+							
+							if (incoming == 'true') 
+							{
+								align = 'left';
+							}
+							else 
+							{
+								align = 'right';
+							}
+							parent = document.createElement('table');
+							parent.setAttribute('class',containerType);
+							parent.setAttribute('align',align);
+							parent.setAttribute('width','80%');
+							
+							tr = document.createElement('tr');
+							parent.appendChild(tr);
+								
+							avatarTd = document.createElement('td');
+							avatarTd.setAttribute('valign','bottom');
+							contentTd = document.createElement('td');
+							contentTd.setAttribute('valign','bottom');
+							contentTd.setAttribute('width','100%');
+//							contentTd.setAttribute('align',align);
+							
+							containerId = 'container' + counter;
+							container = document.createElement('div');
+							container.setAttribute('id',containerId);
+							container.setAttribute('class',containerType + '_bubble');
+ 
+							avatarImg = document.getElementById(direction + '_avatar');
+							if (!avatarImg) 
+							{
+								avatarImg = document.createElement('img');
+								avatarImg.setAttribute('id',direction + '_avatar');
+								avatarImg.setAttribute('class','avatar');
+								avatarImg.setAttribute('rel',avatar);
+							} else {
+								avatarImg.setAttribute('rel',avatar);
+							}
+							if (!historical) 
+							{	
+								avatarImg.setAttribute('src',avatar);
+							}
+							avatarTd.appendChild(avatarImg);
+							contentTd.appendChild(container);
+							message.setAttribute('class','single');
+ 
+							if (incoming == 'true') 
+							{
+								parent.appendChild(avatarTd);
+								parent.appendChild(contentTd);
+							}
+							else 
+							{
+								parent.appendChild(contentTd);							
+								parent.appendChild(avatarTd);
+							}
+							
+							backgroundDiv = document.createElement('div');
+							backgroundDiv.setAttribute('class','background');
+							if (historical) 
+								backgroundDiv.setAttribute('class',backgroundDiv.getAttribute('class')+' historical');
+							container.appendChild(backgroundDiv);
+							
+							chat.appendChild(parent);
+						}
+						
+						container.appendChild(message);
+					}
+					else {
+						message.setAttribute('timestamp',timestamp);
+						chat.appendChild(message);
+					}
+ 
+					lastType = containerType;
+			}
+			
+			// RecordTimestamp records a timestamp in auto-history buffer so that we can display
+			// them at a future time all at once, sorted.
+			//
+			// Parameters:
+			//		timestamp		timestamp in UTC format.
+			//		dynamic			is the timestamp dynamic?
+			//		historical		
+			//		guid			unique identifier
+			//
+			function RecordTimestamp( timestamp, isDynamic, historical, guid )
+			{
+				//console.log("RecordTimestamp " + timestamp + " isDynamic=" + isDynamic + " historical=" + historical + " guid=" + guid);
+				recordedMessageBuffer.push(
+				{
+					mode: "timestamp",
+					historical: historical,
+					guid: (guid==null||typeof(guid)=='undefined'?false:guid),
+					timestamp: timestamp,
+					dynamic: isDynamic,
+				});
+			}
+			// setAvatar immediately sets the avatar.
+			function setAvatar( incoming, avatar )
+			{
+				var avatarImg = document.getElementById( (incoming ? "incoming" : "outgoing" ) + '_avatar');
+				if (avatarImg) 
+				{
+					avatarImg.setAttribute('src',avatar);
+					avatarImg.setAttribute('rel',avatar);
+				}
+			}
+			// AddTimestamp is for new messages
+			function AddTimestamp( timestamp, isDynamic, historical, guid )
+			{
+				RecordTimestamp( timestamp, isDynamic, historical, guid );
+				PlayMessages();
+			}
+		
+			// PrintTimestamp handles adding a simple relative timestamp to the
+			// chat view.  This is important for the timestamps to be able to
+			// change dynamically.
+			// 
+			// In addition, Trillian can update these timestamps /for/ the chat
+			// view.  Any div classed as 'dynamic' will be checked for dynamic
+			// content once a minute in the actual hard-coded webview.  If the
+			// div contains a span classed with 'timestamp_relative' and an 
+			// attribute named 'timestamp' containing a UTC timestamp, then the
+			// text content of that span will be updated to contain a relative
+			// timestamp, brought current once every minute.
+			//
+			// Parameters:
+			//		timestamp		timestamp in UTC format.
+			//		dynamic			is the timestamp dynamic?
+			//
+			function PrintTimestamp( timestamp, isDynamic, historical, guid ) {
+ 
+					var chat = document.getElementById('chat');
+					var message = document.createElement('div');
+					var span = document.createElement('span');
+					span.setAttribute('timestamp',timestamp);
+					span.setAttribute('class','timestamp_relative text');
+					span.setAttribute('guid', guid);
+					
+					message.appendChild(span);
+					if (isDynamic == 'true') 
+					{
+						message.setAttribute('class','timestamp dynamic');
+						if (historical) 
+							message.setAttribute('class', message.getAttribute('class')+' historical');
+						message.setAttribute('guid', guid);
+						span.innerHTML = trillian.relativeTimestamp(timestamp);
+					}
+					else 
+					{
+						message.setAttribute('class','timestamp');
+						if (historical) 
+							message.setAttribute('class', message.getAttribute('class')+' historical');
+						message.setAttribute('guid', guid);
+						span.innerHTML = trillian.absoluteTimestamp(timestamp);
+					}
+					chat.appendChild(message);
+					lastType = 'timestamp';
+					if (!historical) 
+						document.body.scrollTop = document.body.scrollHeight;
+			}
+			if (!Array.indexOf)
+			{
+			  Array.indexOf = [].indexOf ?
+			      function (arr, obj, from) { return arr.indexOf(obj, from); }:
+			      function (arr, obj, from) { // (for IE6)
+			        var l = arr.length,
+			            i = from ? parseInt( (1*from) + (from<0 ? l:0), 10) : 0;
+			        i = i<0 ? 0 : i;
+			        for (; i<l; i++) {
+			          if (i in arr  &&  arr[i] === obj) { return i; }
+			        }
+			        return -1;
+			      };
+			}
+
+
+		// --></script> 
+	</head> 
+	<body> 
+		<table height='100%' width=100%> 
+			<tr><td id='chat' valign='bottom' class='hyphenate'></td></tr> 
+		</table> 
+	</body> 
+</html>
+

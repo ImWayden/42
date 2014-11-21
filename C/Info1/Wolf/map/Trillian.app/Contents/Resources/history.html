@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!-- 05/11/2012 13:56 1.4 -->	
+<style type="text/css"> 
+     html { 
+     }
+     body { 
+	     padding: 0px; margin: 0px;
+     }
+     div { 
+	     cursor: default;
+     }
+     #history { 
+	     font-size: 11px; 
+	     font-family: "Lucida Grande", sans-serif;
+	     display: table;
+	     padding: 0px 0px 15px 0px; 
+     }
+     .row { 
+	     width: 100%;
+	     display: table-row;
+     }
+     .spacer {
+	     height: 10px;
+     }
+     .timestamp { 
+	     display: table-cell;
+	     width: 70px;
+	     padding-top: 5px;
+	     -webkit-user-select: text;
+     }
+     .timestamp > .text {
+	     width: 70px;
+	     text-align: right;
+	     color: #777777;
+	     font-size: 9px;
+	     -webkit-user-select: text;
+     }
+     .ampm {
+	     display: table-cell;
+	     padding: 0px 0px 0px 2px;
+	     width: 10px;
+	     -webkit-user-select: text;
+     }
+     .ampm > .text {
+	     color: #777777;
+	     font-size: 9px;
+	     -webkit-user-select: text;
+     }
+
+     .sender {
+	     display: table-cell;
+	     padding: 0px 0px 0px 20px;
+	     white-space: nowrap; 
+	     text-align: right;
+	     margin-left: auto;
+	     max-width: 150px;
+	     min-width: 60px;
+	     -webkit-user-select: text;
+     }
+     .sender > .text { 
+	     overflow: hidden;
+	     text-overflow: ellipsis;	
+	     font-weight: bold;
+	     -webkit-user-select: text;
+     }
+     .outgoing { 
+	     color: #af8955; 
+     }
+     .incoming { 
+	     color: #3B568B; 
+     }
+     .message { 
+	     display: table-cell;
+	     padding: 0px 50px 0px 20px;
+	     -webkit-user-select: text;
+     }
+     .message > .text { 
+	     color: black;
+	     cursor: text;
+	     word-break: break-word;
+	     -webkit-user-select: text;
+     }
+     .highlight {
+	     background-color: yellow;
+     }
+     .action {
+     }
+
+     body {
+	     -webkit-user-select: none;
+     }
+     
+</style>
+<script src="jquery.min.js"></script>
+<script>
+document.write('<body><div id="history"></div>');
+
+var g_last_displayname;
+var g_recordedMessageBuffer = [];
+// RecordMessage records a message in auto-history buffer so that we can display
+// them at a future time all at once, sorted.
+//
+// Parameters:
+//		type			'info', 'action', or 'normal'
+//		incoming		BOOL
+//		displayname		displayname of user
+//		timestamp		timestamp in UTC format
+//		text			actual message, in HTML forma
+function RecordMessage( type, incoming, avatar, displayname, timestamp, text, sorted ) {
+	g_recordedMessageBuffer.push({
+		type: type,
+		incoming: incoming,
+		displayname: displayname,
+		timestamp: timestamp,
+		text: text
+	});
+}
+
+// PlayMessages plays back the auto-history buffer all at once.  sorts first.
+//
+// Parameters:
+//		None
+function PlayMessages() {
+	g_recordedMessageBuffer.sort(function(a,b) {
+		if (a.timestamp < b.timestamp) return -1;
+		if (a.timestamp > b.timestamp) return 1;
+		return 0;
+	});
+	while (g_recordedMessageBuffer.length) {
+		with (g_recordedMessageBuffer.shift()) {
+			AddMessage(type, incoming, displayname, timestamp, text);
+		}
+	}
+}
+
+// AddMessage is the main guts of our chat view.  This takes several
+// parameters, and can add them to the HTML view however the page sees fit.
+// 
+// Parameters:
+//		type			'info', 'action', or 'normal'
+//		incoming		BOOL
+//		displayname		displayname of user
+//		timestamp		timestamp in UTC format
+//		text			actual message, in HTML format
+//
+
+function AddMessage( a_type, a_incoming, a_displayname, a_timestamp, a_text ) 
+{
+	//console.log("AddMessage( " + a_type + " , " + a_incoming + " , " + a_displayname + " , " + a_timestamp + " , " + a_text + " );");
+	if (a_displayname != g_last_displayname) {
+		var l_separator = $("<div></div>").addClass("row").appendTo("#history").append($("<div></div>").addClass("spacer"));
+	}
+	var l_row = $("<a></a>").addClass("row").attr("name", a_timestamp).appendTo("#history");
+	var l_timestamp = $("<div></div>").addClass("timestamp").appendTo(l_row);
+	var l_timestamp_text = $("<div></div>").addClass("text").appendTo(l_timestamp);
+	var l_ampm = $("<div></div>").addClass("ampm").appendTo(l_row);
+	var l_ampm_text = $("<div></div>").addClass("text").appendTo(l_ampm);
+	var l_sender = $("<div></div>").addClass("sender").appendTo(l_row);
+	var l_sender_text = $("<div></div>").addClass("text").appendTo(l_sender);
+	var l_time = new Date(a_timestamp);
+	if (l_time.getHours() == 0)
+	{
+		l_ampm_text.text("AM");
+		var l_hours = 12;
+	} else if (l_time.getHours() == 12) {
+		l_ampm_text.text("PM");
+		var l_hours = 12;
+	} else if (l_time.getHours() > 12) {
+		l_ampm_text.text("PM");
+	
+		l_hours = Math.abs(l_time.getHours()-12);
+	} else {
+		l_ampm_text.text("AM");
+		l_hours = l_time.getHours();
+	}
+	l_timestamp_text.text(""+l_hours+":"+String(l_time.getMinutes()).lpad("0",2)+":"+String(l_time.getSeconds()).lpad("0",2));
+	switch (a_type)
+	{
+		case "action":
+		case "normal":
+			var l_message = $("<div></div>").addClass("message").appendTo(l_row);
+			var l_message_text = $("<div></div>").addClass("text").appendTo(l_message);
+
+			if (a_type == "action") {
+				l_message_text.addClass("action");	
+				var pattern = "^" + a_displayname +" ";
+				var exp = new RegExp(pattern, 'i');
+				a_text = a_text.replace(exp, "");
+			}
+			//a_text = a_text.replace(/&/g, "&amp;").replace(/  /g, " &nbsp;").replace(/\</g, "&lt;").replace(/\>/g, "&gt;").replace(/\n/g, "<br/>");
+			l_message_text.html(a_text);
+			if (a_displayname != g_last_displayname)
+				l_sender_text.text(a_displayname);
+			l_sender_text.attr("title", a_displayname);
+			if (a_incoming)
+				l_sender_text.addClass("incoming");
+			else
+				l_sender_text.addClass("outgoing");
+				g_last_displayname = a_displayname;
+			break;
+	}
+}
+// Highlight is used with search, to highlight terms.
+//
+// Parameters:
+// 	terms		array of search strings
+function Highlight ( a_terms_array )
+{
+	if (a_terms_array.length)
+	{
+		var l_replacing = "(";
+		for (var i=0; i<a_terms_array.length; i++)
+		{
+			l_replacing += (i?"|":"") + encodeRE(a_terms_array[i]);
+		}
+		l_replacing += ")";
+		l_regex = new RegExp(l_replacing, "gi");
+		$(".message > .text").each(function()
+		{
+			processHighlightChildren($(this)[0], l_regex)
+		});
+	}
+}
+function processHighlightChildren(a_node, a_regex)
+{
+		if (!a_node.childNodes.length==1)
+			processHighlightNode(a_node.firstChild, a_regex);
+		if (!a_node.childNodes.length)
+			processHighlightNode(a_node, a_regex);
+		for (var i=0; i<a_node.childNodes.length; i++)
+				processHighlightNode(a_node.childNodes[i], a_regex);
+}
+function processHighlightNode(a_node, a_regex)
+{
+	if (!a_node)
+		return "";  
+	switch (a_node.nodeName.toUpperCase())
+	{ 
+		case "A": 
+		case "SPAN":
+		case "DIV":
+			if (a_node.childNodes.length)
+				processHighlightChildren(a_node);
+			else
+				a_node.innerHTML = a_node.innerHTML.replace(a_regex, 'span class="highlight">$1</span>');
+		case "#TEXT":
+				if (!a_node.nodeValue)
+					return;
+				a_node.nodeValue = a_node.nodeValue.replace(a_regex, '<span class="highlight">$1</span>');
+				a_node.parentElement.innerHTML = a_node.parentElement.innerHTML.replace(/&lt;span class="highlight"&gt;([^<&]*)&lt;\/span&gt;/ig, '<span class="highlight">$1</span>');
+		default:
+			return "";
+	}
+}
+// Supporting functions
+// Left pad (using with timestamps)
+String.prototype.lpad = function(padString, length) {
+	var str = this;
+    while (str.length < length)
+        str = padString + str;
+    return str;
+}
+// Encode regex (using creating new RegExp from user input)
+function encodeRE(s) { return s.replace(/([.*+?^${}()|[\]\/\\])/g, '\\$1') }
+</script>
+</head>
+

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language type="english">
+	
+<!-- Text for console and message windows -->
+	
+	<translation from="infoCreateConn" to="Creating connection &quot;%username%&quot;"/>
+	<translation from="infoConnect" to="Connecting to %medium% as &quot;%username%&quot;."/>
+	<translation from="infoReconn" to ="Reconnecting to %medium% as &quot;%username%&quot;."/>
+	<translation from="infoConnSucceed" to="You have successfully connected to %medium%."/>
+	<translation from="infoDisconnected" to="You have been disconnected."/>
+	<translation from="infoErrorAuth" to="Wrong login and password combination."/>
+	<translation from="infoErrorAuthAlert" to="Connection to %medium% has failed - invalid password.  Click here to reset it."/>
+	<translation from="infoErrorVerifyCredentials" to="Connection to %medium% has failed - error when attempting to verify credentials."/>
+	<translation from="infoErrorForbidden" to="The request is understood, but it has been refused due to update limits."/>
+	<translation from="infoErrorServiceUnavailable" to="The Twitter servers are up, but overloaded with requests. Try again later."/>
+	<translation from="infoErrorTweetWasNotSent" to="Your tweet could not be delivered."/>
+	<translation from="infoErrorUrlWasNotShortened" to="Url (%url%) could not be successfully shortened."/>
+	<translation from="infoErrorUrlWasNotShortenedWithErrorDescription" to="Url (%url%) could not be successfully shortened. Error: %error_string%"/>
+	<translation from="infoErrorImageWasNotUploaded" to="An image in your tweet could not be successfully uploaded."/>
+	<!--<translation from="infoErrorCommunicationWithTwitterServer" to="There was an error communicating with the Twitter servers and one of your previous messages was not delievered."/> -->
+	<translation from="infoErrorTweetCouldnotBePostedBecauseTextWasModified" to="The tweet could not be posted containing an image because a plugin has modified the text and the image was no longer found."/>
+	<translation from="infoSystrayAlertThereAreNumNewTweets" to="There are %num% new tweets."/>
+	<translation from="infoSystrayAlertThereAreNumNewTweetsRelatedToTheList" to="There are %num% new tweets related to the list: %list%"/>
+	<translation from="infoSystrayAlertThereIsNewTwitterTrend" to="New trending topic: "/>
+	<translation from="infoSystrayAlertThereAreNewTwitterTrends" to="There are new Twitter Trends"/>
+	<translation from="infoSystrayAlertRegardingTheSearchTerm" to="Regarding the search term: "/>
+	<translation from="infoSystrayAlertThereAreNewTweetsRelatedToTheSearchTerm" to="There are %num% new tweets related to the search term: %term%"/>
+	<translation from="infoSystrayAlertThereAreNumNewDirectMessages" to="There are %num% new direct messages"/>
+	<translation from="infoSystrayAlertTwitterNeedsToReauthToGetRightsToAccessToDM" to="Twitter needs you to reauthorize in order to receive direct messages in Trillian"/>
+	<translation from="infoMessage" to="message"/>
+	<translation from="infoReplies" to="replies to "/>
+	<translation from="infoTweets" to="tweets: "/>
+	<translation from="infoTweet" to="Tweet"/>
+	<translation from="infoChangeTweet" to="You are now set as"/>
+
+	<translation from="infoDirectMessageWindow" to="This window allows you to send direct messages to %contact%"/>
+	<translation from="infoAccountMessageWindow" to="Messages you type into this window will be immediately set as your current Tweet"/>
+	<translation from="infoReplyToContact" to="This is a public reply to %contact%"/>
+	<translation from="infoReplyToContactToTheFollowingTweet" to="This is a public reply to %contact% to the following tweet &quot;%tweet%&quot;"/>
+
+	<translation from="infoConnectionSettingsTitle" to="Fine tune connection with the Twitter server"/>
+	<translation from="infoConnectionSettingsProxyHeader" to="Proxy"/>
+	<translation from="Twitter support." to="Twitter support."/>
+	<translation from="Connection Settings" to="Connection Settings"/>
+	<translation from="Organization" to="Organization"/>
+	<translation from="Miscellaneous" to="Miscellaneous"/>
+	<translation from="Manage the organization settings for this account" to="Manage the organization settings for this account"/>
+	<translation from="Manage options for this account" to="Manage options for this account"/>
+	
+	<translation from="infoMsgLenExceed" to="Reason: Maximum length (%length%) exceeded."/>
+
+<!-- Text for captions and tooltips-->	
+	
+	<translation from="Location" to="Location"/>
+	<translation from="Current Tweet" to="Current Tweet"/>
+	<translation from="Last tweets" to="Last Tweets"/>
+	<translation from="Recent tweets" to="Recent Tweets"/>
+	<translation from="ViewMore" to="View %num% More"/>
+	<translation from="ViewMoreNoNum" to="View more on Twitter"/>
+	<translation from="Trending topics" to="Trending topics"/>
+	<translation from="Twitter Trends" to="Twitter Trends"/>
+	<translation from="Follow trillianastra on Twitter" to="Follow trillianastra on Twitter"/>
+	<translation from="Friends" to="Friends"/>
+	<translation from="Favorites" to="Favorites"/>
+	<translation from="Twitter" to="Twitter"/>
+	<translation from="Saved Searches" to="Saved Searches"/>
+	<translation from="Contacts" to="Contacts"/>
+	<translation from="Following" to="Following"/>
+	<translation from="Followers" to="Followers"/>
+	<translation from="Lists" to="Lists"/>
+	<translation from="Mentions" to="Mentions"/>
+	<translation from="Type to Quick Tweet" to="Tweet ..."/>
+	<translation from="Type here for quick retweet" to="Type here for quick retweet"/>
+	<translation from="Type here for quick reply" to="Type here for quick reply"/>
+	<translation from="Type here to answer" to="Type here to answer"/>
+	<translation from="TweetEditCountRelative" to="Tweet (%edit.count_relative%)"/>
+	<translation from="ReplyEditCountRelative" to="Reply (%edit.count_relative%)"/>
+	<translation from="RetweetEditCountRelative" to="Retweet (%edit.count_relative%)"/>
+	<translation from="MessageEditCountRelative" to="Send (%edit.count_relative%)"/>
+	<translation from="on Twitter" to="on Twitter"/>
+	<translation from="on Twitter (Friends)" to="on Twitter (Friends)"/>
+	<translation from="New Twitter Trend" to="New Twitter Trend"/>
+	<translation from="Direct Messages" to="Direct Messages"/>
+	
+	<translation from="FollowingGroupEmptyStr" to="No friends found"/>
+	<translation from="FollowersGroupEmptyStr" to="No followers found"/>
+	<translation from="DirectMessagesGroupEmptyStr" to="No direct messages found"/>
+	<translation from="LoadingStr" to="Loading..."/>
+	<translation from="RefreshingStr" to="Refreshing..."/>
+	<translation from="NoTweetsFoundStr" to="No tweets found"/>
+	<translation from="ErrorRetrievingLastTweetsStr" to="Error retrieving last tweets"/>
+	<translation from="ErrorRetrievingFollowingStr" to="Error retrieving list of friends"/>
+	<translation from="ErrorRetrievingFollowersStr" to="Error retrieving list of followers"/>
+	<translation from="ErrorRetrievingDirectMessagesStr" to="Error retrieving direct messages"/>
+
+	
+<!-- Account creating -->
+	
+	<translation from="prefsConnectionInvitation" to="Enter your Twitter username below, and click connect"/>
+	<translation from="prefsConnectionAutoConnect" to="Automatically connect to this account at startup"/>
+	<translation from="prefsConnectionUsername" to="Username"/>
+	
+<!--Connection Settings-->
+	<translation from="prefsConnectionSettingsUseDefaultProxyChoice" to="Use default proxy settings"/>
+	<translation from="prefsConnectionSettingsUseManualProxyChoice" to="Manually specify proxy"/>
+
+	<translation from="prefsConnectionSettingsProxyProtocol" to="Protocol:"/>
+	<translation from="prefsConnectionSettingsProxyProtocolNone" to="None"/>
+	<translation from="prefsConnectionSettingsProxyProtocolHTTP" to="HTTP"/>
+	<translation from="prefsConnectionSettingsProxyProtocolSOCKS4" to="SOCKS4"/>
+	<translation from="prefsConnectionSettingsProxyProtocolSOCKS5" to="SOCKS5"/>
+
+	<translation from="prefsConnectionSettingsProxyHost" to="Host:"/>
+	<translation from="prefsConnectionSettingsProxyPort" to="Port:"/>
+	<translation from="prefsConnectionSettingsProxyUsername" to="Username:"/>
+	<translation from="prefsConnectionSettingsProxyPassword" to="Password:"/>
+	
+<!--Organization Settings-->	
+	<translation from="prefsOrganizationPinTheFollowingToMyContactList" to="Pin the following to my Contact List:"/>
+	<translation from="prefsOrganizationPinFriendsTweets" to="Friends' tweets"/>
+	<translation from="prefsOrganizationPinReplies" to="@Replies"/>
+	<translation from="prefsOrganizationPinFavorites" to="Favorites"/>
+	<translation from="prefsOrganizationPinDirectMessages" to="Direct Messages"/>
+	<translation from="prefsOrganizationPinTwitterList" to="%name% List"/>
+	<translation from="prefsOrganizationShowTwitterTrends" to="Show Twitter trends"/>
+	<translation from="prefsOrganizationOnlyShowOneItemPerUser" to="Only show one item per user"/>
+	<translation from="prefsOrganizationOrganization" to="Organization"/>
+	<translation from="prefsOrganizationTwitterLists" to="Twitter Lists"/>
+	<translation from="prefsOrganizationIgnoreList" to="Ignore List"/>
+	<translation from="prefsOrganizationIgnoreKeywordList" to="Ignore Keyword List"/>
+	<translation from="prefsOrganizationSearchList" to="Search List"/>
+	<translation from="prefsButtonVarShowLabelAdd" to="Add..."/>
+	<translation from="prefsButtonVarHideLabelCancel" to="Cancel"/>
+	<translation from="prefsButtonVarAddLabelAdd" to="Add"/>
+	<translation from="prefsButtonVarRemoveLabelRemove" to="Remove"/>
+	<translation from="prefsOrganizationListsVarItemLabelNickName" to="Nick name:"/>
+	<translation from="prefsOrganizationListsVarItemLabelSearchTerm" to="Search term:"/>
+	<translation from="prefsOrganizationListsVarItemLabelKeyword" to="Keyword:"/>
+	<translation from="prefsOrganizationListsVarItemLabelListName" to="List name:"/>
+	
+<!--Miscellaneous Setting -->
+	<translation from="prefsMiscellaneousAllReplies" to="All @Replies"/>
+	<translation from="prefsMiscellaneousFollowingReplies" to="@replies to the people I&apos;m following"/>
+	<translation from="prefsMiscellaneousNoReplies" to="No @Replies"/>
+	<translation from="prefsMiscellaneousReplies" to="@Replies"/>
+	<translation from="prefsMiscellaneousTweets" to="Tweets"/>
+	<translation from="prefsMiscellaneousTweetsUpdate" to="Update me about Tweets every %prefsMiscellaneousTweetsUpdate% minutes"/>
+	<translation from="prefsMiscellaneousUseUserStream" to="Instantly stream updates when they become available"/>
+	<translation from="prefsMiscellaneousUrl" to="URLs"/>
+	<translation from="prefsMiscellaneousUrlShorteningUsing" to="When shortening web addresses, use"/>
+	<translation from="prefsMiscellaneousUrlShorteningUsingTinyURL" to="TinyURL"/>
+	<translation from="prefsMiscellaneousUrlShorteningUsingBitLy" to="bit.ly"/>
+	<translation from="prefsMiscellaneousUrlShorteningUsername" to="Username (bit.ly only):"/>
+	<translation from="prefsMiscellaneousUrlShorteningPassword" to="API Key:"/>
+	<translation from="prefsMiscellaneousUrlShorteningShorten" to="Shorten web addresses"/>
+	<translation from="prefsMiscellaneousUrlShorteningShortenAlways" to="Always"/>
+	<translation from="prefsMiscellaneousUrlShorteningShortenWhenNeeded" to="When needed"/>
+	<translation from="prefsMiscellaneousUrlShorteningShortenNever" to="Never"/>
+	<translation from="prefsMiscellaneousTwitpic" to="Include images in my tweets using Twitpic"/>
+	<translation from="prefsMiscellaneousRetweets" to="Retweets"/>
+	<translation from="prefsMiscellaneousUseRetweetWithModifying" to="Allow modification of Retweets"/>
+	<translation from="prefsMiscellaneousMaxTweetNumberOnContactList" to="Show %prefsMiscellaneousMaxTweetNumberOnContactList% Tweets per group on Contact List"/>
+	<translation from="prefsMiscellaneousNotifyMeWhen" to="Notify me when:"/>
+	<translation from="prefsMiscellaneousNotifyMeWhenSomeonePostsNewTweet" to="Someone posts a new tweet"/>
+	<translation from="prefsMiscellaneousNotifyMeWhenNewTrendEmerges" to="A new trend emerges"/>
+	<translation from="prefsMiscellaneousNotifyMeWhenNewTweetsMatchASearchItem" to="New tweets match a search item"/>
+	<translation from="prefsMiscellaneousOptions" to="Options"/>
+	<translation from="prefsMiscellaneousShowMyAccountInContactList" to="Show my account in the contact list"/>
+	<translation from="prefsMiscellaneousAdvanced" to="Advanced"/>
+	<translation from="prefsMiscellaneousHideConnectionOfInactiveAccount" to="When this account is not active, hide its icon from the identity panel"/>
+
+
+<!-- menu -->
+	<translation from="menuConnectionGoToMyTwitterPage" to="Twitter Home"/>
+	<translation from="menuConnectionGoToMyTwitterProfilePage" to="Twitter Profile"/>
+	<translation from="menuConnectionGoToMyTwitterFavoritesPage" to="Twitter Favorites"/>
+	<translation from="menuConnectionDisconnect" to="Disconnect"/>
+	<translation from="menuConnectionReconnect" to="Reconnect"/>
+	<translation from="menuWebSectionRefresh" to="Refresh"/>
+	<translation from="menuWebSectionRemove" to="Remove"/>
+	<translation from="menuWebSectionFollowUser" to="Follow"/>
+	<translation from="menuWebSectionUnfollowUser" to="Unfollow"/>
+	<translation from="menuFollowLinks" to="Follow Links"/>
+	<translation from="menuFollow" to="Follow"/>
+	<translation from="menuNoThanks" to="No thanks"/>
+	<translation from="menuAddToSearch" to="Add to Search"/>
+	<translation from="menuAddAsASearch" to="Add as a search"/>
+	<translation from="menuSwitchToDirectMessage" to="Switch to Direct Message"/>
+	<translation from="menuSwitchToPublicReply" to="Switch to Public Reply"/>
+	<translation from="menuStopReplying" to="Do not mark this message as a reply to the tweet"/>
+	<translation from="menuHide" to="Hide"/>
+	<translation from="menuNewSearch" to="New Search..."/>
+	<translation from="menuNewTwitterList" to="New Twitter List..."/>
+	<translation from="menuPinFriendsTweetsToContactList" to="Pin Friends' Tweets to Contact List"/>
+	<translation from="menuPinToContactList" to="Pin to Contact List"/>
+	<translation from="menuTryAgain" to="Try Again"/>
+	<translation from="menuEdit" to="Edit"/>
+	<translation from="menuReply" to="Reply..."/>
+	<translation from="menuReplyToAll" to="Reply to all..."/>
+	<translation from="menuRetweetModification" to="Retweet..."/>
+	<translation from="menuRetweet" to="Retweet"/>
+	<translation from="menuCopy" to="Copy"/>
+	<translation from="menuMarkAsFavorite" to="Mark as Favorite"/>
+	<translation from="menuOpenInBrowser" to="Open in Browser"/>
+	<translation from="menuDirectMessageContact" to="Direct Message..."/>
+	<translation from="menuIgnoreContact" to="Ignore"/>
+	<translation from="menuMoreSettings" to="More Settings"/>
+	<translation from="menuDelete" to="Delete"/>
+	<translation from="menuAddContactToTwitterLists" to="Add %contact% to"/>
+	<translation from="menuPrivate" to="Private"/>
+	<translation from="menuReauthorize" to="Reauthorize"/>
+	
+	
+	<translation from="buttonRetweetTooltip" to="Retweet"/>
+	<translation from="buttonFavoriteTooltip" to="Favorite this tweet"/>
+	<translation from="buttonUnfavoriteTooltip" to="Un-favorite this tweet"/>
+	
+	
+<!--Miscellaneous-->
+	<translation from="from" to="from"/>
+	<translation from="inReplyTo" to="in reply to"/>
+
+	<translation from="infoAccountRemoveDialogText" to="Permanently remove account &quot;%username%&quot; from your list?"/>
+	<translation from="infoAccountRemoveDialogCaption" to="Trillian"/>
+	
+	<translation from="infoTweetRemoveDialogText" to="Sure you want to delete this tweet?"/>
+	<translation from="infoTweetRemoveDialogCaption" to="Twitter"/>
+	
+	<translation from="infoFollowTrillianAstraDialogText" to="Would you like to follow trillianastra on Twitter and receive updates about things going on in the Trillian community?"/>
+	<translation from="infoFollowTrillianAstraDialogCaption" to="Follow trillianastra on Twitter?"/>
+	
+	<translation from="second ago at" to="second ago at"/>
+	<translation from="seconds ago at" to="seconds ago at"/>
+	<translation from="minute ago at" to="minute ago at"/>
+	<translation from="minutes ago at" to="minutes ago at"/>
+	<translation from="hour ago at" to="hour ago at"/>
+	<translation from="hours ago at" to="hours ago at"/>
+	
+</language>
