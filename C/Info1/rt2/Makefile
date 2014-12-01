@@ -6,7 +6,7 @@
 #    By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/22 14:52:23 by sraccah           #+#    #+#              #
-#    Updated: 2014/11/29 01:52:12 by msarr            ###   ########.fr        #
+#    Updated: 2014/12/01 02:52:09 by msarr            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,11 +16,20 @@ MAKE = make
 CC = gcc
 RM = /bin/rm
 LDIR = libft/
-SDIR = srcs/sphere/
+SDIR = srcs/
 LIDIR = srcs/light/
+PDIR = srcs/parser/
+VDIR = srcs/vector/
+RDIR = srcs/ray/
+ODIR = srcs/object/
 
-SRC = $(SDIR)init.c $(SDIR)ray_s.c $(SDIR)set.c \
-	  $(LIDIR)light.c srcs/main.c srcs/raytracer.c
+SRC = $(SDIR)main.c $(SDIR)expose.c \
+	  $(VDIR)vector.c \
+	  $(LIDIR)light.c \
+	  $(ODIR)center.c $(ODIR)sphere.c\
+	  $(PDIR)init.c $(PDIR)get_cam.c $(PDIR)get_pos.c $(PDIR)get_nbr.c \
+	  $(PDIR)get_file.c $(PDIR)get_sphere.c $(PDIR)get_obj.c $(PDIR)get_spot.c\
+	  $(RDIR)raytracer.c $(RDIR)color.c $(RDIR)noise.c $(RDIR)shaddow.c $(RDIR)reflection.c
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes

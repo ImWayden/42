@@ -5,67 +5,61 @@
 #                                                     +:+ +:+         +:+      #
 #    By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2014/01/22 14:52:23 by sraccah           #+#    #+#              #
-#    Updated: 2014/11/29 01:52:12 by msarr            ###   ########.fr        #
+#    Created: 2013/12/11 16:57:48 by sraccah           #+#    #+#              #
+#    Updated: 2014/07/01 19:15:52 by sraccah          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = raytracer
+NAME = fdf
 
 MAKE = make
 CC = gcc
 RM = /bin/rm
 LDIR = libft/
-SDIR = srcs/sphere/
-LIDIR = srcs/light/
+SDIR = srcs/
 
-SRC = $(SDIR)init.c $(SDIR)ray_s.c $(SDIR)set.c \
-	  $(LIDIR)light.c srcs/main.c srcs/raytracer.c
+SRC = $(SDIR)main.c \
+		$(SDIR)lines.c
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes
+NAME_MINILIBX = mlx
 LIB = ./libft/libft.a
 DIR_LIBS = /opt/X11/lib
-LDFLAGS += -L$(DIR_LIBS) -lmlx -lXext -lX11 -lm
+LDFLAGS += -L$(DIR_LIBS) -lmlx -lXext -lX11
 CFLAGS = -Wall -Wextra -Werror
+R = \033[31;1m
+G = \033[32;1m
+Y = \033[33;1m
+B = \033[34;1m
+P = \033[35;1m
+C = \033[36;1m
+Z = \033[0m
+A = $(R)[$(B)$(NAME)$(R)]----->\033[0m
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@echo "\033[31;1m"
-	@echo -n '---> Creating the Libft... <---'
-	@echo "\033[0m"
-	$(MAKE) re -C $(LDIR)
-	@echo "\033[31;1m"
-	@echo -n '---> Compilation in progress... <---'
-	@echo "\033[0m"
-	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LDFLAGS) $(LIB)
-	@echo "\033[1;32m"
-	@echo -n '---> DONE ! <---'
-	@echo "\033[0m"
+	@$(MAKE) re -C $(LDIR)
+	@$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LDFLAGS) $(LIB)
+	@echo "$(A)$(R)[$(Y)Compilation$(R):$(G) DONE$(R)]$(Z)"
+	@echo "\n$(Y)-----------------------------------"
+	@echo "$(Y)---------- $(R)[$(B)$(NAME) $(G)created$(R)]$(Y) ----------$(Z)"
+	@echo "$(Y)-----------------------------------"
+	@echo "\n$(Y)------------ $(P)Enjoy $(C);)$(Y) -------------$(Z)\n"
 
 %.o:%.c
 	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 clean:
-	@echo "\033[31;1m"
-	@echo -n '---> Clean : <---'
-	@echo "\033[0m"
 	$(RM) -rf $(OBJ)
 	$(MAKE) clean -C $(LDIR)
-	@echo "\033[1;32m"
-	@echo -n '---> DONE ! <---'
-	@echo "\033[0m"
+	@echo "$(R)[$(Y)Clean$(R): $(G)DONE$(R)]$(Z)"
 
 fclean: clean
-	@echo "\033[31;1m"
-	@echo -n '---> FClean : <---'
-	@echo "\033[0m"
 	$(RM) -rf $(NAME)
 	$(MAKE) fclean -C $(LDIR)
-	@echo "\033[1;32m"
-	@echo -n '---> DONE ! <---'
-	@echo "\033[0m"
+	@echo "$(R)[$(Y)Fclean$(R): $(G)DONE$(R)]$(Z)"
 
 re: fclean all
 
