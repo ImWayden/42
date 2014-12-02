@@ -10,16 +10,25 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lemin.h"
+#include "lemin.h"
+#include "fdf.h"
 
 int					main(void)
 {
 	t_lem			*lem;
+	t_coord			coord;
+	t_env			env;
 
 	if ((lem = parse()))
 	{
 		lem->end->dist = 0;
 		lemin(lem);
+		coord.x = 24;
+		coord.y =  24;
+		env.e_x = lem->end->x;
+		env.e_y = lem->end->y;
+		env.room = lem->tab;
+		fdf(env, coord);
 	}
 	return (0);
 }

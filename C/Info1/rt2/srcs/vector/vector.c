@@ -12,15 +12,6 @@
 
 #include "Rt.h"
 
-double invsqrt_1(double y)
-{
-    double xhalf = ( double )0.5 * y;
-    long long i = *( long long* )( &y );
-    i = 0x5fe6ec85e7de30daLL - ( i >> 1 );//LL suffix for (long long) type for GCC
-    y = *( double* )( &i );
-    y = y * ( ( double )1.5 - xhalf * y * y );
-    return y;
-}
 
 t_vect		add2(t_vect a, t_vect b, t_vect c)
 {
@@ -56,8 +47,10 @@ t_vect		unit(t_vect v)
 {
 	double is;
 
-	is = invsqrt_1(v.x * v.x + v.y * v.y + v.z * v.z);
-	return mult2(v, is);
+	if ((is = length(v)))
+		return (mult2(v, 1/is));
+	else
+		return (v);
 }
 
 t_vect		cross(t_vect a, t_vect b)

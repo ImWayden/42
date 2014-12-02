@@ -51,19 +51,10 @@ t_ray        new_ray(t_vect orig, t_vect dir)
 
 t_ray		pixel(t_cam *c, size_t x, size_t y)
 {
-	double	dy;
-	double	dx;
-	double	py;
-	double	px;
-	t_vect	p;
-	t_vect	u_r;
+	t_vect	dir;
 
-	dy = 1.0;
-	dx = 1.0;
-	py = (- c->height / 2.0) + dy * ((double)y + 0.5);
-	px = (- c->width / 2.0) + dx * ((double)x + 0.5);
-	p = add2(c->center, mult2(c->pdir_x, px), mult2(c->pdir_y, py));
-	u_r = unit(sub(p, c->pos));
+	dir.z = cam->focal;
+	dir.z = cam->;
 	u_r = new(x, y, 0);
 	return (new_ray(c->pos, u_r));
 }

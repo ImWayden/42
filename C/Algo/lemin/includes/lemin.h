@@ -31,6 +31,9 @@ typedef struct		s_link
 
 typedef struct		s_room
 {
+	int				x;
+	int				y;
+	int				z;
 	int				dist;
 	int				step;
 	int				lem;
@@ -52,7 +55,7 @@ typedef struct		s_lem
 
 t_lem				*parse();
 t_lem				*newlem(void);
-t_room				*new_room(char *str);
+t_room				*new_room(char *str, int x, int y);
 int					get_door(t_lem *lem, int flag);
 t_link				*new_link(t_room *room);
 int					way(t_room *room, t_lem *lem);

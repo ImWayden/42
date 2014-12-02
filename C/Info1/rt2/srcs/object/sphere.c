@@ -15,9 +15,10 @@
 int				sphere_inter(t_ray *ray, t_scene *sphere, double *dist)
 {
 	double		a;
-	t_vect		ro_sc;
 	double		b;
 	double		c;
+
+	t_vect		ro_sc;
 	double		disc;
 	double		distSqrt;
 	double		q;

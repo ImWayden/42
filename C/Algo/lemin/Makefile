@@ -16,13 +16,17 @@ CC = gcc
 RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
+FDIR = fdf/
 
 SRC = $(SDIR)link.c $(SDIR)parser.c $(SDIR)room.c $(SDIR)way.c $(SDIR)lemin.c \
+	  $(FDIR)init.c $(FDIR)mlx.c $(FDIR)transform.c $(FDIR)fdf.c \
 	  $(SDIR)main.c
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)/includes
 LIB = ./libft/libft.a
+DIR_LIBS = /opt/X11/lib
+LDFLAGS += -L$(DIR_LIBS) -lmlx -lXext -lX11
 CFLAGS = -Wall -Wextra -Werror -g 
 
 all: $(NAME)
@@ -35,8 +39,7 @@ $(NAME): $(OBJ)
 	@echo "\033[31;1m"
 	@echo -n '---> Compilation in progress... <---'
 	@echo "\033[0m"
-	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LIB)
-	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LIB)
+	$(CC) $(CFLAGS) $(INC) $^ -o $(NAME) $(LDFLAGS) $(LIB)
 	@echo "\033[1;32m"
 	@echo -n '---> DONE ! <---'
 	@echo "\033[0m"

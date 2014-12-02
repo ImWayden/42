@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-t_room		*new_room(char *str)
+t_room		*new_room(char *str, int x, int y)
 {
 	t_room	*room;
 
@@ -23,6 +23,9 @@ t_room		*new_room(char *str)
 		room->dist = 100000000;
 		room->lem = 0;
 		room->step = 0;
+		room->x = x;
+		room->y = y;
+		room->z = 0;
 		room->lst = NULL;
 	}
 	return (room);
@@ -34,7 +37,7 @@ int			get_room(char *str, t_lem *lem, int flag)
 
 	if ((tab = ft_strsplit(str, ' ')) && tab[0])
 	{
-		lem->tab[hash(tab[0])] = new_room(tab[0]);
+		lem->tab[hash(tab[0])] = new_room(tab[0], ft_atoi(tab[1]), ft_atoi(tab[2]));
 		if (flag == 1)
 			lem->start = lem->tab[hash(tab[0])];
 		if (flag == 2)
