@@ -18,6 +18,7 @@ static char		**ft_array(char *s, char c)
 	char		**split;
 
 	j = 0;
+	split = NULL;
 	while (s && *s)
 	{
 		while (*s && *s == c)
@@ -27,7 +28,7 @@ static char		**ft_array(char *s, char c)
 		while (*s && *s != c)
 			s++;
 	}
-	if ((split = (char **)malloc(sizeof(*split) * (j + 1))))
+	if ((j) && (split = (char **)malloc(sizeof(char *) * (j + 1))))
 		split[j] = NULL;
 	return (split);
 }
@@ -59,7 +60,8 @@ char			**ft_strsplit(char const *s, int c)
 	{
 		j = c;
 		str = ft_split((char *)str, &j);
-		split[i] = ft_strsub(str, 0, j);
+		if (j)
+			split[i] = ft_strsub(str, 0, j);
 		str = str + j;
 		i++;
 	}

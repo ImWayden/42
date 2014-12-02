@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   ft_deltab.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/25 18:07:57 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/02 13:34:59 by mozzie           ###   ########.fr       */
+/*   Created: 2014/06/25 12:06:00 by msarr             #+#    #+#             */
+/*   Updated: 2014/06/25 12:06:03 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/libft.h"
 
-void				*ft_memchr(const void *s, int c, size_t n)
+void			ft_deltab(char ***str)
 {
-	unsigned char	*tmp;
+	char		**tab;
+	int			i;
 
-	tmp = (unsigned char *) s;
-	while (n && tmp)
+	if (str && *str)
 	{
-		if (*tmp == (unsigned char) c)
-			return ((void *) tmp);
-		else
-			tmp++;
-		n--;
+		tab = *str;
+		i = 0;
+		while (tab && tab[i])
+		{
+			ft_memdel((void **)&(tab[i]));
+			i++;
+		}
+		ft_memdel((void **)str);
 	}
-	return (NULL);
 }

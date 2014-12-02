@@ -6,80 +6,34 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/19 13:59:59 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/19 17:03:47 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/12/02 03:01:57 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lemin.h"
+#include "lemin.h"
 
-int					has_end(t_lemroom *room, t_lem *lem)
+int		way(t_room *room, t_lem *lem)
 {
-	int				i;
+	t_link	*lnk;
+	t_room	*r;
 
-	i = 0;
-	while (room && room->tab && room->tab[i])
+	lnk = room->lst;
+	while (lnk)
 	{
-		if (!ft_strcmp((room->tab[i])->name, lem->end))
+		r = lnk->room;
+		if (r == lem->start)
 		{
-			deltabroom(&(room->tab));
-			room->tab = alloctabroom(1);
-			(room->tab)[0] = lem->lem_end;
-			return (1);
+			if (room->dist < lem->start->dist)
+				lem->start->dist = room->dist + 1;
 		}
-		i++;
+		if (r == lem->end)
+			;
+		else if (r->dist > 10000)
+		{
+			r->dist = room->dist + 1;
+			way(r, lem);
+		}
+		lnk = lnk->next;
 	}
 	return (0);
-}
-
-void				weight(t_lemroom *room, t_lem *lem)
-{
-	int				i;
-
-	i = 0;
-	while (room && room->tab && (room->tab)[i])
-	{
-		weight((room->tab)[i], lem);
-		i++;
-	}
-	if (room && room->tab && room->tab[0])
-	{
-		if (!ft_strcmp((room->tab[0])->name, lem->end))
-			room->dist = 1;
-		else
-		{
-			sort(room->tab);
-			room->dist = ((room->tab)[0])->dist + 1;
-		}
-	}
-}
-
-void				purge(t_lemroom **tab, t_lem *lem)
-{
-	int				i;
-
-	i = 0;
-	while (tab && tab[i])
-	{
-		lem->tab[hash(tab[i]->name)] = NULL;
-		i++;
-	}
-}
-
-t_lemroom			**allconnect(t_lemroom **room, t_lem *lem)
-{
-	int				i;
-	t_lemroom		**tab;
-	t_lemroom		**tmp;
-
-	i = 0;
-	tab = NULL;
-	while (room && room[i])
-	{
-		connect(room[i], lem);
-		tmp = room[i]->tab;
-		if (tmp && tmp[0] && ft_strcmp(tmp[0]->name, lem->end))
-			tab = merge(&tab, tmp);
-		i++;
-	}
-	return (tab);
 }

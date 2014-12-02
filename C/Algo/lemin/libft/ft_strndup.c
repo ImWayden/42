@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hashcode.c                                         :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/03/10 14:57:16 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/10 14:57:19 by msarr            ###   ########.fr       */
+/*   Created: 2014/11/02 19:34:45 by msarr             #+#    #+#             */
+/*   Updated: 2014/11/02 19:34:47 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/libft.h"
 
-int					hash(char *str)
+char		*ft_strndup(const char *s1, size_t n)
 {
-	int				code;
-	int				len;
-	int				i;
+	int		i;
+	char	*cpy;
 
-	len = ft_strlen(str);
-	code = 7;
+	cpy = ft_strnew(n);
 	i = 0;
-	while (i < len)
+	while (s1[i] && n)
 	{
-		code = str[i] + 31 * code;
+		cpy[i] = s1[i];
 		i++;
+		n--;
 	}
-	return (code % 1000);
+	return (cpy);
 }

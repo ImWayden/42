@@ -6,68 +6,60 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/19 14:43:19 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/12/02 03:51:32 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef		LEMIN_H
-# define	LEMIN_H
+#ifndef LEMIN_H
+# define LEMIN_H
 
 # include <errno.h>
 # include <stdio.h>
 # include "libft.h"
-# include "get_next_line.h"
 
 /*
 ** Lists and Strutures
 */
 
-typedef struct			s_lemroom
-{
-	int					dist;
-	int					step;
-	int					lem;
-	char				*name;
-	struct s_lemroom	**tab;
-}						t_lemroom;
+typedef struct		s_room  t_room;
 
-typedef struct			s_lem
+typedef struct		s_link
 {
-	t_lemroom			*tab[1000];
-	int					j;
-	char				*start;
-	t_lemroom			*lem_start;
-	t_lemroom			*lem_end;
-	char				*end;
-}						t_lem;
+	t_room			*room;
+	struct s_link	*next;
+}					t_link;
+
+typedef struct		s_room
+{
+	int				dist;
+	int				step;
+	int				lem;
+	char			*name;
+	struct s_link	*lst;
+}					t_room;
+
+typedef struct		s_lem
+{
+	t_room			*tab[1000];
+	int				nbr;
+	t_room			*start;
+	t_room			*end;
+}					t_lem;
 
 /*
 ** Functions
 */
 
-t_lem					*parse();
-t_lem					*newlem(void);
-void					lemin(t_lem *lem);
-void					dellem(t_lem **lem);
-t_lemroom				**newtabroom(int i);
-t_lemroom				**alloctabroom(int i);
-t_lemroom				*allocroom(char *str);
-void					delroom(t_lemroom **room);
-void					sort(t_lemroom **tabroom);
-void					moove(t_lemroom **tab, int k);
-void					deltabroom(t_lemroom ***room);
-int						tabroomlen(t_lemroom **tabroom);
-void					purge(t_lemroom **tab, t_lem *lem);
-void					weight(t_lemroom *room, t_lem *lem);
-void					connect(t_lemroom *room, t_lem *lem);
-int						get_room(char *str, t_lem *pars, int flag);
-int						get_tab(char *str, t_lem *pars);
-int						get_start_end(t_getline *list, t_lem *pars);
-t_lemroom				**allconnect(t_lemroom **room, t_lem *lem);
-void					addroom(t_lemroom *room, char *str);
-void					putroom(t_lemroom *room, t_lemroom *room1);
-void					send(t_lemroom *room, t_lem *pars);
-int						has_end(t_lemroom *room, t_lem *lem);
-t_lemroom				**merge(t_lemroom ***tabroom, t_lemroom **tabroom1);
+t_lem				*parse();
+t_lem				*newlem(void);
+t_room				*new_room(char *str);
+int					get_door(t_lem *lem, int flag);
+t_link				*new_link(t_room *room);
+int					way(t_room *room, t_lem *lem);
+int					add_link(char *str, t_lem *lem);
+int					hash(char *str);
+void				lemin(t_lem *lem);
+int					get_room(char *str, t_lem *lem, int flag);
+
 
 #endif

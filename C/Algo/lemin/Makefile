@@ -6,7 +6,7 @@
 #    By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/22 14:52:23 by msarr             #+#    #+#              #
-#    Updated: 2014/06/17 01:18:10 by mozzie           ###   ########.fr        #
+#    Updated: 2014/12/02 03:52:21 by msarr            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = lemin
@@ -17,8 +17,8 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 
-SRC = $(SDIR)lib.c $(SDIR)parser.c $(SDIR)room.c $(SDIR)room1.c $(SDIR)get.c\
-	  $(SDIR)lemin.c $(SDIR)way.c $(SDIR)main.c
+SRC = $(SDIR)link.c $(SDIR)parser.c $(SDIR)room.c $(SDIR)way.c $(SDIR)lemin.c \
+	  $(SDIR)main.c
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)/includes

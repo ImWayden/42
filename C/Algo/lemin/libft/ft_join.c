@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_join.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/21 15:20:37 by msarr             #+#    #+#             */
-/*   Updated: 2014/03/02 19:28:04 by mozzie           ###   ########.fr       */
+/*   Created: 2014/07/24 14:48:29 by msarr             #+#    #+#             */
+/*   Updated: 2014/07/24 14:48:31 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/libft.h"
 
-void	ft_putstr_fd(const char *s, int fd)
+void				ft_join(char **str1, char *str2)
 {
-	write(fd, s, ft_strlen(s));
+	char			*tmp;
+
+	tmp = *str1;
+	*str1 = ft_strjoin(*str1, str2);
+	ft_memdel((void **)&tmp);
 }

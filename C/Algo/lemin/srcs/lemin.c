@@ -6,111 +6,91 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/10 15:52:26 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/19 16:12:48 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/12/02 12:27:21 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-static void			transfert(t_lemroom *room, t_lem *pars, int j)
+void			putroom(t_room *room, t_room *room1)
 {
-	int				i;
+	ft_putstr("L");
+	ft_putnbr(room->lem);
+	ft_putstr("-");
+	ft_putstr(room1->name);
+	ft_putchar(' ');
+}
 
-	i = 0;
-	while (room && room->tab && room->lem && room->lem <= pars->j && room->tab[i])
+static void	transfert(t_room *room, t_lem *lem)
+{
+	t_link	*l;
+
+	l = room->lst;
+	while (l && room->lem <= lem->nbr)
 	{
-		if (room->tab[i] == pars->lem_end)
+		if (l->room == lem->end)
 		{
-			(pars->lem_end->lem)++;
-			putroom(room, room->tab[i]);
-			if (room != pars->lem_start)
+			lem->end->lem++;
+			putroom(room, l->room);
+			if (room != lem->start)
+				room->lem = 0;
+			else
+				(room->lem)++;
+			break;
+		}
+		else if (!l->room->lem && l->room->dist < room->dist)
+		{
+			l->room->lem = room->lem;
+			putroom(room, l->room);
+			if (room != lem->start)
 				room->lem = 0;
 			else
 				(room->lem)++;
 		}
-		else if (!(room->tab[i])->lem && (room->tab[i])->dist <= j)
-		{
-			room->tab[i]->lem = room->lem;
-			putroom(room, room->tab[i]);
-			if (room != pars->lem_start)
-				room->lem = 0;
-			else
-				(room->lem)++;
-		}
-		i++;
+		l = l->next;
 	}
 }
 
-void				connect(t_lemroom *room, t_lem *lem)
+static void	send(t_room *room, t_lem *lem)
 {
-	int				i;
-	t_lemroom		*room1;
+	t_link	*l;
 
-	if (has_end(room, lem))
-		return ;
-	if (room)
+	if (room != lem->end)
 	{
-		i = 0;
-		while (room && room->tab && room->tab[i])
+		l = room->lst;
+		while (l)
 		{
-			room1 = (room->tab[i]);
-			if (lem->tab[hash(room1->name)])
+			if (room->step > l->room->step && l->room != lem->start)
 			{
-				room->tab[i] = lem->tab[hash(room1->name)];
-				delroom(&room1);
-				i++;
+				l->room->step++;
+				send(l->room, lem);
 			}
-			else
-				moove(room->tab, i);
+			l = l->next;
 		}
-	}
-}
-
-void				send(t_lemroom *room, t_lem *pars)
-{
-	int				i;
-	int				j;
-
-	if (room != pars->lem_end)
-	{
-		i = 0;
-		while (room && room->tab && room->tab[i])
-		{
-			send(room->tab[i], pars);
-			i++;
-		}
-		if (pars->lem_start->lem <= pars->j)
-			j = (pars->j - pars->lem_start->lem + 1) * pars->lem_start->dist;
-		else
-			j = pars->lem_start->dist;
-		if (room->lem <= pars->j)
-			transfert(room, pars, j);
+		if (room->lem)
+			transfert(room, lem);
 	}
 }
 
 void				lemin(t_lem *lem)
 {
-	t_lemroom		*room;
-	t_lemroom		**tab;
+	t_room		*room;
 
 	ft_putstr("SENDING LEMS....\n");
-	room = lem->lem_start;
+	room = lem->start;
 	room->lem = 1;
-	connect(room, lem);
-	purge(room->tab, lem);
-	tab = room->tab;
-	while ((tab = allconnect(tab, lem)))
-		purge(tab, lem);
-	weight(room, lem);
+	ft_putnbr(lem->start->dist);
+	way(lem->end, lem);
+	ft_putnbr(lem->start->dist);
 	if (room->dist < 1000)
 	{
-		while (lem->lem_end->lem < lem->j)
+		while (lem->end->lem < lem->nbr)
 		{
+			room->step++;
 			send(room, lem);
 			ft_putendl(NULL);
 		}
 	}
 	else
-		ft_putcolorstr("ERROR\n", RED);
-	delroom(&room);
+		ft_putstr("ERROR\n");
 }
