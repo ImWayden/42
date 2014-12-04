@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/10/10 19:12:54 by msarr             #+#    #+#             */
-/*   Updated: 2014/10/11 01:51:05 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/03 22:54:23 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,30 @@ int				ft_mouse_hook(int button, int x, int y)
 	return (0);
 }
 
-int				fdf(t_env env, t_coord coord)
+void			clean(t_env env)
 {
-	init(&env, coord);
-	if ((env.ptr = mlx_init()) == NULL)
-		return (EXIT_FAILURE);
-	if ((env.win = mlx_new_window(env.ptr, env.x++ * env.pad * 2
-		, env.y++ * env.pad * 2, "fdf")) == NULL)
-		return (EXIT_FAILURE);
-	mlx_key_hook(env.win, ft_key_hook, &env);
-	mlx_mouse_hook(env.win, ft_mouse_hook, &env);
-	mlx_expose_hook(env.win, fake_expose, &env);
-	mlx_loop(env.ptr);
+	int			i = 0;
+	int			j = 0;
+
+	while (i > env.w)
+	{
+		j = 0;
+		while (j < env.h)
+		{
+			mlx_pixel_put(env.ptr, env.win, i, j, COLOR2_BLUE);
+			j++;
+		}
+		i++;
+	}
+}
+
+int				fdf(t_env env)
+{
+	clean(env);
+	//mlx_key_hook(env.win, ft_key_hook, &env);
+	//mlx_mouse_hook(env.win, ft_mouse_hook, &env);
+	//fake_expose(&env);
+	//mlx_loop(env.ptr);
+	//project(envc, envc->room);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 #    By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/22 14:52:23 by msarr             #+#    #+#              #
-#    Updated: 2014/12/02 03:52:21 by msarr            ###   ########.fr        #
+#    Updated: 2014/12/03 18:33:32 by msarr            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = lemin
@@ -19,14 +19,14 @@ SDIR = srcs/
 FDIR = fdf/
 
 SRC = $(SDIR)link.c $(SDIR)parser.c $(SDIR)room.c $(SDIR)way.c $(SDIR)lemin.c \
-	  $(FDIR)init.c $(FDIR)mlx.c $(FDIR)transform.c $(FDIR)fdf.c \
+	  $(FDIR)init.c $(FDIR)mlx.c $(FDIR)fdf.c $(FDIR)draw_line.c \
 	  $(SDIR)main.c
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)/includes
 LIB = ./libft/libft.a
-DIR_LIBS = /opt/X11/lib
-LDFLAGS += -L$(DIR_LIBS) -lmlx -lXext -lX11
+DIR_LIBS = /usr/X11/lib 
+LDFLAGS += -L$(DIR_LIBS) -lmlx -lXext -lX11 -lm
 CFLAGS = -Wall -Wextra -Werror -g 
 
 all: $(NAME)

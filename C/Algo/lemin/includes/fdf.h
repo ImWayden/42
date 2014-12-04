@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/24 15:14:37 by msarr             #+#    #+#             */
-/*   Updated: 2014/10/11 21:14:49 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/03 22:51:35 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define	COLOR2_GREEN 	0x007A28
 # define	COLOR2_BLUE   	0x3B9B95
 
+# define SQUARE(x) ((x)*(x))
+
 typedef struct	s_coord
 {
 	float			x;
@@ -46,14 +48,17 @@ typedef	struct	s_env
 	t_room		**room;
 	int			x;
 	int			y;
-	int			e_y;
-	int			e_x;
+	int			c;
+	int			w;
+	int			h;
 	int			pad;
 }				t_env;
 
-int				transform(t_coord **tab, int pad, int pad1, int pad2);
-int				init(t_env *env, t_coord coord);
+t_coord			new_coord(float x, float y);
 int				fake_expose(t_env *envc);
-int				fdf(t_env env, t_coord coord);
+int				fdf(t_env env);
+void			drawline(t_env env, t_coord p, t_coord p1);
+void			project(t_env *env, t_room **room);
+void		draw_lem(t_env *env, t_room **room);
 
 #endif
