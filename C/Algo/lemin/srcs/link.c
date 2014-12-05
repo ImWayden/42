@@ -47,3 +47,37 @@ int			add_link(char *str, t_lem *lem)
 	}
 	return (0);
 }
+
+t_trans		*new_trans(char	*src, char *dst)
+{
+	t_trans	*trans;
+
+	trans = (t_trans *)malloc(sizeof(t_trans));
+	if (trans)
+	{
+		trans->src = ft_strdup(src);
+		trans->dst = ft_strdup(dst);
+		trans->next = NULL;
+	}
+	return (trans);
+}
+
+t_trans		*add_trans(t_trans *trans, t_room *src, t_room *dst)
+{
+	t_trans	*new;
+
+	new = new_trans(src->name, dst->name);
+	new->next = trans;
+	return (new);
+}
+
+void		put_trans(t_trans *trans)
+{
+	while (trans)
+	{
+		ft_putstr(trans->src);
+		ft_putstr("->");
+		ft_putendl(trans->dst);
+		trans = trans->next;
+	}
+}

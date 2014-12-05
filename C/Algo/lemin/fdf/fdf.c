@@ -40,7 +40,7 @@ void			clean(t_env env)
 	int			i = 0;
 	int			j = 0;
 
-	while (i > env.w)
+	while (i < env.w)
 	{
 		j = 0;
 		while (j < env.h)
@@ -54,11 +54,11 @@ void			clean(t_env env)
 
 int				fdf(t_env env)
 {
-	clean(env);
 	//mlx_key_hook(env.win, ft_key_hook, &env);
 	//mlx_mouse_hook(env.win, ft_mouse_hook, &env);
 	//fake_expose(&env);
 	//mlx_loop(env.ptr);
 	//project(envc, envc->room);
+	(void)env;
 	return (EXIT_SUCCESS);
 }

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "lemin.h"
 
 int				color(int i)
 {
@@ -111,9 +112,12 @@ void		draw_s(t_env *env, t_room r, int s)
 	t_coord	pf;
 	t_coord	p;
 	t_coord	pi;
+	static int i = 0;
 
-	if (s == 5)
+	if (s == 5 && i == 0)
 		env->c = COLOR_ORANGE;
+	if (s == 5 && i == 1)
+		env->c = COLOR_BLACK;
 	pi = new_coord(r.x + s, r.y);
 	p = new_coord(r.x + s, r.y);
 	pf = new_coord(r.x, r.y);
@@ -122,29 +126,54 @@ void		draw_s(t_env *env, t_room r, int s)
 	cercle(*env, pf, pi, p, -1);
 	pf = new_coord(r.x, r.y - s);
 	cercle(*env, pf, pi, p, 1);
+	if (++i > 1)
+		i = 0;
 }
 
+void		nav(t_env *env, t_room **room, t_trans *t, int i)
+{
+	t_room	*s;
+	t_room	*d;
+	int		r;
 
-void		draw_lem(t_env *env, t_room **room)
+	s = room[hash(t->src)];
+	d = room[hash(t->dst)];
+	r = sqrt(SQUARE(s->x - d->x) + SQUARE(s->y - d->y));
+	r = r * i / 100;
+	drawline(*env, *s, *d, r);
+}
+
+void		draw_lem(t_env *env, t_room **room, t_trans *t)
 {
 	int		i;
+	t_trans	*s;
 
 	i = 0;
 	while (i < 1000)
 	{
 		if (room[i] && room[i]->dist < 10000)
 			env->c = color(room[i]->dist);
-		if (room[i] && room[i]->dist < 10000)
+		if (room[i] && room[i]->dist < 10000 && room[i]->dist > 0)
 			draw_s(env, *room[i], 20);
-		if (room[i] && room[i]->lem)
-			draw_s(env, *room[i], 5);
 		i++;
+	}
+	i = 0;
+	while (i <= 100)
+	{
+		s = t;
+		while (s)
+		{
+			ft_putendl(s->dst);
+			nav(env, room, s, i);
+			s = s->next;
+		}
+		i++;;
 	}
 }
 
-int			fake_expose(t_env *envc)
+/*int			fake_expose(t_env *envc)
 {
 	project(envc, envc->room);
 	draw_lem(envc, envc->room);
 	return (0);
-}
+}*/

@@ -13,46 +13,45 @@
 #include "lemin.h"
 #include "fdf.h"
 
-void			putroom(t_room *room, t_room *room1)
+t_trans			*putroom(t_trans *trans, t_room *room, t_room *room1)
 {
 	ft_putstr("L");
 	ft_putnbr(room->lem);
 	ft_putstr("-");
 	ft_putstr(room1->name);
 	ft_putchar(' ');
+	return (add_trans(trans, room, room1));
 }
 
-static void	transfert(t_room *room, t_lem *lem)
+static t_trans	*transfert(t_room *room, t_lem *lem, t_trans *trans)
 {
-	t_link	*l;
+	t_link		*l;
+	int			i;
 
 	l = room->lst;
-	while (l && room->lem <= lem->nbr)
+	while (l && room->lem && room->lem <= lem->nbr)
 	{
-		if (l->room == lem->end)
-		{
+		i = 0;
+		if (l->room == lem->end && (i = 1))
 			lem->end->lem++;
-			putroom(room, l->room);
-			if (room != lem->start)
-				room->lem = 0;
-			else
-				(room->lem)++;
-			break;
-		}
-		else if (!l->room->lem && l->room->dist < room->dist)
-		{
+		else if (!l->room->lem && l->room->dist < room->dist && (i = 2))
 			l->room->lem = room->lem;
-			putroom(room, l->room);
+		if (i)
+		{
+			trans = putroom(trans, room, l->room);
 			if (room != lem->start)
 				room->lem = 0;
 			else
 				(room->lem)++;
+			if (i == 1)
+				break;
 		}
 		l = l->next;
 	}
+	return (trans);
 }
 
-static void	send(t_room *room, t_lem *lem)
+static t_trans	*send(t_room *room, t_lem *lem, t_trans *t)
 {
 	t_link	*l;
 
@@ -64,46 +63,36 @@ static void	send(t_room *room, t_lem *lem)
 			if (room->step > l->room->step && l->room != lem->start)
 			{
 				l->room->step++;
-				send(l->room, lem);
+				t = send(l->room, lem, t);
 			}
 			l = l->next;
 		}
-		if (room->lem)
-			transfert(room, lem);
+		if (room->lem && room->lem <= lem->nbr)
+			t = transfert(room, lem, t);
 	}
+	return (t);
 }
 
-void				lemin(t_lem *lem)
-{
-	t_room		*room;
-	t_env		env;
+void		put_trans(t_trans *trans);
 
-	ft_putstr("SENDING LEMS....\n");
-	room = lem->start;
-	room->lem = 1;
-	way(lem->end, lem);
-	env.pad = 24;
-	env.x = 24;
-	env.y =  24;
-	env.w = env.x++ * env.pad * 2;
-	env.h = env.y++ * env.pad * 2;
-	env.room = lem->tab;
-	project(&env, env.room);
-	if ((env.ptr = mlx_init()) == NULL)
-		return ;
-	if (!(env.win = mlx_new_window(env.ptr, env.w, env.h, "fdf")))
-		return ;
-	if (room->dist < 1000)
+void				lemin(t_lem *lem, t_env env)
+{
+	t_trans			*t;
+
+	t = NULL;
+	while (lem->end->lem < lem->nbr)
 	{
-		while (lem->end->lem < lem->nbr)
+		lem->start->step++;
+		if (lem->g)
 		{
-			room->step++;
-			send(room, lem);
-			draw_lem(&env, env.room);	
-			ft_putendl(NULL);
-			sleep (3);
+			draw_lem(&env, env.room, t);
+			put_trans(t);	
+			//clean(env);
 		}
+		t = NULL;
+		t = send(lem->start, lem, t);
+		ft_putendl(NULL);
 	}
-	else
-		ft_putstr("ERROR\n");
+	if (lem->g)
+		draw_lem(&env, env.room, t);
 }

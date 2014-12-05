@@ -20,3 +20,20 @@ t_coord			new_coord(float x, float y)
 	new.y = y;
 	return (new);
 }
+
+
+int			init(t_env *env, t_lem *lem)
+{
+	env->pad = 24;
+	env->x = 24;
+	env->y =  24;
+	env->w = env->x++ * env->pad * 2;
+	env->h = env->y++ * env->pad * 2;
+	env->room = lem->tab;
+	project(env, env->room);
+	if ((env->ptr = mlx_init()) == NULL)
+		exit (0);
+	if (!(env->win = mlx_new_window(env->ptr, env->w, env->h, "fdf")))
+		exit (0);
+	return (1);
+}

@@ -17,7 +17,8 @@
 # include <math.h>
 # include <fcntl.h>
 # include "libft.h"
-# include "lemin.h"
+# include "struct.h"
+
 
 # define	COLOR_BLACK		0x000000
 # define	COLOR_WHITE		0xFFFFFF
@@ -31,34 +32,18 @@
 # define	COLOR2_GREEN 	0x007A28
 # define	COLOR2_BLUE   	0x3B9B95
 
-# define SQUARE(x) ((x)*(x))
+# define 	SQUARE(x)		((x)*(x))
 
-typedef struct	s_coord
-{
-	float			x;
-	float			y;
-	float			z;
-}				t_coord;
 
-typedef	struct	s_env
-{
-	void		*ptr;
-	void		*win;
-	t_coord		**tab;
-	t_room		**room;
-	int			x;
-	int			y;
-	int			c;
-	int			w;
-	int			h;
-	int			pad;
-}				t_env;
 
 t_coord			new_coord(float x, float y);
 int				fake_expose(t_env *envc);
 int				fdf(t_env env);
-void			drawline(t_env env, t_coord p, t_coord p1);
+void			drawline(t_env env, t_room p, t_room p1, int z);
 void			project(t_env *env, t_room **room);
-void		draw_lem(t_env *env, t_room **room);
+void			draw_s(t_env *env, t_room r, int s);
+void			draw_lem(t_env *env, t_room **room, t_trans *t);
+void			clean(t_env env);
+int				init(t_env *env, t_lem *lem);
 
 #endif

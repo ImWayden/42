@@ -16,38 +16,7 @@
 # include <errno.h>
 # include <stdio.h>
 # include "libft.h"
-
-/*
-** Lists and Strutures
-*/
-
-typedef struct		s_room  t_room;
-
-typedef struct		s_link
-{
-	t_room			*room;
-	struct s_link	*next;
-}					t_link;
-
-typedef struct		s_room
-{
-	int				x;
-	int				y;
-	int				z;
-	int				dist;
-	int				step;
-	int				lem;
-	char			*name;
-	struct s_link	*lst;
-}					t_room;
-
-typedef struct		s_lem
-{
-	t_room			*tab[1000];
-	int				nbr;
-	t_room			*start;
-	t_room			*end;
-}					t_lem;
+# include "struct.h"
 
 /*
 ** Functions
@@ -56,13 +25,15 @@ typedef struct		s_lem
 t_lem				*parse();
 t_lem				*newlem(void);
 t_room				*new_room(char *str, int x, int y);
+int					hash(char *str);
 int					get_door(t_lem *lem, int flag);
 t_link				*new_link(t_room *room);
 int					way(t_room *room, t_lem *lem);
 int					add_link(char *str, t_lem *lem);
 int					hash(char *str);
-void				lemin(t_lem *lem);
+void				lemin(t_lem *lem, t_env env);
 int					get_room(char *str, t_lem *lem, int flag);
+t_trans				*add_trans(t_trans *trans, t_room *src, t_room *dst);
 
 
 #endif
