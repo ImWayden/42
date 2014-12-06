@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/10/10 19:12:54 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/03 22:54:23 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/06 04:33:41 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,18 @@ int				ft_mouse_hook(int button, int x, int y)
 void			clean(t_env env)
 {
 	int			i = 0;
-	int			j = 0;
+	int			j = 0;	
+	int			in;
 
 	while (i < env.w)
 	{
 		j = 0;
 		while (j < env.h)
 		{
-			mlx_pixel_put(env.ptr, env.win, i, j, COLOR2_BLUE);
+			in = (env.bpp >> 3)* ((j * (env.sizel >> 2)) + i);
+			env.data[in] = 0;
+			env.data[in + 1] = 0;
+			env.data[in + 2] = 0;
 			j++;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/04 18:37:15 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/04 18:37:18 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/06 03:51:30 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ typedef	struct		s_env
 {
 	void			*ptr;
 	void			*win;
+	void				*img;
+	char				*data;
+	int					sizel;
+	int					endian;
+	int					bpp;
 	t_coord			**tab;
 	t_room			**room;
 	int				x;

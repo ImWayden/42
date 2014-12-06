@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/10 15:52:26 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/03 22:56:32 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/06 14:32:49 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_trans	*transfert(t_room *room, t_lem *lem, t_trans *trans)
 		i = 0;
 		if (l->room == lem->end && (i = 1))
 			lem->end->lem++;
-		else if (!l->room->lem && l->room->dist < room->dist && (i = 2))
+		else if (!l->room->lem && l->room->dist < room->dist * lem->nbr && (i = 2))
 			l->room->lem = room->lem;
 		if (i)
 		{
@@ -83,15 +83,15 @@ void				lemin(t_lem *lem, t_env env)
 	while (lem->end->lem < lem->nbr)
 	{
 		lem->start->step++;
+		t = NULL;
+		t = send(lem->start, lem, t);
+		ft_putendl(NULL);
 		if (lem->g)
 		{
 			draw_lem(&env, env.room, t);
 			put_trans(t);	
 			//clean(env);
 		}
-		t = NULL;
-		t = send(lem->start, lem, t);
-		ft_putendl(NULL);
 	}
 	if (lem->g)
 		draw_lem(&env, env.room, t);

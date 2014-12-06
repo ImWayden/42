@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/24 15:14:37 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/03 22:51:35 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/06 03:47:43 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@
 t_coord			new_coord(float x, float y);
 int				fake_expose(t_env *envc);
 int				fdf(t_env env);
-void			drawline(t_env env, t_room p, t_room p1, int z);
+int				pixel_put(t_env *env, int x, int y, int c);
+t_room			*drawline(t_env env, t_room p, t_room p1, int z);
 void			project(t_env *env, t_room **room);
 void			draw_s(t_env *env, t_room r, int s);
 void			draw_lem(t_env *env, t_room **room, t_trans *t);

@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/10/10 19:20:56 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/03 20:55:14 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/06 05:08:52 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ void	 cercle(t_env env, t_coord c, t_coord s, t_coord e, int flag)
 		{
 			p = point(c, x, y, i);
 			if (!flag)
-				mlx_pixel_put(env.ptr, env.win, p.x, p.y, env.c);
+				pixel_put(&env, p.x, p.y, env.c);
 			else if (p.y >= s.y && p.y >= e.y && flag == 1)
-				mlx_pixel_put(env.ptr, env.win, p.x, p.y, env.c);
+				pixel_put(&env, p.x, p.y, env.c);
 			else if (p.y <= s.y && p.y <= e.y && flag == -1)
-				mlx_pixel_put(env.ptr, env.win, p.x, p.y, env.c);
+				pixel_put(&env, p.x, p.y, env.c);
 			i++;
 		}
 		if (d >= 2*x)
@@ -112,12 +112,12 @@ void		draw_s(t_env *env, t_room r, int s)
 	t_coord	pf;
 	t_coord	p;
 	t_coord	pi;
-	static int i = 0;
 
-	if (s == 5 && i == 0)
-		env->c = COLOR_ORANGE;
-	if (s == 5 && i == 1)
-		env->c = COLOR_BLACK;
+	env->c = r.dist * 25;
+	if (!env->c)
+		env->c = 255;
+	if (env->c < 0)
+		env->c = 0;
 	pi = new_coord(r.x + s, r.y);
 	p = new_coord(r.x + s, r.y);
 	pf = new_coord(r.x, r.y);
@@ -126,11 +126,9 @@ void		draw_s(t_env *env, t_room r, int s)
 	cercle(*env, pf, pi, p, -1);
 	pf = new_coord(r.x, r.y - s);
 	cercle(*env, pf, pi, p, 1);
-	if (++i > 1)
-		i = 0;
 }
 
-void		nav(t_env *env, t_room **room, t_trans *t, int i)
+t_room		*nav(t_env *env, t_room **room, t_trans *t, int i)
 {
 	t_room	*s;
 	t_room	*d;
@@ -140,35 +138,49 @@ void		nav(t_env *env, t_room **room, t_trans *t, int i)
 	d = room[hash(t->dst)];
 	r = sqrt(SQUARE(s->x - d->x) + SQUARE(s->y - d->y));
 	r = r * i / 100;
-	drawline(*env, *s, *d, r);
+	return (drawline(*env, *s, *d, r));
 }
 
 void		draw_lem(t_env *env, t_room **room, t_trans *t)
 {
 	int		i;
+	int		j;
+	double	k;
 	t_trans	*s;
+	t_link	*l;
+	t_room	*r;
 
+	j = 0;
+	k = 1;
+	while (j <= 100)
+	{
 	i = 0;
 	while (i < 1000)
 	{
-		if (room[i] && room[i]->dist < 10000)
-			env->c = color(room[i]->dist);
 		if (room[i] && room[i]->dist < 10000 && room[i]->dist > 0)
 			draw_s(env, *room[i], 20);
 		i++;
 	}
-	i = 0;
-	while (i <= 100)
-	{
 		s = t;
+		l = NULL;
 		while (s)
 		{
-			ft_putendl(s->dst);
-			nav(env, room, s, i);
+			if ((r = nav(env, room, s, j)))
+				l = link_lst(l, r);
 			s = s->next;
 		}
-		i++;;
+		while (l)
+		{
+			l->room->dist = 255;
+			draw_s(env, *(l->room), 5);
+			l = l->next;
+		}
+		mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
+		clean(*env);
+		k += 0.04;
+		j = (int)k;
 	}
+
 }
 
 /*int			fake_expose(t_env *envc)

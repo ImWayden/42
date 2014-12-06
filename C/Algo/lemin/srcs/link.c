@@ -6,7 +6,7 @@
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/02 01:13:58 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/02 03:46:20 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/06 02:10:18 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@ t_link		*new_link(t_room *room)
 		link->room = room;
 		link->next = NULL;
 	}
+	return (link);
+}
+
+t_link		*link_lst(t_link *l, t_room *room)
+{
+	t_link	*link;
+
+	link = new_link(room);
+	link->next = l;
 	return (link);
 }
 

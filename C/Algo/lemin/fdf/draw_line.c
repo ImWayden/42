@@ -6,14 +6,24 @@
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/03 01:05:34 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/03 02:33:53 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/06 04:07:04 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "lemin.h"
 
-void		drawline(t_env env, t_room p, t_room p1, int z)
+int			pixel_put(t_env *env, int x, int y, int c)
+{
+	int		in;
+	in = (env->bpp >> 3)* ((y * (env->sizel >> 2)) + x);
+	env->data[in] = c;
+	env->data[in + 1] = c;
+	env->data[in + 2] = c;
+	return (c);
+}
+
+t_room		*drawline(t_env env, t_room p, t_room p1, int z)
 {
 	int 		dx,dy,i,xinc,yinc,cumul,x,y ;
 	x = p.x;
@@ -26,7 +36,8 @@ void		drawline(t_env env, t_room p, t_room p1, int z)
 	dy = abs(dy) ;
 	t_room	*r;
 
-	mlx_pixel_put(env.ptr, env.win, x, y, COLOR_WHITE);
+	r = NULL;
+	pixel_put(&env, x, y, 255);
 	if ( dx > dy )
 	{
 		cumul = dx / 2 ;
@@ -41,7 +52,7 @@ void		drawline(t_env env, t_room p, t_room p1, int z)
 			}
 			if (sqrt(SQUARE(p.x - x) + SQUARE(p.y - y)) <= z)
 			{
-				mlx_pixel_put(env.ptr, env.win, x, y, COLOR_WHITE);
+				pixel_put(&env, x, y, 255);
 				r = new_room(p.name, x, y);
 			}
 		}
@@ -60,12 +71,10 @@ void		drawline(t_env env, t_room p, t_room p1, int z)
 			}
 			if (sqrt(SQUARE(p.x - x) + SQUARE(p.y - y)) <= z)
 			{
-				mlx_pixel_put(env.ptr, env.win, x, y, COLOR_WHITE);
+				pixel_put(&env, x, y, 255);
 				r = new_room(p.name, x, y);
 			}
 		}
 	}
-	draw_s(&env, *r, 5);
-	sleep(1);
-	draw_s(&env, *r, 5);
+	return (r);
  }

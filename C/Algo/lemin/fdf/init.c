@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/10/09 16:54:09 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/03 15:42:45 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/06 03:56:42 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ int			init(t_env *env, t_lem *lem)
 	if ((env->ptr = mlx_init()) == NULL)
 		exit (0);
 	if (!(env->win = mlx_new_window(env->ptr, env->w, env->h, "fdf")))
+		exit (0);
+	if (!(env->img = mlx_new_image(env->ptr, env->w, env->h)))
+		exit (0);
+	if (!(env->data = mlx_get_data_addr(env->img, &env->bpp, &env->sizel
+		, &env->endian)))
 		exit (0);
 	return (1);
 }

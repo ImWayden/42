@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/03 20:18:02 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/06 02:10:53 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_room				*new_room(char *str, int x, int y);
 int					hash(char *str);
 int					get_door(t_lem *lem, int flag);
 t_link				*new_link(t_room *room);
+t_link				*link_lst(t_link *l, t_room *room);
 int					way(t_room *room, t_lem *lem);
 int					add_link(char *str, t_lem *lem);
 int					hash(char *str);
