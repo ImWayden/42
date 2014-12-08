@@ -6,7 +6,7 @@
 #    By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/22 14:52:23 by msarr             #+#    #+#              #
-#    Updated: 2014/12/03 18:33:32 by msarr            ###   ########.fr        #
+#    Updated: 2014/12/07 22:36:54 by msarr            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = lemin
@@ -19,6 +19,7 @@ SDIR = srcs/
 FDIR = fdf/
 
 SRC = $(SDIR)link.c $(SDIR)parser.c $(SDIR)room.c $(SDIR)way.c $(SDIR)lemin.c \
+	  $(SDIR)lexer.c \
 	  $(FDIR)init.c $(FDIR)mlx.c $(FDIR)fdf.c $(FDIR)draw_line.c \
 	  $(SDIR)main.c
 

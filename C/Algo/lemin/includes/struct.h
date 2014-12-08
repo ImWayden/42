@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/04 18:37:15 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/06 03:51:30 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/08 02:36:28 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 # define STRUCT_H
 
 typedef struct		s_room	t_room;
+
+typedef struct		s_lex
+{
+	char			*str;
+	struct s_lex	*next;
+	struct s_lex	*prev;
+}					t_lex;
 
 typedef struct		s_coord
 {
@@ -35,6 +42,8 @@ typedef struct		s_room
 	int				z;
 	int				dist;
 	int				step;
+	int				r;
+	int				s;
 	int				lem;
 	char			*name;
 	struct s_link	*lst;

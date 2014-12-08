@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/10/09 16:54:09 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/06 03:56:42 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/07 23:43:33 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ t_coord			new_coord(float x, float y)
 
 int			init(t_env *env, t_lem *lem)
 {
-	env->pad = 24;
+	env->pad = 5;
 	env->x = 24;
 	env->y =  24;
-	env->w = env->x++ * env->pad * 2;
-	env->h = env->y++ * env->pad * 2;
+	env->w = env->x++ * 20 * 2;
+	env->h = env->y++ * 20 * 2;
 	env->room = lem->tab;
 	project(env, env->room);
 	if ((env->ptr = mlx_init()) == NULL)

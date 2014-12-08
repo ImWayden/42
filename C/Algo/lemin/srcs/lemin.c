@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/10 15:52:26 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/06 14:32:49 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/08 04:32:43 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,16 @@ static t_trans	*transfert(t_room *room, t_lem *lem, t_trans *trans)
 	int			i;
 
 	l = room->lst;
-	while (l && room->lem && room->lem <= lem->nbr)
+	while (l && room->lem)
 	{
 		i = 0;
 		if (l->room == lem->end && (i = 1))
 			lem->end->lem++;
-		else if (!l->room->lem && l->room->dist < room->dist * lem->nbr && (i = 2))
+		else if (!l->room->lem && l->room != lem->start && (i = 2) && !l->room->r && l->room->dist < room->dist)
 			l->room->lem = room->lem;
 		if (i)
 		{
+			l->room->r = 1;
 			trans = putroom(trans, room, l->room);
 			if (room != lem->start)
 				room->lem = 0;
@@ -55,16 +56,15 @@ static t_trans	*send(t_room *room, t_lem *lem, t_trans *t)
 {
 	t_link	*l;
 
-	if (room != lem->end)
+	if (room->dist && room->dist < 1000 && !room->s)
 	{
+		room->s = 1;
+
 		l = room->lst;
 		while (l)
 		{
-			if (room->step > l->room->step && l->room != lem->start)
-			{
-				l->room->step++;
+			if (l->room != lem->start && !l->room->s)
 				t = send(l->room, lem, t);
-			}
 			l = l->next;
 		}
 		if (room->lem && room->lem <= lem->nbr)
@@ -78,12 +78,22 @@ void		put_trans(t_trans *trans);
 void				lemin(t_lem *lem, t_env env)
 {
 	t_trans			*t;
+	int				i;
 
 	t = NULL;
 	while (lem->end->lem < lem->nbr)
 	{
-		lem->start->step++;
 		t = NULL;
+		i = 0;
+		while (i < 1000)
+		{
+			if (lem->tab[i])
+			{
+				lem->tab[i]->s = 0;
+				lem->tab[i]->r = 0;
+			}
+			i++;
+		}
 		t = send(lem->start, lem, t);
 		ft_putendl(NULL);
 		if (lem->g)
