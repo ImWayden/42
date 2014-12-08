@@ -31,7 +31,6 @@ static t_lex	*get(t_lem **lem, t_lex *l)
 		(*lem)->nbr = i;
 		(*lem)->start = NULL;
 		ft_bzero((*lem)->tab, 1000);
-		ft_putendl("nombre");
 		return (l->next);
 	}
 	return (NULL);

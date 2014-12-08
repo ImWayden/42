@@ -15,76 +15,76 @@
 
 t_trans			*putroom(t_trans *trans, t_room *room, t_room *room1)
 {
-	ft_putstr("L");
+	if (!trans)
+		ft_putstr("L");
+	else
+		ft_putstr(" L");
 	ft_putnbr(room->lem);
 	ft_putstr("-");
 	ft_putstr(room1->name);
-	ft_putchar(' ');
 	return (add_trans(trans, room, room1));
 }
 
-static t_trans	*transfert(t_room *room, t_lem *lem, t_trans *trans)
-{
-	t_link		*l;
-	int			i;
 
-	l = room->lst;
-	while (l && room->lem)
+t_trans		*send(t_room *r, t_lem *lem, t_trans *t)
+{
+	t_link	*l;
+	t_room	*tmp;
+
+	l = r->lst;
+	while (l && r->dist && r->dist < 1000)
 	{
-		i = 0;
-		if (l->room == lem->end && (i = 1))
-			lem->end->lem++;
-		else if (!l->room->lem && l->room != lem->start && (i = 2) && !l->room->r && l->room->dist < room->dist)
-			l->room->lem = room->lem;
-		if (i)
+		tmp = l->room;
+		if (tmp->dist && tmp->dist < 1000 && tmp != lem->start && !tmp->s)
 		{
-			l->room->r = 1;
-			trans = putroom(trans, room, l->room);
-			if (room != lem->start)
-				room->lem = 0;
-			else
-				(room->lem)++;
-			if (i == 1)
-				break;
+			tmp->s = 1;
+			t = send(tmp, lem, t);
 		}
 		l = l->next;
 	}
-	return (trans);
-}
-
-static t_trans	*send(t_room *room, t_lem *lem, t_trans *t)
-{
-	t_link	*l;
-
-	if (room->dist && room->dist < 1000 && !room->s)
+	l = r->lst;
+	while (l && r->lem  && r->lem <= lem->nbr && r->dist && r->dist < 1000 && !r->r)
 	{
-		room->s = 1;
-
-		l = room->lst;
-		while (l)
+		tmp = l->room;
+		if ((!tmp->lem || tmp == lem->end) && tmp->dist >= 0 && (tmp->dist < r->dist * lem->nbr))
 		{
-			if (l->room != lem->start && !l->room->s)
-				t = send(l->room, lem, t);
-			l = l->next;
+			if (tmp == lem->end)
+			{
+				tmp->lem++;
+				t = putroom(t, r, tmp);
+				if (r == lem->start)
+					r->lem++;
+				else
+					r->lem = 0;
+				break ;
+			}
+			else if (tmp != lem->start)
+			{
+				tmp->lem = r->lem;
+				tmp->r = 1;
+				t = putroom(t, r, tmp);
+				if (r == lem->start)
+					r->lem++;
+				else
+					r->lem = 0;
+			}
 		}
-		if (room->lem && room->lem <= lem->nbr)
-			t = transfert(room, lem, t);
+		l = l->next;
 	}
 	return (t);
 }
 
 void		put_trans(t_trans *trans);
 
-void				lemin(t_lem *lem, t_env env)
+void				lemin(t_lem *lem)
 {
-	t_trans			*t;
 	int				i;
+	t_trans			*t;
 
-	t = NULL;
 	while (lem->end->lem < lem->nbr)
 	{
-		t = NULL;
 		i = 0;
+		t = NULL;
 		while (i < 1000)
 		{
 			if (lem->tab[i])
@@ -94,15 +94,8 @@ void				lemin(t_lem *lem, t_env env)
 			}
 			i++;
 		}
-		t = send(lem->start, lem, t);
-		ft_putendl(NULL);
-		if (lem->g)
-		{
-			draw_lem(&env, env.room, t);
-			put_trans(t);	
-			//clean(env);
-		}
+		send(lem->start, lem, t);
+		ft_putendl("");
+		
 	}
-	if (lem->g)
-		draw_lem(&env, env.room, t);
 }

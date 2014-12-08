@@ -75,7 +75,6 @@ t_link		*sort_link(t_link *l)
 				r = n->room;
 				n->room = f->room;
 				f->room = r;
-				ft_putendl("one");
 			}
 			n = n->next;
 		}

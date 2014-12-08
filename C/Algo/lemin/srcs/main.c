@@ -61,8 +61,12 @@ int					main(int argc, char **argv)
 		if (lem->start->dist < 1000)
 		{
 			if (lem->g)
+			{
 				init(&env, lem);
-			lemin(lem, env);
+				fdf(lem, env);
+			}
+			else
+				lemin(lem);
 			return (0);
 		}
 	}

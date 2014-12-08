@@ -89,19 +89,19 @@ void	 cercle(t_env env, t_coord c, t_coord s, t_coord e, int flag)
 void		project(t_env *env, t_room **room)
 {
 	int		i;
-	int		x;
-	int		y;
+	//int		x;
+	//int		y;
 
 	i = 0;
 	while (i < 1000)
 	{
 		if (room[i] && room[i]->dist < 10000)
 		{
-			x = room[i]->x;
-			y = room[i]->y;
-			room[i]->z = room[i]->dist * 5;
-			room[i]->x = env->pad * 0.71 * (x - y) + env->x * env->pad;
-			room[i]->y = env->pad * (-0.82 * room[i]->z + 0.41 * (x + y)) + env->y * 5;
+			//x = room[i]->x;
+			//y = room[i]->y;
+			//room[i]->z = room[i]->dist * 5;
+			room[i]->x = /*env->pad * 0.71 * (x - y)*/ (room[i]->x * env->pad)  + env->x;
+			room[i]->y = /*env->pad * (-0.82 * room[i]->z + 0.41 * (x + y)) +*/(room[i]->y * env->pad) + env->y;
 		}
 		i++;
 	}

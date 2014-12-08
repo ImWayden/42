@@ -49,7 +49,6 @@ t_lex		*get_door(t_lem *lem, t_lex *l, int flag)
 	tab = ft_strsplit(l->str, ' ');
 	if (tab && *tab && tab[1] && tab[2])
 	{
-		ft_putendl(tab[0]);
 		if (is_num(tab[1]) && is_num(tab[2]))
 		{
 			get_room(tab, lem, flag);

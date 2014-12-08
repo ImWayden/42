@@ -11,6 +11,12 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <stdio.h>
+
+int 			abs(int i)
+{
+	return (i > 0 ? i : -i);
+}
 
 t_coord			new_coord(float x, float y)
 {
@@ -22,13 +28,35 @@ t_coord			new_coord(float x, float y)
 }
 
 
-int			init(t_env *env, t_lem *lem)
+int				init(t_env *env, t_lem *lem)
 {
-	env->pad = 5;
-	env->x = 24;
-	env->y =  24;
-	env->w = env->x++ * 20 * 2;
-	env->h = env->y++ * 20 * 2;
+	int			x;
+	int			y;
+	int			i;
+
+	x = 0;
+	y = 0;
+	i = 0;
+	while (i < 1000)
+	{
+		if (lem->tab[i])
+		{
+			if (abs(lem->tab[i]->x) > x)
+				x = abs(lem->tab[i]->x);
+			if (abs(lem->tab[i]->y) > y)
+				y = abs(lem->tab[i]->y);
+		}
+		i++;
+	}
+	printf("%i : y ; %i : x\n", y , x);
+	env->pad = 50;
+	while (env->pad * (x + 1) > 750 || env->pad * (y + 1) > 600)
+		env->pad--;
+	printf("%i : pad\n", env->pad);
+	env->w = (x + 1) * 2 * env->pad;
+	env->h = (y + 1) * 2 * env->pad;
+	env->x = env->w / 2;
+	env->y = env->h / 2;
 	env->room = lem->tab;
 	project(env, env->room);
 	if ((env->ptr = mlx_init()) == NULL)

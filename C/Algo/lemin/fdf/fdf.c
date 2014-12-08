@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "lemin.h"
 
 int				ft_key_hook(int keycode)
 {
@@ -56,13 +57,33 @@ void			clean(t_env env)
 	}
 }
 
-int				fdf(t_env env)
+int				fdf(t_lem *lem, t_env env)
 {
 	//mlx_key_hook(env.win, ft_key_hook, &env);
 	//mlx_mouse_hook(env.win, ft_mouse_hook, &env);
 	//fake_expose(&env);
 	//mlx_loop(env.ptr);
 	//project(envc, envc->room);
-	(void)env;
+	int				i;
+	t_trans			*t;
+
+	while (lem->end->lem < lem->nbr)
+	{
+		i = 0;
+		t = NULL;
+		while (i < 1000)
+		{
+			if (lem->tab[i])
+			{
+				lem->tab[i]->s = 0;
+				lem->tab[i]->r = 0;
+			}
+			i++;
+		}
+		t = send(lem->start, lem, t);
+		draw_lem(&env, env.room, t);
+		ft_putendl("");
+		
+	}
 	return (EXIT_SUCCESS);
 }

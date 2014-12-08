@@ -38,7 +38,7 @@
 
 t_coord			new_coord(float x, float y);
 int				fake_expose(t_env *envc);
-int				fdf(t_env env);
+int				fdf(t_lem *lem, t_env env);
 int				pixel_put(t_env *env, int x, int y, int c);
 t_room			*drawline(t_env env, t_room p, t_room p1, int z);
 void			project(t_env *env, t_room **room);
