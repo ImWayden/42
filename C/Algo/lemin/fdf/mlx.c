@@ -24,7 +24,7 @@ int				color(int i)
 	return (tab[i]);
 }
 
-t_coord	point(t_coord c, int x, int y, int i)
+t_coord			point(t_coord c, int x, int y, int i)
 {
 	if (i == 0)
 		return (new_coord(c.x + x, c.y + y));
@@ -44,9 +44,9 @@ t_coord	point(t_coord c, int x, int y, int i)
 		return (new_coord(c.x - y, c.y - x));
 }
 
-void	 cercle(t_env env, t_coord c, t_coord s, t_coord e, int flag)
+void	 		cercle(t_env env, t_coord c, t_coord s, t_coord e, int flag)
 {
-	t_coord p;
+	t_coord 	p;
 	int		r = sqrt(SQUARE(c.x - s.x) + SQUARE(c.y - s.y));
 	int x = 0;
 	int i = 0;
@@ -69,41 +69,20 @@ void	 cercle(t_env env, t_coord c, t_coord s, t_coord e, int flag)
 		}
 		if (d >= 2*x)
 		{
-			d -= 2*x + 1;
+			d -= 2 * x + 1;
 			x ++;
 		}
 		else if (d < 2 * (r-y))
 		{
-			d += 2*y - 1;
+			d += 2 * y - 1;
 			y --;
 		}
 		else
 		{
-			d += 2*(y - x - 1);
+			d += 2 * (y - x - 1);
 			y --;
 			x ++;
 		}
-	}
-}
-
-void		project(t_env *env, t_room **room)
-{
-	int		i;
-	//int		x;
-	//int		y;
-
-	i = 0;
-	while (i < 1000)
-	{
-		if (room[i] && room[i]->dist < 10000)
-		{
-			//x = room[i]->x;
-			//y = room[i]->y;
-			//room[i]->z = room[i]->dist * 5;
-			room[i]->x = /*env->pad * 0.71 * (x - y)*/ (room[i]->x * env->pad)  + env->x;
-			room[i]->y = /*env->pad * (-0.82 * room[i]->z + 0.41 * (x + y)) +*/(room[i]->y * env->pad) + env->y;
-		}
-		i++;
 	}
 }
 
@@ -158,7 +137,7 @@ void		draw_lem(t_env *env, t_room **room, t_trans *t)
 	while (i < 1000)
 	{
 		if (room[i] && room[i]->dist < 10000 && room[i]->dist > 0)
-			draw_s(env, *room[i], 20);
+			draw_s(env, *room[i], env->pad / 2);
 		i++;
 	}
 		s = t;
