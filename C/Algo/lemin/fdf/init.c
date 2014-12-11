@@ -11,21 +11,6 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
-
-int 			abs(int i)
-{
-	return (i > 0 ? i : -i);
-}
-
-t_coord			new_coord(float x, float y)
-{
-	t_coord		new;
-
-	new.x = x;
-	new.y = y;
-	return (new);
-}
 
 void		project(t_room **room)
 {
@@ -71,8 +56,8 @@ static void		padding(t_env *env, t_lem * lem)
 	env->max_x -= env->min_x;
 	env->max_y -= env->min_y;
 	env->pad = 1;
-	while (env->pad * (env->max_x + 2) < 750 && env->pad
-					* (env->max_y + 1) < 600 && env->pad < 40)
+	while (env->pad * (env->max_x + 2) < 1500 && env->pad
+					* (env->max_y + 1) < 750 /*&& env->pad < 40*/)
 		env->pad++;
 	env->pad--;
 }

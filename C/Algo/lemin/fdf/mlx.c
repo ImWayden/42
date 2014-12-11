@@ -27,6 +27,15 @@ int				color(int i)
 	return (tab[i]);
 }
 
+t_coord			new_coord(float x, float y)
+{
+	t_coord		new;
+
+	new.x = x;
+	new.y = y;
+	return (new);
+}
+
 t_coord			point(t_coord c, int x, int y, int i)
 {
 	if (i == 0)
@@ -95,10 +104,6 @@ void		draw_s(t_env *env, t_room r, int s)
 	t_coord	p;
 	t_coord	pi;
 
-	if (s != 5 && r.dist && r.dist < 1000)
-		env->c = color(r.dist % 7);
-	else if (s != 5 && r.dist)
-		env->c = COLOR_RED;
 	pi = new_coord(r.x + s, r.y);
 	p = new_coord(r.x + s, r.y);
 	pf = new_coord(r.x, r.y);
@@ -133,10 +138,25 @@ void		drawlink(t_env *env, t_link *l, int c)
 	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
 }
 
-t_room		*drawroom(t_env *env, t_room **room)
+void		draw_start(t_env *env)
+{
+	int		i;
+	int 	j;
+
+	i = 0;
+	j = env->pad;
+	while (i <= j)
+	{
+		env->c = color(i % 7);
+		draw_s(env, *env->lem->start, i);
+		i += 5;
+	}
+	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
+}
+
+void		drawroom(t_env *env, t_room **room)
 {
 	t_link	*l;
-	t_room	*r;
 	int		i;
 
 	i = 0;
@@ -144,33 +164,17 @@ t_room		*drawroom(t_env *env, t_room **room)
 	{
 		if (room[i] && room[i]->dist && room[i] != env->lem->start)
 		{
+			env->c = color(room[i]->dist % 7);
 			draw_s(env, *room[i], env->pad / 2);
 			l = room[i]->lst;
 			while (l)
 			{
-				drawline(*env, *room[i], *l->room, 120);
+				drawline(*env, *room[i], *l->room, 120000);
 				l = l->next;
 			}
 		}
-		else if (room[i])
-			r = room[i];
 		i++;
 	}
-	return (r);
-}
-
-void		draw_start(t_env *env, t_room *room)
-{
-	int		i;
-
-	i = room->lem;
-	while (i <= env->lem->nbr && i <= env->pad / 2)
-	{
-		env->c = color(i % 7);
-		draw_s(env, *room, i * 2);
-		i++;
-	}
-	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
 }
 
 void		draw_end(t_env *env, t_room *room)
@@ -182,7 +186,7 @@ void		draw_end(t_env *env, t_room *room)
 	{
 		env->c = color(i % 7);
 		draw_s(env, *room, i * 2);
-		i++;
+		i += 5;
 	}
 	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
 }
@@ -194,12 +198,11 @@ void		draw_lem(t_env *env, t_room **room, t_trans *t)
 	t_trans	*s;
 	t_link	*l;
 	t_room	*r;
-	t_room	*r1;
 
 	j = 0;
 	k = 1;	
-	r1 = drawroom(env, room);
-	draw_start(env, env->lem->start);
+	drawroom(env, room);
+	draw_start(env);
 	while (j <= 100)
 	{
 		s = t;
@@ -212,11 +215,12 @@ void		draw_lem(t_env *env, t_room **room, t_trans *t)
 		}
 		drawlink(env, l, COLOR_BLUE);
 		drawlink(env, l, COLOR_BLACK);
-		//clean(*env);
+		drawroom(env, room);
+		draw_start(env);
 		k += 0.04;
 		j = (int)k;
 	}
-	draw_end(env, r1);
+	draw_end(env, env->lem->end);
 }
 
 int			fake_expose(t_env *env)

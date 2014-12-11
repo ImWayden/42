@@ -16,15 +16,11 @@
 int			pixel_put(t_env *env, int x, int y, int c)
 {
 	int		in;
-	int		t;
 
 	in = (env->bpp >> 3)* ((y * (env->sizel >> 2)) + x);
-	t = mlx_get_color_value(env->ptr, env->data[in]);
-	if (!t || (c != COLOR_BLUE))
-	{
 	env->data[in] = c & 0xff;
 	env->data[in + 1] = (c & 0xff00) >> 8;;
-	env->data[in + 2] = (c & 0xff0000) >> 16;}
+	env->data[in + 2] = (c & 0xff0000) >> 16;
 	return (c);
 }
 
@@ -44,8 +40,6 @@ t_room		*drawline(t_env env, t_room p, t_room p1, int z)
 
 	if (p.dist > 1000 || p1.dist > 1000)
 		c = COLOR_RED;
-	else
-		c = color(p.dist > p1.dist ? p1.dist : p.dist);
 	r = NULL;
 	pixel_put(&env, x, y, c);
 	if ( dx > dy )

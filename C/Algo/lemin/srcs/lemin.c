@@ -50,7 +50,7 @@ t_trans		*send(t_room *r, t_lem *lem, t_trans *t)
 		i = lem->nbr - lem->start->lem;
 		if (i <= 0)
 			i = 1;
-		if ((!tmp->lem || tmp == lem->end) && tmp->dist >= 0 && (tmp->dist <= lem->start->dist * i))
+		if ((!tmp->lem || tmp == lem->end) && tmp->dist >= 0 && (tmp->dist <= lem->start->dist * i) && !r->r)
 		{
 			if (tmp == lem->end)
 			{
@@ -65,7 +65,7 @@ t_trans		*send(t_room *r, t_lem *lem, t_trans *t)
 			else if (tmp != lem->start)
 			{
 				tmp->lem = r->lem;
-				//tmp->r = 1;
+				tmp->r = 1;
 				t = putroom(t, r, tmp);
 				if (r == lem->start)
 					r->lem++;
