@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/10/10 19:20:56 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/07 23:13:44 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/10 19:30:09 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,12 @@ int				color(int i)
 	int			tab[10];
 
 	tab[0] = COLOR_WHITE;
-	tab[1] = COLOR_RED;
+	tab[1] = COLOR_GREEN;
 	tab[2] = COLOR_YELLOW;
-	tab[3] = COLOR_BLUE;
+	tab[3] = COLOR2_BLUE;
+	tab[4] = COLOR_ORANGE;
+	tab[5] = COLOR2_RED;
+	tab[6] = COLOR2_GREEN;
 	return (tab[i]);
 }
 
@@ -92,11 +95,10 @@ void		draw_s(t_env *env, t_room r, int s)
 	t_coord	p;
 	t_coord	pi;
 
-	env->c = r.dist * 25;
-	if (!env->c)
-		env->c = 255;
-	if (env->c < 0)
-		env->c = 0;
+	if (s != 5 && r.dist && r.dist < 1000)
+		env->c = color(r.dist % 7);
+	else if (s != 5 && r.dist)
+		env->c = COLOR_RED;
 	pi = new_coord(r.x + s, r.y);
 	p = new_coord(r.x + s, r.y);
 	pf = new_coord(r.x, r.y);
@@ -120,26 +122,86 @@ t_room		*nav(t_env *env, t_room **room, t_trans *t, int i)
 	return (drawline(*env, *s, *d, r));
 }
 
-void		draw_lem(t_env *env, t_room **room, t_trans *t)
+void		drawlink(t_env *env, t_link *l, int c)
+{
+	while (l)
+	{
+		env->c = c;
+		draw_s(env, *(l->room), 5);
+		l = l->next;
+	}
+	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
+}
+
+t_room		*drawroom(t_env *env, t_room **room)
+{
+	t_link	*l;
+	t_room	*r;
+	int		i;
+
+	i = 0;
+	while (i < 1000)
+	{
+		if (room[i] && room[i]->dist && room[i] != env->lem->start)
+		{
+			draw_s(env, *room[i], env->pad / 2);
+			l = room[i]->lst;
+			while (l)
+			{
+				drawline(*env, *room[i], *l->room, 120);
+				l = l->next;
+			}
+		}
+		else if (room[i])
+			r = room[i];
+		i++;
+	}
+	return (r);
+}
+
+void		draw_start(t_env *env, t_room *room)
 {
 	int		i;
+
+	i = room->lem;
+	while (i <= env->lem->nbr && i <= env->pad / 2)
+	{
+		env->c = color(i % 7);
+		draw_s(env, *room, i * 2);
+		i++;
+	}
+	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
+}
+
+void		draw_end(t_env *env, t_room *room)
+{
+	int		i;
+
+	i = 1;
+	while (i <= room->lem && i <= env->pad / 2)
+	{
+		env->c = color(i % 7);
+		draw_s(env, *room, i * 2);
+		i++;
+	}
+	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
+}
+
+void		draw_lem(t_env *env, t_room **room, t_trans *t)
+{
 	int		j;
 	double	k;
 	t_trans	*s;
 	t_link	*l;
 	t_room	*r;
+	t_room	*r1;
 
 	j = 0;
-	k = 1;
+	k = 1;	
+	r1 = drawroom(env, room);
+	draw_start(env, env->lem->start);
 	while (j <= 100)
 	{
-	i = 0;
-	while (i < 1000)
-	{
-		if (room[i] && room[i]->dist < 10000 && room[i]->dist > 0)
-			draw_s(env, *room[i], env->pad / 2);
-		i++;
-	}
 		s = t;
 		l = NULL;
 		while (s)
@@ -148,23 +210,38 @@ void		draw_lem(t_env *env, t_room **room, t_trans *t)
 				l = link_lst(l, r);
 			s = s->next;
 		}
-		while (l)
-		{
-			l->room->dist = 255;
-			draw_s(env, *(l->room), 5);
-			l = l->next;
-		}
-		mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
-		clean(*env);
+		drawlink(env, l, COLOR_BLUE);
+		drawlink(env, l, COLOR_BLACK);
+		//clean(*env);
 		k += 0.04;
 		j = (int)k;
 	}
-
+	draw_end(env, r1);
 }
 
-/*int			fake_expose(t_env *envc)
+int			fake_expose(t_env *env)
 {
-	project(envc, envc->room);
-	draw_lem(envc, envc->room);
-	return (0);
-}*/
+	int				i;
+	t_lem			*lem;
+	t_trans			*t;
+
+	lem = env->lem;
+	while (lem->end->lem < lem->nbr)
+	{
+		i = 0;
+		t = NULL;
+		while (i < 1000)
+		{
+			if (lem->tab[i])
+			{
+				lem->tab[i]->s = 0;
+				lem->tab[i]->r = 0;
+			}
+			i++;
+		}
+		t = send(lem->start, lem, t);
+		draw_lem(env, env->room, t);
+		ft_putendl("");
+	}
+	return (EXIT_SUCCESS);
+}

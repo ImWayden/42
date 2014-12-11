@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/07 18:45:56 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/08 05:10:53 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/10 19:19:48 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int					main(int argc, char **argv)
 			if (lem->g)
 			{
 				init(&env, lem);
-				fdf(lem, env);
+				fdf(env);
 			}
 			else
 				lemin(lem);

@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/10/10 19:12:54 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/06 04:33:41 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/10 19:20:54 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,33 +57,11 @@ void			clean(t_env env)
 	}
 }
 
-int				fdf(t_lem *lem, t_env env)
+int				fdf(t_env env)
 {
-	//mlx_key_hook(env.win, ft_key_hook, &env);
-	//mlx_mouse_hook(env.win, ft_mouse_hook, &env);
-	//fake_expose(&env);
-	//mlx_loop(env.ptr);
-	//project(envc, envc->room);
-	int				i;
-	t_trans			*t;
-
-	while (lem->end->lem < lem->nbr)
-	{
-		i = 0;
-		t = NULL;
-		while (i < 1000)
-		{
-			if (lem->tab[i])
-			{
-				lem->tab[i]->s = 0;
-				lem->tab[i]->r = 0;
-			}
-			i++;
-		}
-		t = send(lem->start, lem, t);
-		draw_lem(&env, env.room, t);
-		ft_putendl("");
-		
-	}
-	return (EXIT_SUCCESS);
+	mlx_key_hook(env.win, ft_key_hook, &env);
+	mlx_mouse_hook(env.win, ft_mouse_hook, &env);
+	mlx_expose_hook(env.win, fake_expose, &env);
+	mlx_loop(env.ptr);
+	return (0);
 }

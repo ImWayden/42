@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/04 18:37:15 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/08 02:36:28 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/10 19:14:02 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define STRUCT_H
 
 typedef struct		s_room	t_room;
+typedef struct		s_lem	t_lem;
 
 typedef struct		s_lex
 {
@@ -53,15 +54,21 @@ typedef	struct		s_env
 {
 	void			*ptr;
 	void			*win;
-	void				*img;
-	char				*data;
-	int					sizel;
-	int					endian;
-	int					bpp;
+
+	void			*img;
+	char			*data;
+	int				sizel;
+	int				endian;
+	int				bpp;
+
+	t_lem			*lem;
 	t_coord			**tab;
 	t_room			**room;
-	int				x;
-	int				y;
+
+	int				min_x;
+	int				min_y;
+	int				max_x;
+	int				max_y;
 	int				c;
 	int				w;
 	int				h;

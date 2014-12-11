@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/10 15:52:26 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/08 04:32:43 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/11 11:28:50 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_trans		*send(t_room *r, t_lem *lem, t_trans *t)
 {
 	t_link	*l;
 	t_room	*tmp;
+	int		i;
 
 	l = r->lst;
 	while (l && r->dist && r->dist < 1000)
@@ -43,10 +44,13 @@ t_trans		*send(t_room *r, t_lem *lem, t_trans *t)
 		l = l->next;
 	}
 	l = r->lst;
-	while (l && r->lem  && r->lem <= lem->nbr && r->dist && r->dist < 1000 && !r->r)
+	while (l && r->lem  && r->lem <= lem->nbr && r->dist && r->dist < 1000)
 	{
 		tmp = l->room;
-		if ((!tmp->lem || tmp == lem->end) && tmp->dist >= 0 && (tmp->dist < r->dist * lem->nbr))
+		i = lem->nbr - lem->start->lem;
+		if (i <= 0)
+			i = 1;
+		if ((!tmp->lem || tmp == lem->end) && tmp->dist >= 0 && (tmp->dist <= lem->start->dist * i))
 		{
 			if (tmp == lem->end)
 			{
@@ -61,7 +65,7 @@ t_trans		*send(t_room *r, t_lem *lem, t_trans *t)
 			else if (tmp != lem->start)
 			{
 				tmp->lem = r->lem;
-				tmp->r = 1;
+				//tmp->r = 1;
 				t = putroom(t, r, tmp);
 				if (r == lem->start)
 					r->lem++;

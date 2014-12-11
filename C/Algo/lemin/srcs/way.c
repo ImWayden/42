@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/19 13:59:59 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/08 04:20:45 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/10 06:07:02 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ int		way(t_room *room, t_lem *lem)
 		r = lnk->room;
 		if (r != lem->end)
 		{
-			if (r->dist > 1000 || r->dist > room->dist)
+			if (r->dist > room->dist)
 			{
 				r->dist = room->dist + 1;
-				way(r, lem);
+				if (r != lem->start)
+					way(r, lem);
 			}
 		}
 		lnk = lnk->next;
