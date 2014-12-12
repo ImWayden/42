@@ -37,7 +37,9 @@ t_link				*link_lst(t_link *l, t_room *room);
 int					way(t_room *room, t_lem *lem);
 t_lex				*add_link(t_lem *lem, t_lex *l);
 int					hash(char *str);
-void				lemin(t_lem *lem);
+int					lemin(t_lem *lem);
+void				del_lem(t_lem **lem);
+void				del_trans(t_trans **trans);
 t_trans				*add_trans(t_trans *trans, t_room *src, t_room *dst);
 
 

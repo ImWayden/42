@@ -30,10 +30,48 @@ static t_lex	*get(t_lem **lem, t_lex *l)
 		*lem = (t_lem *)malloc(sizeof(t_lem));
 		(*lem)->nbr = i;
 		(*lem)->start = NULL;
+		(*lem)->end = NULL;
 		ft_bzero((*lem)->tab, 1000);
 		return (l->next);
 	}
 	return (NULL);
+}
+
+static void		del_lex(t_lex **lex)
+{
+	t_lex		*t;
+
+	if (*lex)
+		(*lex)->prev->next = NULL;
+	while (*lex)
+	{
+		t = (*lex)->next;
+		ft_memdel((void **)&((*lex)->str));
+		ft_memdel((void **)lex);
+		*lex = t;
+	}
+}
+
+void			del_lem(t_lem **lem)
+{
+	t_room		**room;
+	int			i;
+
+	i = 0;
+	if (*lem)
+	{
+		room = (*lem)->tab;
+		while (i < 1000)
+		{
+			if (room[i])
+			{
+				ft_memdel((void **)&(room[i]->lst));
+				ft_memdel((void **)&(room[i]));
+			}
+			i++;
+		}
+		ft_memdel((void **)lem);
+	}
 }
 
 t_lem			*parse(void)
@@ -58,5 +96,6 @@ t_lem			*parse(void)
 		else
 			break ;
 	}
+	del_lex(&lex);
 	return (lem);
 }

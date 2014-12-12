@@ -106,6 +106,18 @@ t_trans		*add_trans(t_trans *trans, t_room *src, t_room *dst)
 	return (new);
 }
 
+void		del_trans(t_trans **trans)
+{
+	if (*trans && (*trans)->next)
+		del_trans(&((*trans)->next));
+	if (*trans)
+	{
+		ft_memdel((void **)&((*trans)->src));
+		ft_memdel((void **)&((*trans)->dst));
+		ft_memdel((void **)trans);
+	}
+}
+
 void		put_trans(t_trans *trans)
 {
 	while (trans)
