@@ -23,59 +23,46 @@ int			pixel_put(t_env *env, int x, int y, int c)
 	env->data[in + 2] = (c & 0xff0000) >> 16;
 	return (c);
 }
-
-static void	draw(int dx, int dy)
-{
-	int		i;
-	int		cumul;
-
-	i = 1;
-	cumul = dx / 2 ;
-	while (i <= dx)
-	{
-		x += xinc ;
-		cumul += dy ;
-		if ( cumul >= dx )
-		{
-			cumul -= dx ;
-			y += yinc ;
-		}
-		if (sqrt(SQUARE(p.x - x) + SQUARE(p.y - y)) <= z)
-		{
-			pixel_put(&env, x, y, c);
-			r = new_room(p.name, x, y);
-		}
-		i++;
-	}
-}
-
+ 
 t_room		*drawline(t_env env, t_room p, t_room p1, int z)
 {
-	int 		dx;
-	int			dy;
-	int			i;
-	int			xinc;
-	int			yinc;
-	int			x;
-	int			y;
-	t_room		*r;
-	int			c;
+	int		x;
+	int		y;
+	int		dx;
+	int		sx;
+	int		dy;
+	int		sy;
+	int		err;
+	int		e2;
+	t_room *r = NULL;
 
+	dx = abs(p1.x-p.x);
+	sx = p.x<p1.x ? 1 : -1;
+	dy = abs(p1.y-p.y);
+	sy = p.y<p1.y ? 1 : -1;
+	err = (dx >dy ? dx : -dy) / 2;
 	x = p.x;
 	y = p.y;
-	dx = p1.x - p.x;
-	dy = p1.y - p.y;
-	xinc = (dx > 0 ) ? 1 : -1 ;
-	yinc = (dy > 0 ) ? 1 : -1 ;
-	dx = abs(dx) ;
-	dy = abs(dy) ;
-	if (p.dist > 1000 || p1.dist > 1000)
-		c = COLOR_RED;
-	r = NULL;
-	pixel_put(&env, x, y, c);
-	if (dx > dy)
-		draw(dx, dy, xinc, yinc)
-	else
-		draw(dy, dx, yinc, xinc)
+	while (42)
+	{
+		if (sqrt(SQUARE(x - p.x) + SQUARE(y - p.y)) <= z)
+		{
+			pixel_put(&env, p.x, p.y, color(p.z));
+			r = new_room(p.name, p.x, p.y);
+		}
+		if (p.x==p1.x && p.y==p1.y)
+			break;
+		e2 = err;
+		if (e2 >-dx)
+		{
+			err -= dy;
+			p.x += sx;
+		}
+		if (e2 < dy)
+		{
+			err += dx;
+			p.y += sy;
+		}
+	}
 	return (r);
- }
+}

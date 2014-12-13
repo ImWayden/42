@@ -41,7 +41,7 @@ int				fake_expose(t_env *env);
 int				color(int i);
 int				fdf(t_env env);
 int				pixel_put(t_env *env, int x, int y, int c);
-t_room			*drawline(t_env env, t_room p, t_room p1, int z);
+t_room			*drawline(t_env env, t_room pi, t_room pf, int z);
 void			draw_s(t_env *env, t_room r, int s);
 void			draw_lem(t_env *env, t_room **room, t_trans *t);
 void			clean(t_env env);
