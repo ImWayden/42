@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "my_42sh.h"
+#include "minishell3.h"
 
 void			ft_putmsg(char *name, char *msg)
 {
@@ -37,7 +37,7 @@ static int		open_file(char *name)
 	return (fd);
 }
 
-int				spe_left(t_tree *tree, t_shell *shell)
+int				spe_left(t_tree *tree, t_shell **shell)
 {
 	int			fd;
 	char		**args;
@@ -50,7 +50,7 @@ int				spe_left(t_tree *tree, t_shell *shell)
 	return (EXIT_SUCCESS);
 }
 
-int				left_redirection(t_tree *tree, t_shell *shell)
+int				left_redirection(t_tree *tree, t_shell **shell)
 {
 	int			fd;
 	char		**args;
@@ -59,5 +59,6 @@ int				left_redirection(t_tree *tree, t_shell *shell)
 	if (!args || !args[0] || (fd = open_file(args[0])) == -1)
 		return (EXIT_FAILURE);
 	set_fd_in(tree->left, fd);
+	ft_putendl(tree->left->argv[0]);
 	return (execute_it(tree->left, shell));
 }

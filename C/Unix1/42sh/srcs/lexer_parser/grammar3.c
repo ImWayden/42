@@ -11,30 +11,28 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "my_42sh.h"
+#include "minishell3.h"
 
 bool		redir_left_norm(t_tree **tree, t_lex **lex)
 {
-	bool	ret;
 	t_tree	*new;
 
+	new = NULL;
 	if (*lex && redir_right(tree, lex))
 	{
 		if (*lex)
 		{
-			if (is_left_redir((*lex)->str) || !alloc_tree(&new, tree))
+			if (is_left_redir((*lex)->str))
 			{
+				if (!alloc_tree(&new, tree))
+					return (FALSE);
 				new->ope = (!strcmp((*lex)->str, D_LEFT_R))
 				? IS_D_LEFT : IS_LEFT;
 				new->left = *tree;
 				*tree = new;
 				*lex = (*lex)->next;
-				ret = file_exp(&(new->right), lex);
-				ret = is_right_redir((*lex)->str) ?
-				special_case(tree, lex) : ret;
-				return (ret);
+				return (file_exp(&(new->right), lex));
 			}
-			return (FALSE);
 		}
 		return (TRUE);
 	}
@@ -96,8 +94,7 @@ bool		redir_right_norm(t_tree **tree, t_lex **lex)
 			*lex = (*lex)->next;
 			return (file_exp(&(new->right), lex));
 		}
-		if (!(*lex))
-			return (TRUE);
+		return (TRUE);
 	}
 	return (FALSE);
 }

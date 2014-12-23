@@ -11,13 +11,14 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "my_42sh.h"
+#include "minishell3.h"
 
-int			execute_it(t_tree *tree, t_shell *shell)
+int			execute_it(t_tree *tree, t_shell **shell)
 {
 	if (tree->ope == IS_OR && execute_it(tree->left, shell) == EXIT_FAILURE)
 		return (execute_it(tree->right, shell));
-	if (tree->ope == IS_AND && execute_it(tree->left, shell) == EXIT_SUCCESS)
+	else if (tree->ope == IS_AND && execute_it(tree->left, shell)
+			== EXIT_SUCCESS)
 		return (execute_it(tree->right, shell));
 	else if (tree->ope == IS_PIPE)
 		return (execute_pipe_start(tree, shell));
@@ -30,13 +31,13 @@ int			execute_it(t_tree *tree, t_shell *shell)
 	return (EXIT_FAILURE);
 }
 
-void		main_execution(t_shell *shell)
+void		main_execution(t_shell **shell)
 {
 	t_tree	*parse;
 	int		flag;
 
 	flag = 0;
-	parse = shell->tree;
+	parse = (*shell)->tree;
 	while (flag == 0 && parse)
 	{
 		if (execute_it(parse, shell) == FATAL_ERROR)
@@ -44,6 +45,6 @@ void		main_execution(t_shell *shell)
 		close_trees_fd(parse);
 		parse = parse->next;
 	}
-	free_tree(&shell->tree);
-	shell->tree = NULL;
+	free_tree(&(*shell)->tree);
+	(*shell)->tree = NULL;
 }

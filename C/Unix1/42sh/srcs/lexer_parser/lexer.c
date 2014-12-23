@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "my_42sh.h"
+#include "minishell3.h"
 
 bool				is_ope(char c)
 {
@@ -23,7 +23,7 @@ bool				is_ope(char c)
 
 static int			get_operator(t_lex **list, char *str)
 {
-	if ((str[0] == '>' || str[0] == '|' || str[0] == '&') && str[0] == str[1])
+	if ((str[0] == '>' || str[0] == '<' || str[0] == '|' || str[0] == '&') && str[0] == str[1])
 	{
 		*list = addlist(*list, ft_strndup(str, 2));
 		return (2);
@@ -76,7 +76,11 @@ t_lex				*lexer(char *line)
 			line++;
 		i = 0;
 		while (line[i] && !is_ope(line[i]))
+		{
+			if (line[i] == '\t')
+				line[i] = ' ';
 			i++;
+		}
 		if (i && (list = addlist(list, ft_strndup(line, i))))
 			line = line + i;
 		if (is_ope(*line))

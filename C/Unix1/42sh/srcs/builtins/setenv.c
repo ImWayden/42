@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "my_42sh.h"
+#include "minishell3.h"
 
 int					ft_setenv(t_shell *shell, t_tree *tree)
 {
@@ -19,24 +19,24 @@ int					ft_setenv(t_shell *shell, t_tree *tree)
 
 	envc = shell->env;
 	args = tree->argv;
-	if (!envc)
-		shell->env = env_listnew(args);
+	if (args && args[1] && args[2] && !args[3])
+	{
+		while (envc && envc->next && ft_strcmp(envc->name, args[1]))
+			envc = envc->next;
+		if (!ft_strcmp(envc->name, args[1]))
+		{
+			ft_memdel((void **)&(envc->arg));
+			envc->arg = ft_strdup(args[2]);
+		}
+		else if (envc)
+			envc->next = env_listnew(&args[1]);
+		else
+			shell->env = env_listnew(&args[1]);
+	}
 	else
 	{
-		if (args && args[1] && args[2] && !args[3])
-		{
-			while (envc && envc->next && ft_strcmp(envc->name, args[1]))
-				envc = envc->next;
-			if (!ft_strcmp(envc->name, args[1]))
-				envc->arg = ft_strdup(args[0]);
-			else
-				envc->next = env_listnew(args);
-		}
-		else
-		{
-			ft_putmsg("setenv", " : wrong line format.\n");
-			return (EXIT_FAILURE);
-		}
+		ft_putmsg("setenv", " : wrong line format.\n");
+		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
 }

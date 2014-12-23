@@ -54,7 +54,7 @@ int raytracer(t_env *env)
 	theta+=0.1;
 	phi+=0.05;
 	set_pos(&env->light.vect , sin(theta)*128+128,128+cos(phi)*128,cos(theta)*128);
-	set_pos(&env->sphere2.vect, env->light.vect.x,env->light.vect.y,env->light.vect.z);
+	//set_pos(&env->sphere2.vect, env->light.vect.x,env->light.vect.y,env->light.vect.z);
 	for(y=0;y<SCREEN_H;y++)
 	{
 		for(x=0;x<SCREEN_W;x++)
@@ -66,7 +66,7 @@ int raytracer(t_env *env)
 					sphere = env->sphere1;
 				else
 					sphere = env->sphere2;
-				P = ray_sphere(&sphere, 128.0f,128.0f,cop,x,y,0.0,&ret);
+				P = ray_sphere(&sphere, 228.0f,128.0f,cop,x,y,0.0,&ret);
 				if(ret>0)
 				{
 					//apply lighting

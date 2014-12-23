@@ -31,19 +31,19 @@ int		expose(t_env *env)
 	t_ray	ray;
 
 	cam_setup(&env->cam);
-	x = 0;
-	while (x < SCREEN_W)
+	 y = 0;
+	while (y < SCREEN_H)
 	{
-		y = 0;
-		while (y < SCREEN_H)
+		x= 0;
+		while (x < SCREEN_W)
 		{
 			ray = pixel(&env->cam, x, y);
 			color = raytrace(&ray, env);
 			PlotPixel(env, x, y, color);
-			y++;
+			x++;
 			(void)color;
 		}
-		x++;
+		y++;
 	}
 	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
 	return (1);

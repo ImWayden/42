@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "my_42sh.h"
+#include "minishell3.h"
 
 bool		is_redir_no_pipe(char *str)
 {

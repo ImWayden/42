@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+  /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   get_cam.c                                          :+:      :+:    :+:   */
@@ -20,26 +20,8 @@ static int		cam_exit()
 
 void		cam_setup(t_cam *c)
 {
-    t_vect	x_c;
-    t_vect	u_c;
-    t_vect	u_x;
-    t_vect	u_y;
-    double	z_p;
-    t_vect	v_up;
-    t_vect	c_0;
-
-
-    x_c = c->pos;
-    u_c = c->dir;
-    z_p = c->focal;
-    v_up = new(0.0, -1.0, 0.0);
-    c_0 = add(x_c, mult2(u_c, z_p));
-    u_x = unit(cross(u_c, v_up));
-    u_y = cross(mult2(u_c, -1.0), u_x);
-    c->center = c_0;
-    c->pdir_x = u_x;
-    c->pdir_y = u_y;
-    //Vector3 u_z = vec3_mult(u_c, -1.0); // Normal to the view plane
+	c->dir = sub(c->pos, c->dir);
+	c->dir = unit(c->dir);
 }
 
 t_lex			*get_cam(t_cam *cam, t_lex *lex)

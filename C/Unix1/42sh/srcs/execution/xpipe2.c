@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "my_42sh.h"
+#include "minishell3.h"
 
-int				execute_simple_pipe(t_tree *tree, t_shell *shell)
+int				execute_simple_pipe(t_tree *tree, t_shell **shell)
 {
 	int			fd[2];
 	t_tree		*cmd;
@@ -33,14 +33,14 @@ int				execute_simple_pipe(t_tree *tree, t_shell *shell)
 		close(fd[0]);
 		if (dup2(cmd->fd[0], 0) == -1 || dup2(cmd->fd[1], 1) == -1)
 			exit (EXIT_FAILURE);
-		execve(cmd->argv[0], cmd->argv, shell->envc);
+		execve(cmd->argv[0], cmd->argv, (*shell)->envc);
 	}
 	close(fd[1]);
 	cmd->fd[1] = 1;
 	return (execution_chain(tree->left, shell));
 }
 
-void			init_first_pipe(t_tree *tree, t_shell *shell, int *fd)
+void			init_first_pipe(t_tree *tree, t_shell **shell, int *fd)
 {
 	t_tree		*cmd;
 	pid_t		pid;
@@ -55,7 +55,7 @@ void			init_first_pipe(t_tree *tree, t_shell *shell, int *fd)
 		close(fd[0]);
 		if (dup2(cmd->fd[0], 0) == -1 || dup2(cmd->fd[1], 1) == -1)
 			exit(EXIT_FAILURE);
-		execve(cmd->argv[0], cmd->argv, shell->envc);
+		execve(cmd->argv[0], cmd->argv, (*shell)->envc);
 	}
 	close(fd[1]);
 	cmd->fd[1] = 1;
@@ -64,7 +64,7 @@ void			init_first_pipe(t_tree *tree, t_shell *shell, int *fd)
 	exit(EXIT_SUCCESS);
 }
 
-void			init_first_pipe_spe(t_tree *tree, t_shell *shell, int *fd)
+void			init_first_pipe_spe(t_tree *tree, t_shell **shell, int *fd)
 {
 	t_tree		*cmd;
 	pid_t		pid;
@@ -79,7 +79,7 @@ void			init_first_pipe_spe(t_tree *tree, t_shell *shell, int *fd)
 		close(fd[0]);
 		if (dup2(cmd->fd[0], 0) == -1 || dup2(cmd->fd[1], 1) == -1)
 			exit(EXIT_FAILURE);
-		execve(cmd->argv[0], cmd->argv, shell->envc);
+		execve(cmd->argv[0], cmd->argv, (*shell)->envc);
 	}
 	close(fd[1]);
 	cmd->fd[0] = 1;

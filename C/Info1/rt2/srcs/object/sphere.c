@@ -17,11 +17,10 @@ int				sphere_inter(t_ray *ray, t_scene *sphere, double *dist)
 	double		a;
 	double		b;
 	double		c;
-
 	t_vect		ro_sc;
 	double		disc;
 	double		distSqrt;
-	double		q;
+	//double		q;
 	double		t0;
 	double		t1;
 	double		swap;
@@ -34,9 +33,9 @@ int				sphere_inter(t_ray *ray, t_scene *sphere, double *dist)
 	if (disc < 0)
 		return 0;
 	distSqrt = sqrt(disc);
-	q = b < 0.0 ? (-b - distSqrt) / 2.0 : (-b + distSqrt) / 2.0;
-	t0 = q / a;
-	t1 = c / q;
+
+	t0 = (-b - distSqrt) / 2 * a;
+	t1 = (-b + distSqrt) / 2 * a;
 	if (t0 > t1)
 	{
 		swap = t0;

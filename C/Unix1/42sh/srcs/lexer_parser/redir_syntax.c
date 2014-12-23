@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
+#include "libft.h"
 
 int			left_redir_syntax(t_lex *lex)
 {

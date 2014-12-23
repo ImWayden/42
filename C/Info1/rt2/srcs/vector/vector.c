@@ -48,7 +48,7 @@ t_vect		unit(t_vect v)
 	double is;
 
 	if ((is = length(v)))
-		return (mult2(v, 1/is));
+		return (mult2(v, (double)(1/is)));
 	else
 		return (v);
 }

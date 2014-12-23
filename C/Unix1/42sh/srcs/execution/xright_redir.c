@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "my_42sh.h"
+#include "minishell3.h"
 
 static int	open_file(char *name, int ope)
 {
@@ -27,7 +27,7 @@ static int	open_file(char *name, int ope)
 	return (fd);
 }
 
-int			execute_right_redir_spe(t_tree *tree, t_shell *shell)
+int			execute_right_redir_spe(t_tree *tree, t_shell **shell)
 {
 	int		fd;
 	t_tree	*file;
@@ -43,7 +43,7 @@ int			execute_right_redir_spe(t_tree *tree, t_shell *shell)
 	return (execute_last_command(tree->left, shell));
 }
 
-int			right_redirection(t_tree *tree, t_shell *shell)
+int			right_redirection(t_tree *tree, t_shell **shell)
 {
 	int		fd;
 	t_tree	*file;
@@ -56,7 +56,5 @@ int			right_redirection(t_tree *tree, t_shell *shell)
 	if ((fd = open_file(tree->right->argv[0], tree->ope)) == -1)
 		return (EXIT_FAILURE);
 	set_fd_out(tree->left, fd);
-	if (shell->envc)
-		aff_env(shell, tree);
 	return (execute_it(tree->left, shell));
 }

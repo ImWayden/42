@@ -6,11 +6,11 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/06/04 13:39:31 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/08 15:46:58 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/11/12 20:58:52 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "my_42sh.h"
+#include "minishell3.h"
 
 t_env			*env_listnew(char **str)
 {
@@ -20,7 +20,7 @@ t_env			*env_listnew(char **str)
 	{
 		if (str && str[0])
 			list->name = ft_strdup(str[0]);
-		if (str && str[1])
+		if (str)
 			list->arg = ft_strdup(str[1]);
 		list->next = NULL;
 	}
@@ -57,6 +57,7 @@ t_env			*env_to_list(char **env)
 	{
 		args = ft_strsplit(env[i], '=');
 		list = add_env_list(list, args);
+		ft_deltab(&args);
 		i++;
 	}
 	return (list);

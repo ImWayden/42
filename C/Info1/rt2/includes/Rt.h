@@ -19,8 +19,8 @@
 # include <fcntl.h>
 # include "libft.h"
 
-# define	SCREEN_H 255
-# define	SCREEN_W 255
+# define	SCREEN_H 480
+# define	SCREEN_W 640
 # define	SPHERE   1
 # define	KS_CONST 1.0
 # define	MAX_RECURSION_DEPTH 4

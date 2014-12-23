@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "my_42sh.h"
+#include "minishell3.h"
 
 static t_shell		*shellnew(void)
 {
@@ -20,13 +20,15 @@ static t_shell		*shellnew(void)
 	{
 		shell->env = NULL;
 		shell->prompt = NULL;
+		shell->hist = NULL;
+		shell->path = NULL;
 		shell->envc = NULL;
 		shell->tree = NULL;
 	}
 	return (shell);
 }
 
-t_shell				*init(char	**env)
+t_shell				*init(char **env)
 {
 	t_shell			*shell;
 
@@ -34,8 +36,8 @@ t_shell				*init(char	**env)
 	{
 		if ((shell->env = env_to_list(env)))
 			shell->envc = list_to_tab(shell->env);
-		if (!(shell->prompt = get_env(shell->env, "PATH")))
-			shell->prompt = "~>";
+		if (!(shell->prompt = get_env(shell->env, "USER")))
+			shell->prompt = ft_strdup("~>");
 		return (shell);
 	}
 	return (shell);
@@ -43,13 +45,19 @@ t_shell				*init(char	**env)
 
 int					re_init(t_shell *shell)
 {
+	char			*str;
+
 	if (shell && shell->env)
 	{
 		ft_deltab(&(shell->envc));
 		shell->envc = list_to_tab(shell->env);
 		ft_memdel((void **)&(shell->prompt));
-		if (!(shell->prompt = get_env(shell->env, "PWD")))
-			shell->prompt = "~>";
+		if (!(shell->prompt = get_env(shell->env, "USER")))
+			shell->prompt = ft_strdup("~>");
+		ft_deltab(&shell->path);
+		str = get_env(shell->env, "PATH");
+		shell->path = ft_strsplit(str, ':');
+		ft_memdel((void *)&str);
 		return (1);
 	}
 	return (0);

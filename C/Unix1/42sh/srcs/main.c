@@ -6,22 +6,29 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/23 15:07:21 by sraccah           #+#    #+#             */
-/*   Updated: 2014/06/16 12:35:04 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/11/15 12:08:13 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "my_42sh.h"
+#include "minishell3.h"
+#include "getline.h"
 
-/*static void			put_tree(t_tree *tree)
+void			ft_prompt(t_shell *shell)
 {
-	if (tree)
+	char		*str;
+	char		*str1;
+
+	ft_putstr(shell->prompt);
+	ft_putstr(":");
+	if ((str = get_env(shell->env, "PWD")))
 	{
-		put_tree(tree->left);
-		put_tree(tree->right);
-		ft_putnbr(tree->ope);
+		str1 = &((ft_strrchr(str, '/'))[1]);
+		ft_putstr(str1);
+		ft_memdel((void *)&str);
 	}
+	ft_putstr("$ ");
 }
-*/
+
 int				main(int ac, char **av, char **env)
 {
 	t_shell		*shell;
@@ -34,13 +41,17 @@ int				main(int ac, char **av, char **env)
 		av++;
 		line = NULL;
 		shell = init(env);
-
-		re_init(shell);
-		ft_putstr(shell->prompt);
-		get_next_line(1, &line);
-		if ((shell->tree = lexor_and_parsor(line)))
-			ft_putendl("finish parse");
-		main_execution(shell);
+		while (42)
+		{
+			re_init(shell);
+			ft_prompt(shell);
+			line = get_line(shell);
+			if ((shell->tree = lexor_and_parsor(line)))
+			{
+				ft_memdel((void **)&line);
+				main_execution(&shell);
+			}
+		}
 	}
 	return (0);
 }

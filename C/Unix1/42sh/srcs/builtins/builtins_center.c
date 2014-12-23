@@ -10,19 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "my_42sh.h"
+#include "minishell3.h"
 
 int				is_builtin(char *cmd)
 {
 	if (!(ft_strcmp(cmd, "cd"))
 	|| !(ft_strcmp(cmd, "unsetenv"))
 	|| !(ft_strcmp(cmd, "setenv"))
-	|| !(ft_strcmp(cmd, "env")))
+	|| !(ft_strcmp(cmd, "env"))
+	|| !(ft_strcmp(cmd, "pwd"))
+	|| !(ft_strcmp(cmd, "exit")))
 		return (1);
 	return (0);
 }
 
-int				builtins_center(t_shell *shell, t_tree *tree)
+int				builtins_center(t_shell **shell, t_tree *tree)
 {
 	char		**argv;
 
@@ -30,13 +32,17 @@ int				builtins_center(t_shell *shell, t_tree *tree)
 	if (argv && argv[0])
 	{
 		if (!(ft_strcmp(argv[0], "cd")))
-			return (cd(shell, tree));
+			return (cd(*shell, tree));
 		if (!(ft_strcmp(argv[0], "unsetenv")))
-			return (ft_unsetenv(shell, tree));
+			return (ft_unsetenv(*shell, tree));
 		if (!(ft_strcmp(argv[0], "setenv")))
-			return (ft_setenv(shell, tree));
+			return (ft_setenv(*shell, tree));
 		if (!(ft_strcmp(argv[0], "env")))
-			return (aff_env(shell, tree));
+			return (aff_env(*shell, tree));
+		if (!(ft_strcmp(argv[0], "exit")))
+			ft_exit(shell);
+		if (!(ft_strcmp(argv[0], "pwd")))
+			ft_pwd(*shell);
 	}
 	return (EXIT_FAILURE);
 }

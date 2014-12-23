@@ -15,18 +15,24 @@
 static t_vect	ray_recursive(t_ray *ray, t_env *env, size_t depth)
 {
 	t_tracing 	hit;
-	t_shading 	shad;
+	//t_shading 	shad;*/
 	t_vect	 	color;
-	t_vect	 	r_color;
-	t_vect	 	colis;
-	t_ray		reflect;
-
+	//t_vect	 	r_color;
+	//t_vect	 	colis;
+	//t_ray		reflect;
+	(void)depth;
 	hit = ray_once(ray, env);
 	if (hit.scene == NULL)
 		return (env->back_color);
+	t_vect newStart = add(ray->orig, mult2(ray->dir, hit.dist)); 
+      // la normale au point d'intersection 
+     t_vect n = sub(newStart, hit.scene->pos);
+      float temp = dot(n, n);
+      if (temp == 0.0f) 
+        return (env->back_color);
 	color = hit.scene->color;
-	colis = add(mult2(ray->dir, hit.dist), ray->orig);
-	if (hit.scene->reflect > 0.0 && depth > 0)
+	//colis = add(mult2(ray->dir, hit.dist), ray->orig);
+	/*if (hit.scene->reflect > 0.0 && depth > 0)
 	{
 		reflect = ray_reflect(ray, hit.scene, colis);
 		if (hit.scene->reflect > 0)
@@ -36,7 +42,7 @@ static t_vect	ray_recursive(t_ray *ray, t_env *env, size_t depth)
 	}
 	shad = ray_shad(ray, env, hit.scene, colis);    
 	color = get_color(color, shad, env->amb);
-	color = mult2(color, (MAX_VISIBLE_DISTANCE - hit.dist) / MAX_VISIBLE_DISTANCE);
+	color = mult2(color, (MAX_VISIBLE_DISTANCE - hit.dist) / MAX_VISIBLE_DISTANCE);*/
 	return (color);
 }
 
@@ -53,10 +59,9 @@ t_ray		pixel(t_cam *c, size_t x, size_t y)
 {
 	t_vect	dir;
 
-	dir.z = cam->focal;
-	dir.z = cam->;
-	u_r = new(x, y, 0);
-	return (new_ray(c->pos, u_r));
+	 
+	dir = new((x - SCREEN_W / 2), (y - SCREEN_H / 2), c->focal);
+	return (new_ray(dir, c->pos));
 }
 
 t_vect		raytrace(t_ray *ray, t_env *env)
@@ -72,8 +77,8 @@ t_tracing		ray_once(t_ray *ray, t_env *env)
 	t_scene		*scene;
 
 	clos.scene = NULL;
-	clos.dist = 1.0 / 0.0;
-	dist = 1.0 / 0.0f;
+	clos.dist = 20000;
+	dist = 20000;
 	hit = 0;
 	scene = env->scene;
 	while (scene)
@@ -81,6 +86,7 @@ t_tracing		ray_once(t_ray *ray, t_env *env)
 		hit = inter_center(ray, scene, &dist);
 		if (hit && dist < clos.dist && dist > EPSILON)
 		{
+			ft_putendl("hit");
 			clos.dist = dist;
 			clos.scene = scene;
 		}

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "my_42sh.h"
+#include "minishell3.h"
 
 void			set_fd_out(t_tree *begin, int fd)
 {
@@ -50,8 +50,8 @@ void			close_trees_fd(t_tree *begin)
 		}
 		if (begin->fd[1] != 1)
 		{
-			close(begin->fd[0]);
-			begin->fd[1] = 0;
+			close(begin->fd[1]);
+			begin->fd[1] = 1;
 		}
 		close_trees_fd(begin->left);
 		close_trees_fd(begin->right);

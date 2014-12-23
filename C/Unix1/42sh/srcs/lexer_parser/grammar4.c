@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "my_42sh.h"
+#include "minishell3.h"
 
 bool		command_exp(t_tree **tree, t_lex **lex)
 {
@@ -19,7 +19,6 @@ bool		command_exp(t_tree **tree, t_lex **lex)
 
 	if (*lex && is_word((*lex)->str))
 	{
-		ft_putendl("cmd");
 		if (!alloc_tree(&new, tree))
 			return (FALSE);
 		new->ope = IS_CMD;
@@ -27,8 +26,6 @@ bool		command_exp(t_tree **tree, t_lex **lex)
 			return (FALSE);
 		*tree = new;
 		*lex = (*lex)->next;
-		if (*lex)
-			ft_putendl((*lex)->str);
 		return (TRUE);
 	}
 	return (FALSE);
@@ -47,7 +44,6 @@ bool		file_exp(t_tree **tree, t_lex **lex)
 
 	if (*lex && is_word((*lex)->str))
 	{
-		ft_putendl("file");
 		if (!alloc_tree(&new, tree))
 			return (FALSE);
 		new->ope = IS_FILE;
