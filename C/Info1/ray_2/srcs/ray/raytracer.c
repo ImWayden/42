@@ -6,7 +6,7 @@
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/29 01:29:57 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/20 20:11:40 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/23 20:58:36 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_ray        new_ray(t_vect orig, t_vect dir)
 	return r;
 }
 
-t_ray		pixel(t_cam *c, size_t x, size_t y)
+t_ray		pixel(t_cam *c, double x, double y)
 {
 	t_vect	dir;
                                   

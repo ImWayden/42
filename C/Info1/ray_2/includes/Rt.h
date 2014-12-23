@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/28 15:10:47 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/20 19:54:16 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/23 22:39:02 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ typedef struct		s_cam
 	t_vect		pos;
 	t_vect		lookat;
 	t_vect		up;
+	t_vect		downleft;
 	t_vect		upleft;
+	t_vect		upright;
+	t_vect		downright;
 	t_vect		center;
 	t_vect		dir;
 	t_vect		right;
@@ -187,7 +190,7 @@ t_vect		normal(t_vect v);
 */
 
 t_ray		new_ray(t_vect orig, t_vect dir);
-t_ray		pixel(t_cam *c, size_t x, size_t y);
+t_ray		pixel(t_cam *c, double x, double y);
 t_vect		raytrace(t_ray *ray, t_env *env);
 t_tracing	ray_once(t_ray *ray, t_env *env);
 t_ray		ray_addnoise(t_ray *ray, double epsilon);

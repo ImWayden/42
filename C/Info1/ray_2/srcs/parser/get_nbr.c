@@ -6,7 +6,7 @@
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/30 20:02:52 by msarr             #+#    #+#             */
-/*   Updated: 2014/11/30 22:39:20 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/23 21:32:41 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,30 @@ static double		nbr1(char *str, int *j)
 	return (nbr * s);
 }
 
+static double		nbr2(char *str, double nbr, int *j)
+{
+	double			i;
+
+	while (str[*j] && str[*j] != '>')
+		(*j)++;
+	(*j)--;
+	i = 10;
+	while (str[*j] != '>')
+	{
+		if (ft_isdigit(str[*j]))
+		{
+			nbr = (nbr * i + str[*j] - '0') / i;
+			i *= 10;
+		}
+		else if (str[*j] == '.')
+			break;
+		else
+			nbr_exit();
+		*j -= 1;
+	}
+	return (nbr);
+}
+
 double			get_nbr(char *str)
 {
 	int			i;
@@ -52,5 +76,7 @@ double			get_nbr(char *str)
 	if (str[0] != '<' || str[i] != '>')
 		nbr_exit(1);
 	nbr = nbr1(str, &j);
+	if (str[j] == '.')
+		nbr = nbr2(str, nbr, &j);
 	return (nbr);
 }

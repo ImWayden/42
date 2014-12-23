@@ -6,7 +6,7 @@
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/30 18:59:57 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/20 05:20:43 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/23 23:18:35 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,26 @@ static int		cam_exit()
 
 void		cam_setup(t_cam *c)
 {
-	c->fov = 60;
-	c->up = new(0.0f, 1.0f, 0.0f);
-	c->width = SCREEN_W;
-   	c->height = SCREEN_H;
-   	c->focal = -200;//-(SCREEN_W / ( 2 * tan (FOV / 2)));
-   	//c->pos.z = c->focal;
+	c->fov = c->focal;
+   	c->focal = -(SCREEN_W / ( 2 * tan (c->fov / 2)));
+   	c->upleft = new(-SCREEN_W / 2, SCREEN_H / 2, c->pos.z);
+	c->upright = new(SCREEN_W / 2, SCREEN_H / 2, c->pos.z);
+	c->downright = new(SCREEN_W / 2, -SCREEN_H / 2, c->pos.z);
+	c->downleft = new(-SCREEN_W / 2, -SCREEN_H / 2, c->pos.z);
     c->dir = sub(c->lookat, c->pos);
-	c->right = mult(c->up, c->dir);
-    c->up = mult(c->dir, c->right);
-	c->upleft = sub(add(c->pos, add(mult2(c->dir, c->focal),
-		mult2(c->up, (c->height / 2.0f)))), mult2(c->right, (c->width / 2.0f)));
+    c->upleft = add(c->upleft, mult2(c->dir, c->focal));
+	c->upright = mult(c->upright, add(c->pos, c->dir));
+	c->downright = mult(c->downright, add(c->pos, c->dir));
+	c->downleft = mult(c->downleft, add(c->pos, c->dir));
+   // c->upleft = sub(c->upleft, c->pos);
+	//c->upright = sub(c->upright, c->pos);
+	//c->downright = sub(c->downright, c->pos);
+	//c->downleft = sub(c->downleft, c->pos);
    	printf("distance focale : %.1f\n", c->focal);
-   	sleep(2);
+   	printf("vecteur dir : %lf %lf %lf\n", c->dir.x, c->dir.y, c->dir.z);
+   	printf("vecteur upleft : %lf %lf %lf\n", c->upleft.x, c->upleft.y, c->upleft.z);
+   	printf("vecteur upleft : %lf %lf %lf\n", c->upright.x, c->upleft.y, c->upleft.z);
+   	exit(2);
 }
 
 t_lex			*get_cam(t_cam *cam, t_lex *lex)

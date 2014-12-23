@@ -6,7 +6,7 @@
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/28 22:34:01 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/20 18:34:06 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/23 20:57:28 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,23 +54,4 @@ int				hitSphere(t_ray *ray, t_scene *sphere, double *dist)
   else
     *dist = t0;
   return 1;
-/*t_vect d = sub(sphere->pos, ray->orig); 
-   float B = dot(ray->dir, d);
-   float D = B*B - dot(d, d) + SQUARE(sphere->size); 
-   if (D < 0.0f) 
-     return 0; 
-   float t0 = B - sqrtf(D); 
-   float t1 = B + sqrtf(D);
-   int retvalue = 0;  
-   if ((t0 > 0.1f) && (t0 < *dist)) 
-   {
-     *dist = t0;
-     retvalue = 1; 
-   } 
-   if ((t1 > 0.1f) && (t1 < *dist)) 
-   {
-     *dist = t1; 
-     retvalue = 1; 
-   }
-  return retvalue;*/
 }
