@@ -41,7 +41,12 @@ int		expose(t_env *env)
 		{
 			ray = pixel(&env->cam, x, y);
 			color = raytrace(&ray, env);
-			PlotPixel(env, x, y, color);
+			if (color.x || color.y || color.z)
+				PlotPixel(env, x, y, color);
+			else if (y < SCREEN_H /2)
+				PlotPixel(env, x, y, COLOR_BLUE);
+			else
+				PlotPixel(env, x, y, COLOR_GREEN);
 			x++;
 		}
 		y++;

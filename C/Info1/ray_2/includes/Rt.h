@@ -156,6 +156,7 @@ t_lex			*get_obj(t_env *env, t_lex *lex);
 t_lex			*get_light(t_light *light, t_lex *lex);
 void			ft_init(t_env *env, char *file);
 void			cam_setup(t_cam *c);
+t_scene			*new_scene();
 
 
 /*
@@ -213,7 +214,7 @@ t_vect		color_makeFromRGBhex(unsigned int c);
 t_vect		get_color(t_vect color, t_shading light, double amb);
 
 t_vect			light_dir(t_light *light, t_vect point);
-double			light_diff(t_light *light, t_vect dir, t_vect norm);
+t_vect			light_diff(t_light *light, t_vect norm, t_scene *scene, t_vect point);
 double			light_spec(t_light *light, t_vect light_dir, t_vect norm, t_vect ray_dir, double spec);
 
 /*

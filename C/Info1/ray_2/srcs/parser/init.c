@@ -39,6 +39,8 @@ void			ft_init(t_env *env, char *file)
 {
 	t_lex		*lex;
 	t_lex		*tmp;
+	//t_scene		*s = NULL;
+	//t_light		*l = NULL;
 
 	lex = get_file(file);
 	tmp = lex;
@@ -59,4 +61,17 @@ void			ft_init(t_env *env, char *file)
 		if (lex == tmp)
 			break ;
 	}
+	/*l = env->light;
+	while (l)
+	{
+		sleep(1);
+		s = new_scene();
+		s->type = SPHERE;
+		s->pos = l->pos;
+		s->color = new(1, 1, 1);
+		s->size = 5;
+		s->next = env->scene;
+		env->scene = s;
+		l = l->next;
+	}*/
 }

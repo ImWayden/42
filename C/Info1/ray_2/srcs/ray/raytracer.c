@@ -24,7 +24,8 @@ static t_vect	ray_recursive(t_ray *ray, t_env *env, size_t depth)
 	(void)depth;
 	//return(hit.scene->color);
 	colis = add(mult2(ray->dir, hit.dist), ray->orig);
-	//put_vect("colis", colis);
+	put_vect("colis", colis);
+	printf("dist %lf\n", hit.dist);
 	norm = divi(sub(colis, hit.scene->pos), hit.scene->size);
 	return(ray_shad(ray, env, hit.scene, colis, norm));
 }

@@ -17,14 +17,22 @@ t_vect			light_dir(t_light *light, t_vect point)
 	return (unit(sub(point, light->pos)));
 }
 
-double			light_diff(t_light *light, t_vect dir, t_vect norm)
+t_vect			light_diff(t_light *light, t_vect norm, t_scene *scene, t_vect point)
 {
-	double		high;
-
-	high = dot(norm, dir);
-	if (high < 0)
-		return 0;
-	return (high * light->i);
+	t_vect		lightVector;
+	float		angle;
+	t_vect		finalColor;
+                     
+	lightVector = normal(sub(point, light->pos));
+	put_vect("light", lightVector);
+	angle = dot(norm, negate(lightVector));
+	printf("angle %f\n", angle);            	
+	/*if (angle <= 0)
+		finalColor = new(0.0f, 0.0f, 0.0f);
+	else*/
+		finalColor = mult2(mult2(light->color, cos(angle)), scene->diff);
+	put_vect("diff" ,finalColor);
+	return finalColor;
 }
 
 double			light_spec(t_light *light, t_vect light_dir, t_vect norm, t_vect ray_dir, double spec)

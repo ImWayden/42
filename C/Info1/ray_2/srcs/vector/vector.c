@@ -50,14 +50,13 @@ t_vect		rot(t_vect v, t_vect r)
 t_vect		normal(t_vect v)
 {
 	double	d;
-
-   if ((d = sqrt(dot(v, v))))
-   {
-   	v.x /= d;
-   	v.z /= d;
-   	v.y /= d;
-   }
-   return (v);
+	if ((d = sqrt(dot(v, v))))
+	{
+		v.x /= d;
+		v.z /= d;
+		v.y /= d;
+	}
+	return (v);
 }
 
 t_vect		add2(t_vect a, t_vect b, t_vect c)
@@ -67,27 +66,45 @@ t_vect		add2(t_vect a, t_vect b, t_vect c)
 
 double		dot(t_vect a, t_vect b)
 {
-	return ((a.x * b.x) + (a.y * b.y) + (a.z * b.z));
+	double	d;
+
+	d = (a.x * b.x) + (a.y * b.y) + (a.z * b.z);
+	return (d);
 }
 
 t_vect		sub(t_vect a, t_vect b)
 {
-	return (new(a.x - b.x, a.y - b.y, a.z - b.z));
+	t_vect	vect;
+
+	vect.x = a.x - b.x;
+	vect.y = a.y - b.y;
+	vect.z = a.z - b.z;
+	return (vect);
 }
 
 t_vect		mult2(t_vect v, double b)
 {
-	return (new(v.x * b, v.y * b, v.z * b));
+	v.x *= b;
+	v.y *= b;
+	v.z *= b;
+	return (v);
 }
 
 t_vect		divi(t_vect v, double b)
 {
-	return (new(v.x / b, v.y / b, v.z / b));
+	v.x /= b;
+	v.y /= b;
+	v.z /= b;
+	return (v);
 }
 
 double		length(t_vect v)
 {
-	return (sqrt(dot(v, v)));
+	double	d;
+
+	d = dot(v, v);
+	d = sqrt(d);
+	return (d);
 }
 
 t_vect		unit(t_vect v)
@@ -112,7 +129,10 @@ t_vect		cross(t_vect a, t_vect b)
 
 t_vect		negate(t_vect v)
 {
-	return (new(-v.x, -v.y, -v.z));
+	v.x = -v.x;
+	v.y = -v.y;
+	v.z = -v.z;
+	return (v);
 }
 
 t_vect		new(int x, int y, int z)
@@ -132,7 +152,12 @@ t_vect		dupl(t_vect tmp)
 
 t_vect		add(t_vect vect, t_vect vect1)
 {
-	return (new(vect1.x + vect.x, vect1.y + vect.y, vect1.z + vect.z));
+	t_vect	v;
+
+	v.x = vect.x + vect1.x;
+	v.y = vect.y + vect1.y;
+	v.z = vect.z + vect1.z;
+	return (v);
 }
 
 t_vect		mult(t_vect vect, t_vect vect1)

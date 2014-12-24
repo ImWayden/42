@@ -20,36 +20,26 @@ t_vect		ray_shad(t_ray *ray, t_env *env, t_scene *scene, t_vect point, t_vect no
 	double		dist;
 	t_vect		l_vect;
 	t_ray		l_ray;
-	int 		tmp;
 
 	light = env->light;
-	amb = new(0, 0, 0);
+	amb = mult2(scene->color, env->amb);
+	printf("%lf\n", 1 * 0.2);
+	put_vect("amb", amb);
+	put_vect("co", scene->color);
 	while(light)
 	{
 		// Calc the vec (normalized) going from the light to the intersection point
 		l_vect = sub(point, light->pos);
 		dist = length(l_vect);
+		printf("dist %lf\n", dist);
 		l_vect = normal(l_vect);
 		l_ray.orig = light->pos;
 		l_ray.dir = l_vect;
 		trac = ray_once(&l_ray, env);
 		(void)ray;
-		(void)norm;
-		if (trac.scene == NULL && trac.dist > dist)
+		if (trac.scene == NULL || trac.dist > dist || trac.scene == scene)
 		{
-			tmp = 1;
-			if ((unsigned short int) (amb.x + tmp * light->color.x*light->i * scene->color.x) > scene->color.x)
-				amb.x = scene->color.x *light->i;
-			else
-				amb.x += tmp*light->color.x*scene->color.x;
-			if ((unsigned short int) (amb.z + tmp * light->color.z*light->i * scene->color.z) > scene->color.z)
-				amb.z = scene->color.z *light->i;
-			else
-				amb.z += tmp*light->color.z*scene->color.z;
-			if ((unsigned short int) (amb.y + tmp * light->color.y *light->i * scene->color.y) > scene->color.y)
-				amb.y = scene->color.y*light->i;
-			else
-				amb.y += tmp * light->color.y * scene->color.y;
+			amb = add(amb, light_diff(light, norm, scene, point));
 			printf("%lf %lf %lf ", amb.x, amb.y, amb.z);
 		}
 		light = light->next;
