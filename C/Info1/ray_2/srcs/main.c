@@ -6,11 +6,35 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/10/10 19:12:54 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/01 03:00:28 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/24 13:41:21 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Rt.h"
+
+int				ft_key_hook(t_env * env, int keycode)
+{
+	ft_putstr("key : ");
+	ft_putnbr(keycode);
+	ft_putchar('\n');
+	if (keycode == 65307)
+		exit(0);
+	return (0);
+	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
+}
+
+int				ft_mouse_hook(int button, int x, int y)
+{
+	ft_putstr("mouse : ");
+	ft_putnbr(button);
+	ft_putstr(" (");
+	ft_putnbr(x);
+	ft_putstr(" : ");
+	ft_putnbr(y);
+	ft_putchar(')');
+	ft_putchar('\n');
+	return (0);
+}
 
 int				main(int ac, char **av)
 {
@@ -27,6 +51,9 @@ int				main(int ac, char **av)
 	if (!(env.data = mlx_get_data_addr(env.img, &(env.bpp), &(env.sizel)
 		, &(env.endian))))
 		exit (0);
+	cam_setup(&env.cam);
+	mlx_key_hook(env.win, ft_key_hook, &env);
+	mlx_mouse_hook(env.win, ft_mouse_hook, &env);
 	mlx_expose_hook(env.win, expose, &env);
 	mlx_loop(env.ptr);
 	return (0);

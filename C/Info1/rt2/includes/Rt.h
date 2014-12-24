@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/28 15:10:47 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/01 03:48:01 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/24 15:42:01 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ t_tracing	ray_once(t_ray *ray, t_env *env);
 t_ray		ray_addnoise(t_ray *ray, double epsilon);
 t_vect		get_norm(t_scene *scene, t_vect point);
 t_ray		ray_reflect(t_ray *ray, t_scene *scene, t_vect point);
-t_shading	ray_shad(t_ray *ray, t_env *env, t_scene *scene, t_vect point);
+t_shading		ray_shad(t_ray *ray, t_env *env, t_scene *scene, t_vect point, t_vect norm);
 int			inter_center(t_ray *ray, t_scene *scene, double *dist);
 int			sphere_inter(t_ray *ray, t_scene *sphere, double *dist);
 

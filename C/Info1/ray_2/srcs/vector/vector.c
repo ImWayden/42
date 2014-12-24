@@ -6,7 +6,7 @@
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/29 13:13:38 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/23 19:34:17 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/24 16:58:14 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,13 @@ t_vect		normal(t_vect v)
 {
 	double	d;
 
-   d = 1 / sqrt(dot(v, v));
-   return (mult2(v, d));
+   if ((d = sqrt(dot(v, v))))
+   {
+   	v.x /= d;
+   	v.z /= d;
+   	v.y /= d;
+   }
+   return (v);
 }
 
 t_vect		add2(t_vect a, t_vect b, t_vect c)
@@ -77,7 +82,7 @@ t_vect		mult2(t_vect v, double b)
 
 t_vect		divi(t_vect v, double b)
 {
-	return (mult2(v, 1.0 / b));
+	return (new(v.x / b, v.y / b, v.z / b));
 }
 
 double		length(t_vect v)
@@ -89,7 +94,7 @@ t_vect		unit(t_vect v)
 {
 	double is;
 
-	if ((is = length(v)))
+	if ((is = length(v)) > 1)
 		return (mult2(v, (double)(1/is)));
 	else
 		return (v);

@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/28 15:10:47 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/23 22:39:02 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/24 16:56:43 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,9 @@ typedef struct		s_cam
 	t_vect		pos;
 	t_vect		lookat;
 	t_vect		up;
-	t_vect		downleft;
+	t_vect		screen;
 	t_vect		upleft;
 	t_vect		upright;
-	t_vect		downright;
 	t_vect		center;
 	t_vect		dir;
 	t_vect		right;
@@ -188,6 +187,7 @@ t_vect		normal(t_vect v);
 *** RAY FUNTIONS
 **
 */
+void		put_vect(char *str, t_vect v);
 
 t_ray		new_ray(t_vect orig, t_vect dir);
 t_ray		pixel(t_cam *c, double x, double y);
@@ -196,7 +196,7 @@ t_tracing	ray_once(t_ray *ray, t_env *env);
 t_ray		ray_addnoise(t_ray *ray, double epsilon);
 t_vect		get_norm(t_scene *scene, t_vect point);
 t_ray		ray_reflect(t_ray *ray, t_scene *scene, t_vect point);
-t_shading	ray_shad(t_ray *ray, t_env *env, t_scene *scene, t_vect point);
+t_vect	ray_shad(t_ray *ray, t_env *env, t_scene *scene, t_vect point, t_vect norm);
 int			hitSphere(t_ray *ray, t_scene *sphere, double *dist);
 int			sphere_inter(t_ray *ray, t_scene *sphere, double *dist);
 int		inter_center(t_ray *ray, t_scene *scene, double *dist);

@@ -6,11 +6,17 @@
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/30 18:59:57 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/23 23:18:35 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/24 13:12:20 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Rt.h"
+
+void		put_vect(char *str, t_vect v)
+{
+   	printf("%s : %lf %lf %lf\n", str, v.x, v.y, v.z);
+}
+
 
 static int		cam_exit()
 {
@@ -22,24 +28,25 @@ void		cam_setup(t_cam *c)
 {
 	c->fov = c->focal;
    	c->focal = -(SCREEN_W / ( 2 * tan (c->fov / 2)));
-   	c->upleft = new(-SCREEN_W / 2, SCREEN_H / 2, c->pos.z);
-	c->upright = new(SCREEN_W / 2, SCREEN_H / 2, c->pos.z);
-	c->downright = new(SCREEN_W / 2, -SCREEN_H / 2, c->pos.z);
-	c->downleft = new(-SCREEN_W / 2, -SCREEN_H / 2, c->pos.z);
+	c->up = new(0.0f, 1.0f, 0.0f);
+	put_vect("lok", c->lookat);
+   	put_vect("pos", c->pos);
     c->dir = sub(c->lookat, c->pos);
-    c->upleft = add(c->upleft, mult2(c->dir, c->focal));
-	c->upright = mult(c->upright, add(c->pos, c->dir));
-	c->downright = mult(c->downright, add(c->pos, c->dir));
-	c->downleft = mult(c->downleft, add(c->pos, c->dir));
-   // c->upleft = sub(c->upleft, c->pos);
-	//c->upright = sub(c->upright, c->pos);
-	//c->downright = sub(c->downright, c->pos);
-	//c->downleft = sub(c->downleft, c->pos);
-   	printf("distance focale : %.1f\n", c->focal);
-   	printf("vecteur dir : %lf %lf %lf\n", c->dir.x, c->dir.y, c->dir.z);
-   	printf("vecteur upleft : %lf %lf %lf\n", c->upleft.x, c->upleft.y, c->upleft.z);
-   	printf("vecteur upleft : %lf %lf %lf\n", c->upright.x, c->upleft.y, c->upleft.z);
-   	exit(2);
+   	c->dir = normal(c->dir);
+   	put_vect("dir = norm look - pos", c->dir);
+   	put_vect("up", c->up);
+   	c->screen = new(SCREEN_W, SCREEN_H, c->focal);
+   	put_vect("screen", c->screen);
+	c->upright = cross(c->up, c->dir);
+	put_vect("upr = up * dir", c->upright);
+	// De meme pour le "vrai" vecteur haut.
+	c->up = cross(c->dir, c->upright);
+	put_vect("up", c->up);
+	// Maintenant nous avons toutes les informations pour détérminer la position 
+	// en haut à gauche du viewplane.
+	c->upleft = add(c->pos, sub(add(mult2(c->dir, c->focal), mult2(c->up, (SCREEN_H/2.0f))),
+		mult2(c->upright, (SCREEN_W/2.0f))));
+	put_vect("upl", c->up);
 }
 
 t_lex			*get_cam(t_cam *cam, t_lex *lex)

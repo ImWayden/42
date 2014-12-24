@@ -6,7 +6,7 @@
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/01 01:13:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/23 20:50:57 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/24 13:43:03 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ int		expose(t_env *env)
 	t_vect	color;
 	t_ray	ray;
 
-	cam_setup(&env->cam);
-	 y = 0;
+	y = 0;
 	while (y < SCREEN_H)
 	{
 		x= 0;
@@ -48,5 +47,5 @@ int		expose(t_env *env)
 		y++;
 	}
 	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
-	return (1);
+	return (0);
 }
