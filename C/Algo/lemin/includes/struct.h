@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/04 18:37:15 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/10 19:14:02 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/25 21:41:29 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct		s_lem
 {
 	t_room			*tab[1000];
 	int				nbr;
-	int				g;
+	int				flag;
 	t_room			*start;
 	t_room			*end;
 }					t_lem;

@@ -6,26 +6,25 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/10 15:52:26 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/11 11:28:50 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/25 21:45:28 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 #include "fdf.h"
 
-static t_trans	*putroom(t_trans *trans, t_room *room, t_room *room1)
+static void		putroom(t_lem *lem, t_room *room, t_room *room1)
 {
-	if (!trans)
+	if ((lem->flag) && !(lem->flag = 0))
 		ft_putstr("L");
 	else
 		ft_putstr(" L");
 	ft_putnbr(room->lem);
 	ft_putstr("-");
 	ft_putstr(room1->name);
-	return (add_trans(trans, room, room1));
 }
 
-static t_trans	*send_list(t_room *r, t_lem *lem, t_trans *t)
+static void		send_list(t_room *r, t_lem *lem)
 {
 	t_link		*l;
 	t_room		*tmp;
@@ -37,19 +36,20 @@ static t_trans	*send_list(t_room *r, t_lem *lem, t_trans *t)
 		if (tmp->dist && tmp->dist < 1000 && tmp != lem->start && !tmp->s)
 		{
 			tmp->s = 1;
-			t = send(tmp, lem, t);
+			send(tmp, lem);
+			if (tmp->lem)
+				tmp->s = 0;
 		}
 		l = l->next;
 	}
-	return (t);
 }
 
-static t_trans	*trans(t_room *r, t_room *tmp, t_lem *lem, t_trans *t)
+static void		trans(t_room *r, t_room *tmp, t_lem *lem)
 {
 	if (tmp == lem->end)
 	{
 		tmp->lem++;
-		t = putroom(t, r, tmp);
+		putroom(lem, r, tmp);
 		if (r == lem->start)
 			r->lem++;
 		else
@@ -59,22 +59,21 @@ static t_trans	*trans(t_room *r, t_room *tmp, t_lem *lem, t_trans *t)
 	{
 		tmp->lem = r->lem;
 		tmp->r = 1;
-		t = putroom(t, r, tmp);
+		putroom(lem, r, tmp);
 		if (r == lem->start)
 			r->lem++;
 		else
 			r->lem = 0;
 	}
-	return (t);
 }
 
-t_trans			*send(t_room *r, t_lem *lem, t_trans *t)
+void			send(t_room *r, t_lem *lem)
 {
 	t_link		*l;
 	t_room		*tmp;
 	int			i;
 
-	t = send_list(r, lem, t);
+	send_list(r, lem);
 	l = r->lst;
 	while (l && r->lem && r->lem <= lem->nbr && r->dist && r->dist < 1000 && !r->r)
 	{
@@ -84,24 +83,22 @@ t_trans			*send(t_room *r, t_lem *lem, t_trans *t)
 		if ((!tmp->lem || tmp == lem->end) && tmp->dist >= 0
 					&& (tmp->dist <= lem->start->dist * i))
 		{
-			t = trans(r, tmp, lem, t);
+			trans(r, tmp, lem);
 			if (tmp == lem->end)
 				break;
 		}
 		l = l->next;
 	}
-	return (t);
 }
 
 
 int			lemin(t_lem *lem)
 {
 	int			i;
-	t_trans		*t;
 
-	t = NULL;
 	while (lem->end->lem < lem->nbr)
 	{
+		lem->flag = 1;
 		i = 0;
 		while (i < 1000)
 		{
@@ -112,8 +109,7 @@ int			lemin(t_lem *lem)
 			}
 			i++;
 		}
-		t = send(lem->start, lem, t);
-		del_trans(&t);
+		send(lem->start, lem);
 		ft_putendl("");
 	}
 	return (1);

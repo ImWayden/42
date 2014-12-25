@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/03 19:56:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/08 05:05:18 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/25 21:16:07 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 t_lem				*parse();
 t_lex				*get_lst();
 t_lem				*newlem(void);
-t_trans				*send(t_room *r, t_lem *lem, t_trans *t);
+void				send(t_room *r, t_lem *lem);
 int 				is_num(char *str);
 t_room				*new_room(char *str, int x, int y);
 int					sort(t_room **r);
@@ -39,8 +39,6 @@ t_lex				*add_link(t_lem *lem, t_lex *l);
 int					hash(char *str);
 int					lemin(t_lem *lem);
 void				del_lem(t_lem **lem);
-void				del_trans(t_trans **trans);
-t_trans				*add_trans(t_trans *trans, t_room *src, t_room *dst);
 
 
 #endif
