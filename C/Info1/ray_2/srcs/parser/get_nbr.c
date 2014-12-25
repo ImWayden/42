@@ -6,7 +6,7 @@
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/30 20:02:52 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/24 10:59:19 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/25 19:39:55 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,19 @@ static double		nbr1(char *str, int *j)
 static double		nbr2(char *str, double nbr, int *j)
 {
 	double			i;
+	double			k;
 
 	(*j)++;
-	i = 10;
+	i = 10.0;
+	if (nbr < 0)
+		i *= -1;
 	while (str[*j] != '>')
 	{
 		if (ft_isdigit(str[*j]))
 		{
-			nbr += (str[*j] - '0') / i;
+			k = (double)(str[*j] - '0');
+			k /= i;
+			nbr = nbr + k;
 			i *= 10;
 		}
 		else

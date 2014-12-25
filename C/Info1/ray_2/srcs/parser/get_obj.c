@@ -6,7 +6,7 @@
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/30 23:16:13 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/20 14:32:06 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/25 18:12:49 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,13 @@ t_lex			*get_obj(t_env *env, t_lex *lex)
 			s->next = env->scene;
 			env->scene = s;
 			lex = get_sphere(s, lex->next);
+		}
+		else if (!ft_strcmp(lex->str, "<PLAN>"))
+		{
+			s = new_scene();
+			s->next = env->scene;
+			env->scene = s;
+			lex = get_plan(s, lex->next);
 		}
 		else if (!ft_strcmp(lex->str, "<SPOT>"))
 		{

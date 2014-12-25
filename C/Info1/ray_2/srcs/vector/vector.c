@@ -6,7 +6,7 @@
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/29 13:13:38 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/24 16:58:14 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/25 15:10:47 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,12 @@ t_vect		add(t_vect vect, t_vect vect1)
 
 t_vect		mult(t_vect vect, t_vect vect1)
 {
-	return (new(vect1.x * vect.x, vect1.y * vect.y, vect1.z * vect.z));
+	t_vect	v;
+
+	v.x = vect.x * vect1.x;
+	v.y = vect.y * vect1.y;
+	v.z = vect.z * vect1.z;
+	return (v);
 }
 
 t_vect		square(t_vect vect)

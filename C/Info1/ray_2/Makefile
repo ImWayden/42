@@ -6,7 +6,7 @@
 #    By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/22 14:52:23 by sraccah           #+#    #+#              #
-#    Updated: 2014/12/01 02:52:09 by msarr            ###   ########.fr        #
+#    Updated: 2014/12/25 18:27:48 by msarr            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,10 @@ ODIR = srcs/object/
 SRC = $(SDIR)main.c $(SDIR)expose.c \
 	  $(VDIR)vector.c \
 	  $(LIDIR)light.c \
-	  $(ODIR)center.c $(ODIR)sphere.c\
+	  $(ODIR)center.c $(ODIR)sphere.c $(ODIR)plan.c\
 	  $(PDIR)init.c $(PDIR)get_cam.c $(PDIR)get_pos.c $(PDIR)get_nbr.c \
 	  $(PDIR)get_file.c $(PDIR)get_sphere.c $(PDIR)get_obj.c $(PDIR)get_spot.c\
+	  $(PDIR)get_plan.c \
 	  $(RDIR)raytracer.c $(RDIR)color.c $(RDIR)noise.c $(RDIR)shaddow.c $(RDIR)reflection.c
 
 OBJ = $(SRC:.c=.o)

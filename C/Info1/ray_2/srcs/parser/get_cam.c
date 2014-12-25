@@ -6,7 +6,7 @@
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/30 18:59:57 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/24 13:12:20 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/25 18:29:53 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,16 @@ void		cam_setup(t_cam *c)
 	c->fov = c->focal;
    	c->focal = -(SCREEN_W / ( 2 * tan (c->fov / 2)));
 	c->up = new(0.0f, 1.0f, 0.0f);
-	put_vect("lok", c->lookat);
-   	put_vect("pos", c->pos);
     c->dir = sub(c->lookat, c->pos);
    	c->dir = normal(c->dir);
-   	put_vect("dir = norm look - pos", c->dir);
-   	put_vect("up", c->up);
    	c->screen = new(SCREEN_W, SCREEN_H, c->focal);
-   	put_vect("screen", c->screen);
 	c->upright = cross(c->up, c->dir);
-	put_vect("upr = up * dir", c->upright);
 	// De meme pour le "vrai" vecteur haut.
 	c->up = cross(c->dir, c->upright);
-	put_vect("up", c->up);
 	// Maintenant nous avons toutes les informations pour détérminer la position 
 	// en haut à gauche du viewplane.
 	c->upleft = add(c->pos, sub(add(mult2(c->dir, c->focal), mult2(c->up, (SCREEN_H/2.0f))),
 		mult2(c->upright, (SCREEN_W/2.0f))));
-	put_vect("upl", c->up);
 }
 
 t_lex			*get_cam(t_cam *cam, t_lex *lex)

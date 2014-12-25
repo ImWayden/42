@@ -6,7 +6,7 @@
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/30 19:27:07 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/01 01:04:46 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/25 19:35:18 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ t_lex			*get_pos(t_vect *v, t_lex *lex)
 			break;
 		i++;
 	}
-	ft_putnbr(v->x);
-	ft_putnbr(v->y);
-	ft_putnbr(v->z);
+	put_vect("test", *v);
 	if (i != 3)
 		pos_exit();
 	ft_putchar('\n');

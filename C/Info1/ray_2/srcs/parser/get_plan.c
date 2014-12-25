@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_sphere.c                                       :+:      :+:    :+:   */
+/*   get_plan.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/30 23:06:11 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/25 15:56:27 by msarr            ###   ########.fr       */
+/*   Created: 2014/12/25 18:13:13 by msarr             #+#    #+#             */
+/*   Updated: 2014/12/25 18:30:10 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Rt.h"
+
 /*
 typedef struct 		s_scene
 {
@@ -25,18 +26,18 @@ typedef struct 		s_scene
 }
 */
 
-static int		sphere_exit()
+static int		plan_exit()
 {
-	ft_putendl("sphere needs 7 args");
+	ft_putendl("plan needs 7 args");
 	exit (0);
 }
 
-t_lex			*get_sphere(t_scene *scene, t_lex *lex)
+t_lex			*get_plan(t_scene *scene, t_lex *lex)
 {
 	int			i;
 
 	i = 0;
-	scene->type = SPHERE;
+	scene->type = PLAN;
 	while (lex)
 	{
 		i++;
@@ -61,6 +62,6 @@ t_lex			*get_sphere(t_scene *scene, t_lex *lex)
 		lex = lex->next;
 	}
 	if (i < 7)
-		sphere_exit();
+		plan_exit();
 	return (lex);
 }

@@ -6,7 +6,7 @@
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/28 22:34:01 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/23 20:57:28 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/25 14:15:31 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int				hitSphere(t_ray *ray, t_scene *sphere, double *dist)
   if (disc < 0)
     return 0;
   distSqrt = sqrt(disc);
-  t0 = (-b - distSqrt);
-  t1 = (-b + distSqrt);
+  t0 = (-b - distSqrt) / 2.0 * a;
+  t1 = (-b + distSqrt) / 2.0 * a;
   if (t0 > t1)
   {
     swap = t0;

@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/28 15:10:47 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/24 16:56:43 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/25 18:57:08 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define	FOV 	 60
 # define	SCREEN_H 480
 # define	SPHERE   1
+# define	PLAN	 2
 # define	MAX_DIST 655350
 # define	KS_CONST 1.0
 # define	PI 		 3.14159265359
@@ -42,7 +43,7 @@
 # define	COLOR_BLUE  color_makeFromRGBhex(0x0000FF)
 # define	COLORS2_RED    color_makeFromRGBhex(0xC00F12)
 # define	COLORS2_ORANGE color_makeFromRGBhex(0xD27701)
-# define	COLORS2_YELLOW  color_makeFromRGBhex(0xDDBA01)
+# define	COLOR_YELLOW  color_makeFromRGBhex(0xFFFF00)
 # define	COLORS2_GREEN color_makeFromRGBhex(0x007A28)
 # define	COLORS2_BLUE   color_makeFromRGBhex(0x3B9B95)
 
@@ -151,6 +152,7 @@ double			get_nbr(char *str);
 t_lex			*get_pos(t_vect *v, t_lex *lex);
 t_lex			*get_file(char *file);
 t_lex			*get_cam(t_cam *cam, t_lex *lex);
+t_lex			*get_plan(t_scene *scene, t_lex *lex);
 t_lex			*get_sphere(t_scene *scene, t_lex *lex);
 t_lex			*get_obj(t_env *env, t_lex *lex);
 t_lex			*get_light(t_light *light, t_lex *lex);
@@ -188,8 +190,8 @@ t_vect		normal(t_vect v);
 *** RAY FUNTIONS
 **
 */
-void		put_vect(char *str, t_vect v);
 
+void		put_vect(char *str, t_vect v);
 t_ray		new_ray(t_vect orig, t_vect dir);
 t_ray		pixel(t_cam *c, double x, double y);
 t_vect		raytrace(t_ray *ray, t_env *env);
@@ -197,10 +199,11 @@ t_tracing	ray_once(t_ray *ray, t_env *env);
 t_ray		ray_addnoise(t_ray *ray, double epsilon);
 t_vect		get_norm(t_scene *scene, t_vect point);
 t_ray		ray_reflect(t_ray *ray, t_scene *scene, t_vect point);
-t_vect	ray_shad(t_ray *ray, t_env *env, t_scene *scene, t_vect point, t_vect norm);
+t_vect		ray_shad(t_ray *ray, t_env *env, t_scene *scene, t_vect point, t_vect norm);
 int			hitSphere(t_ray *ray, t_scene *sphere, double *dist);
 int			sphere_inter(t_ray *ray, t_scene *sphere, double *dist);
-int		inter_center(t_ray *ray, t_scene *scene, double *dist);
+int			inter_center(t_ray *ray, t_scene *scene, double *dist);
+int			hitplan(t_ray *ray, t_scene *scene, double *distance);
 
 /*
 **
@@ -215,7 +218,8 @@ t_vect		get_color(t_vect color, t_shading light, double amb);
 
 t_vect			light_dir(t_light *light, t_vect point);
 t_vect			light_diff(t_light *light, t_vect norm, t_scene *scene, t_vect point);
-double			light_spec(t_light *light, t_vect light_dir, t_vect norm, t_vect ray_dir, double spec);
+t_vect			light_spec(t_light *light, t_vect norm, t_scene *scene, t_vect point, t_ray *ray);
+
 
 /*
 **

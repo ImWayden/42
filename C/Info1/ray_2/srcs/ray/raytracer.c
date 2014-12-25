@@ -6,7 +6,7 @@
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/29 01:29:57 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/24 17:06:53 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/25 19:44:12 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,10 @@ static t_vect	ray_recursive(t_ray *ray, t_env *env, size_t depth)
 	hit = ray_once(ray, env);
 	if (hit.scene == NULL)
 		return (COLOR_BLACK);
-	(void)depth;
 	//return(hit.scene->color);
+	(void)depth;
 	colis = add(mult2(ray->dir, hit.dist), ray->orig);
-	put_vect("colis", colis);
-	printf("dist %lf\n", hit.dist);
-	norm = divi(sub(colis, hit.scene->pos), hit.scene->size);
+	norm = get_norm(hit.scene, colis);
 	return(ray_shad(ray, env, hit.scene, colis, norm));
 }
 
@@ -48,6 +46,17 @@ t_ray		pixel(t_cam *c, double x, double y)
 t_vect		raytrace(t_ray *ray, t_env *env)
 {
 	return ray_recursive(ray, env, MAX_RECURSION_DEPTH);
+}
+
+int 			in_dir(t_ray *ray, t_scene *s)
+{
+	if (ray->dir.x < 0 && s->pos.x > ray->orig.x)
+		return (0);
+	if (ray->dir.x > 0 && s->pos.x < ray->orig.x)
+		return (0);
+	if (ray->dir.x == 0 && s->pos.x != ray->orig.x)
+		return (0);
+	return(1);
 }
 
 t_tracing		ray_once(t_ray *ray, t_env *env)
