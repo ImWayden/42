@@ -6,7 +6,7 @@
 #    By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/22 14:52:23 by sraccah           #+#    #+#              #
-#    Updated: 2014/12/25 18:27:48 by msarr            ###   ########.fr        #
+#    Updated: 2014/12/26 17:26:39 by msarr            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ VDIR = srcs/vector/
 RDIR = srcs/ray/
 ODIR = srcs/object/
 
-SRC = $(SDIR)main.c $(SDIR)expose.c \
+SRC = $(SDIR)main.c $(SDIR)expose.c $(SDIR)moove.c $(SDIR)key.c \
 	  $(VDIR)vector.c \
 	  $(LIDIR)light.c \
 	  $(ODIR)center.c $(ODIR)sphere.c $(ODIR)plan.c\

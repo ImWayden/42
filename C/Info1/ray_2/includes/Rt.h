@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/28 15:10:47 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/25 18:57:08 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/26 18:03:44 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <mlx.h>
 # include <math.h>
 # include <stdio.h>
+# include <X11/Xlib.h>
 # include <fcntl.h>
 # include "libft.h"
 
@@ -28,13 +29,18 @@
 # define	KS_CONST 1.0
 # define	PI 		 3.14159265359
 # define	MAX_RECURSION_DEPTH 4
-# define	MAX_VISIBLE_DISTANCE 600.0
+# define	MAX_V_DIST 600.0
 # define	EPSILON 0.000001
 # define	SQUARE(x) ((x)*(x))
 # define	MIN(a,b) (((a)<(b))?(a):(b))
 # define	MAX(a,b) (((a)>(b))?(a):(b))
 # define	LIMIT(val, min, max) ((val) > (max) ? (max) : ((val) < (min) ? (min) : (val)))
 # define	STREQ(a,b) (strcmp(a,b) == 0)
+
+# define UP				65362
+# define DOWN			65364
+# define LEFT			65361
+# define RIGHT			65363
 
 # define	COLOR_BLACK  color_makeFromRGBhex(0x000000)
 # define	COLOR_WHITE color_makeFromRGBhex(0xFFFFFF)
@@ -138,8 +144,11 @@ typedef struct	s_env
 	t_light		*light;
 	t_scene		*scene;
 	t_vect		back_color;
-	double		anti;
+	double		aa;
+	double		at;
 	double		amb;
+
+	int 		forward;
 }				t_env;
 
 /*
@@ -167,7 +176,9 @@ t_scene			*new_scene();
 **
 */
 
+double		som(t_vect vect);
 t_vect		rot(t_vect v, t_vect r);
+t_vect		fab(t_vect v);
 double		invsqrt_1(double y);
 t_vect		add2(t_vect a, t_vect b, t_vect c);
 double		dot(t_vect a, t_vect b);
@@ -198,8 +209,9 @@ t_vect		raytrace(t_ray *ray, t_env *env);
 t_tracing	ray_once(t_ray *ray, t_env *env);
 t_ray		ray_addnoise(t_ray *ray, double epsilon);
 t_vect		get_norm(t_scene *scene, t_vect point);
-t_ray		ray_reflect(t_ray *ray, t_scene *scene, t_vect point);
-t_vect		ray_shad(t_ray *ray, t_env *env, t_scene *scene, t_vect point, t_vect norm);
+t_ray		ray_reflect(t_vect *dir, t_scene *scene, t_vect point);
+t_vect		reflected_ray(t_vect *dir, t_scene *scene, t_vect point);
+t_vect		ray_shad(t_ray *ray, t_env *env, t_scene *scene, t_vect point, t_vect color);
 int			hitSphere(t_ray *ray, t_scene *sphere, double *dist);
 int			sphere_inter(t_ray *ray, t_scene *sphere, double *dist);
 int			inter_center(t_ray *ray, t_scene *scene, double *dist);
@@ -217,8 +229,8 @@ t_vect		color_makeFromRGBhex(unsigned int c);
 t_vect		get_color(t_vect color, t_shading light, double amb);
 
 t_vect			light_dir(t_light *light, t_vect point);
-t_vect			light_diff(t_light *light, t_vect norm, t_scene *scene, t_vect point);
-t_vect			light_spec(t_light *light, t_vect norm, t_scene *scene, t_vect point, t_ray *ray);
+t_vect			light_diff(t_light *light, t_scene *scene, t_vect point, double dist);
+t_vect			light_spec(t_light *light, t_ray *ray, t_scene *scene, t_vect point, double dist);
 
 
 /*
@@ -227,5 +239,8 @@ t_vect			light_spec(t_light *light, t_vect norm, t_scene *scene, t_vect point, t
 **
 */
 int			expose(t_env *env);
+int			forward(t_env *env);
+int			ft_key_release(int keycode, t_env *env);
+int			ft_key_press(int keycode, t_env *env);
 
 #endif

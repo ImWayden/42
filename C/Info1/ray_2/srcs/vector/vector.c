@@ -6,7 +6,7 @@
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/29 13:13:38 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/25 15:10:47 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/26 15:55:11 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ double		dot(t_vect a, t_vect b)
 {
 	double	d;
 
-	d = (a.x * b.x) + (a.y * b.y) + (a.z * b.z);
+	d = 0;
+	d += (a.x * b.x);
+	d += (a.y * b.y);
+	d += (a.z * b.z);
 	return (d);
 }
 
@@ -170,7 +173,21 @@ t_vect		mult(t_vect vect, t_vect vect1)
 	return (v);
 }
 
-t_vect		square(t_vect vect)
+t_vect		fab(t_vect vect)
 {
-	return (new(vect.x * vect.x, vect.y * vect.y, vect.z * vect.z));
+	t_vect	v;
+
+	v.x = fabs(vect.x);
+	v.y = fabs(vect.y);
+	v.z = fabs(vect.z);
+	return (v);
+}
+
+
+double		som(t_vect vect)
+{
+	double	d;
+
+	d = vect.x + vect.y + vect.z;
+	return (d);
 }

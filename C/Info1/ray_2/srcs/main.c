@@ -6,21 +6,30 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/10/10 19:12:54 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/24 13:41:21 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/26 18:33:13 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Rt.h"
 
-int				ft_key_hook(t_env * env, int keycode)
+int				ft_key_hook(int keycode, t_env * env)
 {
 	ft_putstr("key : ");
 	ft_putnbr(keycode);
 	ft_putchar('\n');
+	if (keycode == UP)
+	{
+		forward(env);
+			if (!(env->img = mlx_new_image(env->ptr, SCREEN_W, SCREEN_H)))
+		exit (0);
+	if (!(env->data = mlx_get_data_addr(env->img, &(env->bpp), &(env->sizel)
+		, &(env->endian))))
+		exit (0);
+		expose(env);
+	}
 	if (keycode == 65307)
 		exit(0);
 	return (0);
-	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
 }
 
 int				ft_mouse_hook(int button, int x, int y)

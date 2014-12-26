@@ -6,7 +6,7 @@
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/30 19:03:27 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/25 12:34:48 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/26 15:50:03 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ t_lex			*get_gen(t_env *env, t_lex *lex)
 		if (!ft_strcmp(lex->str, "<EYE>") && (lex = get_cam(&env->cam, lex->next)))
 			continue ;
 		else if (!ft_strcmp(lex->str, "<A.A>") && (lex = lex->next))
-			env->anti = get_nbr(lex->str);
+			env->aa = get_nbr(lex->str);
+		else if (!ft_strcmp(lex->str, "<A.T>") && (lex = lex->next))
+			env->at = get_nbr(lex->str);
 		else if (!ft_strcmp(lex->str, "<AMB>") && (lex = lex->next))
 			env->amb = get_nbr(lex->str);
 		else
