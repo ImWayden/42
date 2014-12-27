@@ -55,7 +55,7 @@ int				spe_left(t_tree *tree, t_shell **shell)
 	while (42)
 	{
 		ft_putstr("~>");
-		str1 = get_line(*shell, 1, 0);
+		str1 = get_line(*shell, 1);
 		if (!ft_strcmp(str1, str))
 			break ;
 		write(fd[1], str1, ft_strlen(str1));

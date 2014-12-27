@@ -35,7 +35,7 @@ int					editing(char *str, int j, int len)
 
 void				term_center(t_shell *shell, char **str, char *buf, int *j)
 {
-	if (ft_isprint(buf[0]) && buf[0] != '^' && *j > 0)
+	if (ft_isprint(buf[0]) && *j > 0)
 		insert_mode(str, *j, buf[0]);
 	else if (buf[0] == 127)
 		delete_mode(str, *j + 1);
@@ -62,7 +62,7 @@ int					history(t_line **tmp, char c, char **str)
 }
 
 
-char				*ft_term(t_shell *shell, int j, int k)
+char				*ft_term(t_shell *shell, int j)
 {
 	char			buf[5];
 	int				f;
@@ -78,7 +78,7 @@ char				*ft_term(t_shell *shell, int j, int k)
 		print(str, f);
 		ft_bzero(buf, 5);
 		read(0, buf, 4);
-		if (buf[0] == '\n' || (is_quot(buf[0]) && k))
+		if (buf[0] == '\n')
 			return (exit_mode(shell, str, j));
 		else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 'A' && !j)
 			f *= history(&tmp, 'A', &str);

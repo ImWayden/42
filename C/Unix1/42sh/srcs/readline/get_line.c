@@ -12,7 +12,7 @@
 
 #include "getline.h"
 
-char					*get_line(t_shell *shell, int i, int k)
+char					*get_line(t_shell *shell, int i)
 {
 	struct termios		term;
 	char				*str;
@@ -22,7 +22,7 @@ char					*get_line(t_shell *shell, int i, int k)
 	{
 		if (!ft_config(&term))
 		{
-			str = ft_term(shell, i, k);
+			str = ft_term(shell, i);
 			if (ft_defconfig(&term))
 				exit (0);
 			return (str);

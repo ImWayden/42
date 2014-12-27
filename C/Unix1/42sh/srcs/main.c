@@ -48,7 +48,7 @@ int				main(int ac, char **av, char **env)
 			ft_prompt(shell);
 			if (!shell->hist || (shell->hist->str && *shell->hist->str))
 				new_hist(shell);
-			line = get_line(shell, 0, 0);
+			line = get_line(shell, 0);
 			if ((shell->tree = lexor_and_parsor(shell, &line)))
 			{
 				ft_memdel((void **)&line);

@@ -94,8 +94,7 @@ t_tree				*lexor_and_parsor(t_shell *shell, char **line)
 	int 			i;
 
 	i = 0;
-	ft_putendl(*line);
-	while (*line[i] && !is_quot(*line[i]))
+	while ((*line)[i] && (!is_quot((*line)[i]) || (i > 0 && (*line)[i - 1] == '\\')))
 		i++;
 	if ((*line)[i])
 	{

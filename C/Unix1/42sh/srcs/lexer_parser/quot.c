@@ -25,12 +25,10 @@ int			quot(t_shell *shell, char **line, int *i, int f)
 	char	*str;
 
 	str = NULL;
-	ft_putendl("quot");
-	while (*line && (*line)[*i] && (*line)[*i] != f)
+	ft_putendl("quote");
+	while (*line && (*line)[*i] && ((*line)[*i] != f || (*line)[*i - 1] == '\\'))
 	{
-		ft_putchar(*line[*i]);
-		ft_putchar('\n');
-		if(is_quot((*line)[*i]) && ((*i - 1) < 0 || *line[*i - 1] != '\\') )
+		if(is_quot((*line)[*i]) && ((*line)[*i - 1] != '\\') )
 		{
 			(*i)++;
 			*i = quot(shell, line, i, *line[*i - 1]);
@@ -40,8 +38,9 @@ int			quot(t_shell *shell, char **line, int *i, int f)
 	}
 	if (!(*line)[*i] || (*line)[*i] != f)
 	{
-		str = get_line(shell, 0, 1);
+		str = get_line(shell, 0);
 		*line = ft_strjoin(*line, str);
+		ft_putendl(*line);
 		ft_memdel((void **)&str);
 		return (quot(shell, line, i, f));
 	}
