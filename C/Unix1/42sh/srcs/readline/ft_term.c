@@ -11,12 +11,14 @@
 /* ************************************************************************** */
 
 #include "getline.h"
+#include "grammar.h"
 
-int					exit_mode(char **str, char **str1)
+char				*exit_mode(t_shell *shell, char *str, int j)
 {
 	ft_putendl(NULL);
-	*str = *str1;
-	return (1);
+	if (!j)
+		shell->hist->str = ft_strdup(str);
+	return (str);
 }
 
 int					editing(char *str, int j, int len)
@@ -33,65 +35,61 @@ int					editing(char *str, int j, int len)
 
 void				term_center(t_shell *shell, char **str, char *buf, int *j)
 {
-	if (buf[0] == '\t')
-		autoimpl(str, shell, *j);
-	else if (ft_isprint(buf[0]) && buf[0] != '^' && *j > 0)
+	if (ft_isprint(buf[0]) && buf[0] != '^' && *j > 0)
 		insert_mode(str, *j, buf[0]);
 	else if (buf[0] == 127)
 		delete_mode(str, *j + 1);
 	else if (buf[0] == 27 && buf[1] == 91 && buf[2] == '3')
 		*j += delete_mode(str, *j - 1);
-	else if (ft_isprint(buf[0]) && buf[0] != '^')
+	else if (ft_isprint(buf[0]))
 		ft_join(str, buf);
 	else if (buf[0] != '\n')
 		*j += editing(&(buf[0]), *j, ft_strlen(*str));
+	(void)shell;
 }
+
 
 int					history(t_line **tmp, char c, char **str)
 {
-	if (c == 'A' && !(*tmp)->prev)
-		(*tmp)->str = *str;
+	ft_memdel((void **)&(*tmp)->str);
+	(*tmp)->str = *str;
 	if (c == 'A' && (*tmp)->next)
-	{
 		*tmp = (*tmp)->next;
-		ft_memdel((void **)str);
-		*str = ft_strdup((*tmp)->str);
-		return (0);
-	}
 	else if (c == 'B' && (*tmp)->prev)
-	{
 		*tmp = (*tmp)->prev;
-		ft_memdel((void **)str);
-		*str = ft_strdup((*tmp)->str);
-		return (0);
-	}
-	return (1);
+	*str = ft_strdup((*tmp)->str);
+	return (0);
 }
 
-int					ft_term(char **str, t_shell *shell, int j)
+
+char				*ft_term(t_shell *shell, int j, int k)
 {
-	char			buf[4];
+	char			buf[5];
+	int				f;
 	t_line			*tmp;
-	char			*str1;
+	char			*str;
 
 	tmp = shell->hist;
-	str1 = NULL;
-	while (print_promt(shell, str1, j))
+	str = NULL;
+	ft_putstr(tgetstr("sc", NULL));
+	f = 0;
+	while (42)
 	{
-		ft_bzero(buf, 4);
+		print(str, f);
+		ft_bzero(buf, 5);
 		read(0, buf, 4);
-		if (buf[0] == '\n')
-			return (exit_mode(str, &str1));
-		else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 'A' && tmp->next)
-			j *= history(&tmp, 'A', &str1);
-		else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 'B' && tmp->prev)
-			j *= history(&tmp, 'B', &str1);
+		if (buf[0] == '\n' || (is_quot(buf[0]) && k))
+			return (exit_mode(shell, str, j));
+		else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 'A' && !j)
+			f *= history(&tmp, 'A', &str);
+		else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 'B' && !j)
+			f *= history(&tmp, 'B', &str);
 		else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 'F')
-			j = 0;
+			f = 0;
 		else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 'H')
-			j = ft_strlen(str1);
+			f = ft_strlen(str);
 		else
-			term_center(shell, &str1, buf, &j);
+			term_center(shell, &str, buf, &f);
 	}
-	return (1);
+	return (str);
 }

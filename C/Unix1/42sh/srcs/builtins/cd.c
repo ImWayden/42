@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell3.h"
+#include "42sh.h"
 
 static void			cd_get_path(char **av, char **path, char *pwd, char *str)
 {

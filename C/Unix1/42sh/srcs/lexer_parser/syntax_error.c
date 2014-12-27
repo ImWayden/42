@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "minishell3.h"
+#include "42sh.h"
 
 static t_lex	*set_error_msg(int flag, t_lex **lex)
 {
@@ -29,7 +29,7 @@ static t_lex	*set_error_msg(int flag, t_lex **lex)
 	return (NULL);
 }
 
-t_lex			*syntax_error(char *str)
+t_lex			*syntax_error(t_shell *shell, char *str)
 {
 	t_lex		*lex;
 	int			flag;
@@ -38,6 +38,8 @@ t_lex			*syntax_error(char *str)
 	flag = 0;
 	if (!(lex = lexer(str)))
 		return (NULL);
+	(void)shell;
+	//epure(shell, lex);
 	if (is_pipe(lex->str) || is_and_or_or_bin(lex->str)
 		|| is_semi_colon(lex->str))
 		flag = 1;

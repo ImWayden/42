@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell3.h"
+#include "42sh.h"
 
 static void			del_env(t_env *envc, t_env *tmp, t_shell *shell)
 {

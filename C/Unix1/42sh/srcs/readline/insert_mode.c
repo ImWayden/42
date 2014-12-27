@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell3.h"
+#include "42sh.h"
 
 void				insert_mode(char **str, int j, char c)
 {

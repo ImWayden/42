@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell3.h"
+#include "42sh.h"
 
 int				is_builtin(char *cmd)
 {
@@ -19,7 +19,8 @@ int				is_builtin(char *cmd)
 	|| !(ft_strcmp(cmd, "setenv"))
 	|| !(ft_strcmp(cmd, "env"))
 	|| !(ft_strcmp(cmd, "pwd"))
-	|| !(ft_strcmp(cmd, "exit")))
+	|| !(ft_strcmp(cmd, "exit"))
+	|| !(ft_strcmp(cmd, "alias")))
 		return (1);
 	return (0);
 }
@@ -43,6 +44,8 @@ int				builtins_center(t_shell **shell, t_tree *tree)
 			ft_exit(shell);
 		if (!(ft_strcmp(argv[0], "pwd")))
 			ft_pwd(*shell);
+		if (!(ft_strcmp(argv[0], "alias")))
+			set_alias(*shell, argv);
 	}
 	return (EXIT_FAILURE);
 }

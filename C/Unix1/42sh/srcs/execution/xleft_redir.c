@@ -11,7 +11,8 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "minishell3.h"
+#include "getline.h"
+#include "42sh.h"
 
 void			ft_putmsg(char *name, char *msg)
 {
@@ -19,7 +20,7 @@ void			ft_putmsg(char *name, char *msg)
 	write(STDERR_FILENO, msg, ft_strlen(msg));
 }
 
-static int		open_file(char *name)
+int				open_file(char *name)
 {
 	int			fd;
 
@@ -39,15 +40,32 @@ static int		open_file(char *name)
 
 int				spe_left(t_tree *tree, t_shell **shell)
 {
-	int			fd;
+	int			fd[2];
 	char		**args;
+	char		*str;
+	char		*str1;
 
 	(void)shell;
 	args = tree->right->argv;
-	if (!args || !args[0] || (fd = open_file(args[0])) == -1)
+	if (!(str = args[0]))
 		return (EXIT_FAILURE);
-	set_fd_in(tree->left, fd);
-	return (EXIT_SUCCESS);
+	ft_putendl(str);
+	if (pipe(fd) == -1)
+		return (FATAL_ERROR);
+	while (42)
+	{
+		ft_putstr("~>");
+		str1 = get_line(*shell, 1, 0);
+		if (!ft_strcmp(str1, str))
+			break ;
+		write(fd[1], str1, ft_strlen(str1));
+		write(fd[1], "\n", 1);
+		ft_memdel((void **)&str1);
+	}
+	ft_memdel((void **)&str1);
+	close(fd[1]);
+	set_fd_in(tree->left, fd[0]);
+	return (execute_it(tree->left, shell));
 }
 
 int				left_redirection(t_tree *tree, t_shell **shell)
@@ -59,6 +77,5 @@ int				left_redirection(t_tree *tree, t_shell **shell)
 	if (!args || !args[0] || (fd = open_file(args[0])) == -1)
 		return (EXIT_FAILURE);
 	set_fd_in(tree->left, fd);
-	ft_putendl(tree->left->argv[0]);
 	return (execute_it(tree->left, shell));
 }

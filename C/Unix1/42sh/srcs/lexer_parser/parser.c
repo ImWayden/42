@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "minishell3.h"
+#include "42sh.h"
 
 t_tree				*init_tree(void)
 {
@@ -88,11 +88,21 @@ t_tree				*make_parsing(t_lex **lexem)
 	return (res);
 }
 
-t_tree				*lexor_and_parsor(char *line)
+t_tree				*lexor_and_parsor(t_shell *shell, char **line)
 {
 	t_lex			*lex;
+	int 			i;
 
-	if (line && (lex = syntax_error(line)) != NULL)
+	i = 0;
+	ft_putendl(*line);
+	while (*line[i] && !is_quot(*line[i]))
+		i++;
+	if ((*line)[i])
+	{
+		i++;
+		quot(shell, line, &i, (*line)[i - 1]);
+	}
+	if (*line && (lex = syntax_error(shell, *line)) != NULL)
 		return (make_parsing(&lex));
 	return (NULL);
 }

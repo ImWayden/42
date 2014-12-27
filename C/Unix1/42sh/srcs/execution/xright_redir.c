@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "minishell3.h"
+#include "42sh.h"
 
 static int	open_file(char *name, int ope)
 {

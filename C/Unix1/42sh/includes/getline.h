@@ -23,22 +23,23 @@
 # include <curses.h>
 # include <term.h>
 # include <dirent.h>
-# include "minishell3.h"
+ #include <signal.h>
+# include "struct.h"
+# include "libft.h"
 
 typedef struct termios		t_termios;
 
 void						ft_termcaps(void);
 void						ft_cursor(char c);
-void						setlist(t_line **list, char **str
-							, int len);
-char						*get_line(t_shell *shell);
+void						setlist(t_line **list, char **str, int len);
+char						*get_line(t_shell *shell, int i, int k);
 int							autoimpl(char **str, t_shell *shell, int j);
-int							ft_term(char **str, t_shell *shell, int j);
+char						*ft_term(t_shell *shell, int j, int k);
 int							ft_init(struct termios *term);
 void						insert_mode(char **str, int j, char c);
 int							delete_mode(char **str, int j);
 int							ft_config(struct termios *term);
 int							ft_defconfig(struct termios *term);
-int							print_promt(t_shell *shell, char *str, int j);
+int							print(char *str, int j);
 
 #endif

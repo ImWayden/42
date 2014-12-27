@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "minishell3.h"
+#include "42sh.h"
 
 char			*get_full_path(char **path, char *binary)
 {

@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdbool.h>
+# include "struct.h"
 
 # define LEFT_R "<"
 # define RIGHT_R ">"
@@ -56,23 +57,6 @@
 #  define FALSE 0
 # endif
 
-typedef struct			s_lex
-{
-	char				*str;
-	struct s_lex		*next;
-	struct s_lex		*prev;
-}						t_lex;
-
-typedef struct			s_tree
-{
-	int					ope;
-	int					fd[2];
-	char				**argv;
-	struct s_tree		*left;
-	struct s_tree		*right;
-	struct s_tree		*next;
-}						t_tree;
-
 /*
 ** Library
 */
@@ -102,7 +86,9 @@ int						is_directory(char *str);
 ** check syntax
 */
 
-t_lex					*syntax_error(char *str);
+int						is_quot(char c);
+int						quot(t_shell *shell, char **line, int *i, int f);
+t_lex					*syntax_error(t_shell *shell, char *str);
 int						left_redir_syntax(t_lex *lex);
 int						right_redir_syntax(t_lex *lex);
 int						pipe_and_or_syntax(t_lex *lex);
@@ -117,7 +103,7 @@ void					free_lex(t_lex **lex);
 bool					alloc_tree(t_tree **new, t_tree **tree);
 t_tree					*init_tree(void);
 t_tree					*make_parsing(t_lex **lex);
-t_tree					*lexor_and_parsor(char *line);
+t_tree					*lexor_and_parsor(t_shell *shell, char **line);
 
 /*
 ** BNF

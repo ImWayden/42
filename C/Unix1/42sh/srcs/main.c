@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell3.h"
 #include "getline.h"
+#include "grammar.h"
+#include "42sh.h"
 
 void			ft_prompt(t_shell *shell)
 {
@@ -45,8 +46,10 @@ int				main(int ac, char **av, char **env)
 		{
 			re_init(shell);
 			ft_prompt(shell);
-			line = get_line(shell);
-			if ((shell->tree = lexor_and_parsor(line)))
+			if (!shell->hist || (shell->hist->str && *shell->hist->str))
+				new_hist(shell);
+			line = get_line(shell, 0, 0);
+			if ((shell->tree = lexor_and_parsor(shell, &line)))
 			{
 				ft_memdel((void **)&line);
 				main_execution(&shell);

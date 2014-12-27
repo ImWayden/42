@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env.c                                          :+:      :+:    :+:   */
+/*   epure.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/06/04 13:39:46 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/08 13:07:42 by mozzie           ###   ########.fr       */
+/*   Created: 2014/12/27 07:34:25 by msarr             #+#    #+#             */
+/*   Updated: 2014/12/27 07:34:27 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "42sh.h"
 
-char		*get_env(t_env *env, char *str)
+t_lex		*check_alias(t_shell *shell, char *str)
 {
-	while (env)
+	t_alias	*alias;
+
+	alias = shell->alias;
+	while (alias)
 	{
-		if (!ft_strcmp(env->name, str))
-			return (ft_strdup(env->arg));
-		env = env->next;
+		if (!ft_strcmp(alias->name), lex->str)
+		{}
 	}
-	return (NULL);
+}
+
+t_lex		*epure(t_shell *shell, t_lex *lex)
+{
+	lex = check_alias(shell, lex);
 }

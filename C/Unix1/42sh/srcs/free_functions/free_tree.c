@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell3.h"
+#include "42sh.h"
+#include "grammar.h"
 
 bool		alloc_tree(t_tree **new, t_tree **tree)
 {

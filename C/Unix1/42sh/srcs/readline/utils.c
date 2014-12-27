@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "getline.h"
+#include "42sh.h"
 
 int			ft_init(t_termios *term)
 {
@@ -44,11 +45,10 @@ int			ft_defconfig(t_termios *term)
 	return (0);
 }
 
-int			print_promt(t_shell *shell, char *str, int j)
+int			print(char *str, int j)
 {
-	ft_putchar('\r');
-	ft_putstr(tgetstr("ce", NULL));
-	ft_prompt(shell);
+	ft_putstr(tgetstr("rc", NULL));
+	ft_putstr(tgetstr("cd", NULL));
 	ft_putstr(str);
 	while (j--)
 		ft_putstr(tgetstr("le", NULL));

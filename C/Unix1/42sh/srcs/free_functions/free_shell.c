@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell3.h"
+#include "42sh.h"
+#include "grammar.h"
 
 void			free_shell(t_shell **shell)
 {

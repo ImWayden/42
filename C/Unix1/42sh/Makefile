@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_minishell3
+NAME = 42sh
 
 MAKE = make
 CC = gcc
@@ -30,9 +30,9 @@ SRC = $(SDIR)main.c \
 	  $(BDIR)pwd.c $(BDIR)exit.c $(BDIR)cd_utils.c\
 	  $(FDIR)free_env.c $(FDIR)free_struct.c $(FDIR)free_tree.c $(FDIR)free_shell.c\
 	  $(PDIR)grammar.c $(PDIR)grammar1.c $(PDIR)grammar2.c $(PDIR)grammar3.c \
-	  $(PDIR)grammar4.c \
+	  $(PDIR)grammar4.c $(PDIR)quot.c \
 	  $(PDIR)redir_syntax.c $(PDIR)syntax_error.c $(PDIR)lexer.c $(PDIR)parser.c \
-	  $(IDIR)ft_init.c \
+	  $(IDIR)ft_init.c $(IDIR)alias.c $(IDIR)hist.c \
 	  $(EDIR)execution.c $(EDIR)prep_cmd.c $(EDIR)xcommand.c $(EDIR)xpipe.c \
 	  $(EDIR)xleft_redir.c $(EDIR)xpipe2.c $(EDIR)xright_redir.c $(EDIR)fd.c \
 	  $(RDIR)get_line.c $(RDIR)utils.c $(RDIR)ft_term.c $(RDIR)delete_mode.c \

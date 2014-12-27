@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell3.h"
+#include "42sh.h"
 
 static t_shell		*shellnew(void)
 {
@@ -20,6 +20,8 @@ static t_shell		*shellnew(void)
 	{
 		shell->env = NULL;
 		shell->prompt = NULL;
+		shell->pwd = NULL;
+		shell->alias = NULL;
 		shell->hist = NULL;
 		shell->path = NULL;
 		shell->envc = NULL;
@@ -38,6 +40,9 @@ t_shell				*init(char **env)
 			shell->envc = list_to_tab(shell->env);
 		if (!(shell->prompt = get_env(shell->env, "USER")))
 			shell->prompt = ft_strdup("~>");
+		shell->pwd = get_env(shell->env, "PWD");
+		hist_init(shell);
+		alias_init(shell);
 		return (shell);
 	}
 	return (shell);

@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL3_H
-# define MINISHELL3_H
+#ifndef MYSH__H
+# define MYSH_H
 
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -24,51 +24,23 @@
 # include <fcntl.h>
 # include <term.h>
 # include "libft.h"
-# include "grammar.h"
+# include "struct.h"
 
 # define FATAL_ERROR	-3
 
-/*
-** Lists and Structures
-*/
 
-typedef enum			e_bool
-{
-	FAUX = 0, VRAI = 1
-}						t_bool;
-
-typedef struct			s_termlist
-{
-	char				*str;
-	struct s_termlist	*prev;
-	struct s_termlist	*next;
-}						t_termlist;
-
-typedef struct			s_env
-{
-	char				*name;
-	char				*arg;
-	struct s_env		*next;
-}						t_env;
-
-typedef struct			s_shell
-{
-	char				*prompt;
-	char				**path;
-	t_tree				*tree;
-	t_line				*hist;
-	char				**envc;
-	t_env				*env;
-	int					flag;
-}						t_shell;
 
 /*
 ** ft_init
 */
 
 t_shell					*init(char	**env);
+int 					hist_init(t_shell *shell);
+int						new_hist(t_shell *shell);
 int						re_init(t_shell *shell);
 void					ft_prompt(t_shell *shell);
+int 					alias_init(t_shell *shell);
+int						new_alias(t_shell *shell, char **str);
 
 /*
 ** ft_get
@@ -102,6 +74,7 @@ void					free_shell(t_shell **shell);
 int						ft_pwd(t_shell *shell);
 int						ft_exit(t_shell **shell);
 char					**list_to_tab(t_env *env);
+int 					set_alias(t_shell *shell, char **argv);
 int						builtins_center(t_shell **shell, t_tree *tree);
 
 /*

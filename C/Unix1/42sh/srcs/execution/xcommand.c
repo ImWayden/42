@@ -12,7 +12,7 @@
 
 #include <errno.h>
 #include "grammar.h"
-#include "minishell3.h"
+#include "42sh.h"
 
 int				write_statut(int status)
 {
@@ -34,6 +34,7 @@ int				execute_simple_command(t_tree *tree, t_shell **shell)
 		return (flag);
 	if ((pid = fork()) == 0)
 	{
+		(*shell)->son = getpid();
 		dup2(tree->fd[0], STDIN_FILENO);
 		dup2(tree->fd[1], STDOUT_FILENO);
 		if ((execve(tree->argv[0], tree->argv, (*shell)->envc)) == -1)
