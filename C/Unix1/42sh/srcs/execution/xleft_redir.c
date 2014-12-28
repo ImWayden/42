@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/06/24 13:10:21 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/24 13:10:24 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/27 23:54:09 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,12 @@ int				spe_left(t_tree *tree, t_shell **shell)
 	args = tree->right->argv;
 	if (!(str = args[0]))
 		return (EXIT_FAILURE);
-	ft_putendl(str);
 	if (pipe(fd) == -1)
 		return (FATAL_ERROR);
 	while (42)
 	{
 		ft_putstr("~>");
-		str1 = get_line(*shell, 1);
+		str1 = get_line(*shell, 2);
 		if (!ft_strcmp(str1, str))
 			break ;
 		write(fd[1], str1, ft_strlen(str1));

@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/27 00:19:12 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/27 00:19:14 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/28 04:55:49 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ typedef struct			s_shell
 {
 	char				*prompt;
 	char				*pwd;
+	char				*a_file;
+	char				*h_file;
 	char				**path;
 	t_tree				*tree;
 	t_line				*hist;

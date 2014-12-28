@@ -1,2 +1,8 @@
+exit
+ll
+ls
 ls -la
 ls
+ls
+cat auteur
+exit

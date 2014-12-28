@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/27 08:30:44 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/13 12:29:24 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/12/28 00:22:33 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 
 bool		is_left_redir(char *str)
 {
-	if (str && (!ft_strcmp(str, LEFT_R) || !ft_strcmp(str, D_LEFT_R)))
+	if (str && (!ft_strcmp(str, R_LEFT) || !ft_strcmp(str, DR_LEFT)))
 		return (TRUE);
 	return (FALSE);
 }
 
 bool		is_right_redir(char *str)
 {
-	if (str && (!ft_strcmp(str, RIGHT_R) || !ft_strcmp(str, D_RIGHT_R)))
+	if (str && (!ft_strcmp(str, R_RIGHT) || !ft_strcmp(str, DR_RIGHT)))
 		return (TRUE);
 	return (FALSE);
 }

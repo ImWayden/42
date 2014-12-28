@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/03 15:00:45 by msarr             #+#    #+#             */
-/*   Updated: 2014/11/15 22:46:16 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/28 00:28:28 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ void						insert_mode(char **str, int j, char c);
 int							delete_mode(char **str, int j);
 int							ft_config(struct termios *term);
 int							ft_defconfig(struct termios *term);
-int							print(char *str, int j);
+int							print(char *str, int j, char *buf);
 
 #endif

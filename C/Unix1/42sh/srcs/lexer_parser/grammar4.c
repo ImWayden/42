@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/27 08:30:44 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/24 21:25:24 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/12/28 01:11:36 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ bool		special_case(t_tree **tree, t_lex **lex)
 
 	if (!alloc_tree(&new, tree))
 		return (FALSE);
-	new->ope = (!strcmp((*lex)->str, D_RIGHT_R)) ? IS_D_RIGHT : IS_RIGHT;
+	new->ope = (!strcmp((*lex)->str, DR_RIGHT)) ? IS_D_RIGHT : IS_RIGHT;
 	new->left = *tree;
 	*tree = new;
 	*lex = (*lex)->next;

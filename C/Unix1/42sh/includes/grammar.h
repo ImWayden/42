@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/23 14:47:56 by sraccah           #+#    #+#             */
-/*   Updated: 2014/06/16 17:34:35 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/12/28 00:26:16 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,6 @@
 # include <stdbool.h>
 # include "struct.h"
 
-# define LEFT_R "<"
-# define RIGHT_R ">"
-# define D_LEFT_R "<<"
-# define D_RIGHT_R ">>"
-# define PIPE "|"
-
 /*
 ** Define Execution
 */
@@ -36,6 +30,15 @@
 # define AND_BIN "&&"
 # define OR_BIN "||"
 # define SEMICOLON ";"
+# define OPE "<>&|"
+# define SEP	" \t\n"
+# define R_LEFT "<"
+# define R_RIGHT ">"
+# define DR_LEFT "<<"
+# define DR_RIGHT ">>"
+# define PIPE "|"
+# define QUOT	"\\\"\'"
+# define REDIR	(R_LEFT | DR_LEFT | R_RIGHT | DR_RIGHT)
 
 /*
 ** Data type
@@ -87,7 +90,7 @@ int						is_directory(char *str);
 */
 
 int						is_quot(char c);
-int						quot(t_shell *shell, char **line, int *i, int f);
+int						quot(t_shell *shell, char **line);
 t_lex					*syntax_error(t_shell *shell, char *str);
 int						left_redir_syntax(t_lex *lex);
 int						right_redir_syntax(t_lex *lex);

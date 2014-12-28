@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/27 08:30:44 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/24 21:15:24 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/12/28 00:22:29 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool		redir_left_norm(t_tree **tree, t_lex **lex)
 			{
 				if (!alloc_tree(&new, tree))
 					return (FALSE);
-				new->ope = (!strcmp((*lex)->str, D_LEFT_R))
+				new->ope = (!strcmp((*lex)->str, DR_LEFT))
 				? IS_D_LEFT : IS_LEFT;
 				new->left = *tree;
 				*tree = new;
@@ -52,7 +52,7 @@ bool		redir_left_spe(t_tree **tree, t_lex **lex)
 		{
 			if (!alloc_tree(&new, tree))
 				return (FALSE);
-			new->ope = (!strcmp((*lex)->prev->prev->str, D_LEFT_R))
+			new->ope = (!strcmp((*lex)->prev->prev->str, DR_LEFT))
 			? IS_D_LEFT : IS_LEFT;
 			new->right = *tree;
 			*tree = new;
@@ -87,7 +87,7 @@ bool		redir_right_norm(t_tree **tree, t_lex **lex)
 		{
 			if (!alloc_tree(&new, tree))
 				return (FALSE);
-			new->ope = (!strcmp((*lex)->str, D_RIGHT_R)) ?
+			new->ope = (!strcmp((*lex)->str, DR_RIGHT)) ?
 			IS_D_RIGHT : IS_RIGHT;
 			new->left = *tree;
 			*tree = new;
@@ -110,7 +110,7 @@ bool		redir_right_spe(t_tree **tree, t_lex **lex)
 		{
 			if (!alloc_tree(&new, tree))
 				return (FALSE);
-			new->ope = (!strcmp((*lex)->prev->prev->str, D_RIGHT_R))
+			new->ope = (!strcmp((*lex)->prev->prev->str, DR_RIGHT))
 			? IS_D_RIGHT : IS_RIGHT;
 			new->right = *tree;
 			*tree = new;

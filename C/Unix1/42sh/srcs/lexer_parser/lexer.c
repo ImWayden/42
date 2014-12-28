@@ -6,24 +6,16 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/27 08:30:44 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/16 16:21:14 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/12/28 01:33:45 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "grammar.h"
 #include "42sh.h"
 
-bool				is_ope(char c)
-{
-	if (c == '<' || c == '>' || c == '|' || c == ';' || c == '&')
-		return (TRUE);
-	else
-		return (FALSE);
-}
-
 static int			get_operator(t_lex **list, char *str)
 {
-	if ((str[0] == '>' || str[0] == '<' || str[0] == '|' || str[0] == '&') && str[0] == str[1])
+	if (ft_strchr(OPE, str[0]) && str[0] == str[1])
 	{
 		*list = addlist(*list, ft_strndup(str, 2));
 		return (2);
@@ -72,10 +64,10 @@ t_lex				*lexer(char *line)
 	list = NULL;
 	while (line && *line)
 	{
-		while (*line == ' ' || *line == '\t')
+		while (ft_strchr(SEP, *line))
 			line++;
 		i = 0;
-		while (line[i] && !is_ope(line[i]))
+		while (line[i] && !ft_strchr(OPE, line[i]))
 		{
 			if (line[i] == '\t')
 				line[i] = ' ';
@@ -83,7 +75,7 @@ t_lex				*lexer(char *line)
 		}
 		if (i && (list = addlist(list, ft_strndup(line, i))))
 			line = line + i;
-		if (is_ope(*line))
+		if (*line && ft_strchr(OPE, *line))
 			line += get_operator(&list, line);
 	}
 	return (list);

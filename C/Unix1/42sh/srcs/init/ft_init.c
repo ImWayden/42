@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/23 16:04:00 by sraccah           #+#    #+#             */
-/*   Updated: 2014/02/24 23:07:35 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/12/28 05:04:42 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static t_shell		*shellnew(void)
 		shell->prompt = NULL;
 		shell->pwd = NULL;
 		shell->alias = NULL;
+		shell->a_file = NULL;
+		shell->h_file = NULL;
 		shell->hist = NULL;
 		shell->path = NULL;
 		shell->envc = NULL;
@@ -41,6 +43,8 @@ t_shell				*init(char **env)
 		if (!(shell->prompt = get_env(shell->env, "USER")))
 			shell->prompt = ft_strdup("~>");
 		shell->pwd = get_env(shell->env, "PWD");
+		shell->a_file = "/.alias";
+		shell->h_file = "/.hist";
 		hist_init(shell);
 		alias_init(shell);
 		return (shell);

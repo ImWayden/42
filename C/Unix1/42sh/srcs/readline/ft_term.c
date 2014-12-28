@@ -6,7 +6,7 @@
 /*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/11 15:00:54 by msarr             #+#    #+#             */
-/*   Updated: 2014/11/15 22:02:15 by msarr            ###   ########.fr       */
+/*   Updated: 2014/12/28 03:02:38 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,16 @@ char				*exit_mode(t_shell *shell, char *str, int j)
 {
 	ft_putendl(NULL);
 	if (!j)
+	{
+		ft_memdel((void **)&shell->hist->str);
 		shell->hist->str = ft_strdup(str);
+	}
+	else
+	{
+		if (j == 2)
+			ft_join(&shell->hist->str, "\n");
+		ft_join(&shell->hist->str, ft_strdup(str));
+	}
 	return (str);
 }
 
@@ -75,14 +84,16 @@ char				*ft_term(t_shell *shell, int j)
 	f = 0;
 	while (42)
 	{
-		print(str, f);
+		print(str, f, buf);
 		ft_bzero(buf, 5);
 		read(0, buf, 4);
+		ft_putnbr(buf[0]);
+		ft_putchar(buf[0]);
 		if (buf[0] == '\n')
 			return (exit_mode(shell, str, j));
-		else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 'A' && !j)
+		else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 'A')
 			f *= history(&tmp, 'A', &str);
-		else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 'B' && !j)
+		else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 'B')
 			f *= history(&tmp, 'B', &str);
 		else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 'F')
 			f = 0;

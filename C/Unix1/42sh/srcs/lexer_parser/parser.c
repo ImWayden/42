@@ -6,7 +6,7 @@
 /*   By: mozzie <mozzie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/27 08:30:44 by msarr             #+#    #+#             */
-/*   Updated: 2014/06/24 22:05:02 by mozzie           ###   ########.fr       */
+/*   Updated: 2014/12/28 01:37:21 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,17 +91,12 @@ t_tree				*make_parsing(t_lex **lexem)
 t_tree				*lexor_and_parsor(t_shell *shell, char **line)
 {
 	t_lex			*lex;
-	int 			i;
 
-	i = 0;
-	while ((*line)[i] && (!is_quot((*line)[i]) || (i > 0 && (*line)[i - 1] == '\\')))
-		i++;
-	if ((*line)[i])
-	{
-		i++;
-		quot(shell, line, &i, (*line)[i - 1]);
-	}
+	while (!quot(shell, line))
+		;
 	if (*line && (lex = syntax_error(shell, *line)) != NULL)
+	{
 		return (make_parsing(&lex));
+	}
 	return (NULL);
 }
