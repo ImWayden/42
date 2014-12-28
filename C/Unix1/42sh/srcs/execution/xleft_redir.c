@@ -12,12 +12,18 @@
 
 #include "grammar.h"
 #include "getline.h"
-#include "42sh.h"
+#include "shell.h"
 
 void			ft_putmsg(char *name, char *msg)
 {
+	write(STDERR_FILENO, NAME, ft_strlen(NAME));
 	write(STDERR_FILENO, name, ft_strlen(name));
-	write(STDERR_FILENO, msg, ft_strlen(msg));
+	if (msg)
+	{
+		write(STDERR_FILENO, ": ", 3);
+		write(STDERR_FILENO, msg, ft_strlen(msg));
+	}
+	write(STDERR_FILENO, "\n", 1);
 }
 
 int				open_file(char *name)
@@ -27,14 +33,14 @@ int				open_file(char *name)
 	if (access(name, F_OK) == -1 || access(name, R_OK) == -1)
 	{
 		if (access(name, F_OK) == -1)
-			ft_putmsg(name, ": no such file or directory.\n");
+			ft_putmsg(name, DIR_E);
 		else
-			ft_putmsg(name, ": don't have the permission to read file.\n");
+			ft_putmsg(name, READ_PERM);
 		return (-1);
 	}
 	fd = open(name, O_RDONLY);
 	if (fd == -1)
-		ft_putmsg(name, ": Error: maybe targeted directory doesn't exist.\n");
+		ft_putmsg(name, OPEN_DIR);
 	return (fd);
 }
 

@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-int 			is_num(char *str)
+int				is_num(char *str)
 {
 	if (*str == '+' || *str == '-')
 		str++;
@@ -23,7 +23,7 @@ int 			is_num(char *str)
 
 static t_lex	*get(t_lem **lem, t_lex *l)
 {
-	int 		i;
+	int			i;
 
 	if (is_num(l->str) && (i = ft_atoi(l->str)))
 	{

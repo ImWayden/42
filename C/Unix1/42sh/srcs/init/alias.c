@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "shell.h"
 
 int				new_alias(t_shell *shell, char **str)
 {
@@ -27,21 +27,25 @@ int				new_alias(t_shell *shell, char **str)
 		shell->alias = tmp;
 		return (1);
 	}
+	else
+		ft_putmsg(INIT, NULL);
 	return (0);
 }
 
-int 			set_alias(t_shell *shell, char **argv)
+int				set_alias(t_shell *shell, char **argv)
 {
 	if (argv && *argv && argv[1])
 	{
-		new_alias(shell, argv);
-		return (EXIT_SUCCESS);
+		if (new_alias(shell, argv))
+			return (EXIT_SUCCESS);
+		else
+			return (EXIT_FAILURE);
 	}
-	else
-		return (EXIT_FAILURE);
+	ft_putendl(ALIAS_FORMAT);
+	return (EXIT_FAILURE);
 }
 
-char 			*get_alias(t_shell *shell, char *str)
+char			*get_alias(t_shell *shell, char *str)
 {
 	t_alias		*a;
 
@@ -50,12 +54,12 @@ char 			*get_alias(t_shell *shell, char *str)
 	{
 		if (!ft_strcmp(a->name, str))
 			return (ft_strdup(a->arg));
-		a++;
+		a = a->next;
 	}
 	return (NULL);
 }
 
-int 			alias_init(t_shell *shell)
+int				alias_init(t_shell *shell)
 {
 	char		*str;
 	char		**al;
@@ -63,7 +67,7 @@ int 			alias_init(t_shell *shell)
 
 	if (shell->pwd)
 	{
-		str = ft_strjoin(shell->pwd, "/.alias");
+		str = ft_strjoin(shell->pwd, shell->a_file);
 		fd = open(str, O_RDWR, O_CREAT);
 		ft_memdel((void **)&str);
 		if (fd != -1)
@@ -78,6 +82,5 @@ int 			alias_init(t_shell *shell)
 			return (1);
 		}
 	}
-	ft_putendl("42sh : alias load error");
 	return (0);
 }

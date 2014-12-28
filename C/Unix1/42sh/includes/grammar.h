@@ -21,6 +21,7 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include "struct.h"
+# include "define.h"
 
 /*
 ** Define Execution

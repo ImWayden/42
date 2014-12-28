@@ -10,45 +10,48 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "shell.h"
 #include "grammar.h"
 
-int				save_infos(t_shell *shell)
+int				save_hist(t_shell *shell)
 {
-	char		*str1;
-	char		*str2;
-	int			fd1;
-	int			fd2;
-	t_alias		*a;
+	char		*str;
+	int			fd;
 	t_line		*h;
-	void		*v;
 
-	str1 = ft_strjoin(shell->pwd, shell->a_file);
-	str2 = ft_strjoin(shell->pwd, shell->h_file);
-	fd1 = open(str1, O_RDWR, O_CREAT | S_IRWXG);
-	fd2 = open(str2, O_RDWR, O_CREAT | S_IRWXG);
-	a = shell->alias;
-	while (a)
-	{
-		write(fd1, a->name, ft_strlen(a->name));
-		write(fd1, " ", 1);
-		write(fd1, a->arg, ft_strlen(a->arg));
-		write(fd1, "\n", 1);
-		v = a;
-		a = a->next;
-		ft_memdel(v);
-	}
+	str = ft_strjoin(shell->pwd, shell->h_file);
+	fd = open(str, O_RDWR | O_CREAT, S_IXUSR | S_IWUSR | S_IRUSR);
 	h = shell->hist;
-	while (h)
-	{
-		write(fd2, h->str, ft_strlen(h->str));
-		write(fd2, "\n", 1);
-		v = h;
+	while (h && h->next)
 		h = h->next;
-		ft_memdel(v);
+	while (h && fd != -1)
+	{
+		write(fd, h->str, ft_strlen(h->str));
+		write(fd, "\n", 1);
+		h = h->prev;
 	}
-	close(fd1);
-	close(fd2);
+	close(fd);
+	return (1);
+}
+
+int				save_alias(t_shell *shell)
+{
+	char		*str;
+	int			fd;
+	t_alias		*h;
+
+	str = ft_strjoin(shell->pwd, shell->a_file);
+	fd = open(str, O_RDWR | O_CREAT, S_IXUSR | S_IWUSR | S_IRUSR);
+	h = shell->alias;
+	while (h && fd != -1)
+	{
+		write(fd, h->name, ft_strlen(h->name));
+		write(fd, " ", 1);
+		write(fd, h->arg, ft_strlen(h->arg));
+		write(fd, "\n", 1);
+		h = h->next;
+	}
+	close(fd);
 	return (1);
 }
 
@@ -56,7 +59,8 @@ void			free_shell(t_shell **shell)
 {
 	if (shell && *shell)
 	{
-		save_infos(*shell);
+		save_hist(*shell);
+		save_alias(*shell);
 		ft_memdel((void **)&(*shell)->prompt);
 		ft_memdel((void **)&(*shell)->pwd);
 		ft_deltab(&((*shell)->envc));

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "shell.h"
 
 static void			cd_get_path(char **av, char **path, char *pwd, char *str)
 {
@@ -48,9 +48,9 @@ static void			ft_del(char **path, char **pwd, char **home)
 static	int			cd_error(char **path, char *bin)
 {
 	if (access(*path, F_OK) == -1)
-		ft_putmsg(bin, ":cd : No such file or directory.\n");
+		ft_putmsg(bin, CD_DIR);
 	else
-		ft_putmsg(bin, ":cd : permission denied.\n");
+		ft_putmsg(bin, CD_PERM);
 	ft_memdel((void **)path);
 	return (EXIT_FAILURE);
 }
@@ -78,7 +78,7 @@ int					cd(t_shell *shell, t_tree *tree)
 	{
 		if (!(path = get_env(shell->env, "OLDPWD")))
 		{
-			ft_putmsg("cd : ", "\"OLDPWD\" NOT SET.\n");
+			ft_putmsg(CD_OLDPWD, NULL);
 			return (EXIT_FAILURE);
 		}
 		ft_putendl(path);

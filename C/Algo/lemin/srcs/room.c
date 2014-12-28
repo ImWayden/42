@@ -61,8 +61,9 @@ t_lex		*get_door(t_lem *lem, t_lex *l, int flag)
 int			sort(t_room **r)
 {
 	t_link	*l;
-	int i = 0;
+	int		i;
 
+	i = 0;
 	while (i < 1000)
 	{
 		if (r[i])

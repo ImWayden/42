@@ -42,39 +42,44 @@ int					editing(char *str, int j, int len)
 	return (0);
 }
 
-void				term_center(t_shell *shell, char **str, char *buf, int *j)
-{
-	if (ft_isprint(buf[0]) && *j > 0)
-		insert_mode(str, *j, buf[0]);
-	else if (buf[0] == 127)
-		delete_mode(str, *j + 1);
-	else if (buf[0] == 27 && buf[1] == 91 && buf[2] == '3')
-		*j += delete_mode(str, *j - 1);
-	else if (ft_isprint(buf[0]))
-		ft_join(str, buf);
-	else if (buf[0] != '\n')
-		*j += editing(&(buf[0]), *j, ft_strlen(*str));
-	(void)shell;
-}
-
-
 int					history(t_line **tmp, char c, char **str)
 {
+	int				i;
+
+	i = 0;
 	ft_memdel((void **)&(*tmp)->str);
 	(*tmp)->str = *str;
 	if (c == 'A' && (*tmp)->next)
+	{
+		i = 1;
 		*tmp = (*tmp)->next;
+	}
 	else if (c == 'B' && (*tmp)->prev)
+	{
+		i = 1;
 		*tmp = (*tmp)->prev;
+	}
 	*str = ft_strdup((*tmp)->str);
-	return (0);
+	if (i)
+	{
+		ft_putstr(tgetstr("rc", NULL));
+		ft_putstr(tgetstr("cd", NULL));
+		ft_putstr(tgetstr("sc", NULL));
+		ft_putstr(*str);
+		return (0);
+	}
+	return (1);
 }
 
+void				ft_read(char *buf)
+{
+	ft_bzero(buf, 5);
+	read(0, buf, 5);
+}
 
-char				*ft_term(t_shell *shell, int j)
+char				*ft_term(t_shell *shell, int j, int f)
 {
 	char			buf[5];
-	int				f;
 	t_line			*tmp;
 	char			*str;
 
@@ -84,20 +89,16 @@ char				*ft_term(t_shell *shell, int j)
 	f = 0;
 	while (42)
 	{
-		print(str, f, buf);
-		ft_bzero(buf, 5);
-		read(0, buf, 4);
-		ft_putnbr(buf[0]);
-		ft_putchar(buf[0]);
+		ft_read(buf);
 		if (buf[0] == '\n')
 			return (exit_mode(shell, str, j));
-		else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 'A')
+		else if (K_UP(buf))
 			f *= history(&tmp, 'A', &str);
-		else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 'B')
+		else if (K_DOWN(buf))
 			f *= history(&tmp, 'B', &str);
-		else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 'F')
+		else if (K_END(buf))
 			f = 0;
-		else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 'H')
+		else if (K_HOME(buf))
 			f = ft_strlen(str);
 		else
 			term_center(shell, &str, buf, &f);

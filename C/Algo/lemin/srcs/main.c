@@ -11,9 +11,8 @@
 /* ************************************************************************** */
 
 #include "lemin.h"
-#include "fdf.h"
 
-int					hash(char *str)
+int			hash(char *str)
 {
 	int				code;
 	int				len;
@@ -44,7 +43,7 @@ void		put_link(t_room *room)
 	ft_putendl(NULL);
 }
 
-int			main()
+int			main(void)
 {
 	t_lem	*lem;
 

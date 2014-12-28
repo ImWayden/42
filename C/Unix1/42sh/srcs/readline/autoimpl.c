@@ -12,7 +12,7 @@
 
 #include "getline.h"
 #include "grammar.h"
-#include "42sh.h"
+#include "shell.h"
 
 void				insert(t_line *tmp2, t_line *tmp, char *str)
 {

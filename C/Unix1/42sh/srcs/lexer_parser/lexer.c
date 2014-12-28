@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "42sh.h"
+#include "shell.h"
 
 static int			get_operator(t_lex **list, char *str)
 {

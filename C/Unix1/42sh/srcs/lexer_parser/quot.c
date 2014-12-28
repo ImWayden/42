@@ -11,11 +11,12 @@
 /* ************************************************************************** */
 
 #include "getline.h"
-#include "42sh.h"
+#include "shell.h"
 
-int			is_quot(char c)
+int			is_quot(char *str, int i)
 {
-	if (c == '\'' || c == '\"' || c == '\\')
+	if ((str[i] == '\'' || str[i] == '\"' || str[i] == '\\')
+		&& (!i || str[i - 1] != '\\'))
 		return (1);
 	return (0);
 }
@@ -27,7 +28,7 @@ int			find_next(char *str)
 
 	i = 1;
 	c = str[0];
-	while (str[i] && str[i] != c)
+	while (str[i] && (str[i] != c || !is_quot(str, i)))
 		i++;
 	return (str[i] == c ? i : 0);
 }
@@ -36,13 +37,15 @@ int			quot(t_shell *shell, char **line)
 {
 	char	*str;
 	int		i;
+	int		j;
 
 	str = *line;
+	j = 0;
 	while (*str)
 	{
-		if(is_quot(*str))
+		if (is_quot(*line, j))
 		{
-			if(!(i = find_next(str)))
+			if (!(i = find_next(str)))
 			{
 				ft_putstr("~>");
 				str = get_line(shell, 1);
@@ -54,6 +57,7 @@ int			quot(t_shell *shell, char **line)
 				str += i;
 		}
 		str++;
+		j++;
 	}
 	return (1);
 }

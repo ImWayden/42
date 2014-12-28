@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "42sh.h"
+#include "shell.h"
 
 int			execute_it(t_tree *tree, t_shell **shell)
 {
@@ -26,7 +26,7 @@ int			execute_it(t_tree *tree, t_shell **shell)
 		return (execute_simple_command(tree, shell));
 	else if (tree->ope == IS_RIGHT || tree->ope == IS_D_RIGHT)
 		return (right_redirection(tree, shell));
-	else if (tree->ope == IS_LEFT )
+	else if (tree->ope == IS_LEFT)
 		return (left_redirection(tree, shell));
 	else if (tree->ope == IS_D_LEFT)
 		return (spe_left(tree, shell));

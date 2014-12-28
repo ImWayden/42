@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "shell.h"
 
-void				insert_mode(char **str, int j, char c)
+void				insert_mode(char **str, int j, char c, char *buf)
 {
 	int				i;
 	char			*str1;
@@ -24,6 +24,9 @@ void				insert_mode(char **str, int j, char c)
 	str1[i] = c;
 	str1[i + 1] = '\0';
 	*str = ft_strjoin(str1, str2);
+	ft_putstr(tgetstr("im", NULL));
+	ft_putstr(buf);
+	ft_putstr(tgetstr("ei", NULL));
 	ft_memdel((void **)&str1);
 	ft_memdel((void **)&str2);
 }

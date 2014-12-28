@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "getline.h"
-#include "42sh.h"
+#include "shell.h"
 
 int			ft_init(t_termios *term)
 {
@@ -47,11 +47,36 @@ int			ft_defconfig(t_termios *term)
 
 int			print(char *str, int j, char *buf)
 {
-	(void)buf;
-	ft_putstr(tgetstr("rc", NULL));
-	ft_putstr(tgetstr("cd", NULL));
-	ft_putstr(str);
-	while (j--)
-		ft_putstr(tgetstr("le", NULL));
+	if (((K_LEFT(buf) || K_DEL(buf)) && j <= ft_strlen(str))
+		|| (K_RIGHT(buf) && j >= 0) || (ft_isprint(*buf) && !j))
+		ft_putstr(buf);
+	else if (K_HOME(buf))
+		ft_putstr(tgetstr("rc", NULL));
+	else if (K_END(buf))
+		ft_putstr(tgetstr("cd", NULL));
 	return (1);
+}
+
+void		term_center(t_shell *shell, char **str, char *buf, int *j)
+{
+	int		i;
+
+	i = 0;
+	if (K_DEL(buf))
+		delete_mode(str, *j + 1, buf);
+	else if (buf[0] == 27 && buf[1] == 91 && buf[2] == '3')
+		i += delete_mode(str, *j - 1, buf);
+	else if (K_LEFT(buf) || K_RIGHT(buf) || ft_isprint(buf[0]))
+	{
+		if (ft_isprint(*buf))
+			ft_join(str, buf);
+		else
+			i = editing(&(buf[0]), *j, ft_strlen(*str));
+		if (ft_isprint(*buf) || i)
+			ft_putstr(buf);
+	}
+	else if (ft_isprint(buf[0]) && *j > 0)
+		insert_mode(str, *j, buf[0], buf);
+	*j += i;
+	(void)shell;
 }

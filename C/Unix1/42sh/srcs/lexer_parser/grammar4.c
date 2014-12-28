@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "42sh.h"
+#include "shell.h"
 
 bool		command_exp(t_tree **tree, t_lex **lex)
 {

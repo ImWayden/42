@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "shell.h"
 
 int			aff_env(t_shell *shell, t_tree *tree)
 {

@@ -11,20 +11,20 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "42sh.h"
+#include "shell.h"
 
 static t_lex	*set_error_msg(int flag, t_lex **lex)
 {
 	if (flag == 0)
 		return (*lex);
 	if (flag == 1)
-		ft_putendl("Invalid null command.");
+		ft_putmsg(CMD_E, NULL);
 	else if (flag == 2)
-		ft_putendl("Missing name for redirect.");
+		ft_putmsg(REDIR_E1, NULL);
 	else if (flag == 3)
-		ft_putendl("Ambiguous input redirect.");
+		ft_putmsg(REDIR_E2, NULL);
 	else if (flag == 4)
-		ft_putendl("Ambiguous output redirect.");
+		ft_putmsg(REDIR_E3, NULL);
 	free_lex(lex);
 	return (NULL);
 }
@@ -39,7 +39,6 @@ t_lex			*syntax_error(t_shell *shell, char *str)
 	if (!(lex = lexer(str)))
 		return (NULL);
 	(void)shell;
-	//epure(shell, lex);
 	if (is_pipe(lex->str) || is_and_or_or_bin(lex->str)
 		|| is_semi_colon(lex->str))
 		flag = 1;

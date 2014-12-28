@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "42sh.h"
+#include "shell.h"
 
 int				execute_last_command(t_tree *tree, t_shell **shell)
 {
@@ -29,7 +29,7 @@ int				execute_last_command(t_tree *tree, t_shell **shell)
 	else if (pid > 0)
 	{
 		if (waitpid(pid, &statut, 0) == -1)
-			perror("Waitpid() :");
+			ft_putmsg(WAITPID, NULL);
 		close(tree->fd[1]);
 		return (write_statut(statut));
 	}
@@ -69,7 +69,7 @@ int				execute_pipe_start(t_tree *tree, t_shell **shell)
 	else if (pid > 0)
 	{
 		if (waitpid(-1, &statut, 0) == -1)
-			perror("Waitpid() :");
+			ft_putmsg(WAITPID, NULL);
 		return (write_statut(statut));
 	}
 	return (FATAL_ERROR);

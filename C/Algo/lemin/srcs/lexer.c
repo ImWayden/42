@@ -49,7 +49,7 @@ static t_lex	*addlist(t_lex *list, char *str)
 	return (list);
 }
 
-t_lex			*get_lst()
+t_lex			*get_lst(void)
 {
 	t_lex		*lst;
 	char		*str;
@@ -59,7 +59,7 @@ t_lex			*get_lst()
 	while ((get_next_line(0, &str)))
 	{
 		if (*str == 'L')
-			break;
+			break ;
 		else if (is_comment(str))
 			continue ;
 		else

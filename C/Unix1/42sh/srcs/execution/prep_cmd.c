@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "42sh.h"
+#include "shell.h"
 
 char			*get_full_path(char **path, char *binary)
 {
@@ -44,15 +44,9 @@ static char		*get_bin_path(char *bin, t_shell *shell)
 	else
 		path = get_full_path(shell->path, bin);
 	if (!path || (path && access(path, F_OK) == -1))
-	{
-		ft_putstr(bin);
-		ft_putstr(": Command not found.\n");
-	}
+		ft_putmsg(bin, CMD_1);
 	else if (access(path, X_OK) == -1)
-	{
-		ft_putstr(path);
-		ft_putstr(" : Permission denied.\n");
-	}
+		ft_putmsg(path, PERM);
 	else
 		return (path);
 	ft_memdel((void **)&path);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "shell.h"
 
 static void			del_env(t_env *envc, t_env *tmp, t_shell *shell)
 {

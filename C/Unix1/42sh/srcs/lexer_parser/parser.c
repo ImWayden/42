@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "42sh.h"
+#include "shell.h"
 
 t_tree				*init_tree(void)
 {
@@ -98,5 +98,6 @@ t_tree				*lexor_and_parsor(t_shell *shell, char **line)
 	{
 		return (make_parsing(&lex));
 	}
+	ft_memdel((void **)line);
 	return (NULL);
 }

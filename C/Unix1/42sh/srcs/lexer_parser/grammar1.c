@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "42sh.h"
+#include "shell.h"
 
 bool		is_redir_no_pipe(char *str)
 {
@@ -47,7 +47,7 @@ int			is_directory(char *path)
 
 	if (stat(path, &buf) == -1)
 	{
-		perror("Stat");
+		ft_putmsg(STAT, NULL);
 		return (0);
 	}
 	if (S_ISDIR(buf.st_mode))

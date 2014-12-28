@@ -12,7 +12,7 @@
 
 #include "getline.h"
 #include "grammar.h"
-#include "42sh.h"
+#include "shell.h"
 
 void			ft_prompt(t_shell *shell)
 {
@@ -50,13 +50,9 @@ int				main(int ac, char **av, char **env)
 				ft_memdel((void **)&shell->hist->str);
 			line = get_line(shell, 0);
 			if (line && (shell->tree = lexor_and_parsor(shell, &line)))
-			{
-				ft_putendl(line);
-				ft_memdel((void **)&line);
 				main_execution(&shell);
-			}
 		}
 	}
-	ft_putendl("Usage: ./42sh");
+	ft_putmsg(USAGE, NULL);
 	return (0);
 }

@@ -10,13 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "shell.h"
 #include "grammar.h"
 
 bool		alloc_tree(t_tree **new, t_tree **tree)
 {
 	if (!(*new = init_tree()))
 	{
+		ft_putmsg(INIT, NULL);
 		free_tree(tree);
 		return (FALSE);
 	}

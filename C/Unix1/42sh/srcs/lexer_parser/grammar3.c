@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "42sh.h"
+#include "shell.h"
 
 bool		redir_left_norm(t_tree **tree, t_lex **lex)
 {

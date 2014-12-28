@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "shell.h"
 
 int				new_hist(t_shell *shell)
 {
@@ -29,29 +29,23 @@ int				new_hist(t_shell *shell)
 	return (0);
 }
 
-int 			hist_init(t_shell *shell)
+int				hist_init(t_shell *shell)
 {
 	char		*str;
-	char		*str1;
 	int			fd;
 
-	if ((str = get_env(shell->env, "PWD")))
+	str = ft_strjoin(shell->pwd, shell->h_file);
+	fd = open(str, O_RDWR);
+	ft_memdel((void **)&str);
+	if (fd != -1)
 	{
-		str1 = ft_strjoin(str, "/.hist");
-		fd = open(str1, O_RDWR, O_CREAT);
-		ft_memdel((void **)&str);
-		ft_memdel((void **)&str1);
-		if (fd != -1)
+		while (get_next_line(fd, &str))
 		{
-			while (get_next_line(fd, &str))
-			{
-				if (new_hist(shell))
-					shell->hist->str = str;
-			}
-			close(fd);
-			return (1);
+			if (new_hist(shell))
+				shell->hist->str = str;
 		}
+		close(fd);
+		return (1);
 	}
-	ft_putendl("42sh : history load error");
 	return (0);
 }

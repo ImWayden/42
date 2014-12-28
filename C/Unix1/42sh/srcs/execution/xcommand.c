@@ -12,7 +12,7 @@
 
 #include <errno.h>
 #include "grammar.h"
-#include "42sh.h"
+#include "shell.h"
 
 int				write_statut(int status)
 {
@@ -44,7 +44,7 @@ int				execute_simple_command(t_tree *tree, t_shell **shell)
 	else if (pid > 0)
 	{
 		if (waitpid(pid, &statut, 0) == -1)
-			perror("Waitpid");
+			ft_putmsg(WAITPID, NULL);
 		return (write_statut(statut));
 	}
 	return (FATAL_ERROR);

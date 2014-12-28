@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MYSH__H
-# define MYSH_H
+#ifndef SHELL_H
+# define SHELL_H
 
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -25,21 +25,20 @@
 # include <term.h>
 # include "libft.h"
 # include "struct.h"
+# include "define.h"
 
 # define FATAL_ERROR	-3
-
-
 
 /*
 ** ft_init
 */
 
 t_shell					*init(char	**env);
-int 					hist_init(t_shell *shell);
+int						hist_init(t_shell *shell);
 int						new_hist(t_shell *shell);
 int						re_init(t_shell *shell);
 void					ft_prompt(t_shell *shell);
-int 					alias_init(t_shell *shell);
+int						alias_init(t_shell *shell);
 int						new_alias(t_shell *shell, char **str);
 
 /*
@@ -74,7 +73,7 @@ void					free_shell(t_shell **shell);
 int						ft_pwd(t_shell *shell);
 int						ft_exit(t_shell **shell);
 char					**list_to_tab(t_env *env);
-int 					set_alias(t_shell *shell, char **argv);
+int						set_alias(t_shell *shell, char **argv);
 int						builtins_center(t_shell **shell, t_tree *tree);
 
 /*

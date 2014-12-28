@@ -14,6 +14,7 @@
 # define STRUCT_H
 
 # include "libft.h"
+
 /*
 ** Lists and Structures
 */
@@ -37,7 +38,6 @@ typedef struct			s_env
 	struct s_env		*next;
 }						t_env;
 
-
 typedef struct			s_lex
 {
 	char				*str;
@@ -55,13 +55,13 @@ typedef struct			s_tree
 	struct s_tree		*next;
 }						t_tree;
 
-typedef struct		s_alias
+typedef struct			s_alias
 {
-	char			*name;
-	char			*arg;
-	struct s_alias	*next;
-	struct s_alias	*prev;
-}					t_alias;
+	char				*name;
+	char				*arg;
+	struct s_alias		*next;
+	struct s_alias		*prev;
+}						t_alias;
 
 typedef struct			s_shell
 {

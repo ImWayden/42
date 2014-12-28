@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "shell.h"
 
 static int	s_setenv2(t_env **envs, char *name, char **arg, t_env *envc)
 {
@@ -55,15 +55,13 @@ int			cd_needed(t_shell *shell, t_tree *tree, char **pwd, char **home)
 	*pwd = get_env(shell->env, "PWD");
 	if (!*pwd)
 	{
-		ft_putmsg("cd : ", "\"PWD\" NOT SET.\n");
-		ft_memdel((void **)pwd);
+		ft_putmsg(CD_PWD, NULL);
 		return (EXIT_FAILURE);
 	}
 	*home = get_env(shell->env, "HOME");
-	if (!*home && !ft_strncmp(tree->argv[1], "~", 1))
+	if (!*home && (!tree->argv[1] || tree->argv[1][0] == '~'))
 	{
-		ft_putmsg("cd : ", "\"HOME\" NOT SET.\n");
-		ft_memdel((void **)home);
+		ft_putmsg(CD_HOME, NULL);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "shell.h"
 
 int					ft_setenv(t_shell *shell, t_tree *tree)
 {
@@ -35,7 +35,7 @@ int					ft_setenv(t_shell *shell, t_tree *tree)
 	}
 	else
 	{
-		ft_putmsg("setenv", " : wrong line format.\n");
+		ft_putmsg(SETENV_FORMAT, NULL);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);

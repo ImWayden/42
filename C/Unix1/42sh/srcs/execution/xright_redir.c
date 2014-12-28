@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "grammar.h"
-#include "42sh.h"
+#include "shell.h"
 
 static int	open_file(char *name, int ope)
 {
@@ -23,7 +23,7 @@ static int	open_file(char *name, int ope)
 	else if (ope == IS_RIGHT)
 		fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
-		perror("42sh : open");
+		ft_putmsg(OPEN, NULL);
 	return (fd);
 }
 

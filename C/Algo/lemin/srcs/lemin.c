@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "lemin.h"
-#include "fdf.h"
 
 static void		putroom(t_lem *lem, t_room *room, t_room *room1)
 {
@@ -75,7 +74,8 @@ void			send(t_room *r, t_lem *lem)
 
 	send_list(r, lem);
 	l = r->lst;
-	while (l && r->lem && r->lem <= lem->nbr && r->dist && r->dist < 1000 && !r->r)
+	while (l && r->lem && r->lem <= lem->nbr && r->dist && r->dist < 1000
+		&& !r->r)
 	{
 		tmp = l->room;
 		if ((i = lem->nbr - lem->start->lem) <= 0)
@@ -85,14 +85,13 @@ void			send(t_room *r, t_lem *lem)
 		{
 			trans(r, tmp, lem);
 			if (tmp == lem->end)
-				break;
+				break ;
 		}
 		l = l->next;
 	}
 }
 
-
-int			lemin(t_lem *lem)
+int				lemin(t_lem *lem)
 {
 	int			i;
 

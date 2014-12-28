@@ -22,7 +22,7 @@ char					*get_line(t_shell *shell, int i)
 	{
 		if (!ft_config(&term))
 		{
-			str = ft_term(shell, i);
+			str = ft_term(shell, i, 0);
 			if (ft_defconfig(&term))
 				exit (0);
 			return (str);
