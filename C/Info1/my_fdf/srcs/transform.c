@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-int			transform(t_coord **tab, int pad, int pad1, int pad2)
+int			transform(t_coord **tab)
 {
 	int		i;
 	int		j;
@@ -30,8 +30,8 @@ int			transform(t_coord **tab, int pad, int pad1, int pad2)
 			y = tab[i][j].y;
 			if (tab[i][j].z)
 				tab[i][j].z = tab[i][j].z / 20;
-			tab[i][j].x = pad * 0.71 * (x - y) + pad1;
-			tab[i][j].y = pad * (-0.82 * tab[i][j].z + 0.41 * (x + y)) + pad2;
+			tab[i][j].x = 0.71 * (x - y);
+			tab[i][j].y = (-0.82 * tab[i][j].z + 0.41 * (x + y));
 			j++;
 		}
 		i++;

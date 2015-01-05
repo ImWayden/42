@@ -37,6 +37,58 @@ void		line(t_env env, t_coord pi, t_coord pf)
 	}
 }
 
+static void		padding(t_env *env, t_coord **tab)
+{
+	int 		i;
+	int 		j;
+
+	env->max_x = tab[0][0].x;
+	env->min_x = tab[0][0].x;
+	env->max_y = tab[0][0].y;
+	env->min_y = tab[0][0].y;
+	i = 0;
+	while (tab[i])
+	{
+		j = 0;
+		while (tab[i][j].z != -2)
+		{
+			if (tab[i][j]->x > env->max_x)
+				env->max_x = lem->tab[i]->x;
+			if (tab[i][j]->x < env->min_x)
+				env->min_x = lem->tab[i]->x;
+			if (tab[i][j]->y > env->max_y)
+				env->max_y = lem->tab[i]->y;
+			if (tab[i][j]->y < env->min_y)
+				env->min_y = lem->tab[i]->y;
+		}
+		i++;
+	}
+	env->max_x -= env->min_x;
+	env->max_y -= env->min_y;
+	env->pad = 1;
+	while (env->pad * (env->max_x + 2) < 1500 && env->pad
+					* (env->max_y + 1) < 750 && env->pad < 40)
+		env->pad++;
+	env->pad--;
+}
+
+static void		trans(t_env *env, t_lem *lem)
+{
+	int 		i;
+
+	i = 0;
+	while (tab[i])
+	{
+		j = 0;
+		while (tab[i][j].z != -2)
+		{
+			tab[i][j].x = (tab[i][j].x - env->min_x + 1) * env->pad;
+			tab[i][j].y = (tab[i][j].y - env->min_y + 1) * env->pad;
+		}
+		i++;
+	}
+}
+
 int			fake_expose(t_env *envc)
 {
 	int		i;
