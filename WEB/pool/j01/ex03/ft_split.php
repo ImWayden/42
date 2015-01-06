@@ -1,7 +1,8 @@
 <?
 function ft_split($value)
 {
-	sort($array = preg_split("([ ]+)", trim($value)));
+	$array = preg_split("([ ]+)", trim($value));
+	sort($array);
 	return $array;
 }
 ?>
