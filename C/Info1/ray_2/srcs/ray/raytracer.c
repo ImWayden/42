@@ -6,7 +6,7 @@
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/29 01:29:57 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/26 11:25:56 by msarr            ###   ########.fr       */
+/*   Updated: 2015/01/02 00:18:25 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static t_vect	ray_recursive(t_ray *ray, t_env *env, size_t depth)
         color = color_blend(r_color, hit.scene->reflect, color);
     }
 	color = ray_shad(ray, env, hit.scene, colis, color);
-	color = mult2(color, (MAX_V_DIST - hit.dist) / MAX_V_DIST);
+	//color = mult2(color, (MAX_V_DIST - hit.dist) / MAX_V_DIST);
     return (color);
 }
 

@@ -6,7 +6,7 @@
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/30 15:08:18 by msarr             #+#    #+#             */
-/*   Updated: 2014/12/26 13:19:42 by msarr            ###   ########.fr       */
+/*   Updated: 2015/01/03 21:48:31 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_vect		ray_shad(t_ray *ray, t_env *env, t_scene *scene, t_vect point, t_vect am
 		l_ray.orig = light->pos;
 		l_ray.dir = l_vect;
 		trac = ray_once(&l_ray, env);
-		if (trac.scene == NULL || trac.dist > dist - 0.5)
+		if (trac.scene == NULL || trac.dist > dist - 1)
 		{
 			amb = add(amb, light_diff(light, scene, point, dist));
 			amb = add(amb, light_spec(light, ray, scene, point, dist));
