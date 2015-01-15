@@ -29,7 +29,7 @@ Class Vector
 			$this->_y = $dest->getY() - $orig->getY();
 			$this->_z = $dest->getZ() - $orig->getZ();
 		}
-		$this->_w = 1.0;
+		$this->_w = 0.0;
 		if (self::$verbose)
 			echo $this->__toString()." constructed.\n";
 	}
@@ -85,7 +85,7 @@ Class Vector
 
 	public function magnitude()
 	{
-		return (sqrt($this->_length()));
+		return (sqrt($this->_length));
 	}
 
 	private function _length()
@@ -98,6 +98,7 @@ Class Vector
 		return (($this->_x * $rhs->getX() + $this->_y * $rhs->getY() + $this->_z * $rhs->getZ()) / sqrt($this->_length() * $rhs->_length()));
 	}
 
+	
 	public function normalize()
 	{
 		$l = $this->magnitude();
