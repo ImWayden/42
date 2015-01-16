@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title></title>
+<script>
+function calc() {
+    var left = parseInt(document.getElementById('left').value, 10);
+    var right = parseInt(document.getElementById('right').value, 10);
+    var operand = document.getElementById('ope').value;
+    var result;
+    if (left < 0 || right < 0)
+    {
+        alert("Error :(");
+        return ;
+    }
+    if (operand == "+")
+        result = left + right;
+    if (operand == "-")
+        result = left - right;
+    if (operand == "*")
+        result = left * right;
+    if (operand == "/")
+    {
+        result = left / right;
+        if (right == 0)
+            result = "It's over 9000!";
+    }
+    if (operand == "%")
+    {
+        result = left % right;
+        if (right == 0)
+            result = "It's over 9000!";
+    }
+    console.log(result);
+    alert(result);
+}
+</script>
+</head>
+<body>
+<div id="Calc">
+    <input id="left" type="text">
+    <select id="ope">
+        <option>+</option>
+        <option>-</option>
+        <option>*</option>
+        <option>/</option>
+        <option>%</option>
+    </select>
+    <input id="right" type="text">
+    <input type="submit" value="Try me!" onclick="calc();">
+</div>
+<script>
+setInterval(function(){alert("Please, use me...");}, 30000);
+</script>
+</body>
+</html>
