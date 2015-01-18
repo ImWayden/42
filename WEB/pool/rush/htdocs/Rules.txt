@@ -1,0 +1,66 @@
+TO KNOW !
+
+- Utilisation de dès a 6 faces ordinaires = "D6"
+- Si droit a 3 lancés alors on note : "3D6"
+- Obtenir 3, 4, 5 ou 6 sur 1D6 ne se note : "3+"
+- Zone de jeu sur 150 x 100 cases.
+- Les joueurs sont reconnaissables sur la map et commence une parties dans les coins opposés !
+- Mettres des obstacles (5 ou 6) (position et taille aléatoire)
+- Si un vaisseau sort de la zone ou heurt un obstacle il meurt !
+
+TOUR :
+
+- A chaques tour, les joueurs joue un de leurs vaisseaux a tour de role jusqu'a ce que tous les vaisseaux ai été joués
+- Quand on joue un vaisseau on dit qu'on l'active
+- On ne peux activer qu'un vaisseau par tour...
+- Activer un vaisseau est irreversible !
+- Un vaisseau activer doit éffectuer les 3 phases de jeu, dans l'ordre.
+- Une fois que tous les vaisseaux on été joués, le tour prend fin et on rejoue un nouveau tour...
+
+VAISSEAUX :
+
+- NOM : Forcement BADASS !
+- TAILLE : 1x2 = tout petit ; 1x4 = normal ; 2 x 10 = balèze.
+- SPRITE OU AUTRE : Représentation du vaisseau sur la table de jeu.
+- POINTS DE COQUE : PV (5 au depart est pas mal, si 0 on est mort...)
+- PUISSANCE DES MOTEURS : PP (débloqués lors de l'activation du vaisseau, r-a-z a chaques tours)
+- VITESSE : Nombre de cases parcourable par le vaisseau
+- MANOEUVRABILITÉ : Nombre de cases a parcourir (tout droit) ce tour, si le vaisseau s'est déplacé le tour précédent
+- BOUCLIER : Nombre de points de dégats qu'il est possible de se prendre avant de faire baisser les PV (commence a 0 mais augmentable par PP)
+- ARMES : Liste des armes disponibles pour ce vaisseau. (1 ou 2 par vaisseau) : - Besoin de PP pour activer l'arme...
+																				- En augmenter l'éfficacité ce tour...
+																				- Un section leurs sera dédiée...
+																				- Il est possible de donner des "bonus spéciaux" aux vaisseaux pour modif les caracs. 
+
+PHASES DE JEU :
+
+- 1 - ORDRES : - Tous les PP sont r-a-z (comme tous les caracs)
+			   - 1 PP dans la vitesse permet d'avancer d'1D6 supp
+			   - 1 PP dans le bouclier augmente de 1 les points du boubou
+			   - 1 PP dépensé pour une arme donne 1D6 supp pour cette arme.
+			   - Possibilité de réparer un vaisseau, pour cela : - Il doit etre immobile...
+			   													 - Chaque PP vaut 1D6 supp
+			   													 - Chaque 6 donne droit a 1 PV restauré (jusqu'au max de PV du vaisseau)...
+
+- 2 - MOUVEMENT : - Virage = "pivoter le vaisseau de 90 degrés vers la droite ou vers la gauche".
+				  - Le point de virage est le point le plus centrale du vaisseau
+				  - Un vaisseau immobile peux effectuer un virage gratuit avant de commencer le déplacement
+				  - Un vaisseau ne peux se déplacer que d'un nombre de cases relatif a sa vitesse
+				  - Un vaisseau doit tjr se déplacer d'un nombre de cases >= a sa carac manoeuvrabilité...
+				  - SI le vaisseau s'est déplacer du nombre exact de sa capa de manoeuvrabilité au tou précédent alors il peut rester immobile ce tour.
+				  - Un vaisseau immobile peux le rester autant de tour qu'il ne le souhaite.
+				  - Un vaisseau immobile au tour précédent pourra ce tour se déplacer moins loin que sa carac manoeuvre. (seul cas !)
+				  - Un vaisseau peut effectuer un virage a chaque fois qu’il a parcouru un nombre de cases supérieur ou égal a sa carac manoeuvre.
+				  - SI un vaisseau percute un autre vaisseau, il s'arrete totalement et sera immobile au prochain tour...
+				  - SI le vaisseau percuteur s'est déplacer de plus de cases que sa carac manoeuvre : Les deux vaisseau se prennent du dégat correspondant au nombre de PV que l'autre vaisseau a au moment de l'impact...(Peut etre absorber par le Boubou)
+				  - SI il sort de la zone de jeu ou heurt un obstacle il est mort.
+ 
+- 3 - TIR : - CHARGES : Munitions (chaque PP dépensé rajoute une charge, chaque charge en plusdonne 1D6 supp)
+			- PORTEE COURTE :  Nombre de cases ou la portée est considérée comme courte
+			- PORTEE MOYENNE : Nombre de cases ou la portée est considérée comme moyenne
+			- PORTEE LONGUE :  Nombre de cases ou la portée est considérée comme longue
+			- ZONE D'EFFECT :  Description des cases sur lesquelles l’arme peut tirer
+			- BREF : Pour tirer, le vaisseau doit avoir une ligne de vue sur sa cible. Tout vaisseau ou obstacle bloque les lignes de vue. Pour avoir une ligne de vue, 			 on pourrait tracer une ligne entre le tireur et sa cible sans rien croiser. Si le tireur a une ligne de vue sur sa cible, le vaisseau lance un nombre 			 de des egal au nombre de points de charge que possède l’arme. Bien entendu, la cible doit se trouver à portee de l’arme et dans sa zone d’effet. Les 		 des obtenant au moins une certaine valeur comptent comme un "succès". Les valeurs de base à obtenir pour provoquer un succès sont les suivantes :
+		 	(Portee courte : 4+
+		 	 Portee intermediaire : 5+
+		 	 Portee longue : 6)
