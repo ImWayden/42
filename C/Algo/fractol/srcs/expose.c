@@ -15,7 +15,9 @@
 int     expose(t_env *env)
 {
 	int row, col;
-	for (row = 0; row < env->yres; row++)
+
+	row = 0;
+	while (env->funct == main_flame && row < env->yres)
 	{
 		for (col = 0; col < env->xres; col++)
 		{
@@ -29,7 +31,8 @@ int     expose(t_env *env)
 	    env->invert ==
 	    1 ? ~(env->pixels[row][col].
 		  b) : env->pixels[row][col].b;
-	}
+		}
+		row++;
     }
 	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
 	return (0);

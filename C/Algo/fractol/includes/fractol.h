@@ -16,8 +16,8 @@
 # include <mlx.h>
 # include <math.h>
 # include <fcntl.h>
-# include </usr/X11/include/X11/X.h>
-//# include <X11/Xlib.h>
+//# include </usr/X11/include/X11/X.h>
+# include <X11/Xlib.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include "libft.h"
@@ -27,34 +27,30 @@
 # define	N_COLORS		3*256
 # define	RANDR(lo,hi)	((lo) + (((hi)-(lo)) * drand48()))
 # define	random_bit()	random() & 01
-# define	NUMV			64
+# define	NUMV			4
 # define	SAMPLES 		20000
 # define	ITT 			1000
 # define	SUPER 			1
-# define	GAMMA 			2.2
-# define	SEED 			1
-# define	ISBLACK(c)		(!c.r && !c.g && !c.b)
-
-
-
-
-#define    Aquamarine             rgb( 112, 219, 147)
-#define    MediumAquamarine       rgb(  50, 204, 153)
-#define    Black                  rgb(   0,   0,   0)
-#define    Blue                   rgb(   0,   0, 255)
-#define    CadetBlue              rgb(  95, 159, 159)
-#define    CornflowerBlue         rgb(  66,  66, 111)
+# define GAMMA 			2.2
+# define SEED 			1
+# define ISBLACK(c)		(!c.r && !c.g && !c.b)
+# define Aquamarine             rgb( 112, 219, 147)
+# define MediumAquamarine       rgb(  50, 204, 153)
+# define Black                  rgb(   0,   0,   0)
+# define Blue                   rgb(   0,   0, 255)
+# define    CadetBlue              rgb(  95, 159, 159)
+# define    CornflowerBlue         rgb(  66,  66, 111)
 # define    DarkSlateBlue          rgb( 107,  35, 142)
-#define    LightBlue              rgb( 191, 216, 216)
-#define    LightSteelBlue         rgb( 143, 143, 188)
-#define    MediumBlue             rgb(  50,  50, 204)
-#define    MediumSlateBlue        rgb( 127,   0, 255)
-#define    MidnightBlue           rgb(  47,  47,  79)
-#define    NavyBlue               rgb(  35,  35, 142)
-#define    Navy                   rgb(  35,  35, 142)
-#define    SkyBlue                rgb(  50, 153, 204)
-#define    SlateBlue              rgb(   0, 127, 255)
-#define    Coral                  rgb( 255, 127,   0)
+# define    LightBlue              rgb( 191, 216, 216)
+# define    LightSteelBlue         rgb( 143, 143, 188)
+# define    MediumBlue             rgb(  50,  50, 204)
+# define    MediumSlateBlue        rgb( 127,   0, 255)
+# define    MidnightBlue           rgb(  47,  47,  79)
+# define    NavyBlue               rgb(  35,  35, 142)
+# define    Navy                   rgb(  35,  35, 142)
+# define    SkyBlue                rgb(  50, 153, 204)
+# define SlateBlue              rgb(0, 127, 255)
+# define Coral					rgb(255 , 127,   0)
 #define    Cyan                   rgb(   0, 255, 255)
 #define    SteelBlue              rgb( 35, 107, 142)
 #define    Firebrick              rgb( 142,  35,  35)
@@ -122,7 +118,14 @@ typedef struct	s_coord
 {
 	double			x;
 	double			y;
+	double			z;
 }				t_coord;
+
+typedef struct	s_point
+{
+	t_coord			c;
+	struct s_point	*next;
+}				t_point;
 
 typedef struct 	s_real
 {
@@ -150,22 +153,21 @@ typedef struct	s_env
 	int			sizel;
 	int			endian;
 	int			bpp;
-	t_pixel		**pixels;
-	/* image buffer */
+	t_pixel		**pixels;	/* image buffer */
 ///
-	int			yres; /* x and y resolution of image */
-	int			xres; /* x and y resolution of image */
+	int			yres; 		/* x and y resolution of image */
+	int			xres;		/* x and y resolution of image */
 	double		ranx;
-	double		rany; /* numerical range of x/y axis */
-	int 		 ncolors;          /* number of equations */
+	double		rany; 		/* numerical range of x/y axis */
+	int			ncolors;	/* number of equations && colors */
 	int 		sup;		/* super sample value  */
 	int 		samples;	/* number of flame samples */
-	long int 	max_i; /* number of iterations per sample */
+	long int 	max_i; 		/* number of iterations per sample */
 	int 		invert;		/* use inverse colors? 0 false, else true */
 	int 		symmetry;	/* use symmetrical rotation axis? set to greater than 1 */
 	int 		seed;		/* random seed */
-	double		gamma;	/* gamma correction factor */
-	int 		choice;	/* transformations to use */
+	double		gamma;		/* gamma correction factor */
+	int 		(*funct)(struct s_env *env);		/* transformations to use */
 	int 		count;		/* number of tranformations available */	
 	double		x_min;
 	double		x_max;
@@ -189,14 +191,15 @@ void			linear(t_env *env, double x, double y);
 
 int				main_mandel(t_env *env);
 int 			main_flame(t_env *env);
+int				pyramid(t_env *env);
+
 
 //mlx init
-void			init(t_env *env);
+void			init(t_env *env, char **av);
 int				expose(t_env *env);
 t_rgb			getpixel(t_env *env, int x, int y);
 void			addpixel(t_env *env, int x, int y, t_rgb color);
 void			plotpixel(t_env *env, int x, int y, t_rgb color);
-
 //color
 
 t_color			color();

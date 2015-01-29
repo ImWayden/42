@@ -12,13 +12,12 @@
 
 #include "fractol.h"
 
-/* allocate memory for the image buffer */
+/* mlx iITIALISATION*/
 static void	img_init (t_env *env)
 {
 	env->ranx = env->x_max - env->x_min;
 	env->rany = env->y_max - env->y_min;
 
-	/* malloc new memory array for the image */
 	if (!(env->ptr = mlx_init()))
 		exit(0);
 	if (!(env->win = mlx_new_window(env->ptr, SCREEN_W, SCREEN_H
@@ -32,40 +31,27 @@ static void	img_init (t_env *env)
 	ft_putendl("Done!\n");
 }
 
-void		init(t_env *env)
+void		init(t_env *env, char **av)
 {
 	/* change default values set in fractal.h */
 	env->xres = SCREEN_W;
 	env->yres = SCREEN_H;
-	/*env->x_max = XMAX;
-	env->y_max = YMAX;
-	env->x_min = XMIN;
-	env->y_min = YMIN;*/
 	env->x_min = -1.777;
 	env->x_max = 1.777;
 	env->y_min = -1.0;
 	env->y_max = 1.0;
+	env->seed = SEED;
 	env->ncolors = NUMV;
 	env->samples = SAMPLES;
 	env->gamma = GAMMA;
 	env->symmetry = 1;
 	env->invert = 0;
-	env->max_i = ITT;
+	env->max_i = (av[1][1] == 'v') ? ITT : 25;
 	env->count = 1;
 	env->colormap = NULL;
-	env->choice = 0;
-	env->conf = 2;
+	env->funct = (av[1][1] == 'v') ? main_flame : main_mandel;
+	env->conf =	(av[1][1] == 'j') ? 1 : ft_atoi(av[2]) % 46;
 	map(env);
-	int i;
-	for (i = 0; i < env->ncolors; i++)
-    {
-      printf ("%f %f %f %f %f %f\n",
-	      env->colormap[i].ac,
-	      env->colormap[i].bc,
-	      env->colormap[i].cc,
-	      env->colormap[i].dc,
-	      env->colormap[i].ec, env->colormap[i].fc);
-    }
 	env->zoom_x = SCREEN_W / (env->x_max - env->x_min);
 	env->zoom_y = SCREEN_H / (env->y_max - env->y_min);
 	img_init(env);
