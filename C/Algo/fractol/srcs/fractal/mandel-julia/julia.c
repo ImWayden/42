@@ -14,12 +14,11 @@
 
 void		julia(t_env *env, int x, int y)
 {
-	static  int i = 37;
+	static  int i = -1;
 
 	if (!x && !y)
 		i++;
-    env->c = conf(i);
-    printf("%li\n", env->max_i);
-	env->z.r = x / env->zoom_x + env->x_min;
-	env->z.i = y / env->zoom_y + env->y_min;
+	env->c = conf(i);
+	env->z.r = (double)x / env->zoom_x + env->x_min;
+	env->z.i = -((double)y / env->zoom_y + env->y_min);
 }

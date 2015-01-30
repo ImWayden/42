@@ -42,13 +42,20 @@ t_coord		mult(t_coord vect, double d)
 	return (v);
 }
 
-t_point		*addlist(t_point *p, t_coord c)
+t_point		*addlist(t_env *env, t_point *p, t_coord c)
 {
+	static int i = 0;
 	t_point	*tmp;
 
+	if (!i)
+	{
+		env->x_min = 0;
+		env->y_min = 0;
+	}
 	tmp = malloc(sizeof(t_point));
-	tmp->c.x =  0.71 * (c.x - c.y) * SCREEN_W;
-	tmp->c.y = (-0.82 * c.z + 0.41 * (c.x + c.y)) * SCREEN_H;
+	tmp->c.x =  c.x * 100.0;
+	tmp->c.z =  c.z * 100.0;
+	tmp->c.y = (-0.82 * c.z + 0.41 * (c.x + c.y)) * 100.0;
 	tmp->next = p;
 	return (tmp);
 }
@@ -71,7 +78,7 @@ int			pyramid(t_env *env)
 	v = newc(0.0,0.0,0.0);
 	n = 2;
 			int j = 0;
-	env->max_i = 40000;
+	env->max_i = 4000;
 	while (n < env->max_i)
 	{
 		k = RANDR(0, 1);
@@ -81,7 +88,7 @@ int			pyramid(t_env *env)
 			if (k > ((double)i-1.0)/5.0 && k < (double)i/5.0)
 			{
 				v = add(mult(v, 1.0/2.0), t[i]);
-				list = addlist(list, v);
+				list = addlist(env, list, v);
 				printf("hhh %lf - %lf\n", list->c.x, list->c.y);
 				j++;
 			}
@@ -89,9 +96,10 @@ int			pyramid(t_env *env)
 		}
 		n++;
 	}
+	printf("%lf %lf\n", env->x_min, env->y_min);
 	while (list)
 	{
-		plotpixel(env, (int)list->c.x , (int)list->c.y, LightGrey);
+		plotpixel(env, (int)list->c.x , (int)list->c.z, LightGrey);
 		list = list->next;
 	}
 	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);

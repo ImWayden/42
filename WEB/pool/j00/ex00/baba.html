@@ -1,26 +1,76 @@
+<!DOCTYPE html>
 <html>
-	<head>
-		<title>B.A.BA</title>
-		<style>
-			body{background-color: pink;}
-			h1 {text-align:center;color:white;}
-			.div_style {display:inline-block;}
-			#login {font-style:italic; font-family:monospace;}
-		</style>
-	</head>
-	<body >
-		<h1>PAGE TITR&Eacute;E</h1>
-		<div class="div_style">
-			<img src="http://img.clubic.com/04234374-photo-amazon-sq-logo-gb.jpg"></img><br />
-			<a href="http://www.amazon.fr">Amazon</a>
-		</div>
-		<div class="div_style">
-			<img src="http://www.siliconrepublic.com/fs/img/news/201209/rs-426x288/new-ebay-logo.jpg"></img><br />
-			<a href="http://www.ebay.fr">Ebay</a>
-		</div>
-		<hr>
-		<div id="login" align="right">
-			&copy; msarr 2015
-		</div>
-	</body>
+<head>
+   <title>HTML5  Fractales: Éponge de Sierpinski-Menger en évolution</title>
+   <script type="text/javascript">
+   //<![CDATA[
+      var cnv,ctx,niv=0,lim=5,width=700,height=630; // nombre de niveaux et dimension du canvas
+      var UX=-646.2198,UY=861.6264,VX=-320,VY=-240,VZ=1000 // perspective
+         ,WX=-0.7427814,WY=-0.5570860,WZ=-0.37139068,Z=1077.033;
+      var u,v,u0=u0=350,v0=280; // centrage
+      var tmr,iD,nD,D=new Array(14*8000);
+      
+      function Psp(x,y,z) { // (x,y,z) --> (u,v)
+         var w=WX*x+WY*y+WZ*z+Z;
+         if ((-1.0e-12<w)&&(w<1.0e-12)) w=1.0e-12;
+         u=(UX*x+UY*y)/w; v=(VX*x+VY*y+VZ*z)/w;
+      }
+      function Cube(x,y,z,d,n) {
+         if (--n>0) { // subdivision
+            d/=3;
+            var xa=x+d,ya=y+d,za=z+d,xb=x+d+d,yb=y+d+d,zb=z+d+d;
+            Cube(x,y ,z ,d,n); Cube(xa,y ,z ,d,n); Cube(x ,ya,z ,d,n); Cube(xb,y ,z ,d,n);
+            Cube(x,yb,z ,d,n); Cube(xb,ya,z ,d,n); Cube(xa,yb,z ,d,n); Cube(xb,yb,z ,d,n);
+            Cube(x,y ,za,d,n); Cube(xb,y ,za,d,n); Cube(x ,yb,za,d,n); Cube(xb,yb,za,d,n);
+            Cube(x,y ,zb,d,n); Cube(xa,y ,zb,d,n); Cube(x ,ya,zb,d,n); Cube(xb,y ,zb,d,n);
+            Cube(x,yb,zb,d,n); Cube(xb,ya,zb,d,n); Cube(xa,yb,zb,d,n); Cube(xb,yb,zb,d,n);
+         } else { // enregistrement
+            Psp(x+d,y  ,z  ); D[nD++]=u; D[nD++]=v;
+            Psp(x  ,y+d,z  ); D[nD++]=u; D[nD++]=v;
+            Psp(x  ,y  ,z+d); D[nD++]=u; D[nD++]=v;
+            Psp(x+d,y+d,z  ); D[nD++]=u; D[nD++]=v;
+            Psp(x  ,y+d,z+d); D[nD++]=u; D[nD++]=v;
+            Psp(x+d,y  ,z+d); D[nD++]=u; D[nD++]=v;
+            Psp(x+d,y+d,z+d); D[nD++]=u; D[nD++]=v;       
+         }
+      }
+      function Eponge() {
+         if (++niv>lim) niv=1;
+         ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,width,height);
+         ctx.translate(u0,v0); ctx.scale(1.2,-1.2);
+         nD=0; Cube(-160,-160,-160,320,niv);
+         iD=0; tmr=setInterval('Evo()',512>>(2*niv));
+         if (iD>=nD) clearInterval(tmr);
+      }
+      function Evo() {
+         var ux=D[iD++],vx=D[iD++],uy=D[iD++],vy=D[iD++],uz=D[iD++],vz=D[iD++],uxy=D[iD++]
+            ,vxy=D[iD++],uyz=D[iD++],vyz=D[iD++],uzx=D[iD++],vzx=D[iD++],uxyz=D[iD++],vxyz=D[iD++];
+         ctx.beginPath(); ctx.fillStyle='#00BB55'; // face X
+         ctx.moveTo(ux,vx); ctx.lineTo(uxy,vxy); ctx.lineTo(uxyz,vxyz); ctx.lineTo(uzx,vzx);
+         ctx.fill(); ctx.closePath();          
+         ctx.beginPath(); ctx.fillStyle='#0055BB'; // face Y
+         ctx.moveTo(uy,vy); ctx.lineTo(uyz,vyz); ctx.lineTo(uxyz,vxyz); ctx.lineTo(uxy,vxy);
+         ctx.fill(); ctx.closePath();          
+         ctx.beginPath(); ctx.fillStyle='#FFFF77'; // face Z
+         ctx.moveTo(uz,vz); ctx.lineTo(uzx,vzx); ctx.lineTo(uxyz,vxyz); ctx.lineTo(uyz,vyz);
+         ctx.fill(); ctx.closePath();          
+         if (iD>=nD) clearInterval(tmr);
+      }
+      function Ini() {
+         cnv=document.getElementById('cv'); cnv.width=width; cnv.height=height;
+         ctx=cnv.getContext("2d"); Eponge();
+      }
+   //]]>
+   </script>
+</head>
+<body style='background-color:#BBBBBB;' onload='Ini()'>
+   <canvas id='cv' onclick='clearInterval(tmr); Eponge()' style='background-color:#DDDDDD; cursor:pointer;'
+      title="Cliquez pour passer à l'objet suivant">Your browser does not support HTML5 canvas
+   </canvas>
+   <div>
+      <br/><br/>Wikipédia: &nbsp;
+      <a href='http://fr.wikipedia.org/wiki/%C3%89ponge_de_Menger'>Éponge de Sierpinski-Menger</a>
+      <br/><br/><a href='http://www.william-voirol.ch/Prog/Fractales/Eponge.zip'>Zip des codes<br/></a>
+   </div>
+</body>
 </html>

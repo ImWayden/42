@@ -36,10 +36,10 @@ void		init(t_env *env, char **av)
 	/* change default values set in fractal.h */
 	env->xres = SCREEN_W;
 	env->yres = SCREEN_H;
-	env->x_min = -1.777;
-	env->x_max = 1.777;
-	env->y_min = -1.0;
-	env->y_max = 1.0;
+	env->x_min = -2.0;
+	env->x_max = 2.0;
+	env->y_min = -1.2;
+	env->y_max = 1.2;
 	env->seed = SEED;
 	env->ncolors = NUMV;
 	env->samples = SAMPLES;
