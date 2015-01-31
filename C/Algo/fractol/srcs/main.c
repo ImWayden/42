@@ -75,10 +75,11 @@ int				main(int ac, char **av)
 	if (ac == 2)
 	{
 		init(&env, av);
-		//env.funct(&env);
+		env.funct = pyramid;
+		env.funct(&env);
 		mlx_key_hook(env.win, key_hook, &env);
 		mlx_mouse_hook(env.win, mouse_button, &env);
-		mlx_expose_hook(env.win, pyramid, &env);
+		mlx_expose_hook(env.win, expose, &env);
 		mlx_hook(env.win, MotionNotify, PointerMotionMask, mouse_move, &env);
 		mlx_loop(env.ptr);
 	}

@@ -31,7 +31,7 @@ int			iterator(t_env *env)
 	return (i);
 }
 
-double		mod(t_real a)
+double		mod(t_cplx a)
 {
 	return sqrt(a.r * a.r + a.i * a.i);
 }

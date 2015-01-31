@@ -16,8 +16,8 @@
 # include <mlx.h>
 # include <math.h>
 # include <fcntl.h>
-//# include </usr/X11/include/X11/X.h>
-# include <X11/Xlib.h>
+# include </usr/X11/include/X11/X.h>
+// # include <X11/Xlib.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include "libft.h"
@@ -27,7 +27,7 @@
 # define N_COLORS			3*256
 # define RANDR(lo,hi)		((lo) + (((hi)-(lo)) * drand48()))
 # define random_bit()		random() & 01
-# define NUMV				4
+# define NUMV				64
 # define SAMPLES 			20000
 # define ITT 				1000
 # define SUPER 				1
@@ -107,13 +107,6 @@ typedef struct		s_rgb
 	size_t			b;
 }					t_rgb;
 
-typedef struct 		s_color
-{
-	double ac, bc, cc, dc, ec, fc; /* set of coefficients a-f */
-	double pa1, pa2, pa3, pa4;
-	t_rgb			rgb; /* color content of a pixel: RBG channels */
-}					t_color; 
-
 typedef struct	s_coord
 {
 	double			x;
@@ -121,28 +114,54 @@ typedef struct	s_coord
 	double			z;
 }				t_coord;
 
-typedef struct	s_point
+typedef struct 		s_color
+{
+	double			ac;
+	double			bc;
+	double			cc;
+	double			dc;
+	double			ec;
+	double			fc; /* set of coefficients a-f */
+	double			pa1;
+	double			pa2;
+	double			pa3;
+	double			pa4;
+	t_rgb			rgb; /* color content of a pixel: RBG channels */
+}					t_color; 
+
+typedef struct		s_point
 {
 	t_coord			c;
 	struct s_point	*next;
-}				t_point;
+}					t_point;
 
-typedef struct 	s_real
+typedef struct 		s_cplx
 {
 	double		r;
 	double		i;
 
-}				t_real;
+}					t_cplx;
 
-typedef union {
+typedef union
+{
 	unsigned int counter; /* number of times pixel has been incremented */
 	float normal; /* normalized value at pixel */
-	} hitcounter;
+} 					hitcounter;
 
-typedef struct {
-	hitcounter value; 
-	unsigned char r, g, b; /* color content of a pixel: rgb channels */
-	} t_pixel;
+typedef struct		t_pixel
+{
+	hitcounter		value; 
+	unsigned char	r; /* color content of a pixel: rgb channels */
+	unsigned char	g; /* color content of a pixel: rgb channels */
+	unsigned char	b; /* color content of a pixel: rgb channels */
+}					t_pixel;
+
+typedef struct		s_triangle
+{
+	t_coord			p1;
+	t_coord			p2;
+	t_coord			p3;
+}					t_triangle;
 
 typedef struct	s_env
 {
@@ -177,14 +196,14 @@ typedef struct	s_env
 	double		zoom_y;
 	
 	t_color		*colormap;
-	t_real		z;
-	t_real		c;
+	t_cplx		z;
+	t_cplx		c;
 	int 		conf;
 }				t_env;
 
 //mandel julia
 
-t_real			conf(int i);
+t_cplx			conf(int i);
 void			julia(t_env *env, int x, int y);
 void			mendel(t_env *env, int x, int y);
 void			linear(t_env *env, double x, double y);

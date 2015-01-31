@@ -13,16 +13,16 @@
 #include "fractol.h"
 
 
-t_real		new(double x, double y)
+t_cplx		new(double x, double y)
 {
-	t_real	c;
+	t_cplx	c;
 
 	c.r = x;
 	c.i = y;
 	return (c);
 }
 
-t_real		conf(int i)
+t_cplx		conf(int i)
 {
 	double r = -1.0; 
 	double im = 1.0; 

@@ -42,21 +42,71 @@ t_coord		mult(t_coord vect, double d)
 	return (v);
 }
 
-t_point		*addlist(t_env *env, t_point *p, t_coord c)
+void		plot3d(t_env *env, t_coord c, int i)
 {
-	static int i = 0;
-	t_point	*tmp;
+	double	x;
+	double	y;
 
-	if (!i)
+	x = (0.71 * (c.x - c.y) + 4) * 75.0;
+	y = (-0.82 * c.z + 0.41 * (c.x + c.y) + 4) * 75.0;
+	printf("hhh %lf - %lf\n", x, y);
+	if (x >= 0 && y >= 0)
+	plotpixel(env, (int)x , (int)y, env->colormap[i].rgb);
+}
+
+void		drawp(t_env *env, t_coord *t)
+{
+	double	k;
+	double	n;
+	t_coord	v;
+	int		i;
+
+	v = newc(0.0,0.0,0.0);
+	n = 2;
+	env->max_i = 400000;
+	while (n < env->max_i)
 	{
-		env->x_min = 0;
-		env->y_min = 0;
+		k = RANDR(-1, 1);
+		i = 0;
+		while(i < 3)
+		{
+			if (k > ((double)i - 1.0) / 6.0 && k < (double) i / 6.0)
+			{
+	//v = newc(0.0,0.0,0.0);
+
+				v = mult(add(v, t[i]), 1.0/2.0);
+				plot3d(env, v, i);
+			}
+			i++;
+		}
+		n++;
 	}
-	tmp = malloc(sizeof(t_point));
-	tmp->c.x = (0.71 * (c.x - c.y) + 1) * SCREEN_H / 2;
-	tmp->c.y = (-0.82 * c.z + 0.41 * (c.x + c.y) + 1) * SCREEN_H / 2;
-	tmp->next = p;
-	return (tmp);
+}
+
+int			pyramid(t_env *env)
+{
+	t_coord	t[8];
+
+	t[2] = newc(0.0, 0.0, 2.0);
+
+	t[0] = newc(-1.0, 1.0, 0.0);
+	t[1] = newc(-1.0, -1.0, 0.0);
+	drawp(env, t);
+	
+	t[0] = newc(-1.0, -1.0, 0.0);
+	t[1] = newc(1.0, -1.0, 0.0);
+	drawp(env, t);
+	
+	t[0] = newc(1.0, 1.0, 0.0);
+	t[1] = newc(1.0, -1.0, 0.0);
+	drawp(env, t);
+	
+
+	t[0] = newc(-1.0, 1.0, 0.0);
+	t[1] = newc(1.0, 1.0, 0.0);
+	drawp(env, t);
+	
+	return (0);
 }
 
 /*
