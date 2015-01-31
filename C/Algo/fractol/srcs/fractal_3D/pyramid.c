@@ -53,56 +53,34 @@ t_point		*addlist(t_env *env, t_point *p, t_coord c)
 		env->y_min = 0;
 	}
 	tmp = malloc(sizeof(t_point));
-	tmp->c.x =  c.x * 100.0;
-	tmp->c.z =  c.z * 100.0;
-	tmp->c.y = (-0.82 * c.z + 0.41 * (c.x + c.y)) * 100.0;
+	tmp->c.x = (0.71 * (c.x - c.y) + 1) * SCREEN_H / 2;
+	tmp->c.y = (-0.82 * c.z + 0.41 * (c.x + c.y) + 1) * SCREEN_H / 2;
 	tmp->next = p;
 	return (tmp);
 }
 
-int			pyramid(t_env *env)
-{
-	t_coord	t[6];
-	t_coord	v;
-	t_point	*list = NULL;
-	int		i;
-	int		n;
-	double	k;
+/*
 
-	t[1] = newc(0.0, 0.0, 0.0);
-	t[2] = newc(0.0, 1.0/2.0, 0.0);
-	t[3] = newc(1.0/2.0, 0.0, 0.0);
-	t[4] = newc(1.0/2.0, 1.0/2.0, 0.0);
-	t[5] = newc(1.0/4.0, 1.0/4.0, 1.0/2.0);
-	printf("%lf\n", t[5].x);
-	v = newc(0.0,0.0,0.0);
-	n = 2;
-			int j = 0;
-	env->max_i = 4000;
-	while (n < env->max_i)
-	{
-		k = RANDR(0, 1);
-		i = 1;
-		while(i < 5)
-		{
-			if (k > ((double)i-1.0)/5.0 && k < (double)i/5.0)
-			{
-				v = add(mult(v, 1.0/2.0), t[i]);
-				list = addlist(env, list, v);
-				printf("hhh %lf - %lf\n", list->c.x, list->c.y);
-				j++;
-			}
-			i++;
-		}
-		n++;
-	}
-	printf("%lf %lf\n", env->x_min, env->y_min);
-	while (list)
-	{
-		plotpixel(env, (int)list->c.x , (int)list->c.z, LightGrey);
-		list = list->next;
-	}
-	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
-	ft_putendl("ok");
-	return (0);
-}
+  ;;;creates a pyramid
+    (define (pyramid c1 c2 c3 ctop)
+      (polygon c1 c2 ctop)
+      (polygon c2 c3 ctop)
+      (polygon c3 c1 ctop)
+      (polygon c1 c2 c3))
+
+    ;;;recursively creates pyramids in order to create sierpinski's triangles in 3D
+    (define (sierpinski c1 c2 c3 ctop depth)
+      (if (> depth 0)
+        (begin
+          (pyramid c1 c2 c3 ctop)
+          (sierpinski c1 (mid c1 c2) (mid c1 c3) (mid c1 ctop) (- depth 1))
+          (sierpinski c2 (mid c2 c3) (mid c2 c1) (mid c2 ctop) (- depth 1))
+          (sierpinski c3 (mid c3 c1) (mid c3 c2) (mid c3 ctop) (- depth 1))
+          (sierpinski (mid c1 ctop) (mid c2 ctop) (mid c3 ctop) ctop (- depth 1)))
+        (pyramid c1 c2 c3 ctop)))
+
+    ;;;initiating the pyramid
+    (sierpinski (list -50 -20 -50) (list 50 -20 -40) (list 10 0 -85) (list 5 40 -65) 4)
+
+*/
+
