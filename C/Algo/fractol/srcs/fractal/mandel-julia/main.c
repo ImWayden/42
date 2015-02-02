@@ -17,6 +17,7 @@ int			iterator(t_env *env)
 	int		i;
 	float	tmp;
 	float	tmp2;
+	//double	a;
 
 	i = 0;
 	tmp2 = 0;
@@ -27,6 +28,8 @@ int			iterator(t_env *env)
 		env->z.r = tmp;
 		i++;
 		tmp2 = env->z.r * env->z.r + env->z.i * env->z.i;
+		//a = sqrt(env->z.i);
+		//env->dist = 2.0 * a * log(a) / sqrt(tmp2);
 	}
 	return (i);
 }

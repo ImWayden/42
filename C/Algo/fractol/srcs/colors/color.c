@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "colors.h"
+#include <stdio.h>
 
 t_rgb		rgb(int r, int g, int b)
 {
@@ -22,7 +23,27 @@ t_rgb		rgb(int r, int g, int b)
 	return (vect);
 }
 
-t_color		color()
+t_rgb2		rgb2(double r, double g, double b)
+{
+	t_rgb2	vect;
+
+	vect.r = r;
+	vect.g = g;
+	vect.b = b;
+	return (vect);
+}
+
+t_hsl		hsl(double h, double s, double l)
+{
+	t_hsl	vect;
+
+	vect.h = h;
+	vect.s = s;
+	vect.l = l;
+	return (vect);
+}
+
+t_color		color(t_rgb r)
 {
 	t_color	c;
 
@@ -36,7 +57,7 @@ t_color		color()
 	c.pa2 = RANDR (-2, 2);
 	c.pa3 = RANDR (-2, 2);
 	c.pa4 = RANDR (-2, 2);
-	c.rgb = rgb((64 + RANDR (64, 256)), (64 + RANDR (64, 256))
-				, (64 + RANDR (64, 256)));
+	c.rgb = rgb(r.r, r.g, r.b);
+	printf("%i %i %i\n", r.r, r.g, r.b);
 	return (c);
 }

@@ -145,7 +145,7 @@ void			fjulia(t_env *env, double x, double y){ 13/* Julia */
 }
 void			funct(t_env *env, double x, double y){ 14/* Bent */
 	if (x >= 0.0 && y >= 0.0)
-		{ko
+		{
 		  env->z.r = x;
 		  env->z.i = y;
 		}

@@ -68,13 +68,13 @@ void		drawp(t_env *env, t_coord *t)
 	{
 		k = RANDR(-1, 1);
 		i = 0;
-		while(i < 3)
+		while(i < 8)
 		{
-			if (k > ((double)i - 1.0) / 6.0 && k < (double) i / 6.0)
+			if (k > ((double)i - 1.0) / 8.0 && k < (double) i / 8.0)
 			{
 	//v = newc(0.0,0.0,0.0);
 
-				v = mult(add(v, t[i]), 1.0/2.0);
+				v = mult(add(v, t[i]), 1.0/3.0);
 				plot3d(env, v, i);
 			}
 			i++;
@@ -87,25 +87,15 @@ int			pyramid(t_env *env)
 {
 	t_coord	t[8];
 
-	t[2] = newc(0.0, 0.0, 2.0);
-
 	t[0] = newc(-1.0, 1.0, 0.0);
 	t[1] = newc(-1.0, -1.0, 0.0);
+	t[2] = newc(1.0, -1.0, 0.0);
+	t[3] = newc(1.0, 1.0, 0.0);
+	t[4] = newc(1.0, -1.0, 0.0);
+	t[5] = newc(1.0, 1.0, 0.0);
+	t[6] = newc(-1.0, 1.0, 0.0);
+	t[7] = newc(-1.0, -1.0, 0.0);
 	drawp(env, t);
-	
-	t[0] = newc(-1.0, -1.0, 0.0);
-	t[1] = newc(1.0, -1.0, 0.0);
-	drawp(env, t);
-	
-	t[0] = newc(1.0, 1.0, 0.0);
-	t[1] = newc(1.0, -1.0, 0.0);
-	drawp(env, t);
-	
-
-	t[0] = newc(-1.0, 1.0, 0.0);
-	t[1] = newc(1.0, 1.0, 0.0);
-	drawp(env, t);
-	
 	return (0);
 }
 

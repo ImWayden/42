@@ -75,7 +75,7 @@ int				main(int ac, char **av)
 	if (ac == 2)
 	{
 		init(&env, av);
-		env.funct = pyramid;
+		//env.funct = pyramid;
 		env.funct(&env);
 		mlx_key_hook(env.win, key_hook, &env);
 		mlx_mouse_hook(env.win, mouse_button, &env);

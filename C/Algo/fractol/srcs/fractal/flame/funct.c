@@ -31,3 +31,4 @@ void			linear(t_env *env, double x, double y)
 ** 01 : Sinusoidal
 */
 
+

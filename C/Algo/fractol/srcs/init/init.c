@@ -12,36 +12,44 @@
 
 #include "fractol.h"
 
-/* mlx iITIALISATION*/
-static void	img_init (t_env *env)
+static void	coord_init(t_env *env)
 {
+	env->xres = SCREEN_W;
+	env->yres = SCREEN_H;
+	env->x_min = -1.0;
+	env->x_max = 1.0;
+	env->y_min = -1.0;
+	env->y_max = 1.0;
 	env->ranx = env->x_max - env->x_min;
 	env->rany = env->y_max - env->y_min;
+	env->zoom_x = SCREEN_W / (env->x_max - env->x_min);
+	env->zoom_y = SCREEN_H / (env->y_max - env->y_min);
+}
 
-	if (!(env->ptr = mlx_init()))
-		exit(0);
-	if (!(env->win = mlx_new_window(env->ptr, SCREEN_W, SCREEN_H
-		, "Fractol")))
-		exit(0);
-	if (!(env->img = mlx_new_image(env->ptr, SCREEN_W, SCREEN_H)))
-		exit(0);
-	if (!(env->data = mlx_get_data_addr(env->img, &(env->bpp), &(env->sizel)
+static void	img_init(t_env *env)
+{
+	if (!(env->ptr = mlx_init())
+		||
+		!(env->win = mlx_new_window(env->ptr, SCREEN_W, SCREEN_H, "Fractol"))
+		||
+		!(env->img = mlx_new_image(env->ptr, SCREEN_W, SCREEN_H))
+		||
+		!(env->data = mlx_get_data_addr(env->img, &(env->bpp), &(env->sizel)
 		, &(env->endian))))
+	{
+
+		ft_putendl("erro!\n");
 		exit(0);
-	ft_putendl("Done!\n");
+	}
 }
 
 void		init(t_env *env, char **av)
 {
 	/* change default values set in fractal.h */
-	env->xres = SCREEN_W;
-	env->yres = SCREEN_H;
-	env->x_min = -2.0;
-	env->x_max = 2.0;
-	env->y_min = -1.2;
-	env->y_max = 1.2;
+	coord_init(env);
 	env->seed = SEED;
-	env->ncolors = NUMV;
+	env->ncolors = NCOLORS;
+	env->rgb = IndianRed;
 	env->samples = SAMPLES;
 	env->gamma = GAMMA;
 	env->symmetry = 1;
@@ -51,8 +59,7 @@ void		init(t_env *env, char **av)
 	env->colormap = NULL;
 	env->funct = (av[1][1] == 'v') ? main_flame : main_mandel;
 	env->conf =	(av[1][1] == 'j') ? 1 : ft_atoi(av[2]) % 46;
-	map(env);
-	env->zoom_x = SCREEN_W / (env->x_max - env->x_min);
-	env->zoom_y = SCREEN_H / (env->y_max - env->y_min);
+	colormap(env);
+	pixelmap(env);
 	img_init(env);
 }

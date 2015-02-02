@@ -17,6 +17,8 @@ CC = gcc
 RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
+MXDIR = srcs/mlx/
+PDIR = srcs/pixels/
 MDIR = srcs/fractal/mandel-julia/
 FDIR = srcs/fractal/flame/
 F3DIR = srcs/fractal_3D/
@@ -24,10 +26,12 @@ IDIR = srcs/init/
 DDIR = srcs/draw/
 CDIR = srcs/colors/
 
-SRC = $(DDIR)plotpixel.c $(SDIR)expose.c $(SDIR)main.c \
-	  $(CDIR)color.c $(CDIR)coeff.c \
+SRC = $(SDIR)main.c \
+	  $(MXDIR)expose.c \
+	  $(CDIR)color.c $(CDIR)map.c $(CDIR)conversion.c \
 	  $(IDIR)init.c \
 	  $(F3DIR)pyramid.c \
+	  $(PDIR)plotpixel.c \
 	  $(MDIR)mandel.c $(MDIR)julia.c $(MDIR)conf.c $(MDIR)main.c \
 	  $(FDIR)funct.c $(FDIR)main.c \
 
