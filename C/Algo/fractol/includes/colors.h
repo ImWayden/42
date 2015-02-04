@@ -109,6 +109,12 @@ typedef struct		s_hsl
 	double			l;
 }					t_hsl;
 
+typedef struct		s_hsv
+{
+	double			h;
+	double			s;
+	double			v;
+}					t_hsv;
 
 typedef struct 		s_color
 {
@@ -128,6 +134,7 @@ typedef struct 		s_color
 
 t_color			color(t_rgb r);
 t_hsl			rgbtohsl(t_rgb c);
+t_rgb			hsvtorgb(t_hsv hsv);
 t_rgb			hsltorgb(t_hsl h);
 t_rgb			subc(t_rgb a, t_rgb b);
 t_rgb			multc(t_rgb v, double b);

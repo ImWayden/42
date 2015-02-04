@@ -16,8 +16,8 @@
 # include <mlx.h>
 # include <math.h>
 # include <fcntl.h>
-// # include </usr/X11/include/X11/X.h>
-# include <X11/Xlib.h>
+# include </usr/X11/include/X11/X.h>
+//# include <X11/Xlib.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include "libft.h"

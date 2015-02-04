@@ -60,11 +60,40 @@ t_hsl			rgbtohsl(t_rgb c)
 	d = max - min;
 	h.s = h.l > 0.5 ? d / (2 - max - min) : d / (max + min);
 	if (max == p.r)
-		h.h = (p.g - p.b) / d + (p.g < p.b ? 6 : 0);
+		h.h = (p.g - p.b) / d + (p.g < p.b ? 6.0 : 0.0);
 	else if (max == p.g)
 		h.h = (p.b - p.r) / d + 2;
 	else
 		h.h = (p.r - p.g) / d + 4;
 	h.h /= 6.0;
 	return (h);
+}
+
+t_rgb			hsvtorgb(t_hsv hsv)
+{
+	int			hi;
+	double		f;
+	double		p;
+	double		q;
+	double		t;
+	/// Implementation based on: http://en.wikipedia.org/wiki/HSV_color_space
+	hsv.h = mod(hsv.h,2.*PI);
+	hi = (int)(mod(hsv.h / (2.0 * M_PI / 6.0 ), 6.0));
+	f = (hsv.h / (2.0 * M_PI / 6.0)) - (double)hi;
+	p = hsv.v * (1.0 - hsv.s);
+	q = hsv.v*(1.0 - f * hsv.s);
+	t = hsv.v*(1.0 - (1.0 - f) * hsv.s);
+	if (hi == 0)
+		return (rgb(hsv.v,t,p));
+	if (hi == 1)
+		return rgb(q,hsv.v,p);
+	if (hi == 2)
+		return rgb(p,hsv.v,t);
+	if (hi == 3)
+		return rgb(p,q,hsv.v);
+	if (hi == 4)
+		return rgb(t,p,hsv.v);
+	if (hi == 5)
+		return rgb(hsv.v,p,q);
+	return rgb(0, 0, 0);
 }
