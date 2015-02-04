@@ -12,14 +12,11 @@
 
 #include "fractol.h"
 
-static void	coord_init(t_env *env)
+static void	coord_init(t_env *env, char **av)
 {
 	env->xres = SCREEN_W;
 	env->yres = SCREEN_H;
-	env->x_min = -1.0;
-	env->x_max = 1.0;
-	env->y_min = -1.0;
-	env->y_max = 1.0;
+	intervals(env, av, 1);	
 	env->ranx = env->x_max - env->x_min;
 	env->rany = env->y_max - env->y_min;
 	env->zoom_x = SCREEN_W / (env->x_max - env->x_min);
@@ -46,19 +43,13 @@ static void	img_init(t_env *env)
 void		init(t_env *env, char **av)
 {
 	/* change default values set in fractal.h */
-	coord_init(env);
-	env->seed = SEED;
+	coord_init(env, av);
+	// env->seed = SEED;
 	env->ncolors = NCOLORS;
-	env->rgb = IndianRed;
 	env->samples = SAMPLES;
-	env->gamma = GAMMA;
 	env->symmetry = 1;
 	env->invert = 0;
-	env->max_i = (av[1][1] == 'v') ? ITT : 25;
 	env->count = 1;
-	env->colormap = NULL;
-	env->funct = (av[1][1] == 'v') ? main_flame : main_mandel;
-	env->conf =	(av[1][1] == 'j') ? 1 : ft_atoi(av[2]) % 46;
 	colormap(env);
 	pixelmap(env);
 	img_init(env);

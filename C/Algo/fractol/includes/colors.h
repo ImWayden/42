@@ -129,7 +129,13 @@ typedef struct 		s_color
 t_color			color(t_rgb r);
 t_hsl			rgbtohsl(t_rgb c);
 t_rgb			hsltorgb(t_hsl h);
+t_rgb			subc(t_rgb a, t_rgb b);
+t_rgb			multc(t_rgb v, double b);
+t_rgb			cosc(t_rgb v);
+t_rgb			addc(t_rgb a, t_rgb b);
 t_rgb   		rgb(int r, int g, int b);
+t_rgb			linear_inter(t_rgb v0, t_rgb v1, double t);
+t_rgb			add2c(t_rgb a, double d);
 t_rgb2   		rgb2(double r, double g, double b);
 t_hsl			hsl(double h, double s, double l);
 

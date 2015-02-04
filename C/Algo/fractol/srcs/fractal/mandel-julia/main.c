@@ -21,6 +21,7 @@ int			iterator(t_env *env)
 
 	i = 0;
 	tmp2 = 0;
+	env->dist = 10000.0;
 	while ((tmp2) < 4 && i < env->max_i)
 	{
 		tmp = env->z.r*env->z.r - env->z.i*env->z.i + env->c.r;
@@ -30,6 +31,7 @@ int			iterator(t_env *env)
 		tmp2 = env->z.r * env->z.r + env->z.i * env->z.i;
 		//a = sqrt(env->z.i);
 		//env->dist = 2.0 * a * log(a) / sqrt(tmp2);
+		env->dist = MIN(env->dist, abs(dot(env->z, env->z) - RANDR(0.0, 2.0)));
 	}
 	return (i);
 }
@@ -44,6 +46,7 @@ int			main_mandel(t_env *env)
 	int     x;
 	int     y;
 	int     i;
+	t_rgb	color;
 
 	y = 0;
 	while (y < SCREEN_H)
@@ -52,14 +55,15 @@ int			main_mandel(t_env *env)
 		while (x < SCREEN_W)
 		{
 			env->conf == 1 ? julia(env, x, y) : mendel(env, x, y);
-			if ((i = iterator(env)) == env->max_i)
-				plotpixel(env, x, y, LightGrey);
-			else
-			{
-				i = i - log(log(mod(env->z))) / log(2); // Lisse le dégradé (sorte de formule magique)
-				i = ((env->ncolors - 1) * i) / env->max_i;             // Mise à l'échelle de la palette de couleur*/
-				plotpixel(env, x, y, env->colormap[i].rgb);
-			}
+			i = iterator(env)
+			;//	plotpixel(env, x, y, LightGrey);
+			//else
+			//{
+				//printf("%lf\n", env->dist);
+				color = env->colormap[i % NCOLORS].rgb;
+				color = style2(env, color, i);
+				plotpixel(env, x, y, color);
+			//}
 			x++;
 		}
 		y++;

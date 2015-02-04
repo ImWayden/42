@@ -52,11 +52,11 @@ static void		project(t_env *env, int i)
 	    		}
 	    		else
 	    		{
-	    			red = (unsigned char) ((point->r + env->colormap[i].rgb.r) / 2);
+	    			red = (unsigned char) ((point->r + env->colormap[i].rgb.r) / 2.0);
 	    			point->r = red;
-	    			green = (unsigned char) ((point->g + env->colormap[i].rgb.g) / 2);
+	    			green = (unsigned char) ((point->g + env->colormap[i].rgb.g) / 2.0);
 	    			point->g = green;
-	    			blue = (unsigned char) ((point->b + env->colormap[i].rgb.b) / 2);
+	    			blue = (unsigned char) ((point->b + env->colormap[i].rgb.b) / 2.0);
 	    			point->b = blue;
 	    		}
 	    		point->value.counter++;

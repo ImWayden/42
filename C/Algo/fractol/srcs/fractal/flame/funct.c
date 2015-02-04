@@ -19,12 +19,10 @@
 void			linear(t_env *env, double x, double y) 
 {
 	double		r;
-	double		theta;
 
-	r = sqrt (x * x + y * y) * M_PI;
-	theta = atan2 (y, x) / M_PI;
-	env->z.r = theta * sin (r);
-	env->z.i = theta * cos (r);
+	r = x * x + y * y;
+	env->z.r = x * sin(r) - y * cos(r);
+	env->z.i = x * cos(r) + y * sin(r);
 }
 
 /*

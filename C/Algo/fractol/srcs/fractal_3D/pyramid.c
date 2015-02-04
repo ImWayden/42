@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 /*iterations=40000*/
-t_coord		newc(double x, double y, double z)
+t_coord		coord(double x, double y, double z)
 {
 	t_coord	v;
 
@@ -47,8 +47,8 @@ void		plot3d(t_env *env, t_coord c, int i)
 	double	x;
 	double	y;
 
-	x = (0.71 * (c.x - c.y) + 4) * 75.0;
-	y = (-0.82 * c.z + 0.41 * (c.x + c.y) + 4) * 75.0;
+	x = 0.71 * (c.x - c.y);// + 4) ;//* 75.0;
+	y = -0.82 * c.z + 0.41 * (c.x + c.y); //+ 4) ;//* 75.0;
 	printf("hhh %lf - %lf\n", x, y);
 	if (x >= 0 && y >= 0)
 	plotpixel(env, (int)x , (int)y, env->colormap[i].rgb);
@@ -61,20 +61,20 @@ void		drawp(t_env *env, t_coord *t)
 	t_coord	v;
 	int		i;
 
-	v = newc(0.0,0.0,0.0);
+	v = coord(0.0,0.0,0.0);
 	n = 2;
 	env->max_i = 400000;
 	while (n < env->max_i)
 	{
 		k = RANDR(-1, 1);
 		i = 0;
-		while(i < 8)
+		while(i < 4)
 		{
-			if (k > ((double)i - 1.0) / 8.0 && k < (double) i / 8.0)
+			if (k > ((double)i - 1.0) / 3.0 && k < (double) i / 3.0)
 			{
-	//v = newc(0.0,0.0,0.0);
+	//v = coord(0.0,0.0,0.0);
 
-				v = mult(add(v, t[i]), 1.0/3.0);
+				v = mult(add(v, t[i]), 1.4649/*1.0/3.0*/);
 				plot3d(env, v, i);
 			}
 			i++;
@@ -83,18 +83,18 @@ void		drawp(t_env *env, t_coord *t)
 	}
 }
 
-int			pyramid(t_env *env)
+int			main_attract(t_env *env)
 {
 	t_coord	t[8];
 
-	t[0] = newc(-1.0, 1.0, 0.0);
-	t[1] = newc(-1.0, -1.0, 0.0);
-	t[2] = newc(1.0, -1.0, 0.0);
-	t[3] = newc(1.0, 1.0, 0.0);
-	t[4] = newc(1.0, -1.0, 0.0);
-	t[5] = newc(1.0, 1.0, 0.0);
-	t[6] = newc(-1.0, 1.0, 0.0);
-	t[7] = newc(-1.0, -1.0, 0.0);
+	t[0] = coord(-1.0, 1.0, 0.0);
+	t[1] = coord(-1.0, -1.0, 0.0);
+	t[2] = coord(1.0, -1.0, 0.0);
+	t[3] = coord(1.0, 1.0, 0.0);
+	t[4] = coord(1.0, -1.0, 0.0);
+	t[5] = coord(1.0, 1.0, 0.0);
+	t[6] = coord(-1.0, 1.0, 0.0);
+	t[7] = coord(-1.0, -1.0, 0.0);
 	drawp(env, t);
 	return (0);
 }

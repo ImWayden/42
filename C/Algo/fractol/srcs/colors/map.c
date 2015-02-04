@@ -54,25 +54,44 @@ static void	mapping (t_color *color)
 	color->fc = RANDR (-2, 2);
 }
 
+void		hslmap(t_env *env)
+{
+	env->hslmap[0] = rgbtohsl(env->rgbmap[0]);
+	env->hslmap[0].l = 0.2;
+	env->hslmap[1] = rgbtohsl(env->rgbmap[1]);
+	env->hslmap[1].l = 0.2;
+	env->hslmap[2] = rgbtohsl(env->rgbmap[2]);
+	env->hslmap[2].l = 0.2;
+}
+
+void		rgbmap(t_env *env)
+{
+	env->rgbmap[0] = Green;
+	env->rgbmap[1] = Yellow;
+	env->rgbmap[2] = Red;
+}
+
 void		colormap(t_env *env)
 {
-	t_hsl	h;
-	double	l;
 	int		i;
+	int		j;
 
+	rgbmap(env);
+	hslmap(env);
 	if ((env->colormap = malloc(NCOLORS * sizeof(t_color))))
 	{
 		i = 0;
-		h = rgbtohsl(env->rgb);
-		l = h.l;
-		printf("%lf %lf %lf\n", h.h, h.s, l);
-		while (i < NCOLORS)
+		while (i < 10)
 		{
-			h.l += (1 - h.l) / NCOLORS;
-			printf("newl = %lf ", h.l);
-			env->colormap[i] = color(hsltorgb(h));
-			if (random_bit())
-				mapping (&(env->colormap[i]));
+			j = 0;
+			while (j < 3)
+			{
+				env->hslmap[j].l += 0.8 / 10.0;
+				env->colormap[(j * 10) + i] = color(hsltorgb(env->hslmap[j]));
+				if (random_bit())
+					mapping (&(env->colormap[(j * 10) + i]));
+				j++;
+			}
 			i++;
 		}
 	}
@@ -82,5 +101,3 @@ void		colormap(t_env *env)
 		exit (EXIT_FAILURE);
 	}
 }
-
-

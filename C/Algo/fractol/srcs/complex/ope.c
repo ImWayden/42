@@ -12,9 +12,9 @@
 
 #include "fractol.h"
 
-t_real		complex(float x,float y)
+t_cplx		cplx(double r,double i)
 {
-	t_real	c;
+	t_cplx	c;
 
 	c.r = x;
 	c.i = y;

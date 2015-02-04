@@ -28,8 +28,9 @@ CDIR = srcs/colors/
 
 SRC = $(SDIR)main.c \
 	  $(MXDIR)expose.c \
-	  $(CDIR)color.c $(CDIR)map.c $(CDIR)conversion.c \
-	  $(IDIR)init.c \
+	  $(CDIR)color.c $(CDIR)map.c $(CDIR)conversion.c $(CDIR)linear.c \
+	  $(CDIR)style.c $(CDIR)ope.c \
+	  $(IDIR)init.c $(IDIR)intervals.c \
 	  $(F3DIR)pyramid.c \
 	  $(PDIR)plotpixel.c \
 	  $(MDIR)mandel.c $(MDIR)julia.c $(MDIR)conf.c $(MDIR)main.c \

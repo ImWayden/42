@@ -38,7 +38,7 @@ t_rgb			hsltorgb(t_hsl h)
 	q = h.l < 0.5 ? h.l * (1.0 + h.s) : h.l + h.s - h.l * h.s;
 	p = 2.0 * h.l - q;
 	printf("p = %lf ", p);
-	return (rgb((int)hue2rgb(p, q, h.h + 1.0 / 3.0) * 255.0,
+	return (rgb(hue2rgb(p, q, h.h + 1.0 / 3.0) * 255.0,
 				hue2rgb(p, q, h.h) * 255.0,
 				hue2rgb(p, q, h.h - 1.0 / 3.0) * 255.0));
 }
