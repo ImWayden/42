@@ -50,8 +50,11 @@ int				key_hook(int keycode)
 
 int					mouse_button(int button, int x, int y, t_env *env)
 {
-	if (button && x && y)
+	if (button && x && y && env->conf)
+	{
+		env->conf++;
 		main_mandel(env);
+	}
 	return (0);
 }
 

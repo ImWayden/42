@@ -16,12 +16,13 @@
 # include <mlx.h>
 # include <math.h>
 # include <fcntl.h>
-# include </usr/X11/include/X11/X.h>
-//# include <X11/Xlib.h>
+//# include </usr/X11/include/X11/X.h>
+# include <X11/Xlib.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include "libft.h"
 # include "colors.h"
+# include "complex.h"
 
 # define SCREEN_W 			670
 # define SCREEN_H			480
@@ -36,8 +37,6 @@
 # define Power				1
 # define Radius				1.332
 
-
-
 typedef struct	s_coord
 {
 	double			x;
@@ -51,12 +50,6 @@ typedef struct		s_point
 	t_coord			c;
 	struct s_point	*next;
 }					t_point;
-
-typedef struct 		s_cplx
-{
-	double		r;
-	double		i;
-}					t_cplx;
 
 typedef struct
 {
@@ -143,7 +136,9 @@ void			plot3d(t_env *env, t_coord c, int i);
 t_coord			coord(double x, double y, double z);
 t_rgb			orbittrap(t_env *env);
 t_rgb			style1(t_env *env, t_rgb color);
+t_rgb			basecolor(t_env *env);
 t_rgb			style2(t_env *env, t_rgb color, int i);
+double			clamp(double value, double min, double max);
 void			addpixel(t_env *env, int x, int y, t_rgb color);
 void			plotpixel(t_env *env, int x, int y, t_rgb color);
 void			pixelmap(t_env *env);

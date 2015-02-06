@@ -29,6 +29,10 @@ t_cplx		conf(int i)
 	
 	r +=  ((int)(i / 6)) * 0.2;
 	r -= r > 0 ? 0.01 : 0.0;
+	if (r > 1.0)
+		r = -1.0;
 	im -=  ((int)(i % 6)) * 0.2;
+	if (im < 0)
+		im = 1;
 	return (new(r, im));
 }

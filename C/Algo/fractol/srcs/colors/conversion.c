@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "colors.h"
-#include <stdio.h>
+#include "fractol.h"
 
 static double	hue2rgb(double p, double q, double t)
 {
@@ -37,7 +36,6 @@ t_rgb			hsltorgb(t_hsl h)
 		return (rgb(h.l * 255, h.l * 255, h.l * 255)); // achromatic
 	q = h.l < 0.5 ? h.l * (1.0 + h.s) : h.l + h.s - h.l * h.s;
 	p = 2.0 * h.l - q;
-	printf("p = %lf ", p);
 	return (rgb(hue2rgb(p, q, h.h + 1.0 / 3.0) * 255.0,
 				hue2rgb(p, q, h.h) * 255.0,
 				hue2rgb(p, q, h.h - 1.0 / 3.0) * 255.0));
@@ -45,13 +43,13 @@ t_rgb			hsltorgb(t_hsl h)
 
 t_hsl			rgbtohsl(t_rgb c)
 {
-	t_rgb2		p;
+	t_rgb		p;
 	t_hsl		h;
 	double		min;
 	double		max;
 	double		d;
 
-	p = rgb2(c.r / 255.0, c.g / 255.0, c.b / 255.0);
+	p = rgb(c.r / 255.0, c.g / 255.0, c.b / 255.0);
 	max = MAX3(p.r, p.g, p.b);
 	min = MIN3(p.r, p.g, p.b);
 	h = hsl((max + min) / 2.0, (max + min) / 2.0, (max + min) / 2.0);
@@ -77,12 +75,13 @@ t_rgb			hsvtorgb(t_hsv hsv)
 	double		q;
 	double		t;
 	/// Implementation based on: http://en.wikipedia.org/wiki/HSV_color_space
-	hsv.h = mod(hsv.h,2.*PI);
-	hi = (int)(mod(hsv.h / (2.0 * M_PI / 6.0 ), 6.0));
+	hsv.h = mod(cplx(hsv.h, 2.0 * M_PI));
+	hi = (int)(mod(cplx(hsv.h / (2.0 * M_PI / 6.0 ), 6.0)));
 	f = (hsv.h / (2.0 * M_PI / 6.0)) - (double)hi;
 	p = hsv.v * (1.0 - hsv.s);
 	q = hsv.v*(1.0 - f * hsv.s);
 	t = hsv.v*(1.0 - (1.0 - f) * hsv.s);
+	hi %= 6;
 	if (hi == 0)
 		return (rgb(hsv.v,t,p));
 	if (hi == 1)
@@ -95,5 +94,6 @@ t_rgb			hsvtorgb(t_hsv hsv)
 		return rgb(t,p,hsv.v);
 	if (hi == 5)
 		return rgb(hsv.v,p,q);
+	ft_putnbr(hi);
 	return rgb(0, 0, 0);
 }

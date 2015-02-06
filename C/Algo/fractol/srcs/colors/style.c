@@ -42,17 +42,6 @@ double		clamp(double value, double min, double max)
 	return result;
 }
 
-double		dot(t_cplx a, t_cplx b)
-{
-	double	d;
-
-	d = 0.0;
-	d += (a.r * b.r);
-	d += (a.i * b.i);
-	return (d);
-}
-
-
 t_rgb		style1(t_env *env, t_rgb color)
 {
 	if (env->z.r > 0 && env->z.i > 0)
@@ -70,7 +59,7 @@ t_rgb		style2(t_env *env, t_rgb color, int i)
 	double co;
 	double co2;
 	double fac;
-	t_rgb2	c;
+	t_rgb	c;
 
 	(void)env;
 	co = (double)i + 1.0 - log2(0.5 * log2(dot(env->z, env->z)));
@@ -78,11 +67,11 @@ t_rgb		style2(t_env *env, t_rgb color, int i)
 	co2 = env->dist * Divider;
 	//co += co2;
 	fac = clamp(1.0 / pow(co2, Power), 0.0, 1.0);
-	c.r = (.5 + .5 * cos(6.2831 * co + (double)color.r)) * fac * 255.0;
-	c.g = (.5 + .5 * cos(6.2831 * co + (double)color.g)) * fac * 255.0;
-	c.b = (.5 + .5 * cos(6.2831 * co + (double)color.b)) * fac * 255.0;
+	c.r = (.5 + .5 * cos(6.2831 * co + (int)color.r % 256)) * fac * 255.0;
+	c.g = (.5 + .5 * cos(6.2831 * co + (int)color.g % 256)) * fac * 255.0;
+	c.b = (.5 + .5 * cos(6.2831 * co + (int)color.b % 256)) * fac * 255.0;
 	printf("%lf %lf %lf \n", c.r, c.g, c.b);
-	return (rgb((int)c.r, (int)c.g, (int)c.b));
+	return (c);
 }
 
 double		 arg(t_cplx c)

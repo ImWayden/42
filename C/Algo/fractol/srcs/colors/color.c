@@ -10,26 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "colors.h"
-#include <stdio.h>
+#include "fractol.h"
 
-t_rgb		rgb(int r, int g, int b)
+t_rgb		rgb(double r, double g, double b)
 {
 	t_rgb	vect;
 
-	vect.r = r;
-	vect.g = g;
-	vect.b = b;
-	return (vect);
-}
-
-t_rgb2		rgb2(double r, double g, double b)
-{
-	t_rgb2	vect;
-
-	vect.r = r;
-	vect.g = g;
-	vect.b = b;
+	vect.r = clamp(r, 0.0, 255.0);
+	vect.g = clamp(g, 0.0, 255.0);
+	vect.b = clamp(b, 0.0, 255.0);;
 	return (vect);
 }
 
@@ -40,6 +29,16 @@ t_hsl		hsl(double h, double s, double l)
 	vect.h = h;
 	vect.s = s;
 	vect.l = l;
+	return (vect);
+}
+
+t_hsv		hsv(double h, double s, double v)
+{
+	t_hsv	vect;
+
+	vect.h = h;
+	vect.s = s;
+	vect.v = v;
 	return (vect);
 }
 
@@ -58,6 +57,5 @@ t_color		color(t_rgb r)
 	c.pa3 = RANDR (-2, 2);
 	c.pa4 = RANDR (-2, 2);
 	c.rgb = rgb(r.r, r.g, r.b);
-	printf("%i %i %i\n", r.r, r.g, r.b);
 	return (c);
 }

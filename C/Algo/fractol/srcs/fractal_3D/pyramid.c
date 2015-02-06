@@ -47,80 +47,46 @@ void		plot3d(t_env *env, t_coord c, int i)
 	double	x;
 	double	y;
 
-	x = 0.71 * (c.x - c.y);// + 4) ;//* 75.0;
-	y = -0.82 * c.z + 0.41 * (c.x + c.y); //+ 4) ;//* 75.0;
-	printf("hhh %lf - %lf\n", x, y);
+	x = (0.71 * (c.x - c.y) + 10) * 30.0;
+	y = (-0.82 * c.z + 0.41 * (c.x + c.y) + 10) * 30.0;
+	//printf("hhh %lf - %lf\n", x, y);
 	if (x >= 0 && y >= 0)
-	plotpixel(env, (int)x , (int)y, env->colormap[i].rgb);
+	plotpixel(env, (int)x , (int)y, env->rgbmap[i % 3]);
 }
 
-void		drawp(t_env *env, t_coord *t)
+void		pyramid(t_env *env, t_coord	p, int depth, double z, int j)
 {
-	double	k;
-	double	n;
-	t_coord	v;
-	int		i;
+	t_coord	t[4];
+	int 	i;
 
-	v = coord(0.0,0.0,0.0);
-	n = 2;
-	env->max_i = 400000;
-	while (n < env->max_i)
+	if (depth)
 	{
-		k = RANDR(-1, 1);
-		i = 0;
-		while(i < 4)
+		t[0] = add(p, coord(-z / 2.0, -z / 2.0, -z));
+		t[1] = add(p, coord(z / 2.0, -z / 2.0, -z));
+		t[2] = add(p, coord(-z / 2.0, z / 2.0, -z));
+		t[3] = add(p, coord(z / 2.0, z / 2.0, -z));
+		i = -1;
+		while (++i < 4)
 		{
-			if (k > ((double)i - 1.0) / 3.0 && k < (double) i / 3.0)
-			{
-	//v = coord(0.0,0.0,0.0);
-
-				v = mult(add(v, t[i]), 1.4649/*1.0/3.0*/);
-				plot3d(env, v, i);
-			}
-			i++;
+			plot3d(env, t[i], j);
+			t[i] = mult(add(p, t[i]), 1.0 / 2.0);
 		}
-		n++;
+		expose(env);
+		pyramid(env, t[0], depth -1, z / 2.0, 0);
+		pyramid(env, t[1], depth -1, z / 2.0, 1);
+		pyramid(env, t[2], depth -1, z / 2.0, 0);
+		pyramid(env, t[3], depth -1, z / 2.0, 1);
+		pyramid(env, p, depth -1, z / 2.0, j);
 	}
 }
 
+
 int			main_attract(t_env *env)
 {
-	t_coord	t[8];
+	t_coord	t;
 
-	t[0] = coord(-1.0, 1.0, 0.0);
-	t[1] = coord(-1.0, -1.0, 0.0);
-	t[2] = coord(1.0, -1.0, 0.0);
-	t[3] = coord(1.0, 1.0, 0.0);
-	t[4] = coord(1.0, -1.0, 0.0);
-	t[5] = coord(1.0, 1.0, 0.0);
-	t[6] = coord(-1.0, 1.0, 0.0);
-	t[7] = coord(-1.0, -1.0, 0.0);
-	drawp(env, t);
+	t = coord(0.0, 0.0, 7.0);
+	plot3d(env, t, 0);
+	pyramid(env, t, 8, 7.0, 2);
 	return (0);
 }
-
-/*
-
-  ;;;creates a pyramid
-    (define (pyramid c1 c2 c3 ctop)
-      (polygon c1 c2 ctop)
-      (polygon c2 c3 ctop)
-      (polygon c3 c1 ctop)
-      (polygon c1 c2 c3))
-
-    ;;;recursively creates pyramids in order to create sierpinski's triangles in 3D
-    (define (sierpinski c1 c2 c3 ctop depth)
-      (if (> depth 0)
-        (begin
-          (pyramid c1 c2 c3 ctop)
-          (sierpinski c1 (mid c1 c2) (mid c1 c3) (mid c1 ctop) (- depth 1))
-          (sierpinski c2 (mid c2 c3) (mid c2 c1) (mid c2 ctop) (- depth 1))
-          (sierpinski c3 (mid c3 c1) (mid c3 c2) (mid c3 ctop) (- depth 1))
-          (sierpinski (mid c1 ctop) (mid c2 ctop) (mid c3 ctop) ctop (- depth 1)))
-        (pyramid c1 c2 c3 ctop)))
-
-    ;;;initiating the pyramid
-    (sierpinski (list -50 -20 -50) (list 50 -20 -40) (list 10 0 -85) (list 5 40 -65) 4)
-
-*/
-

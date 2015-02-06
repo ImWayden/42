@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-t_rgb		subc(t_rgb a, t_rgb b)
+t_rgb		rgb_sub(t_rgb a, t_rgb b)
 {
 	t_rgb	vect;
 
@@ -22,7 +22,7 @@ t_rgb		subc(t_rgb a, t_rgb b)
 	return (vect);
 }
 
-t_rgb		multc(t_rgb v, double b)
+t_rgb		rgb_mult(t_rgb v, double b)
 {
 	v.r *= b;
 	v.g *= b;
@@ -30,7 +30,7 @@ t_rgb		multc(t_rgb v, double b)
 	return (v);
 }
 
-t_rgb		addc(t_rgb vect, t_rgb vect1)
+t_rgb		rgb_add(t_rgb vect, t_rgb vect1)
 {
 	t_rgb	v;
 
@@ -40,7 +40,7 @@ t_rgb		addc(t_rgb vect, t_rgb vect1)
 	return (v);
 }
 
-t_rgb		add2c(t_rgb a, double d)
+t_rgb		rgb_add2(t_rgb a, double d)
 {
 	t_rgb	v;
 
@@ -51,7 +51,7 @@ t_rgb		add2c(t_rgb a, double d)
 }
 
 
-t_rgb		cosc(t_rgb v)
+t_rgb		rgb_cos(t_rgb v)
 {
 	v.r = cos(v.r);
 	v.g = cos(v.g);

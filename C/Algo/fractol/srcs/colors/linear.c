@@ -16,7 +16,7 @@
 // due to floating-point arithmetic error.
 t_rgb		linear_inter(t_rgb v0, t_rgb v1, double t)
 {
-	return (addc(v0, multc(subc(v1, v0), t)));
+	return (rgb_add(v0, rgb_mult(rgb_sub(v1, v0), t)));
 }
  
 // Precise method which guarantees v = v1 when t = 1.
