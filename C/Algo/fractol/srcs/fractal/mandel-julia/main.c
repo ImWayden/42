@@ -35,8 +35,12 @@ t_rgb		iterator(t_env *env)
 		
 		env->dist = MIN(env->dist, abs(dot(env->z, env->z) - RANDR(0.0, 0.0)));
 	}
+	env->i = i;
 	if (i != env->max_i)
-		return basecolor(env);
+	{
+		curl(env, env->z.r, env->z.i);
+		return rgb(env->z.r * 255, env->z.i * 255, i * 255);
+	}
 	else if (abs(env->z.r - sin(env->z.i * 1000) / 9) < 0.02)
 		color = rgb(0, (sin(env->z.r * 400.0) + 1) / 2 * 255, 0);
 	else if (abs(env->z.i - sin(env->z.r * 180)) < 0.02)

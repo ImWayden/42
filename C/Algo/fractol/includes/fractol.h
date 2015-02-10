@@ -28,7 +28,7 @@
 # define SCREEN_H			480
 # define random_bit()		random() & 01
 # define NCOLORS			3 * 10
-# define SAMPLES 			20000
+# define SAMPLES 			40000
 # define ITT 				1000
 # define SUPER 				1
 # define GAMMA 				2.2
@@ -60,9 +60,7 @@ typedef struct
 typedef struct		t_pixel
 {
 	hitcounter		value; 
-	unsigned char	r; /* color content of a pixel: rgb channels */
-	unsigned char	g; /* color content of a pixel: rgb channels */
-	unsigned char	b; /* color content of a pixel: rgb channels */
+	t_rgb			rgb;
 }					t_pixel;
 
 typedef struct		s_triangle
@@ -71,6 +69,14 @@ typedef struct		s_triangle
 	t_coord			p2;
 	t_coord			p3;
 }					t_triangle;
+
+typedef struct		s_var
+{
+	double			d1;
+	double			d2;
+	double			d3;
+	double			d4;
+}					t_var;
 
 typedef struct		s_env
 {
@@ -101,6 +107,7 @@ typedef struct		s_env
 	double		zoom_y;
 
 	long int 	max_i; 		/* number of iterations per sample */
+	long int 	i; 		/* number of iterations per sample */
 	int 		invert;		/* use inverse colors? 0 false, else true */
 	int 		symmetry;		/* use inverse colors? 0 false, else true */
 	int 		samples;		/* use inverse colors? 0 false, else true */
@@ -121,6 +128,21 @@ t_cplx			conf(int i);
 void			julia(t_env *env, int x, int y);
 void			mendel(t_env *env, int x, int y);
 void			linear(t_env *env, double x, double y);
+void			sinusoidal(t_env *env, double x, double y);
+void			spherical(t_env *env, double x, double y);
+void			swirl(t_env *env, double x, double y);
+void			horseshoe(t_env *env, double x, double y);
+void			polar(t_env *env, double x, double y);
+void			handker(t_env *env, double x, double y);
+void			heart(t_env *env, double x, double y);
+void			disk(t_env *env, double x, double y);
+void			spiral(t_env *env, double x, double y);
+void			hyper(t_env *env, double x, double y);
+void			diamond(t_env *env, double x, double y);
+void			f_exp(t_env *env, double x, double y);
+void			fjulia(t_env *env, double x, double y);
+void			bent(t_env *env, double x, double y);
+void			curl(t_env *env, double x, double y);
 
 int				main_mandel(t_env *env);
 int 			main_flame(t_env *env);
@@ -135,6 +157,7 @@ t_rgb			getpixel(t_env *env, int x, int y);
 void			plot3d(t_env *env, t_coord c, int i);
 t_coord			coord(double x, double y, double z);
 t_rgb			orbittrap(t_env *env);
+t_rgb		lerp(t_env *env, double t);
 t_rgb			style1(t_env *env, t_rgb color);
 t_rgb			basecolor(t_env *env);
 t_rgb			style2(t_env *env, t_rgb color, int i);

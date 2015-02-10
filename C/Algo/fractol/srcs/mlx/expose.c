@@ -21,20 +21,10 @@ int     expose(t_env *env)
 	{
 		for (col = 0; col < env->xres; col++)
 		{
-			env->data[(col + row * env->xres) * 4] = env->invert == 1 ? ~(env->pixels[row][col].b) :
-	    env->pixels[row][col].b;
-	  env->data[(col + row * env->xres) * 4 + 1] =
-	    env->invert ==
-	    1 ? ~(env->pixels[row][col].
-		  g) : env->pixels[row][col].g;
-	  env->data[(col + row * env->xres) * 4 + 2] =
-	    env->invert ==
-	    1 ? ~(env->pixels[row][col].
-		  r) : env->pixels[row][col].r;
+			plotpixel(env, col, row, env->pixels[row][col].rgb);
 		}
 		row++;
     }
-		ft_putendl("ok");
 	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
 	return (0);
 }

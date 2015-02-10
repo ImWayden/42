@@ -59,3 +59,4 @@ t_color		color(t_rgb r)
 	c.rgb = rgb(r.r, r.g, r.b);
 	return (c);
 }
+

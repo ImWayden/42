@@ -1,7 +1,0 @@
-parameters:
-#    acme_project.example.class: Acme\ProjectBundle\Example
-
-services:
-#    acme_project.example:
-#        class: %acme_project.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

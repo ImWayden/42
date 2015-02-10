@@ -28,7 +28,6 @@ static void		project(t_env *env, int i)
 	int y1;
 	int s;
 	t_pixel	*point;
-	    	unsigned char red, green, blue;
 	double theta2, x_rot, y_rot;
 
 	theta2 = 0.0;
@@ -46,18 +45,20 @@ static void		project(t_env *env, int i)
 				point = &env->pixels[y1][x1];
 				if (!point->value.counter)
 				{
-					point->r = env->colormap[i].rgb.r;
-	    			point->g = env->colormap[i].rgb.g;
-	    			point->b = env->colormap[i].rgb.b;
+					point->rgb = env->colormap[i % NCOLORS].rgb;
+					//point->r = color.r;
+	    			//point->g = color.g;
+	    			//point->b = color.b;
 	    		}
 	    		else
 	    		{
-	    			red = (unsigned char) ((point->r + env->colormap[i].rgb.r) / 2.0);
-	    			point->r = red;
-	    			green = (unsigned char) ((point->g + env->colormap[i].rgb.g) / 2.0);
-	    			point->g = green;
-	    			blue = (unsigned char) ((point->b + env->colormap[i].rgb.b) / 2.0);
-	    			point->b = blue;
+	    			point->rgb = rgb_mult(rgb_add(point->rgb,env->colormap[i % 10].rgb), 1 / 2.0);
+	    			//red = (unsigned char) ((point->r + env->colormap[i].rgb.r) / 2.0);
+	    			//point->r = color.r;
+	    			//green = (unsigned char) ((point->g + env->colormap[i].rgb.g) / 2.0);
+	    			//point->g = color.g;
+	    			//blue = (unsigned char) ((point->b + env->colormap[i].rgb.b) / 2.0);
+	    			//point->b = color.b;
 	    		}
 	    		point->value.counter++;
 			}
@@ -79,7 +80,7 @@ int 			main_flame(t_env *env)
 		for (step = -20; step < env->max_i; step++)
 		{
 			i = get_xy(env, &x, &y);
-			linear(env, x, y);
+			curl(env, x, y);
 			if (step > 0)
 				project(env, i);
 		}

@@ -54,6 +54,36 @@ void		plot3d(t_env *env, t_coord c, int i)
 	plotpixel(env, (int)x , (int)y, env->rgbmap[i % 3]);
 }
 
+void		drawp(t_env *env, t_coord *t)
+{
+	double	k;
+	double	n;
+	t_coord	v;
+	int		i;
+ 
+	v = coord(0.0,0.0,0.0);
+	n = 2;
+	env->max_i = 400000;
+	while (n < env->max_i)
+	{
+		k = RANDR(-1, 1);
+		i = 0;
+		while(i < 3)
+ 		{
+			if (k > ((double)i - 1.0) / 3.0 && k < (double) i / 3.0)
+			{
+	//v = coord(0.0,0.0,0.0);
+
+				v = mult(add(v, t[i]), 1.0/2.0);
+				plot3d(env, v, i);
+			}
+			i++;
+ 		}
+		n++;
+ 	}
+}
+
+
 void		pyramid(t_env *env, t_coord	p, int depth, double z, int j)
 {
 	t_coord	t[4];
@@ -83,10 +113,14 @@ void		pyramid(t_env *env, t_coord	p, int depth, double z, int j)
 
 int			main_attract(t_env *env)
 {
-	t_coord	t;
+	t_coord	t[3];
 
-	t = coord(0.0, 0.0, 7.0);
-	plot3d(env, t, 0);
-	pyramid(env, t, 8, 7.0, 2);
+	t[0] = coord(-1.0, 1.0, 0.0);
+	t[1] = coord(-1.0, -1.0, 0.0);
+	t[2] = coord(1.0, -1.0, 0.0);
+//	t = coord(0.0, 0.0, 7.0);
+//	plot3d(env, t, 0);
+//	pyramid(env, t, 8, 7.0, 2);
+	drawp(env, t);
 	return (0);
 }
