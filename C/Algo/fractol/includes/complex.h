@@ -15,8 +15,8 @@
 
 typedef struct 		s_cplx
 {
-	double		r;
-	double		i;
+	double			r;
+	double			i;
 }					t_cplx;
 
 t_cplx		cplx_sqrt(t_cplx a);

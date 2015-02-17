@@ -64,9 +64,6 @@
 # define Pink       rgb( 188, 143, 143)
 # define Plum       rgb( 234, 173, 234)
 # define Red     rgb( 255,   0,   0)
-# define IndianRed			  rgb( 79,  47,  47)
-# define MediumVioletRed  rgb( 219, 112, 147)
-# define OrangeRed     rgb( 255,   0, 127)
 # define VioletRed     rgb( 204,  50, 153)
 # define Salmon     rgb( 111,  66,  66)
 # define Sienna     rgb( 142, 107,  35)
@@ -80,6 +77,9 @@
 # define Wheat      rgb( 216, 216, 191)
 # define White      rgb( 252, 252, 252)
 # define Yellow     rgb( 255, 255,   0)
+# define IndianRed			  rgb( 79,  47,  47)
+# define OrangeRed     rgb( 255,   0, 127)
+# define MediumVioletRed  rgb( 219, 112, 147)
 # define GreenYellow   rgb( 147, 219, 112)
 
 # define RANDR(lo,hi)		((lo) + (((hi)-(lo)) * drand48()))
@@ -90,10 +90,17 @@
 
 typedef struct		s_rgb
 {
-	double	r;
-	double	g;
-	double	b;
+	unsigned int	r;
+	unsigned int	g;
+	unsigned int	b;
 }					t_rgb;
+
+typedef struct		s_rgb2
+{
+	double			r;
+	double			g;
+	double			b;
+}					t_rgb2;
 
 typedef struct		s_hsl
 {
@@ -126,19 +133,17 @@ typedef struct 		s_color
 
 
 t_color			color(t_rgb r);
-t_rgb   		rgb(double r, double g, double b);
-t_hsl			hsl(double h, double s, double l);
-t_hsv			hsv(double h, double s, double v);
-
 t_hsl			rgbtohsl(t_rgb c);
 t_rgb			hsvtorgb(t_hsv hsv);
 t_rgb			hsltorgb(t_hsl h);
-
-t_rgb			rgb_sub(t_rgb a, t_rgb b);
-t_rgb			rgb_mult(t_rgb v, double b);
-t_rgb			rgb_cos(t_rgb v);
-t_rgb			rgb_add(t_rgb a, t_rgb b);
-t_rgb			rgb_add2(t_rgb a, double d);
+t_rgb			subc(t_rgb a, t_rgb b);
+t_rgb			multc(t_rgb v, double b);
+t_rgb			cosc(t_rgb v);
+t_rgb			addc(t_rgb a, t_rgb b);
+t_rgb   		rgb(int r, int g, int b);
 t_rgb			linear_inter(t_rgb v0, t_rgb v1, double t);
+t_rgb			add2c(t_rgb a, double d);
+t_rgb2   		rgb2(double r, double g, double b);
+t_hsl			hsl(double h, double s, double l);
 
 #endif

@@ -16,10 +16,11 @@
 # include <mlx.h>
 # include <math.h>
 # include <fcntl.h>
-//# include </usr/X11/include/X11/X.h>
-# include <X11/Xlib.h>
+# include </usr/X11/include/X11/X.h>
+//# include <X11/Xlib.h>
 # include <stdbool.h>
 # include <stdio.h>
+#include <time.h>
 # include "libft.h"
 # include "colors.h"
 # include "complex.h"
@@ -108,6 +109,8 @@ typedef struct		s_env
 	double		rany; 		/* numerical range of x/y axis */
 	double		zoom_x;
 	double		zoom_y;
+	double		z_x;
+	double		z_y;
 
 	long int 	max_i; 		/* number of iterations per sample */
 	long int 	i; 		/* number of iterations per sample */
@@ -117,6 +120,9 @@ typedef struct		s_env
 	int 		(*funct)(struct s_env *env);		/* transformations to use */
 	int 		count;		/* number of tranformations available */	
 	
+	int 		start;
+	int 		end;
+
 	t_cplx		z;
 	t_cplx		c;
 	double		dist;

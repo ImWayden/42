@@ -40,6 +40,8 @@ void		init(t_env *env, char **av)
 	env->y_max = 2.0;
 	env->x_min = -2.0;
 	env->x_max = 2.0;
+	env->z_x = 1;
+	env->z_y = 1;
 	env->ranx = env->x_max - env->x_min;
 	env->rany = env->y_max - env->y_min;
 	env->zoom_x = SCREEN_W / env->ranx;
@@ -55,6 +57,8 @@ void		init(t_env *env, char **av)
 	env->symmetry = 1;
 	env->invert = 0;
 	env->count = 1;
+	env->start = 0;
+	env>end = 0;
 	colormap(env);
 	pixelmap(env);
 	img_init(env);

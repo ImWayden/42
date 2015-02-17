@@ -56,6 +56,5 @@ int			main_mandel(t_env *env)
 		}
 		y++;
 	}
-	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
 	return (0);
 }

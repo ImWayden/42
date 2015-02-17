@@ -14,49 +14,48 @@
 
 int		mouse_press(int button, int x, int y, t_env *env)
 {
-	ft_putnbr(button);
-	env->z.r = (double)x / env->zoom_x + env->x_min;
-	env->z.i = env->y_max - (double)y / env->zoom_y;
-	if (button == 1)
+	if (!env->start)
+		env->start = clock();
+	if (button == 5)
 	{
-		env->zoom_x *= 2;
-		env->zoom_y *= 2;
-		ft_putendl("i am zooming");
+		env->z_x += 0.05;
+		env->z_y += 0.05;
 	}
-	if (button == 2)
+	else if (button == 4 && env->zoom_x > 1 && env->zoom_y > 1)
 	{
-		env->zoom_x -= 2;
-		env->zoom_y -= 2;
-		ft_putendl("i am dezooming");
+		env->z_x -= 0.0005;
+		env->z_y -= 0.0005;
 	}
-	env->ranx = SCREEN_W / env->zoom_x;
-	env->rany = SCREEN_H / env->zoom_y;
-	env->y_min = env->z.i - env->rany / 2.0;
-	env->y_max = env->z.i + env->rany / 2.0;
-	env->x_min = env->z.r - env->ranx / 2.0;
-	env->x_max = env->z.r + env->ranx / 2.0;
-	env->funct(env);
 	return 0;
 }
 
 int		mouse_release(int button, int x, int y, t_env *env)
 {
-	printf("%i %i %i\n", button, x, y);
-	if (button == 1)
-		env->left = 0;
-	if (button == 2)
-		env->right = 0;
-	(void)y;
-	(void)x;
+	if (button == 5 || button == 4)
+	{
+		if (env->start + < clock())
+		{
+			env->z.r = (double)x / env->zoom_x + env->x_min;
+			env->z.i = env->y_max - (double)y / env->zoom_y;
+		}
+		env->zoom_x *= env->z_x;
+		env->zoom_y *= env->z_y;
+		env->z_x = 1;
+		env->z_y = 1;
+		env->ranx = SCREEN_W / env->zoom_x;
+		env->rany = SCREEN_H / env->zoom_y;
+		env->y_min = env->z.i - env->rany / 2.0;
+		env->y_max = env->z.i + env->rany / 2.0;
+		env->x_min = env->z.r - env->ranx / 2.0;
+		env->x_max = env->z.r + env->ranx / 2.0;
+		env->funct(env);
+		expose(env);
+	}
 	return (0);
 }
 
 int		mouse_hook(int x, int y, t_env *env)
 {
-	(void)y;
-	(void)x;
-	if (env->funct == main_mandel && env->conf)
-		env->conf = (env->conf + 1) % 42;
-	env->funct(env);
+	printf("hook %i %i %i %i\n", x, y, env->left, env->right);
 	return (0);
 }
