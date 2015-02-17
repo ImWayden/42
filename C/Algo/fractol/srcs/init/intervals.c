@@ -14,17 +14,13 @@
 
 void		intervals(t_env *env, char **av, int i)
 {
-	int 	j;
-
-	if (av[i][1] == 'm' || av[i][1] == 'j')
-		j = 1;
-	else
-		j = 0;
-	env->y_min = -1.0;
-	env->y_max = 1.0;
-	env->x_min = (j == 1) ? -2.0 : -1.0;
-	env->x_max = (j == 1) ? 2.0 : 1.0;
-	env->max_i = !j ? ITT : (av[i][1] == 'm' ? 150 : 25);
-	env->conf =	(av[i][1] == 'j') ? 1 : ft_atoi(av[i + 1]) % 46;
-	env->funct = (av[i][1] == 'v') ? main_flame : ((av[i][1] == 'i') ? main_attract : main_mandel);
+	env->y_min = -2.0;
+	env->y_max = 2.0;
+	env->x_min = -2.0;
+	env->x_max = 2.0;
+	env->max_i = av[i][1] == 'm' ? 150 : 25;
+	env->max_i = av[i][1] == 'v' ? ITT : env->max_i;
+	env->conf =	av[i][1] == 'j' ? 1 : ft_atoi(av[i + 1]) % 46;
+	env->funct = av[i][1] == 'v' ? main_flame : env->funct;
+	env->funct = av[i][1] == 'm' ? main_attract : env->funct;
 }

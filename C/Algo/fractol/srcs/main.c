@@ -48,29 +48,6 @@ int				key_hook(int keycode)
         if(!inkeys[SDLK_KP_MULTIPLY] && !inkeys[SDLK_KP_DIVIDE] && !inkeys[SDLK_F1]) keyReleased = 1;
 */
 
-int					mouse_button(int button, int x, int y, t_env *env)
-{
-	if (button && x && y && env->conf)
-	{
-		env->conf++;
-		main_mandel(env);
-	}
-	return (0);
-}
-
-int				mouse_move(int x, int y, t_env *env)
-{
-	(void)env;
-	ft_putstr("mouse : ");
-	ft_putstr(" (");
-	ft_putnbr(x);
-	ft_putstr(" ok: ");
-	ft_putnbr(y);
-	ft_putchar(')');
-	ft_putchar('\n');
-	return (0);
-}
-
 int				main(int ac, char **av)
 {
 	t_env		env;
@@ -78,12 +55,10 @@ int				main(int ac, char **av)
 	if (ac == 2)
 	{
 		init(&env, av);
-		//env.funct = pyramid;
 		env.funct(&env);
 		mlx_key_hook(env.win, key_hook, &env);
-		mlx_mouse_hook(env.win, mouse_button, &env);
-		mlx_expose_hook(env.win, expose, &env);
-		mlx_hook(env.win, MotionNotify, PointerMotionMask, mouse_move, &env);
+		//mlx_hook(env.win, ButtonPress, ButtonPressMask, mouse_press, &env);
+		mlx_hook(env.win, MotionNotify, Button1MotionMask, mouse_press, &env);
 		mlx_loop(env.ptr);
 	}
 	return (0);

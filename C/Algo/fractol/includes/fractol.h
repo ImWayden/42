@@ -88,6 +88,9 @@ typedef struct		s_env
 	int			endian;
 	int			bpp;
 
+	int			left;
+	int			right;
+
 	t_pixel		**pixels;	/* image buffer */
 	t_color		*colormap;
 	t_rgb		rgbmap[3];
@@ -152,12 +155,11 @@ int				main_attract(t_env *env);
 //mlx init
 void			init(t_env *env, char **av);
 void			intervals(t_env *env, char **av, int i);
-int				expose(t_env *env);
 t_rgb			getpixel(t_env *env, int x, int y);
 void			plot3d(t_env *env, t_coord c, int i);
 t_coord			coord(double x, double y, double z);
 t_rgb			orbittrap(t_env *env);
-t_rgb		lerp(t_env *env, double t);
+t_rgb			lerp(t_env *env, double t);
 t_rgb			style1(t_env *env, t_rgb color);
 t_rgb			basecolor(t_env *env);
 t_rgb			style2(t_env *env, t_rgb color, int i);
@@ -167,5 +169,9 @@ void			plotpixel(t_env *env, int x, int y, t_rgb color);
 void			pixelmap(t_env *env);
 void			colormap(t_env *env);
 
+int				expose(t_env *env);
+int				mouse_hook(int x, int y, t_env *env);
+int				mouse_press(int button, int x, int y, t_env *env);
+int				mouse_release(int button, int x, int y, t_env *env);
 
 #endif

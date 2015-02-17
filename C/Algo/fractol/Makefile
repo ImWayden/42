@@ -28,7 +28,7 @@ DDIR = srcs/draw/
 CDIR = srcs/colors/
 
 SRC = $(SDIR)main.c \
-	  $(MXDIR)expose.c \
+	  $(MXDIR)expose.c  $(MXDIR)mouse.c \
 	  $(CPDIR)ope.c \
 	  $(CDIR)color.c $(CDIR)map.c $(CDIR)conversion.c $(CDIR)linear.c \
 	  $(CDIR)style.c $(CDIR)ope.c $(CDIR)lifted.c\
