@@ -70,7 +70,6 @@ t_rgb		style2(t_env *env, t_rgb color, int i)
 	c.r = (.5 + .5 * cos(6.2831 * co + (int)color.r % 256)) * fac * 255.0;
 	c.g = (.5 + .5 * cos(6.2831 * co + (int)color.g % 256)) * fac * 255.0;
 	c.b = (.5 + .5 * cos(6.2831 * co + (int)color.b % 256)) * fac * 255.0;
-	printf("%lf %lf %lf \n", c.r, c.g, c.b);
 	return (c);
 }
 
@@ -85,11 +84,9 @@ t_rgb			orbittrap(t_env *env)
 
 	r = log(dot(env->z, env->z)) / 4.0 / log(M_PI) - arg(env->z) / 2.0 * M_PI + env->p;
 	r = abs(r - round(r));
-	printf("%lf _ ", r);
 	if (r > 2 || r < 0)
 		r = 0.0;
 	else
 		r = 1.0 - (r / 2.0);
-	printf("%lf\n", r);
 	return (env->colormap[(int)(r * 18.0) % NCOLORS].rgb);
 }

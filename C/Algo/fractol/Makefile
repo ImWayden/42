@@ -43,7 +43,7 @@ INC = -I includes -I $(LDIR)includes
 LIB = ./libft/libft.a
 DIR_LIBS = /opt/X11/lib
 LDFLAGS += -L$(DIR_LIBS) -lmlx -lXext -lX11 -lm
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = 
 
 all: $(NAME)
 

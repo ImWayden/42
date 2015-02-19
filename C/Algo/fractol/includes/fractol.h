@@ -16,11 +16,12 @@
 # include <mlx.h>
 # include <math.h>
 # include <fcntl.h>
-# include </usr/X11/include/X11/X.h>
-//# include <X11/Xlib.h>
+//# include </usr/X11/include/X11/X.h>
+# include <X11/Xlib.h>
 # include <stdbool.h>
 # include <stdio.h>
 #include <time.h>
+#include <sys/time.h>
 # include "libft.h"
 # include "colors.h"
 # include "complex.h"
@@ -103,6 +104,8 @@ typedef struct		s_env
 	double		x_max;
 	double		y_min;
 	double		y_max;
+	double		ptx;
+	double		pty;
 	int			yres; 		/* x and y resolution of image */
 	int			xres;		/* x and y resolution of image */
 	double		ranx;
@@ -178,6 +181,6 @@ void			colormap(t_env *env);
 int				expose(t_env *env);
 int				mouse_hook(int x, int y, t_env *env);
 int				mouse_press(int button, int x, int y, t_env *env);
-int				mouse_release(int button, int x, int y, t_env *env);
+int				mouse_release(t_env *env);
 
 #endif
