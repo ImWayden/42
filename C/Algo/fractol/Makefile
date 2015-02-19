@@ -39,11 +39,11 @@ SRC = $(SDIR)main.c \
 	  $(FDIR)funct.c $(FDIR)main.c \
 
 OBJ = $(SRC:.c=.o)
-INC = -I includes -I $(LDIR)includes
+INC = -I includes -I $(LDIR)includes -I /opt/X11/include
 LIB = ./libft/libft.a
 DIR_LIBS = /opt/X11/lib
 LDFLAGS += -L$(DIR_LIBS) -lmlx -lXext -lX11 -lm
-CFLAGS = 
+CFLAGS = -Wall -Werror -Wextra
 
 all: $(NAME)
 

@@ -16,12 +16,12 @@
 # include <mlx.h>
 # include <math.h>
 # include <fcntl.h>
-//# include </usr/X11/include/X11/X.h>
-# include <X11/Xlib.h>
+# include <X11/X.h>
+//# include <X11/Xlib.h>
 # include <stdbool.h>
 # include <stdio.h>
-#include <time.h>
-#include <sys/time.h>
+# include <time.h>
+# include <sys/time.h>
 # include "libft.h"
 # include "colors.h"
 # include "complex.h"
@@ -123,8 +123,8 @@ typedef struct		s_env
 	int 		(*funct)(struct s_env *env);		/* transformations to use */
 	int 		count;		/* number of tranformations available */	
 	
-	int 		start;
-	int 		end;
+	struct timeval	start;
+	struct timeval	end;
 
 	t_cplx		z;
 	t_cplx		c;
@@ -179,8 +179,8 @@ void			pixelmap(t_env *env);
 void			colormap(t_env *env);
 
 int				expose(t_env *env);
-int				mouse_hook(int x, int y, t_env *env);
+int				loop_hook(t_env *env);
 int				mouse_press(int button, int x, int y, t_env *env);
-int				mouse_release(t_env *env);
+int				mouse_release(int button, int x, int y, t_env *env);
 
 #endif

@@ -57,8 +57,6 @@ void		init(t_env *env, char **av)
 	env->symmetry = 1;
 	env->invert = 0;
 	env->count = 1;
-	env->start = 0;
-	env->end = 0;
 	colormap(env);
 	pixelmap(env);
 	img_init(env);

@@ -32,6 +32,7 @@ int		main(int ac, char **av)
         mlx_hook(env.win, ButtonPress, ButtonPressMask, mouse_press, &env);
         //mlx_hook(env.win, MotionNotify, PointerMotionMask, mouse_hook, &env);
         mlx_expose_hook(env.win, expose, &env);
+        mlx_loop_hook(env.ptr, loop_hook, &env);
         mlx_loop(env.ptr);
 	}
 	return (0);
