@@ -40,8 +40,6 @@ void		init(t_env *env, char **av)
 	env->y_max = 2.0;
 	env->x_min = -2.0;
 	env->x_max = 2.0;
-	env->z_x = 1;
-	env->z_y = 1;
 	env->ranx = env->x_max - env->x_min;
 	env->rany = env->y_max - env->y_min;
 	env->zoom_x = SCREEN_W / env->ranx;
@@ -49,14 +47,15 @@ void		init(t_env *env, char **av)
 	env->max_i = av[i][1] == 'm' ? 150 : 25;
 	env->max_i = av[i][1] == 'v' ? ITT : env->max_i;
 	env->conf =	av[i][1] == 'j' ? 1 : ft_atoi(av[i + 1]) % 46;
-	env->funct = av[i][1] == 'v' ? main_flame : env->funct;
-	env->funct = av[i][1] == 'm' ? main_mandel : env->funct;
+	env->funct = av[i][1] == 'v' ? main_flame : main_mandel;
 	// env->seed = SEED;
 	env->ncolors = NCOLORS;
 	env->samples = SAMPLES;
 	env->symmetry = 1;
 	env->invert = 0;
 	env->count = 1;
+	env->left = 0;
+	env->zoom_factor = 0.025;
 	colormap(env);
 	pixelmap(env);
 	img_init(env);

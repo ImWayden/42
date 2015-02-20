@@ -112,8 +112,7 @@ typedef struct		s_env
 	double		rany; 		/* numerical range of x/y axis */
 	double		zoom_x;
 	double		zoom_y;
-	double		z_x;
-	double		z_y;
+	double		zoom_factor;
 
 	long int 	max_i; 		/* number of iterations per sample */
 	long int 	i; 		/* number of iterations per sample */
@@ -181,6 +180,6 @@ void			colormap(t_env *env);
 int				expose(t_env *env);
 int				loop_hook(t_env *env);
 int				mouse_press(int button, int x, int y, t_env *env);
-int				mouse_release(int button, int x, int y, t_env *env);
+int				mouse_motion(int x, int y, t_env *env);
 
 #endif
