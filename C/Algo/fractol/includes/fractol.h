@@ -22,6 +22,7 @@
 # include <stdio.h>
 # include <time.h>
 # include <sys/time.h>
+# include <pthread.h>
 # include "libft.h"
 # include "colors.h"
 # include "complex.h"
@@ -30,7 +31,7 @@
 # define SCREEN_H			480
 # define random_bit()		random() & 01
 # define NCOLORS			3 * 10
-# define SAMPLES 			40000
+# define SAMPLES 			20000
 # define ITT 				1000
 # define SUPER 				1
 # define GAMMA 				2.2
@@ -38,6 +39,16 @@
 # define Divider			35
 # define Power				1
 # define Radius				1.332
+
+typedef struct s_env t_env;
+
+typedef struct	s_thread
+{
+	int			y_min;
+	int			y_max;
+	pthread_t	thread;
+	t_env			*env;
+}				t_thread;
 
 typedef struct	s_coord
 {
@@ -113,13 +124,14 @@ typedef struct		s_env
 	double		zoom_x;
 	double		zoom_y;
 	double		zoom_factor;
+	t_thread	threadtab[100];
 
 	long int 	max_i; 		/* number of iterations per sample */
 	long int 	i; 		/* number of iterations per sample */
 	int 		invert;		/* use inverse colors? 0 false, else true */
 	int 		symmetry;		/* use inverse colors? 0 false, else true */
 	int 		samples;		/* use inverse colors? 0 false, else true */
-	int 		(*funct)(struct s_env *env);		/* transformations to use */
+	void 		*(*funct)(void *arg);		/* transformations to use */
 	int 		count;		/* number of tranformations available */	
 	
 	struct timeval	start;
@@ -131,6 +143,7 @@ typedef struct		s_env
 	double		p;
 	int 		conf;
 }				t_env;
+
 
 //mandel julia
 
@@ -154,9 +167,12 @@ void			f_exp(t_env *env, double x, double y);
 void			fjulia(t_env *env, double x, double y);
 void			bent(t_env *env, double x, double y);
 void			curl(t_env *env, double x, double y);
+t_cplx			cross(t_env *env, double x, double y);
 
-int				main_mandel(t_env *env);
-int 			main_flame(t_env *env);
+void			*mandelbrot(void *env);
+void			*flame(void *env);
+t_rgb			julia_iter(t_env *env, int x, int y);
+t_rgb			mandel_iter(t_env *env, int x, int y);
 int				main_attract(t_env *env);
 
 

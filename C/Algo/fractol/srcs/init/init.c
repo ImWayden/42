@@ -31,9 +31,24 @@ static void	img_init(t_env *env)
 
 void		init(t_env *env, char **av)
 {
-	int i = 1;
+	int i = 0;
+	int j = 0;
+
+	env->samples = av[1][1] == 'm' ? SCREEN_H : SAMPLES;
+	env->funct = av[1][1] == 'm' ? mandelbrot : flame;
 	env->xres = SCREEN_W;
 	env->yres = SCREEN_H;
+	while (i < 100)
+	{
+		env->threadtab[i].y_min = j;
+		j += env->samples / 100;
+		if (i == 99)
+			j = env->samples;
+		env->threadtab[i].y_max = j;
+		env->threadtab[i].env = env;
+		printf("%i %i\n", env->threadtab[i].y_max, env->threadtab[i].y_min);
+		i++;
+	}
 	env->left = 0;
 	env->right = 0;
 	env->y_min = -2.0;
@@ -44,19 +59,18 @@ void		init(t_env *env, char **av)
 	env->rany = env->y_max - env->y_min;
 	env->zoom_x = SCREEN_W / env->ranx;
 	env->zoom_y = SCREEN_H / env->rany;
-	env->max_i = av[i][1] == 'm' ? 150 : 25;
-	env->max_i = av[i][1] == 'v' ? ITT : env->max_i;
-	env->conf =	av[i][1] == 'j' ? 1 : ft_atoi(av[i + 1]) % 46;
-	env->funct = av[i][1] == 'v' ? main_flame : main_mandel;
+	env->max_i = av[1][1] == 'm' ? 150 : 25;
+	env->max_i = av[1][1] == 'v' ? ITT : env->max_i;
+	env->conf =	av[1][1] == 'j' ? 1 : ft_atoi(av[2]) % 46;
 	// env->seed = SEED;
 	env->ncolors = NCOLORS;
-	env->samples = SAMPLES;
-	env->symmetry = 1;
+	env->symmetry = 0;
 	env->invert = 0;
 	env->count = 1;
 	env->left = 0;
 	env->zoom_factor = 0.025;
+	ft_putendl("ok");
 	colormap(env);
 	pixelmap(env);
-	img_init(env);
+	img_init(env);	
 }

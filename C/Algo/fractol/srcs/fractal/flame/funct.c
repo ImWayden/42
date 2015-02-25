@@ -237,9 +237,9 @@ void			bent(t_env *env, double x, double y)
 	}
 }
 
-/*
-** 15 : Waves
-*/
+// /*
+// ** 15 : Waves
+// */
 
 // void			waves(t_env *env, double x, double y)
 // {
@@ -360,9 +360,9 @@ void			bent(t_env *env, double x, double y)
 // 	env->z.r = x + b * sin (y / pow (c, 2.0));
 // 	env->z.i = y + e * sin (x / pow (f, 2.0));
 // }
-/*
-**
-*/
+// /*
+// **
+//*/
 void			curl(t_env *env, double x, double y)
 {
 	static double	p1 = 0.3;
@@ -374,4 +374,16 @@ void			curl(t_env *env, double x, double y)
 	t2 = p1 * y + 2 * p2 * x * y;
 	env->z.r = (1 / (t1 * t1 + t2 * t2)) * (x * t1 + y * t2);
 	env->z.i = (1 / (t1 * t1 + t2 * t2)) * (y * t1 - x * t2);
+}
+
+t_cplx			cross(t_env *env, double x, double y) // Cross (Variation 48)
+{
+	double		c;
+	t_cplx		z;
+
+	(void)env;
+	c = sqrt(pow(x * x - y * y, -2));
+    z.r = x * c;
+    z.i = y * c;
+    return (z);
 }

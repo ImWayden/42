@@ -12,30 +12,32 @@
 
 #include "fractol.h"
 
-static int		get_xy(t_env *env, double *x, double *y)
+static int		get_xy(t_env *env, double *x, double *y, t_cplx z)
 {
 	int			i;
 
 	i = random () % env->ncolors;	/*RANDR(0,env->ncolor);*/
-	*x = env->colormap[i].ac * env->z.r + env->colormap[i].bc * env->z.i + env->colormap[i].cc;
-	*y = env->colormap[i].dc * env->z.r + env->colormap[i].ec * env->z.i + env->colormap[i].fc;
+	*x = env->colormap[i].ac * z.r + env->colormap[i].bc * z.i + env->colormap[i].cc;
+	*y = env->colormap[i].dc * z.r + env->colormap[i].ec * z.i + env->colormap[i].fc;
 	return (i);
 }
 
-static void		project(t_env *env, int i)
+static void		project(t_env *env, int i, t_cplx z)
 {
 	int x1;
 	int y1;
 	int s;
 	t_pixel	*point;
-	double theta2, x_rot, y_rot;
+	double theta2;
+	double	x_rot;
+	double	y_rot;
 
 	theta2 = 0.0;
 	for (s = 0; s < env->symmetry; s++)
 	{
-		theta2 += (double) ((2 * M_PI) / (env->symmetry));
-		x_rot = (double) (env->z.r * cos (theta2) - env->z.i * sin (theta2));
-		y_rot = env->z.r * sin (theta2) + env->z.i * cos (theta2);
+		theta2 += (double)((2 * M_PI) / (env->symmetry));
+		x_rot = (double)(z.r * cos (theta2) - z.i * sin(theta2));
+		y_rot = z.r * sin(theta2) + z.i * cos(theta2);
 		if (x_rot >= env->x_min && x_rot <= env->x_max && y_rot >= env->y_min && y_rot <= env->y_max)
 		{
 			x1 = env->xres - (unsigned int) (((env->x_max - x_rot) / env->ranx) * env->xres);
@@ -44,45 +46,35 @@ static void		project(t_env *env, int i)
 			{
 				point = &env->pixels[y1][x1];
 				if (!point->value.counter)
-				{
 					point->rgb = env->colormap[i % NCOLORS].rgb;
-					//point->r = color.r;
-	    			//point->g = color.g;
-	    			//point->b = color.b;
-	    		}
 	    		else
-	    		{
 	    			point->rgb = rgb_mult(rgb_add(point->rgb,env->colormap[i % 10].rgb), 1 / 2.0);
-	    			//red = (unsigned char) ((point->r + env->colormap[i].rgb.r) / 2.0);
-	    			//point->r = color.r;
-	    			//green = (unsigned char) ((point->g + env->colormap[i].rgb.g) / 2.0);
-	    			//point->g = color.g;
-	    			//blue = (unsigned char) ((point->b + env->colormap[i].rgb.b) / 2.0);
-	    			//point->b = color.b;
-	    		}
 	    		point->value.counter++;
 			}
 		}
 	}
 }
 
-int 			main_flame(t_env *env)
+void		*flame(void *arg)
 {
 	double  x, y;
+	t_env	*env;
 	int i, num;
 	long int step;
+	t_cplx	z;
 
 	i = 0;
-	for (num = 0; num < env->samples; num++)
+	env = ((t_thread *)arg)->env;
+	for (num = 0; num < env->samples / 100; num++)
 	{
-		env->z.r = RANDR(env->x_min, env->x_max);
-		env->z.i = RANDR(env->y_min, env->y_max);
+		z.r = RANDR(env->x_min, env->x_max);
+		z.i = RANDR(env->y_min, env->y_max);
 		for (step = -20; step < env->max_i; step++)
 		{
-			i = get_xy(env, &x, &y);
-			curl(env, x, y);
+			i = get_xy(env, &x, &y, z);
+			z = cross(env, x, y);
 			if (step > 0)
-				project(env, i);
+				project(env, i, z);
 		}
 	}
 	return (0);

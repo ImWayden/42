@@ -14,17 +14,6 @@
 
 int     expose(t_env *env)
 {
-	int row, col;
-
-	row = 0;
-	while (env->funct == main_flame && row < env->yres)
-	{
-		for (col = 0; col < env->xres; col++)
-		{
-			plotpixel(env, col, row, env->pixels[row][col].rgb);
-		}
-		row++;
-    }
 	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
 	return (0);
 }
