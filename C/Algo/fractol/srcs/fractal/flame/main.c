@@ -27,7 +27,6 @@ static void		project(t_env *env, int i, t_cplx z)
 	int x1;
 	int y1;
 	int s;
-	t_pixel	*point;
 	double theta2;
 	double	x_rot;
 	double	y_rot;
@@ -44,12 +43,10 @@ static void		project(t_env *env, int i, t_cplx z)
 			y1 = env->yres - (unsigned int) (((env->y_max - y_rot) / env->rany) * env->yres);
 			if (x1 >= 0 && x1 < env->xres && y1 >= 0 && y1 < env->yres)
 			{
-				point = &env->pixels[y1][x1];
-				if (!point->value.counter)
-					point->rgb = env->colormap[i % NCOLORS].rgb;
+				if (ISBLACK(getpixel(env, x1, y1)))
+					plotpixel(env, x1, y1, env->colormap[i % NCOLORS].rgb);
 	    		else
-	    			point->rgb = rgb_mult(rgb_add(point->rgb,env->colormap[i % 10].rgb), 1 / 2.0);
-	    		point->value.counter++;
+					addpixel(env, x1, y1, env->colormap[i % NCOLORS].rgb);
 			}
 		}
 	}
@@ -72,7 +69,7 @@ void		*flame(void *arg)
 		for (step = -20; step < env->max_i; step++)
 		{
 			i = get_xy(env, &x, &y, z);
-			z = cross(env, x, y);
+			z = cross(env->colormap[i], x, y);
 			if (step > 0)
 				project(env, i, z);
 		}

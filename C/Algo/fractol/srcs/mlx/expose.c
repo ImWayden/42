@@ -14,6 +14,22 @@
 
 int     expose(t_env *env)
 {
-	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
+	int		i;
+
+	i = 0;
+	zoom(env);
+	while (i < 100)
+	{
+		if (0 != pthread_create(&env->threadtab[i].thread, NULL, env->main, (void *)&env->threadtab[i]))
+			exit (EXIT_FAILURE);
+		i++;
+	}
+	i = 0;
+	while (i < 100)
+	{
+		if (pthread_join(env->threadtab[i].thread, NULL))
+			exit(0);
+		i++;
+	}
 	return (0);
 }

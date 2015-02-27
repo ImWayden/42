@@ -22,10 +22,23 @@ void	zoom(t_env *env)
 	env->x_max = env->ptx + env->ranx / 2.0;
 }
 
+int		key_hook(int keycode, t_env *env)
+{
+	if (keycode == 65307)
+		exit(0);
+	if (keycode == '=' || keycode == 65451)
+		env->max_i += 10;
+	if (keycode == '-' || keycode == 65453)
+		env->max_i -= 10;
+	env->max_i = env->max_i < 0 ? 0 : env->max_i;
+	return (0);
+}
+
 int		mouse_press(int button, int x, int y, t_env *env)
 {
 	if (button == 5  || button == 4)
 	{
+		env->count = 1;
 		gettimeofday(&(env->end), NULL);
 		if ((env->end.tv_sec - env->start.tv_sec) > 1)
 		{
@@ -52,30 +65,18 @@ int		mouse_motion(int x, int y, t_env *env)
 	(void)x;
 	(void)y;
 	if (env->conf)
-		env->conf = (env->conf % 46) + 1;
+	{
+		env->conf += 0.5;
+		if (env->conf > 46)
+			env->conf = 1;
+	}
 	return (0);
 }
 
 int		loop_hook(t_env *env)
 {
-	int		i;
-
-	zoom(env);
-	i = 0;
-	while (i < 100)
-	{
-		if (0 != pthread_create(&env->threadtab[i].thread, NULL, env->funct, (void *)&env->threadtab[i]))
-			exit (EXIT_FAILURE);
-		i++;
-	}
-	i = 0;
-	while (i < 100)
-	{
-		if (pthread_join(env->threadtab[i].thread, NULL))
-			exit (1);
-		i++;
-	}
-	expose(env);
-	sleep(50);
+	if (env->count)
+		env->count = expose(env);
+	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
 	return (0);
 }

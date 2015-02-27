@@ -25,10 +25,10 @@ t_rgb		mandel_iter(t_env *env, int x, int y)
 	z.i = 0;
 	while (mod(z) < 4 && i < env->max_i)
 	{
-		z = cplx_add(cplx_mult(cplx_mult(z, z), z), c);
+		z = cplx_add(cplx_mult(z, z), c);
 		i++;
 	}
 	if (i == env->max_i)
 		return (Black);
-	return (env->rgbmap[i % 3]);
+	return (lerp(heart(env->colormap[i % 3], x, y), i));
 }

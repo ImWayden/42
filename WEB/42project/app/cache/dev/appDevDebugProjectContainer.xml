@@ -17,6 +17,7 @@
       <parameter key="DoctrineBundle">Doctrine\Bundle\DoctrineBundle\DoctrineBundle</parameter>
       <parameter key="SensioFrameworkExtraBundle">Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</parameter>
       <parameter key="AppBundle">AppBundle\AppBundle</parameter>
+      <parameter key="AcmeCalendarBundle">Acme\Bundle\CalendarBundle\AcmeCalendarBundle</parameter>
       <parameter key="DebugBundle">Symfony\Bundle\DebugBundle\DebugBundle</parameter>
       <parameter key="AcmeDemoBundle">Acme\DemoBundle\AcmeDemoBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
@@ -2974,6 +2975,10 @@
       <call method="addPath">
         <argument>/home/msarr/42/WEB/42project/vendor/doctrine/doctrine-bundle/Resources/views</argument>
         <argument>Doctrine</argument>
+      </call>
+      <call method="addPath">
+        <argument>/home/msarr/42/WEB/42project/src/Acme/Bundle/CalendarBundle/Resources/views</argument>
+        <argument>AcmeCalendar</argument>
       </call>
       <call method="addPath">
         <argument>/home/msarr/42/WEB/42project/vendor/symfony/symfony/src/Symfony/Bundle/DebugBundle/Resources/views</argument>

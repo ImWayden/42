@@ -1,0 +1,31 @@
+* ************************************************************************** *
+*                                                                            *
+*                                                        :::      ::::::::   *
+*   init.c                                             :+:      :+:    :+:   *
+*                                                    +:+ +:+         +:+     *
+*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        *
+*                                                +#+#+#+#+#+   +#+           *
+*   Created: 2015/01/20 14:46:45 by msarr             #+#    #+#             *
+*   Updated: 2015/01/20 14:46:45 by msarr            ###   ########.fr       *
+*                                                                            *
+* ************************************************************************** *
+*                           FRACTALS  LIST                                   *
+* ************************************************************************** *
+*    *                                                                       *
+* -m *             mandelbrot set you can provide for the power              *
+******               **************************************                  *
+*    *                                                                       *
+* -j *            julia set you can provide number for the conf              *
+******              ***************************************                  *
+*    *                                                                       *
+* -v *         flame set you can provide number for the variation            *
+*    *              ***************************************                  *
+** 0 * Linear   * 1 * Sinusoidal * 2 * Spherical* 3 * Swirl   * 4 * Horseshoe*
+** 5 * Polar    * 6 * Handker..  * 7 * Heart    * 8 * Disk    * 9 * Spiral   *
+** 0 * Linear   * 1 * Sinusoidal * 2 * Spherical* 3 * Swirl   * 4 * Horseshoe*
+** 5 * Polar    * 6 * Handker..  * 7 * Heart    * 8 * Disk    * 9 * Spiral   *
+** 0 * Linear   * 1 * Sinusoidal * 2 * Spherical* 3 * Swirl   * 4 * Horseshoe*
+** 5 * Polar    * 6 * Handker..  * 7 * Heart    * 8 * Disk    * 9 * Spiral   *
+******************************************************************************
+*                                                                            *
+******************************************************************************

@@ -20,16 +20,16 @@ t_rgb		linear_inter(t_rgb v0, t_rgb v1, double t)
 }
  
 // Precise method which guarantees v = v1 when t =
-t_rgb		lerp(t_env *env, double t)
+t_rgb		lerp(t_cplx z, double t)
 {
 	t_rgb 	r;
 	double		p1;
 
-	r = rgb(env->z.r, env->z.i, t);
+	r = rgb(z.r, z.i, t);
 	p1 = sqrt (r.r * r.r + r.g * r.b);
 	p1++;
-	r.r = sqrt(2.0 / (p1 + 1)) * env->z.r * 255;
-	r.g = sqrt(2.0 / (p1 + 1)) * env->z.i * 255;
+	r.r = sqrt(2.0 / (p1 + 1)) * z.r * 255;
+	r.g = sqrt(2.0 / (p1 + 1)) * z.i * 255;
 	r.b = (int)(t * 255) % 256;
 	return r;
 }

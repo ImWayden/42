@@ -40,8 +40,8 @@
 # define Power			1
 # define Radius			1.332
 # define RANDR(lo,hi)	((lo) + (((hi)-(lo)) * drand48()))
-# define MIN(a, b)		a < b ? a : b
-# define MAX(a, b)		a > b ? a : b
+# define MIN(a, b)		((a < b) ? a : b)
+# define MAX(a, b)		((a > b) ? a : b)
 # define MAX3(a, b, c)	MAX(a, MAX(b, c))
 # define MIN3(a, b, c)	MIN(a, MIN(b, c))
 
@@ -136,7 +136,7 @@ typedef struct			s_env
 	int 				invert;
 	int 				symmetry;
 	int 				samples;
-	void 				*(*funct)(void *arg);
+	void 				*(*main)(void *arg);
 	int 				count;	
 	
 	struct timeval		start;
@@ -146,7 +146,7 @@ typedef struct			s_env
 	t_cplx				c;
 	double				dist;
 	double				p;
-	int 				conf;
+	double 				conf;
 }						t_env;
 
 
@@ -154,7 +154,7 @@ typedef struct			s_env
 ** Mandelbrot
 */
 
-t_cplx					conf(int i);
+t_cplx					conf(double i);
 void					*mandelbrot(void *env);
 void					*flame(void *env);
 t_rgb					julia_iter(t_env *env, int x, int y);
@@ -165,52 +165,54 @@ int						main_attract(t_env *env);
 ** Flames
 */
 
-t_cplx					linear(t_env *env, double x, double y, int i);
-t_cplx					sinusoidal(t_env *env, double x, double y, int i);
-t_cplx					spherical(t_env *env, double x, double y, int i);
-t_cplx					swirl(t_env *env, double x, double y, int i);
-t_cplx					horseshoe(t_env *env, double x, double y, int i);
-t_cplx					polar(t_env *env, double x, double y, int i);
-t_cplx					handker(t_env *env, double x, double y, int i);
-t_cplx					heart(t_env *env, double x, double y, int i);
-t_cplx					disk(t_env *env, double x, double y, int i);
-t_cplx					spiral(t_env *env, double x, double y, int i);
-t_cplx					hyper(t_env *env, double x, double y, int i);
-t_cplx					diamond(t_env *env, double x, double y, int i);
-t_cplx					f_exp(t_env *env, double x, double y, int i);
-t_cplx					f_julia(t_env *env, double x, double y, int i);
-t_cplx					bent(t_env *env, double x, double y, int i);
-t_cplx					waves(t_env *env, double x, double y, int i);
-t_cplx					fisheye(t_env *env, double x, double y, int i);
-t_cplx					popcorn(t_env *env, double x, double y, int i);
-t_cplx					exponential(t_env *env, double x, double y, int i);
-t_cplx					power(t_env *env, double x, double y, int i);
-t_cplx					cosine(t_env *env, double x, double y, int i);
-t_cplx					rings(t_env *env, double x, double y, int i);
-t_cplx					fan(t_env *env, double x, double y, int i);
-t_cplx					blob(t_env *env, double x, double y, int i);
-t_cplx					pdj(t_env *env, double x, double y, int i);
-t_cplx					fan2(t_env *env, double x, double y, int i);
-t_cplx					rings2(t_env *eenv, double x, double y, int i);
-t_cplx					eyefish(t_env *env, double x, double y, int i);
-t_cplx					bubble(t_env *env, double x, double y, int i);
-t_cplx					cylinder(t_env *env, double x, double y, int i);
-t_cplx					noise(t_env *env, double x, double y, int i);
-t_cplx					blur(t_env *env, double x, double y, int i);
-t_cplx					curl(t_env *env, double x, double y, int i);
-t_cplx					tangent(t_env *env, double x, double y, int i);
-t_cplx					square(t_env *env, double x, double y, int i);
-t_cplx					cross(t_env *env, double x, double y, int i);
-t_cplx					collatz(t_env *env, double x, double y, int i);
-t_cplx					mobius(t_env *env, double x, double y, int i);
-t_cplx					bwaves(t_env *env, double x, double y, int i);
+t_cplx					linear(t_color col, double x, double y);
+t_cplx					sinusoidal(t_color col, double x, double y);
+t_cplx					spherical(t_color col, double x, double y);
+t_cplx					swirl(t_color col, double x, double y);
+t_cplx					horseshoe(t_color col, double x, double y);
+t_cplx					polar(t_color col, double x, double y);
+t_cplx					handker(t_color col, double x, double y);
+t_cplx					heart(t_color col, double x, double y);
+t_cplx					disk(t_color col, double x, double y);
+t_cplx					spiral(t_color col, double x, double y);
+t_cplx					hyper(t_color col, double x, double y);
+t_cplx					diamond(t_color col, double x, double y);
+t_cplx					f_exp(t_color col, double x, double y);
+t_cplx					f_julia(t_color col, double x, double y);
+t_cplx					bent(t_color col, double x, double y);
+t_cplx					waves(t_color col, double x, double y);
+t_cplx					fisheye(t_color col, double x, double y);
+t_cplx					popcorn(t_color col, double x, double y);
+t_cplx					exponential(t_color col, double x, double y);
+t_cplx					power(t_color col, double x, double y);
+t_cplx					cosine(t_color col, double x, double y);
+t_cplx					rings(t_color col, double x, double y);
+t_cplx					fan(t_color col, double x, double y);
+t_cplx					blob(t_color col, double x, double y);
+t_cplx					pdj(t_color col, double x, double y);
+t_cplx					fan2(t_color col, double x, double y);
+t_cplx					rings2(t_color col, double x, double y);
+t_cplx					eyefish(t_color col, double x, double y);
+t_cplx					bubble(t_color col, double x, double y);
+t_cplx					cylinder(t_color col, double x, double y);
+t_cplx					noise(t_color col, double x, double y);
+t_cplx					blur(t_color col, double x, double y);
+t_cplx					curl(t_color col, double x, double y);
+t_cplx					tangent(t_color col, double x, double y);
+t_cplx					square(t_color col, double x, double y);
+t_cplx					cross(t_color col, double x, double y);
+t_cplx					collatz(t_color col, double x, double y);
+t_cplx					mobius(t_color col, double x, double y);
+t_cplx					bwaves(t_color col, double x, double y);
 
 /*
 ** Prog Init
 */
 
 void					init(t_env *env, char **av);
-void					intervals(t_env *env, char **av, int i);
+void					mandel_init(t_env *env);
+void					julia_init(t_env *env);
+void					flame_init(t_env *env, char *av);
 
 /*
 ** Pixels && Colors
@@ -229,9 +231,9 @@ void					colormap(t_env *env);
 */
 
 t_rgb					orbittrap(t_env *env);
-t_rgb					lerp(t_env *env, double t);
+t_rgb					lerp(t_cplx z, double t);
 t_rgb					style1(t_env *env, t_rgb color);
-t_rgb					basecolor(t_env *env);
+t_rgb					basecolor(t_cplx z);
 t_rgb					style2(t_env *env, t_rgb color, int i);
 double					clamp(double value, double min, double max);
 
@@ -239,9 +241,11 @@ double					clamp(double value, double min, double max);
 ** MLX
 */
 
+void					zoom(t_env *env);
 int						expose(t_env *env);
 int						loop_hook(t_env *env);
 int						mouse_press(int button, int x, int y, t_env *env);
+int						key_hook(int keycode, t_env *env);
 int						mouse_motion(int x, int y, t_env *env);
 
 #endif

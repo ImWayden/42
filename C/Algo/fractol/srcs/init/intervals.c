@@ -12,16 +12,38 @@
 
 #include "fractol.h"
 
-void		intervals(t_env *env, char **av, int i)
+void		mandel_init(t_env *env)
 {
 	env->y_min = -2.0;
 	env->y_max = 2.0;
-	env->x_min = 0.0;
-	env->x_max = i;
-	(void)av;
-	// env->max_i = av[i][1] == 'm' ? 150 : 25;
-	// env->max_i = av[i][1] == 'v' ? ITT : env->max_i;
-	// env->conf =	av[i][1] == 'j' ? 1 : ft_atoi(av[i + 1]) % 46;
-	// env->funct = av[i][1] == 'v' ? main_flame : env->funct;
-	// env->funct = av[i][1] == 'm' ? main_attract : env->funct;
+	env->x_min = -2.0;
+	env->x_max = 2.0;
+	env->max_i = 150;
+	env->conf =	0;
+	env->main = mandelbrot;
+	env->samples = SCREEN_H;
+}
+
+void		julia_init(t_env *env)
+{
+	env->y_min = -2.0;
+	env->y_max = 2.0;
+	env->x_min = -2.0;
+	env->x_max = 2.0;
+	env->max_i = 50;
+	env->conf =	1;
+	env->main = mandelbrot;
+	env->samples = SCREEN_H;
+}
+
+void		flame_init(t_env *env, char *av)
+{
+	env->y_min = -1.0;
+	env->y_max = 1.0;
+	env->x_min = -1.0;
+	env->x_max = 1.0;
+	env->max_i = ITT;
+	env->conf =	ft_atoi(av);
+	env->main = flame;
+	env->samples = SAMPLES;
 }

@@ -31,9 +31,8 @@ double		fract(double x)
 	return (x - floor(x));
 }
 
-t_rgb		basecolor(t_env *env)
+t_rgb		basecolor(t_cplx z)
 {
-	t_cplx z;
 	double r;
 	double phi;
 	double theta;
@@ -46,7 +45,7 @@ t_rgb		basecolor(t_env *env)
 	double s;
 	double val;
 	
-	z = formula(env->z);
+	z = formula(z);
 	r = dot(z, z);
 	phi = 2.0 * atan(1.0 / r);
 	theta = atan2(z.r, z.i);

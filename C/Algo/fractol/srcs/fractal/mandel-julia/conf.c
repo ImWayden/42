@@ -22,7 +22,7 @@ t_cplx		new(double x, double y)
 	return (c);
 }
 
-t_cplx		conf(int i)
+t_cplx		conf(double i)
 {
 	double r = -1.0; 
 	double im = 1.0; 
@@ -31,7 +31,7 @@ t_cplx		conf(int i)
 	r -= r > 0 ? 0.01 : 0.0;
 	if (r > 1.0)
 		r = -1.0;
-	im -=  ((int)(i % 6)) * 0.2;
+	im -=  ((int)i % 6) * 0.2;
 	if (im < 0)
 		im = 1;
 	return (new(r, im));
