@@ -34,6 +34,12 @@
 
 typedef struct termios	t_term;
 
+typedef struct	s_win
+{
+	int			val;
+	WINDOW		*win;
+}				t_win;
+
 typedef struct	s_game
 {
 	int			win_h;
@@ -42,12 +48,15 @@ typedef struct	s_game
 	WINDOW 		*menubar;
 	WINDOW 		**menulist;
 	WINDOW		*msgbar;
-	int			*aray;
+	t_win		array[5][5];
+	WINDOW		*win;
 }				t_game;
+
+
 
 
 int			term(void);
 int 		menu(t_game game);
-int			setwin(t_game game);
+t_game		setwin(t_game game);
 
 #endif

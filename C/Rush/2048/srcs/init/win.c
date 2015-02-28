@@ -12,7 +12,7 @@
 
 #include "game_2048.h"
 
-int					setwin(t_game game)
+t_game					setwin(t_game game)
 {
 	struct winsize	win;
 
@@ -20,8 +20,6 @@ int					setwin(t_game game)
 	{
 		game.win_w = win.ws_col;
 		game.win_h = win.ws_row;
-		(void)game;
-		return (1);
 	}
-	return (0);
+	return (game);
 }
