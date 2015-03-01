@@ -44,19 +44,26 @@ typedef struct	s_game
 {
 	int			win_h;
 	int			win_w;
+	int			startx;
+	int			padx;
+	int			starty;
+	int			pady;
 	int			size;
 	WINDOW 		*menubar;
-	WINDOW 		**menulist;
 	WINDOW		*msgbar;
-	t_win		array[5][5];
 	WINDOW		*win;
+	WINDOW		**menulist;	
+	t_win		array[5][5];
 }				t_game;
 
 
 
 
-int			term(void);
-int 		menu(t_game game);
-t_game		setwin(t_game game);
+int 		menu(t_game *game);
+int			setwins(t_game *game);
+void		del_win(WINDOW **win);
+void		del_menu(t_game *game);
+int			padding(t_game *game);
+int			ft_exit(char *str, t_game *game);
 
 #endif

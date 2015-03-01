@@ -18,9 +18,11 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 IDIR = $(SDIR)init/
+EDIR = $(SDIR)exit/
 
-SRC = $(SDIR)main.c $(SDIR)menu.c\
-	  $(IDIR)term.c $(IDIR)win.c
+SRC = $(SDIR)main.c $(SDIR)menu.c \
+	  $(IDIR)win.c \
+	  $(EDIR)exit.c
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes
 LIB = ./libft/libft.a
