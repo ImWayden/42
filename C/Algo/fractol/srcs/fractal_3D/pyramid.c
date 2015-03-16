@@ -101,7 +101,6 @@ void		pyramid(t_env *env, t_coord	p, int depth, double z, int j)
 			plot3d(env, t[i], j);
 			t[i] = mult(add(p, t[i]), 1.0 / 2.0);
 		}
-		expose(env);
 		pyramid(env, t[0], depth -1, z / 2.0, 0);
 		pyramid(env, t[1], depth -1, z / 2.0, 1);
 		pyramid(env, t[2], depth -1, z / 2.0, 0);

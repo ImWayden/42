@@ -16,7 +16,7 @@
 ** 00 : Linear
 */
 
-t_cplx			linear(t_color col, double x, double y) 
+t_cplx			linear(t_coeff col, double x, double y) 
 {
 	t_cplx		z;
 
@@ -30,7 +30,7 @@ t_cplx			linear(t_color col, double x, double y)
 ** 01 : Sinusoidal
 */
 
-t_cplx			sinusoidal(t_color col, double x, double y)
+t_cplx			sinusoidal(t_coeff col, double x, double y)
 {
 	t_cplx		z;
 
@@ -44,7 +44,7 @@ t_cplx			sinusoidal(t_color col, double x, double y)
 ** 02 :Spherical
 */
 
-t_cplx			spherical(t_color col, double x, double y)
+t_cplx			spherical(t_coeff col, double x, double y)
 {
 	t_cplx		z;
 	double		r;
@@ -60,7 +60,7 @@ t_cplx			spherical(t_color col, double x, double y)
 ** 03 : Swirl
 */
 
-t_cplx			swirl(t_color col, double x, double y)
+t_cplx			swirl(t_coeff col, double x, double y)
 {
 	t_cplx		z;
 	double		r;
@@ -76,7 +76,7 @@ t_cplx			swirl(t_color col, double x, double y)
 ** 04 Horseshoe
 */
 
-t_cplx			horseshoe(t_color col, double x, double y)
+t_cplx			horseshoe(t_coeff col, double x, double y)
 {
 	t_cplx		z;
 	double		r;
@@ -92,7 +92,7 @@ t_cplx			horseshoe(t_color col, double x, double y)
 ** 05 : Polar
 */
 
-t_cplx			polar(t_color col, double x, double y)
+t_cplx			polar(t_coeff col, double x, double y)
 {
 	t_cplx		z;
 
@@ -106,7 +106,7 @@ t_cplx			polar(t_color col, double x, double y)
 ** 06 : Handkerchief
 */
 
-t_cplx			handker(t_color col, double x, double y)
+t_cplx			handker(t_coeff col, double x, double y)
 {
 	double		r;
 	t_cplx		z;
@@ -124,7 +124,7 @@ t_cplx			handker(t_color col, double x, double y)
 ** 07 : Heart
 */
 
-t_cplx			heart(t_color col, double x, double y)
+t_cplx			heart(t_coeff col, double x, double y)
 {
 	double		r;
 	t_cplx		z;
@@ -142,7 +142,7 @@ t_cplx			heart(t_color col, double x, double y)
 ** 08 : Disk
 */
 
-t_cplx			disk(t_color col, double x, double y)
+t_cplx			disk(t_coeff col, double x, double y)
 {
 	double		r;
 	t_cplx		z;
@@ -160,7 +160,7 @@ t_cplx			disk(t_color col, double x, double y)
 ** 09 : Spiral
 */
 
-t_cplx			spiral(t_color col, double x, double y)
+t_cplx			spiral(t_coeff col, double x, double y)
 {
 	double		r;
 	t_cplx		z;
@@ -178,7 +178,7 @@ t_cplx			spiral(t_color col, double x, double y)
 ** 10 : Hyperbolic
 */
 
-t_cplx			hyper(t_color col, double x, double y)
+t_cplx			hyper(t_coeff col, double x, double y)
 {
 	double		r;
 	t_cplx		z;
@@ -196,7 +196,7 @@ t_cplx			hyper(t_color col, double x, double y)
 ** 11 : Diamond
 */
 
-t_cplx			diamond(t_color col, double x, double y)
+t_cplx			diamond(t_coeff col, double x, double y)
 {
 	double		r;
 	t_cplx		z;
@@ -214,7 +214,7 @@ t_cplx			diamond(t_color col, double x, double y)
 ** 12 : Ex
 */
 
-t_cplx			f_exp(t_color col, double x, double y)
+t_cplx			f_exp(t_coeff col, double x, double y)
 {
 	double		r;
 	t_cplx		z;
@@ -238,7 +238,7 @@ t_cplx			f_exp(t_color col, double x, double y)
 ** 13 : Julia 
 */
 
-t_cplx			f_julia(t_color col, double x, double y)
+t_cplx			f_julia(t_coeff col, double x, double y)
 {
 	double		r;
 	t_cplx		z;
@@ -258,7 +258,7 @@ t_cplx			f_julia(t_color col, double x, double y)
 ** 14 : Bent
 */
 
-t_cplx			bent(t_color col, double x, double y)
+t_cplx			bent(t_coeff col, double x, double y)
 {
 	t_cplx		z;
 
@@ -290,7 +290,7 @@ t_cplx			bent(t_color col, double x, double y)
 ** 15 : Waves
 */
 
-t_cplx			waves(t_color col, double x, double y)
+t_cplx			waves(t_coeff col, double x, double y)
 {
 	t_cplx		z;
 
@@ -303,7 +303,7 @@ t_cplx			waves(t_color col, double x, double y)
 ** 16 : Fisheye
 */
 
-t_cplx			fisheye(t_color col, double x, double y)
+t_cplx			fisheye(t_coeff col, double x, double y)
 {
 	t_cplx		z;
 	double		r;
@@ -321,7 +321,7 @@ t_cplx			fisheye(t_color col, double x, double y)
 ** 17 : Popcorn
 */
 
-t_cplx			popcorn(t_color col, double x, double y)
+t_cplx			popcorn(t_coeff col, double x, double y)
 { 
 	t_cplx		z;
 
@@ -335,7 +335,7 @@ t_cplx			popcorn(t_color col, double x, double y)
 */
 
 
-t_cplx			exponential(t_color col, double x, double y)
+t_cplx			exponential(t_coeff col, double x, double y)
 {
 	t_cplx		z;
 
@@ -349,7 +349,7 @@ t_cplx			exponential(t_color col, double x, double y)
 ** 19 : Power
 */
 
-t_cplx			power(t_color col, double x, double y)
+t_cplx			power(t_coeff col, double x, double y)
 {
 	t_cplx		z;
 	double		r;
@@ -367,7 +367,7 @@ t_cplx			power(t_color col, double x, double y)
 ** 20 : Cosine
 */
 
-t_cplx			cosine(t_color col, double x, double y)
+t_cplx			cosine(t_coeff col, double x, double y)
 {
 	t_cplx		z;
 
@@ -381,7 +381,7 @@ t_cplx			cosine(t_color col, double x, double y)
 ** 21 : Rings
 */
 
-t_cplx			rings(t_color col, double x, double y)
+t_cplx			rings(t_coeff col, double x, double y)
 {
 	t_cplx		z;
 	double		r;
@@ -402,7 +402,7 @@ t_cplx			rings(t_color col, double x, double y)
 ** 22 : Fan
 */
 
-t_cplx			fan(t_color col, double x, double y)
+t_cplx			fan(t_coeff col, double x, double y)
 {
 	double		r;
 	double		theta;
@@ -429,7 +429,7 @@ t_cplx			fan(t_color col, double x, double y)
 ** 23 : Blob
 */
 
-t_cplx			blob(t_color col, double x, double y)
+t_cplx			blob(t_coeff col, double x, double y)
 {
 	double		r;
 	double		theta;
@@ -446,7 +446,7 @@ t_cplx			blob(t_color col, double x, double y)
 ** 24 : PDJ
 */
 
-t_cplx		pdj(t_color col, double x, double y)
+t_cplx		pdj(t_coeff col, double x, double y)
 {
     t_cplx	z;
  //    double pdj1 = 1.2;
@@ -463,7 +463,7 @@ t_cplx		pdj(t_color col, double x, double y)
 ** 25 : Fan2
 */
 
-t_cplx		fan2(t_color col, double x, double y) 
+t_cplx		fan2(t_coeff col, double x, double y) 
 {
 	double	r;
 	double	theta;
@@ -497,7 +497,7 @@ t_cplx		fan2(t_color col, double x, double y)
 ** 26 : Rings2
 */
 
-t_cplx		rings2(t_color col, double x, double y)
+t_cplx		rings2(t_coeff col, double x, double y)
 {
 	double	r;
 	double	p;
@@ -518,7 +518,7 @@ t_cplx		rings2(t_color col, double x, double y)
 ** 27 : Eyefish
 */
 
-t_cplx			eyefish(t_color col, double x, double y)
+t_cplx			eyefish(t_coeff col, double x, double y)
 {
 	t_cplx		z;
 	double		r;
@@ -534,7 +534,7 @@ t_cplx			eyefish(t_color col, double x, double y)
 ** 28 : Bubble
 */
 
-t_cplx			bubble(t_color col, double x, double y)
+t_cplx			bubble(t_coeff col, double x, double y)
 {
 	t_cplx		z;
 	double		r;
@@ -550,7 +550,7 @@ t_cplx			bubble(t_color col, double x, double y)
 ** 29 : Cylinder
 */
 
-t_cplx			cylinder(t_color col, double x, double y)
+t_cplx			cylinder(t_coeff col, double x, double y)
 {
 	t_cplx		z;
 
@@ -564,7 +564,7 @@ t_cplx			cylinder(t_color col, double x, double y)
 ** 31 : Noise
 */
 
-t_cplx			noise(t_color col, double x, double y)
+t_cplx			noise(t_coeff col, double x, double y)
 {
 	double		theta;
 	t_cplx		z;
@@ -582,7 +582,7 @@ t_cplx			noise(t_color col, double x, double y)
 ** 34 : Blur
 */
 
-t_cplx			blur(t_color col, double x, double y)
+t_cplx			blur(t_coeff col, double x, double y)
 {
 	double		theta;
 	t_cplx		z;
@@ -602,7 +602,7 @@ t_cplx			blur(t_color col, double x, double y)
 ** 39 : Curl
 */
 
-t_cplx			curl(t_color col, double x, double y)
+t_cplx			curl(t_coeff col, double x, double y)
 {
 	double			p1 = 0.3;
 	double			p2 = -0.7;
@@ -622,7 +622,7 @@ t_cplx			curl(t_color col, double x, double y)
 ** 42 : tangent
 */
 
-t_cplx			tangent(t_color col, double x, double y)
+t_cplx			tangent(t_coeff col, double x, double y)
 {
 	t_cplx		z;
 
@@ -636,7 +636,7 @@ t_cplx			tangent(t_color col, double x, double y)
 ** 43 : Square
 */
 
-t_cplx			square(t_color col, double x, double y)
+t_cplx			square(t_coeff col, double x, double y)
 {
 	t_cplx		z;
 
@@ -652,7 +652,7 @@ t_cplx			square(t_color col, double x, double y)
 ** 48 : Cross
 */
 
-t_cplx			cross(t_color col, double x, double y)
+t_cplx			cross(t_coeff col, double x, double y)
 {
 	double		c;
 	t_cplx		z;
@@ -668,7 +668,7 @@ t_cplx			cross(t_color col, double x, double y)
 ** 48 : Collatz
 */
 
-t_cplx			collatz(t_color col, double x, double y)
+t_cplx			collatz(t_coeff col, double x, double y)
 {
 	t_cplx		z;
 

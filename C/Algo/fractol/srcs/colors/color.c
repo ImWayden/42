@@ -42,20 +42,3 @@ t_hsv		hsv(double h, double s, double v)
 	return (vect);
 }
 
-t_color		color(t_rgb r)
-{
-	t_color	c;
-
-	c.ac = RANDR (-1.5, 1.5);
-	c.bc = RANDR (-1.5, 1.5);
-	c.cc = RANDR (-1.5, 1.5);
-	c.dc = RANDR (-1.5, 1.5);
-	c.ec = RANDR (-1.5, 1.5);
-	c.fc = RANDR (-1.5, 1.5);
-	c.pa1 = RANDR (-2, 2);
-	c.pa2 = RANDR (-2, 2);
-	c.pa3 = RANDR (-2, 2);
-	c.pa4 = RANDR (-2, 2);
-	c.rgb = rgb(r.r, r.g, r.b);
-	return (c);
-}

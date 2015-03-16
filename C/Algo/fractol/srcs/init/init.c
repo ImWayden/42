@@ -29,44 +29,45 @@ static void	img_init(t_env *env)
 	}
 }
 
-void		threadmap(t_env *env)
+void		cleanpixels(t_env *env)
 {
-	int i = 0;
-	int j = 0;
+	int		x;
+	int		y;
 
-	while (i < 100)
+	x = 0;
+	while (x < SCREEN_W)
 	{
-		env->threadtab[i].y_min = j;
-		j += env->samples / 100;
-		if (i == 99)
-			j = env->samples;
-		env->threadtab[i].y_max = j;
-		env->threadtab[i].env = env;
-		printf("%i %i\n", env->threadtab[i].y_max, env->threadtab[i].y_min);
-		i++;
+		y = 0;
+		while (y < SCREEN_H)
+		{
+			env->pixels[x][y] = rgb(0, 0, 0);
+			y++;
+		}
+		x++;
 	}
 }
 
+
 void		init(t_env *env, char **av)
 {
-	env->ncolors = NCOLORS;
-	env->symmetry = 1;
+	pthread_mutex_init(&env->mutex, NULL);
+	env->back = malloc(SCREEN_H * SCREEN_W * sizeof(t_cplx));
+	env->t = malloc(SCREEN_H * SCREEN_W * sizeof(t_thread));
+	env->nc = 3;
 	env->count = 1;
-	env->invert = 0;
 	env->xres = SCREEN_W;
 	env->yres = SCREEN_H;
-	env->count = 1;
 	env->zoom_factor = 0.25;
 	if (!ft_strcmp(av[1], "-m"))
-		mandel_init(env);
+		imandel(env);
 	else if (!ft_strcmp(av[1], "-j"))
-		julia_init(env);
-	else if (!ft_strcmp(av[1], "-f"))
-		flame_init(env, av[2]);
+		ijulia(env);
+	else
+		exit(0);
 	env->zoom_x = SCREEN_W / (env->x_max - env->x_min);
 	env->zoom_y = SCREEN_H / (env->y_max - env->y_min);
-	threadmap(env);
-	colormap(env);
-	pixelmap(env);
+	rgbmap(env);
+	cleanpixels(env);
+	env->coeff = coeff();
 	img_init(env);	
 }

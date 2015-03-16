@@ -12,14 +12,11 @@
 
 #include "fractol.h"
 
-// Imprecise method which does not guarantee v = v1 when t = 1,
-// due to floating-point arithmetic error.
 t_rgb		linear_inter(t_rgb v0, t_rgb v1, double t)
 {
 	return (rgb_add(v0, rgb_mult(rgb_sub(v1, v0), t)));
 }
- 
-// Precise method which guarantees v = v1 when t =
+
 t_rgb		lerp(t_cplx z, double t)
 {
 	t_rgb 	r;

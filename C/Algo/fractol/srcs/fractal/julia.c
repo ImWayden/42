@@ -12,28 +12,31 @@
 
 #include "fractol.h"
 
-t_rgb		julia_iter(t_env *env, int x, int y)
+void		*julia(void *arg)
 {
+	t_env	*env;
+	int		x;
+	int		y;
 	int		i;
-	double	tmp;
-	double	tmp2;
 	t_cplx	 z;
 	t_cplx	 c;
+	t_cplx	 a;
 
+	getarg(arg, &env, &x, &y);
 	i = 0;
-	tmp2 = 0;
 	z.r = (double)x / env->zoom_x + env->x_min;
 	z.i = env->y_max - (double)y / env->zoom_y;
 	c = conf(env->conf);
-	while ((tmp2) < 4 && i < env->max_i)
+	a = cplx(z.r, z.i);
+	while (mod(z) < 4 && i < env->max_i)
 	{
-		tmp = z.r * z.r - z.i * z.i + c.r;
-		z.i = 2 * z.r * z.i + c.i;
-		z.r = tmp;
+		z = cplx_add(cplx_mult(z, z), c);
+		a = cross(env->coeff[i % env->nc], a.r, a.i);
 		i++;
-		tmp2 = z.r * z.r + z.i * z.i;
 	}
 	if (i == env->max_i)
-		return (Black);
-	return (env->rgbmap[i % 3]);
+		plotpixel(env, x, y, Black);
+	else
+		plotpixel(env, x, y, getcolor(a));
+	return (NULL);
 }

@@ -15,7 +15,7 @@
 
 # include <stdlib.h>
 
-# define ISBLACK(c)			(!c.r && !c.g && !c.b)
+# define ISBLACK(c)			(c.r < 5 && c.g < 5  && c.b < 5)
 # define Aquamarine			rgb(112, 219, 147)
 # define MediumAquamarine	rgb(50, 204, 153)
 # define Black				rgb(0, 0, 0)
@@ -110,26 +110,11 @@ typedef struct				s_hsv
 	double					v;
 }							t_hsv;
 
-typedef struct 				s_color
-{
-	double					ac;
-	double					bc;
-	double					cc;
-	double					dc;
-	double					ec;
-	double					fc;
-	double					pa1;
-	double					pa2;
-	double					pa3;
-	double					pa4;
-	t_rgb					rgb;
-}							t_color; 
 
 /*
 ** Colors creation
 */
 
-t_color						color(t_rgb r);
 t_rgb   					rgb(double r, double g, double b);
 t_hsl						hsl(double h, double s, double l);
 t_hsv						hsv(double h, double s, double v);

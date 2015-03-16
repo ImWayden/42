@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mendel.c                                           :+:      :+:    :+:   */
+/*   bckgrd7.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/01/20 15:03:34 by msarr             #+#    #+#             */
-/*   Updated: 2015/01/20 15:03:34 by msarr            ###   ########.fr       */
+/*   Created: 2015/03/09 00:11:00 by msarr             #+#    #+#             */
+/*   Updated: 2015/03/09 00:11:00 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-t_rgb		mandel_iter(t_env *env, int x, int y)
-{
-	int		i;
-	t_cplx	 z;
-	t_cplx	 c;
+/*
+** 39 : Curl
+*/
 
-	i = 0;
-	c.r = (double)x / env->zoom_x + env->x_min;
-	c.i = env->y_max - (double)y / env->zoom_y;
-	z.r = 0;
-	z.i = 0;
-	while (mod(z) < 4 && i < env->max_i)
-	{
-		z = cplx_add(cplx_mult(z, z), c);
-		i++;
-	}
-	if (i == env->max_i)
-		return (Black);
-	return (lerp(heart(env->colormap[i % 3], x, y), i));
+t_cplx			curl(t_coeff col, double x, double y)
+{
+	double			p1 = 0.3;
+	double			p2 = -0.7;
+	double			t1;
+	t_cplx			z;
+	double			t2;
+
+	(void)col;
+	t1 = 1 + p1 * x + p2 * (x * x - y * y);
+	t2 = p1 * y + 2 * p2 * x * y;
+	z.r = (1 / (t1 * t1 + t2 * t2)) * (x * t1 + y * t2);
+	z.i = (1 / (t1 * t1 + t2 * t2)) * (y * t1 - x * t2);
+	return (z);
 }

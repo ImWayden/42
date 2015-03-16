@@ -1,35 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   intervals.c                                        :+:      :+:    :+:   */
+/*   bckgrd9.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/02/02 02:05:17 by msarr             #+#    #+#             */
-/*   Updated: 2015/02/02 02:05:17 by msarr            ###   ########.fr       */
+/*   Created: 2015/03/09 00:11:51 by msarr             #+#    #+#             */
+/*   Updated: 2015/03/09 00:11:51 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void		imandel(t_env *env)
+/* 
+** 48 : Cross
+*/
+
+t_cplx			cross(t_coeff col, double x, double y)
 {
-	env->y_min = -2.0;
-	env->y_max = 2.0;
-	env->x_min = -2.0;
-	env->x_max = 2.0;
-	env->max_i = 150;
-	env->conf =	0;
-	env->fract = mandel;
+	double		c;
+	t_cplx		z;
+
+	(void)col;
+	c = sqrt(pow(x * x - y * y, -2));
+    z.r = x * c;
+    z.i = y * c;
+    return (z);
 }
 
-void		ijulia(t_env *env)
+/* 
+** 48 : Collatz
+*/
+
+t_cplx			collatz(t_coeff col, double x, double y)
 {
-	env->y_min = -2.0;
-	env->y_max = 2.0;
-	env->x_min = -2.0;
-	env->x_max = 2.0;
-	env->max_i = 50;
-	env->conf =	1;
-	env->fract = julia;
+	t_cplx		z;
+
+	(void)col;
+	z.r = .25 * (1.0 + 4.0 * x - (1.0 + 2.0 * x) * cos (M_PI * x));
+	z.i = .25 * (1.0 + 4.0 * y - (1.0 + 2.0 * y) * cos (M_PI * y));
+	return (z);
 }

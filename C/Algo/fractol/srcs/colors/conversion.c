@@ -33,7 +33,7 @@ t_rgb			hsltorgb(t_hsl h)
 	double	p;
 
 	if (h.s == 0.0)
-		return (rgb(h.l * 255, h.l * 255, h.l * 255)); // achromatic
+		return (rgb(h.l * 255, h.l * 255, h.l * 255));
 	q = h.l < 0.5 ? h.l * (1.0 + h.s) : h.l + h.s - h.l * h.s;
 	p = 2.0 * h.l - q;
 	return (rgb(hue2rgb(p, q, h.h + 1.0 / 3.0) * 255.0,
@@ -54,7 +54,7 @@ t_hsl			rgbtohsl(t_rgb c)
 	min = MIN3(p.r, p.g, p.b);
 	h = hsl((max + min) / 2.0, (max + min) / 2.0, (max + min) / 2.0);
 	if(max == min)
-		return (hsl(0.0, 0.0, h.l));// achromatic
+		return (hsl(0.0, 0.0, h.l));
 	d = max - min;
 	h.s = h.l > 0.5 ? d / (2 - max - min) : d / (max + min);
 	if (max == p.r)
@@ -74,7 +74,7 @@ t_rgb			hsvtorgb(t_hsv hsv)
 	double		p;
 	double		q;
 	double		t;
-	/// Implementation based on: http://en.wikipedia.org/wiki/HSV_color_space
+
 	hsv.h = mod(cplx(hsv.h, 2.0 * M_PI));
 	hi = (int)(mod(cplx(hsv.h / (2.0 * M_PI / 6.0 ), 6.0)));
 	f = (hsv.h / (2.0 * M_PI / 6.0)) - (double)hi;
@@ -94,6 +94,5 @@ t_rgb			hsvtorgb(t_hsv hsv)
 		return rgb(t,p,hsv.v);
 	if (hi == 5)
 		return rgb(hsv.v,p,q);
-	ft_putnbr(hi);
 	return rgb(0, 0, 0);
 }

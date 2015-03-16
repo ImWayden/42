@@ -76,7 +76,11 @@ int		mouse_motion(int x, int y, t_env *env)
 int		loop_hook(t_env *env)
 {
 	if (env->count)
-		env->count = expose(env);
+	{
+		zoom(env);
+		cleanpixels(env);
+		env->count = render(env);
+	}
 	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
 	return (0);
 }

@@ -20,8 +20,8 @@ SDIR = srcs/
 CPDIR = srcs/complex/
 MXDIR = srcs/mlx/
 PDIR = srcs/pixels/
-MDIR = srcs/fractal/mandel-julia/
-FDIR = srcs/fractal/flame/
+BDIR = srcs/bckgrd/
+FDIR = srcs/fractal/
 F3DIR = srcs/fractal_3D/
 IDIR = srcs/init/
 DDIR = srcs/draw/
@@ -30,13 +30,14 @@ CDIR = srcs/colors/
 SRC = $(SDIR)main.c \
 	  $(MXDIR)expose.c  $(MXDIR)mouse.c \
 	  $(CPDIR)ope.c \
-	  $(CDIR)color.c $(CDIR)map.c $(CDIR)conversion.c $(CDIR)linear.c \
+	  $(CDIR)color.c $(CDIR)conversion.c $(CDIR)linear.c \
 	  $(CDIR)style.c $(CDIR)ope.c $(CDIR)lifted.c\
-	  $(IDIR)init.c $(IDIR)intervals.c \
+	  $(IDIR)init.c $(IDIR)intervals.c $(IDIR)coeff.c $(IDIR)thread.c $(IDIR)color.c\
 	  $(F3DIR)pyramid.c \
 	  $(PDIR)plotpixel.c \
-	  $(MDIR)mandel.c $(MDIR)julia.c $(MDIR)conf.c $(MDIR)main.c \
-	  $(FDIR)funct.c $(FDIR)main.c \
+	  $(FDIR)mandel.c $(FDIR)julia.c $(FDIR)buddha.c  $(FDIR)conf.c $(FDIR)main.c \
+	  $(BDIR)bckgrd.c $(BDIR)bckgrd1.c $(BDIR)bckgrd2.c $(BDIR)bckgrd3.c $(BDIR)bckgrd4.c \
+	  $(BDIR)bckgrd5.c $(BDIR)bckgrd6.c $(BDIR)bckgrd7.c $(BDIR)bckgrd8.c $(BDIR)bckgrd9.c\
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes -I /opt/X11/include
