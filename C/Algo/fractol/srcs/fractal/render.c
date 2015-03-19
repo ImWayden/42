@@ -13,46 +13,25 @@
 #include "fractol.h"
 
 
-int     		threads(t_env *env, int x, int y)
+int     		threads(t_env *env, int y)
 {
-	env->t[x + y * SCREEN_H].env = env;
-	env->t[x + y * SCREEN_H].x = x;
-	env->t[x + y * SCREEN_H].y = y;
-	pthread_create(&env->t[x + y * SCREEN_H].t, NULL, env->fract, (void *)&env->t[x + y * SCREEN_H]);
-	
+	env->t[y].env = env;
+	env->t[y].y = y;
+	pthread_create(&env->t[y].t, NULL, env->fract, (void *)&env->t[y]);
 	return (0);
 }
 
 int			render(t_env *env)
 {
-	int		x;
 	int		y;
 
-	y = 0;
-	while (y < SCREEN_H)
-	{
-		x = -1;
-		while (++x < SCREEN_W)
-			{
-		ft_putnbr(x);
-		ft_putchar(' ');
-		ft_putnbr(y);
-		ft_putchar('\n');
-			threads(env, x, y);
-		}
-		y++;
-	}
-	y = 0;
-	while (y < SCREEN_H)
-	{
-		x = -1;
-		while (++x < SCREEN_W)
-		{
-			if (pthread_join(env->t[x + y * SCREEN_H].t, NULL))
-				printf("join %i %i\n", x, y);	
-		}
-		y++;
-	}
+	y = -1;
+	while (++y < SCREEN_H)
+		threads(env, y);
+	y = -1;
+	while (++y < SCREEN_H)
+		if (pthread_join(env->t[y].t, NULL))
+			exit (0);
 	putpixels(env);
 	return(0);
 }

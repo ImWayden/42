@@ -12,6 +12,18 @@
 
 #include "fractol.h"
 
+t_cplx 		cplx_cos(t_cplx z )
+{
+	double	a;
+	double	b;
+
+	a = exp(z.i);
+	b = 1.0 / a;
+	a = a / 2.0;
+	b = b/2.0;
+	return (cplx(cos(z.r) * (a + b), - sin(z.r ) * (a - b)));
+}
+
 t_cplx		cplx(double r, double i)
 {
 	t_cplx	c;

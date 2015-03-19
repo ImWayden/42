@@ -25,6 +25,7 @@ double		 		arg(t_cplx c);
 double				dot(t_cplx a, t_cplx b);
 t_cplx				cplx(double r,double i);
 t_cplx 				cplx_mult(t_cplx a, t_cplx b);
+t_cplx 				cplx_cos(t_cplx a);
 t_cplx 				cplx_sub(t_cplx a, t_cplx b);
 t_cplx 				cplx_add(t_cplx a, t_cplx b);
 t_cplx				cplx_div(t_cplx lhs, t_cplx rhs);

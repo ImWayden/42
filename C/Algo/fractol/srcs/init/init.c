@@ -50,9 +50,8 @@ void		cleanpixels(t_env *env)
 
 void		init(t_env *env, char **av)
 {
-	pthread_mutex_init(&env->mutex, NULL);
 	env->back = malloc(SCREEN_H * SCREEN_W * sizeof(t_cplx));
-	env->t = malloc(SCREEN_H * SCREEN_W * sizeof(t_thread));
+	env->t = malloc(SCREEN_H * sizeof(t_thread));
 	env->nc = 3;
 	env->count = 1;
 	env->xres = SCREEN_W;

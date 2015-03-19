@@ -23,20 +23,22 @@ void		*julia(void *arg)
 	t_cplx	 a;
 
 	getarg(arg, &env, &x, &y);
-	i = 0;
-	z.r = (double)x / env->zoom_x + env->x_min;
-	z.i = env->y_max - (double)y / env->zoom_y;
-	c = conf(env->conf);
-	a = cplx(z.r, z.i);
-	while (mod(z) < 4 && i < env->max_i)
+	while (++x < SCREEN_W)
 	{
-		z = cplx_add(cplx_mult(z, z), c);
-		a = cross(env->coeff[i % env->nc], a.r, a.i);
-		i++;
+		i = -1;
+		z.r = (double)x / env->zoom_x + env->x_min;
+		z.i = env->y_max - (double)y / env->zoom_y;
+		c = conf(env->conf);
+		a = cplx(z.r, z.i);
+		while (mod(z) < 4 && ++i < env->max_i)
+		{
+			z = cplx_add(cplx_cos(z), c);
+			a = cross(env->coeff[i % env->nc], a.r, a.i);
+		}
+		if (i == env->max_i)
+			plotpixel(env, x, y, Black);
+		else
+			plotpixel(env, x, y, getcolor(a));
 	}
-	if (i == env->max_i)
-		plotpixel(env, x, y, Black);
-	else
-		plotpixel(env, x, y, getcolor(a));
 	return (NULL);
 }

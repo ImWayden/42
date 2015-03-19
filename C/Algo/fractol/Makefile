@@ -33,9 +33,9 @@ SRC = $(SDIR)main.c \
 	  $(CDIR)color.c $(CDIR)conversion.c $(CDIR)linear.c \
 	  $(CDIR)style.c $(CDIR)ope.c $(CDIR)lifted.c\
 	  $(IDIR)init.c $(IDIR)intervals.c $(IDIR)coeff.c $(IDIR)thread.c $(IDIR)color.c\
-	  $(F3DIR)pyramid.c \
 	  $(PDIR)plotpixel.c \
-	  $(FDIR)mandel.c $(FDIR)julia.c $(FDIR)buddha.c  $(FDIR)conf.c $(FDIR)main.c \
+	  $(FDIR)mandel.c $(FDIR)julia.c $(FDIR)buddha.c  $(FDIR)conf.c $(FDIR)render.c \
+	  $(F3DIR)pyramid.c \
 	  $(BDIR)bckgrd.c $(BDIR)bckgrd1.c $(BDIR)bckgrd2.c $(BDIR)bckgrd3.c $(BDIR)bckgrd4.c \
 	  $(BDIR)bckgrd5.c $(BDIR)bckgrd6.c $(BDIR)bckgrd7.c $(BDIR)bckgrd8.c $(BDIR)bckgrd9.c\
 

@@ -15,7 +15,7 @@
 void		getarg(void *arg, t_env **env, int *x, int *y)
 {
 	*env = ((t_thread *)arg)->env;
-	*x = ((t_thread *)arg)->x;
+	*x = -1;
 	*y = ((t_thread *)arg)->y;
 }
 
@@ -29,26 +29,24 @@ void		*mandel(void *arg)
 	t_cplx	 a;
 	t_cplx	 c;
 
-	i = 0;
 	getarg(arg, &env, &x, &y);
-	c.r = (double)x / env->zoom_x + env->x_min;
-	c.i = env->y_max - (double)y / env->zoom_y;
-	z = cplx(0.0, 0.0);
-	a = cplx(c.r, c.i);
-	while (mod(z) < 4 && i < env->max_i)
+	while (++x < SCREEN_W)
 	{
-		pthread_mutex_lock(&env->mutex); /* On verrouille le mutex */
-		z = cplx_add(cplx_mult(z, z), c);
-		a = curl(env->coeff[i % env->nc], a.r, a.i);
-		pthread_mutex_unlock(&env->mutex); 
-		i++;
+		c.r = (double)x / env->zoom_x + env->x_min;
+		c.i = env->y_max - (double)y / env->zoom_y;
+		z = cplx(0.0, 0.0);
+		a = cplx(c.r, c.i);
+		i = -1;
+		ft_putnbr(x);
+		while (mod(z) < 16 && ++i < env->max_i)
+		{
+			z = cplx_add(cplx_cos(z), c);
+			a = heart(env->coeff[i % env->nc], a.r, a.i);
+		}
+		if (i == env->max_i)
+			plotpixel(env, x, y, Black);
+		else
+			plotpixel(env, x, y, getcolor(a));
 	}
-	pthread_mutex_lock(&env->mutex); /* On verrouille le mutex */
-	if (i == env->max_i)
-		plotpixel(env, x, y, Black);
-	else
-		plotpixel(env, x, y, getcolor(a));
-	pthread_mutex_unlock(&env->mutex); 
-	pthread_exit(NULL);
 	return (NULL);
 }

@@ -28,17 +28,13 @@ void	putpixels(t_env *env)
 	int		x;
 	int		y;
 
-	x = 0;
-	while (x < SCREEN_W)
+	x = -1;
+	while (++x < SCREEN_H)
 	{
-		y = 0;
-		while (y < SCREEN_H)
-		{
-			if (y < SCREEN_W && x < SCREEN_H && !ISBLACK(env->pixels[x][y]))
-				plotpixel(env, y + ((SCREEN_W - SCREEN_H) / 2), x, env->pixels[x][y]);
-			y++;
-		}
-		x++;
+		y = -1;
+		while (++y < SCREEN_W)
+			if (!(ISBLACK(env->pixels[y][x])))
+				plotpixel(env, y, x, env->pixels[y][x]);
 	}
 }
 
