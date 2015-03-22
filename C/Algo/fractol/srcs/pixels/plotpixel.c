@@ -11,6 +11,12 @@
 /* ************************************************************************** */
 
 #include "fractol.h"
+void	lotpixel(char *data, t_rgb color)
+{
+	data[0] = color.b;
+	data[1] = color.g;
+	data[2] = color.r;
+}
 
 void	plotpixel(t_env *env, int x, int y, t_rgb color)
 {

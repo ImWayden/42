@@ -51,12 +51,12 @@ void		cleanpixels(t_env *env)
 void		init(t_env *env, char **av)
 {
 	env->back = malloc(SCREEN_H * SCREEN_W * sizeof(t_cplx));
-	env->t = malloc(SCREEN_H * sizeof(t_thread));
+	env->t = malloc(SCREEN_H * SCREEN_W * sizeof(t_thread));
 	env->nc = 3;
 	env->count = 1;
 	env->xres = SCREEN_W;
 	env->yres = SCREEN_H;
-	env->zoom_factor = 0.25;
+	env->zoom_factor = 0.10;
 	if (!ft_strcmp(av[1], "-m"))
 		imandel(env);
 	else if (!ft_strcmp(av[1], "-j"))
@@ -65,6 +65,9 @@ void		init(t_env *env, char **av)
 		exit(0);
 	env->zoom_x = SCREEN_W / (env->x_max - env->x_min);
 	env->zoom_y = SCREEN_H / (env->y_max - env->y_min);
+	env->ptx = -1.74999841099;
+	env->pty = -0.00000000001;
+	printf("%lf %lf\n", env->zoom_x, env->zoom_y);
 	rgbmap(env);
 	cleanpixels(env);
 	env->coeff = coeff();

@@ -55,6 +55,7 @@ typedef struct			s_thread
 {
 	int					y;
 	int					x;
+	char				*pix;
 	t_env				*env;
 	pthread_t			t;
 }						t_thread;
@@ -113,8 +114,8 @@ typedef struct			s_env
 	double				x_max;
 	double				y_min;
 	double				y_max;
-	double				ptx;
-	double				pty;
+	long double				ptx;
+	long double				pty;
 	int					yres;
 	int					xres;
 	double				ranx;
@@ -122,13 +123,13 @@ typedef struct			s_env
 	double				zoom_x;
 	double				zoom_y;
 	double				zoom_factor;
-	t_thread			*t;
 	long int 			max_i;
 	void 				*(*fract)(void *arg);
 	int 				count;	
 	struct timeval		start;
 	struct timeval		end;
 	double 				conf;
+	t_thread			*t;
 }						t_env;
 
 
@@ -198,6 +199,7 @@ t_coeff					*coeff(void);
 void					cleanpixels(t_env *env);
 void					imandel(t_env *env);
 void					ijulia(t_env *env);
+void					ibuddha(t_env *env);
 
 /*
 ** Colors
@@ -205,6 +207,7 @@ void					ijulia(t_env *env);
 
 void					plot3d(t_env *env, t_coord c, int i);
 t_coord					coord(double x, double y, double z);
+void					lotpixel(char *data, t_rgb color);
 void					addpixel(t_env *env, int x, int y, t_rgb color);
 void					plotpixel(t_env *env, int x, int y, t_rgb color);
 t_rgb					getpixel(t_env *env, int x, int y);

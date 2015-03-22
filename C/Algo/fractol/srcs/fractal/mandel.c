@@ -15,7 +15,7 @@
 void		getarg(void *arg, t_env **env, int *x, int *y)
 {
 	*env = ((t_thread *)arg)->env;
-	*x = -1;
+	*x = -1;//((t_thread *)arg)->x;
 	*y = ((t_thread *)arg)->y;
 }
 
@@ -37,10 +37,9 @@ void		*mandel(void *arg)
 		z = cplx(0.0, 0.0);
 		a = cplx(c.r, c.i);
 		i = -1;
-		ft_putnbr(x);
 		while (mod(z) < 16 && ++i < env->max_i)
 		{
-			z = cplx_add(cplx_cos(z), c);
+			z = cplx_add(cplx_mult(z, z), c);
 			a = heart(env->coeff[i % env->nc], a.r, a.i);
 		}
 		if (i == env->max_i)

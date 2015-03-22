@@ -39,23 +39,25 @@ int		mouse_press(int button, int x, int y, t_env *env)
 	if (button == 5  || button == 4)
 	{
 		env->count = 1;
-		gettimeofday(&(env->end), NULL);
-		if ((env->end.tv_sec - env->start.tv_sec) > 1)
-		{
+		// gettimeofday(&(env->end), NULL);
+		// if ((env->end.tv_sec - env->start.tv_sec) > 1)
+		// {
 			env->ptx = (double)x / env->zoom_x + env->x_min;
 			env->pty = env->y_max - (double)y / env->zoom_y;
-		}
+		//
 		if (button == 4)
 		{
-			env->zoom_x *= 1 - env->zoom_factor * 2.0;
-			env->zoom_y *= 1 - env->zoom_factor * 2.0;
+			env->zoom_x *= 1.1;// *= 1 - env->zoom_factor * 2.0;
+			env->zoom_y *= 1.1;// *= 1 - env->zoom_factor * 2.0;
 		}
 		if (button == 5)
 		{
-			env->zoom_x *= 1 + env->zoom_factor * 2.0;
-			env->zoom_y *= 1 + env->zoom_factor * 2.0;
+			env->zoom_x /= 1.1;// *= 1 + env->zoom_factor * 2.0;
+			env->zoom_y /= 1.1;// *= 1 + env->zoom_factor * 2.0;
 		}
-		gettimeofday(&(env->start), NULL);
+		zoom(env);
+		loop_hook(env);
+		//gettimeofday(&(env->start), NULL);
 	}
 	return 0;
 }
@@ -77,10 +79,10 @@ int		loop_hook(t_env *env)
 {
 	if (env->count)
 	{
-		zoom(env);
 		cleanpixels(env);
 		env->count = render(env);
 	}
-	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
+	else
+		mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
 	return (0);
 }
