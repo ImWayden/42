@@ -40,15 +40,19 @@ SRC = $(SDIR)main.c \
 	  $(BDIR)bckgrd5.c $(BDIR)bckgrd6.c $(BDIR)bckgrd7.c $(BDIR)bckgrd8.c $(BDIR)bckgrd9.c\
 
 OBJ = $(SRC:.c=.o)
-INC = -I includes -I $(LDIR)includes -I /opt/X11/include
+INC = -I includes -I $(LDIR)includes -I minilibx_macos
 LIB = ./libft/libft.a
-DIR_LIBS = /opt/X11/lib
-LDFLAGS += -L$(DIR_LIBS) -lmlx -lXext -lX11 -lm -lpthread
+DIR_LIBS = ./minilibx_macos
+LDFLAGS += -L$(DIR_LIBS) -framework OpenGL -framework AppKit -lpthread
 CFLAGS = -Wall -Werror -Wextra
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
+	@echo "\033[31;1m"
+	@echo -n '---> Compiling Minilibx... <---'
+	@echo "\033[0m"
+	$(MAKE) re -C ./minilibx_macos
 	@echo "\033[31;1m"
 	@echo -n '---> Creating the Libft... <---'
 	@echo "\033[0m"
