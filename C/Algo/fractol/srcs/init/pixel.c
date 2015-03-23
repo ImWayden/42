@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   thread.c                                           :+:      :+:    :+:   */
+/*   pixel.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/03/07 22:39:03 by msarr             #+#    #+#             */
-/*   Updated: 2015/03/07 22:39:03 by msarr            ###   ########.fr       */
+/*   Created: 2015/03/23 01:49:02 by msarr             #+#    #+#             */
+/*   Updated: 2015/03/23 01:49:02 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-t_thread		*threadmap(t_env *env)
+t_rgb			*pixelmap(void)
 {
-	t_thread	*thread;
-	int			y;
+	int		x;
+	int		d;
+	t_rgb	*pixels;
 
-	thread = NULL;
-	if ((thread = malloc(SCREEN_H * sizeof(t_thread))))
-	{
-		y = -1;
-		while (++y < SCREEN_H)
-		{
-			thread[y].y = y;
-			thread[y].env = env;
-		}
-	}
-	return (thread);
+	x = -1;
+	d = SCREEN_H * SCREEN_W;
+	pixels = NULL;
+	if ((pixels = malloc(sizeof(t_rgb) * d)))
+		while (++x < d)
+			pixels[x] = rgb(0, 0, 0);
+	return (pixels);
 }

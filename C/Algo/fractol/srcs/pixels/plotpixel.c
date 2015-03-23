@@ -13,9 +13,9 @@
 #include "fractol.h"
 void	lotpixel(char *data, t_rgb color)
 {
-	data[0] = color.b;
+	data[0] = color.r;
 	data[1] = color.g;
-	data[2] = color.r;
+	data[2] = color.b;
 }
 
 void	plotpixel(t_env *env, int x, int y, t_rgb color)
@@ -24,9 +24,9 @@ void	plotpixel(t_env *env, int x, int y, t_rgb color)
 
 	p = x + y * SCREEN_W;
 	p *= 4;
-	env->data[p] = color.b;
+	env->data[p] = color.r;
 	env->data[p + 1] = color.g;
-	env->data[p + 2] = color.r;
+	env->data[p + 2] = color.b;
 }
 
 void	putpixels(t_env *env)
@@ -39,8 +39,8 @@ void	putpixels(t_env *env)
 	{
 		y = -1;
 		while (++y < SCREEN_W)
-			if (!(ISBLACK(env->pixels[y][x])))
-				plotpixel(env, y, x, env->pixels[y][x]);
+			if (!(ISBLACK(env->pixel[y + x * SCREEN_W])))
+				plotpixel(env, y, x, env->pixel[y + x * SCREEN_W]);
 	}
 }
 

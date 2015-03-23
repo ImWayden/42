@@ -50,7 +50,7 @@ void		plot3d(t_env *env, t_coord c, int i)
 	x = (0.71 * (c.x - c.y) + 10) * 30.0;
 	y = (-0.82 * c.z + 0.41 * (c.x + c.y) + 10) * 30.0;
 	if (x >= 0 && y >= 0)
-	plotpixel(env, (int)x , (int)y, env->rgbmap[i % 3]);
+	plotpixel(env, (int)x , (int)y, env->color[i % 3]);
 }
 
 void		drawp(t_env *env, t_coord *t)

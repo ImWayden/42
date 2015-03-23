@@ -12,64 +12,58 @@
 
 #include "fractol.h"
 
-static void	img_init(t_env *env)
+static int		img_init(t_env *env)
 {
-	if (!(env->ptr = mlx_init())
-		||
-		!(env->win = mlx_new_window(env->ptr, SCREEN_W, SCREEN_H, "Fractol"))
-		||
-		!(env->img = mlx_new_image(env->ptr, SCREEN_W, SCREEN_H))
-		||
-		!(env->data = mlx_get_data_addr(env->img, &(env->bpp), &(env->sizel)
-		, &(env->endian))))
-	{
+	int			sizel;
+	int			endian;
+	int			bpp;
 
-		ft_putendl("erro!\n");
-		exit(0);
-	}
+	if (!(env->ptr = mlx_init()))
+		return (0);
+	if (!(env->win = mlx_new_window(env->ptr, SCREEN_W, SCREEN_H, "Fractol")))
+		return (0);
+	if (!(env->img = mlx_new_image(env->ptr, SCREEN_W, SCREEN_H)))
+		return (0);
+	if (!(env->data = mlx_get_data_addr(env->img, &bpp, &sizel, &endian)))
+		return (0);
+	return (1); 
 }
 
-void		cleanpixels(t_env *env)
+static int init_args(t_env *env, char **av, int ac)
 {
-	int		x;
-	int		y;
-
-	x = 0;
-	while (x < SCREEN_W)
+	env->color = NULL;
+	env->pixel = NULL;
+	env->coeff = NULL;
+	env->t = NULL;
+	env->zoom = SCREEN_W * 0.25296875f;
+	while (--ac)
 	{
-		y = 0;
-		while (y < SCREEN_H)
-		{
-			env->pixels[x][y] = rgb(0, 0, 0);
-			y++;
-		}
-		x++;
+		if (!ft_strcmp(av[ac], "-m"))
+			env->fract = mandel;
+		else if (!ft_strcmp(av[ac], "-j"))
+			env->fract = julia;
+		else if (!ft_strcmp(av[ac], "-b"))
+			env->fract = buddha;
+		else
+			break ;
 	}
+	return (ac);
 }
 
 
-void		init(t_env *env, char **av)
+
+void		init(t_env *env, char **av, int ac)
 {
-	env->back = malloc(SCREEN_H * SCREEN_W * sizeof(t_cplx));
-	env->t = malloc(SCREEN_H * SCREEN_W * sizeof(t_thread));
-	env->nc = 3;
-	env->count = 1;
-	env->xres = SCREEN_W;
-	env->yres = SCREEN_H;
-	env->zoom_factor = 0.10;
-	if (!ft_strcmp(av[1], "-m"))
-		imandel(env);
-	else if (!ft_strcmp(av[1], "-j"))
-		ijulia(env);
-	else
-		exit(0);
-	env->zoom_x = SCREEN_W / (env->x_max - env->x_min);
-	env->zoom_y = SCREEN_H / (env->y_max - env->y_min);
-	env->ptx = -1.74999841099;
-	env->pty = -0.00000000001;
-	printf("%lf %lf\n", env->zoom_x, env->zoom_y);
-	rgbmap(env);
-	cleanpixels(env);
-	env->coeff = coeff();
-	img_init(env);	
+	if ((init_args(env, av, ac)))
+		ft_exit(env, NULL);
+	if (!(img_init(env)))
+		ft_exit(env, "Unable to init mlx.");
+	if (!(env->color = rgbmap()))
+		ft_exit(env, "Unable to creat rgbmap");
+	if (!(env->pixel = pixelmap()))
+		ft_exit(env, "Unable to create pixelmap");
+	if (!(env->coeff = coeffmap()))
+		ft_exit(env, "Unable to create coeffmap");
+	if (!(env->t = threadmap(env)))
+		ft_exit(env, "Unable to create threadmap");
 }

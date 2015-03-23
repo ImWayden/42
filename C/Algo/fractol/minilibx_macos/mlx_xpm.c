@@ -1,7 +1,8 @@
 // mlx xpm
 // by ol
 
-#include <OpenGL/gl3.h>
+//#include <OpenGL/gl3.h>
+#include <GL/glcorearb.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/mman.h>

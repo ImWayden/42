@@ -29,7 +29,9 @@
 # define SCREEN_W 		670
 # define SCREEN_H		480
 # define random_bit()	random() & 01
-# define NCOLORS		3 * 10
+# define NCOLORS		3
+# define NCOEFF			30
+# define ZOOM_FACTOR	1.1
 # define SAMPLES 		2000
 # define ITT 			10000
 # define SUPER 			1
@@ -46,32 +48,15 @@
 # define MAX_R			1000
 # define MAX_G			200
 # define MAX_B			20
+# define ButtonPress	4
+# define ButtonRelease	5
+# define MotionNotify	6
+# define KeyPressMask	(1L<<0)
+# define KeyReleaseMask	(1L<<1)
+# define ButtonPressMask	(1L<<2)
+# define ButtonReleaseMask	(1L<<3)
+# define PointerMotionMask	(1L<<6)
 
-
-#define KeyPressMask	(1L<<0)
-#define KeyReleaseMask	(1L<<1)
-#define Button3MotionMask	(1L<<10)
-#define Button4MotionMask	(1L<<11)
-#define Button5MotionMask	(1L<<12)
-#define ButtonMotionMask	(1L<<13)
-#define KeymapStateMask	(1L<<14)
-#define ExposureMask	(1L<<15)
-#define VisibilityChangeMask	(1L<<16)
-#define StructureNotifyMask	(1L<<17)
-#define ResizeRedirectMask	(1L<<18)
-#define SubstructureNotifyMask	(1L<<19)
-#define ButtonPressMask	(1L<<2)
-#define SubstructureRedirectMask	(1L<<20)
-#define FocusChangeMask	(1L<<21)
-#define PropertyChangeMask	(1L<<22)
-#define ColormapChangeMask	(1L<<23)
-#define ButtonReleaseMask	(1L<<3)
-#define EnterWindowMask	(1L<<4)
-#define LeaveWindowMask	(1L<<5)
-#define PointerMotionMask	(1L<<6)
-#define PointerMotionHintMask	(1L<<7)
-#define Button1MotionMask	(1L<<8)
-#define Button2MotionMask	(1L<<9)
 
 typedef struct			s_env t_env;
 
@@ -125,35 +110,17 @@ typedef struct			s_env
 	void				*win;
 	void				*img;
 	char				*data;
-	int					sizel;
-	int					endian;
-	int					bpp;
 	t_coeff				*coeff;
-	t_rgb				rgbmap[3];
-	t_rgb				pixels[SCREEN_W][SCREEN_H];
-	t_cplx				*back;
-	pthread_mutex_t		mutex;
-	int					nc;
-	double				x_min;
-	double				x_max;
-	double				y_min;
-	double				y_max;
-	long double				ptx;
-	long double				pty;
-	int					yres;
-	int					xres;
-	double				ranx;
-	double				rany;
-	double				zoom_x;
-	double				zoom_y;
-	double				zoom_factor;
+	t_rgb				*color;
+	t_rgb				*pixel;
+	double				zoom;
+	long double			ptx;
+	long double			pty;
 	long int 			max_i;
-	void 				*(*fract)(void *arg);
-	int 				count;	
 	struct timeval		start;
 	struct timeval		end;
-	double 				conf;
 	t_thread			*t;
+	void 				*(*fract)(void *arg);
 }						t_env;
 
 
@@ -217,13 +184,12 @@ t_cplx					bwaves(t_coeff col, double x, double y);
 ** Prog Init
 */
 
-void					init(t_env *env, char **av);
-void					rgbmap(t_env *env);
-t_coeff					*coeff(void);
-void					cleanpixels(t_env *env);
-void					imandel(t_env *env);
-void					ijulia(t_env *env);
-void					ibuddha(t_env *env);
+t_rgb					*rgbmap(void);
+t_coeff					*coeffmap(void);
+t_rgb					*pixelmap(void);
+t_thread				*threadmap(t_env *env);
+void					ft_exit(t_env *env, char *str);
+void					init(t_env *env, char **av, int ac);
 
 /*
 ** Colors

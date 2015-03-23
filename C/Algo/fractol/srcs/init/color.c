@@ -12,9 +12,16 @@
 
 #include "fractol.h"
 
-void		rgbmap(t_env *env)
+t_rgb		*rgbmap(void)
 {
-	env->rgbmap[0] = Green;
-	env->rgbmap[1] = Yellow;
-	env->rgbmap[2] = Red;
+	t_rgb	*rgbtab;
+
+	rgbtab = NULL;
+	if ((rgbtab = malloc(NCOLORS * sizeof(t_rgb))))
+	{
+		rgbtab[0] = Green;
+		rgbtab[1] = Yellow;
+		rgbtab[2] = Red;
+	}
+	return (rgbtab);
 }

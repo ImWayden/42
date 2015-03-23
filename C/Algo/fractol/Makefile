@@ -26,24 +26,26 @@ F3DIR = srcs/fractal_3D/
 IDIR = srcs/init/
 DDIR = srcs/draw/
 CDIR = srcs/colors/
+EDIR = srcs/exit/
 
 SRC = $(SDIR)main.c \
 	  $(MXDIR)expose.c  $(MXDIR)mouse.c \
 	  $(CPDIR)ope.c \
 	  $(CDIR)color.c $(CDIR)conversion.c $(CDIR)linear.c \
 	  $(CDIR)style.c $(CDIR)ope.c $(CDIR)lifted.c\
-	  $(IDIR)init.c $(IDIR)intervals.c $(IDIR)coeff.c $(IDIR)thread.c $(IDIR)color.c\
+	  $(IDIR)init.c $(IDIR)thread.c $(IDIR)coeff.c $(IDIR)pixel.c $(IDIR)color.c\
 	  $(PDIR)plotpixel.c \
 	  $(FDIR)mandel.c $(FDIR)julia.c $(FDIR)buddha.c  $(FDIR)conf.c $(FDIR)render.c \
 	  $(F3DIR)pyramid.c \
 	  $(BDIR)bckgrd.c $(BDIR)bckgrd1.c $(BDIR)bckgrd2.c $(BDIR)bckgrd3.c $(BDIR)bckgrd4.c \
 	  $(BDIR)bckgrd5.c $(BDIR)bckgrd6.c $(BDIR)bckgrd7.c $(BDIR)bckgrd8.c $(BDIR)bckgrd9.c\
+	  $(EDIR)exit.c
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes -I minilibx_macos
 LIB = ./libft/libft.a
 DIR_LIBS = ./minilibx_macos
-LDFLAGS += -L$(DIR_LIBS) -framework OpenGL -framework AppKit -lpthread
+LDFLAGS += -L$(DIR_LIBS) -framework OpenGL -framework AppKit -lglut -lGL -lGLU -lGLEW -lpthread
 CFLAGS = -Wall -Werror -Wextra
 
 all: $(NAME)

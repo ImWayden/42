@@ -17,20 +17,22 @@ void	addred(t_env *env, t_cplx *z, int n)
 	int		x;
 	int		y;
 	int		i;
+	int		d;
 
 	i = -1;
 	while (++i < env->max_i)
 	{
-		x = (z[i].r - env->x_min) * env->zoom_x;
-		y = -((z[i].i - env->y_max) * env->zoom_y);
-		if (x > 0 && y > 0 && x < env->xres && y < env->yres)
+		x = ((z[i].r - env->ptx) * env->zoom) + (SCREEN_W / 2);
+		y = ((z[i].i - env->pty) * env->zoom) + (SCREEN_H / 2);
+		if (x > 0 && y > 0 && x < SCREEN_W && y < SCREEN_H)
 		{
+			d = x + y * SCREEN_W;
 			if (n < 115)
-				env->pixels[x][y].r++;
+				env->pixel[d].r++;
 			if (n < 30)
-				env->pixels[x][y].g++;
+				env->pixel[d].g++;
 			if (n < 20)
-				env->pixels[x][y].b++;
+				env->pixel[d].b++;
 		}
 	}
 }
@@ -52,15 +54,15 @@ void		*buddha(void *ptr)
 		i = -1;
 		while (++i < env->max_i)
 			zt[i] = cplx(0.0, 0.0);
-		c.r = (double)x / env->zoom_x + env->x_min;
-		c.i = env->y_max - (double)y / env->zoom_y;
+		c.r = env->ptx + ((x - (SCREEN_W / 2)) / env->zoom);
+		c.i = env->pty + ((y - (SCREEN_H / 2)) / env->zoom);
 		a = cplx(c.r, c.i);
 		z = cplx(0.0, 0.0);
 		i = -1;
 		while (mod(z) < 4 && ++i < env->max_i)
 		{
 			z = cplx_add(cplx_mult(z, z), c);
-			a = curl(env->coeff[i % env->nc], a.r, a.i);
+			a = curl(env->coeff[i % NCOEFF], a.r, a.i);
 			zt[i] = cplx(z.r, z.i);
 		}
 		plotpixel(env, x, y, lerp(c, arg(c)));

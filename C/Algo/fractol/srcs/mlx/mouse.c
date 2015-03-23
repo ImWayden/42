@@ -12,20 +12,11 @@
 
 #include "fractol.h"
 
-void	zoom(t_env *env)
-{
-	env->ranx = SCREEN_W / env->zoom_x;
-	env->rany = SCREEN_H / env->zoom_y;
-	env->y_min = env->pty - env->rany / 2.0;
-	env->y_max = env->pty + env->rany / 2.0;
-	env->x_min = env->ptx - env->ranx / 2.0;
-	env->x_max = env->ptx + env->ranx / 2.0;
-}
 
 int		key_hook(int keycode, t_env *env)
 {
 	if (keycode == 65307)
-		exit(0);
+		ft_exit(env, "See ya.");
 	if (keycode == '=' || keycode == 65451)
 		env->max_i += 10;
 	if (keycode == '-' || keycode == 65453)
@@ -38,26 +29,19 @@ int		mouse_press(int button, int x, int y, t_env *env)
 {
 	if (button == 5  || button == 4)
 	{
-		env->count = 1;
-		// gettimeofday(&(env->end), NULL);
-		// if ((env->end.tv_sec - env->start.tv_sec) > 1)
-		// {
-			env->ptx = (double)x / env->zoom_x + env->x_min;
-			env->pty = env->y_max - (double)y / env->zoom_y;
-		//
+		gettimeofday(&(env->end), NULL);
+		if ((env->end.tv_sec - env->start.tv_sec) > 1)
+		{
+			env->ptx = env->ptx + ((x - (SCREEN_W / 2)) / env->zoom);
+			env->pty = env->pty + ((y - (SCREEN_H / 2)) / env->zoom);
+		}
 		if (button == 4)
-		{
-			env->zoom_x *= 1.1;// *= 1 - env->zoom_factor * 2.0;
-			env->zoom_y *= 1.1;// *= 1 - env->zoom_factor * 2.0;
-		}
+			env->zoom *= ZOOM_FACTOR;
 		if (button == 5)
-		{
-			env->zoom_x /= 1.1;// *= 1 + env->zoom_factor * 2.0;
-			env->zoom_y /= 1.1;// *= 1 + env->zoom_factor * 2.0;
-		}
-		zoom(env);
-		loop_hook(env);
-		//gettimeofday(&(env->start), NULL);
+			env->zoom /= ZOOM_FACTOR;
+		env->max_i = (SCREEN_W / 2) * 0.049715909 * log10(env->zoom);
+		render(env);
+		gettimeofday(&(env->start), NULL);
 	}
 	return 0;
 }
@@ -66,23 +50,12 @@ int		mouse_motion(int x, int y, t_env *env)
 {
 	(void)x;
 	(void)y;
-	if (env->conf)
-	{
-		env->conf += 0.5;
-		if (env->conf > 46)
-			env->conf = 1;
-	}
+	(void)env;
 	return (0);
 }
 
 int		loop_hook(t_env *env)
 {
-	if (env->count)
-	{
-		cleanpixels(env);
-		env->count = render(env);
-	}
-	else
-		mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
+	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
 	return (0);
 }

@@ -70,5 +70,5 @@ t_rgb			orbittrap(t_env *env, t_cplx z)
 		r = 0.0;
 	else
 		r = 1.0 - (r / 2.0);
-	return (env->rgbmap[(int)(r * 255.0) % env->nc]);
+	return (env->color[(int)(r * 255.0) % NCOLORS]);
 }

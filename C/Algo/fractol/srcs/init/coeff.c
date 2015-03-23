@@ -72,12 +72,12 @@ t_coeff		co()
 	return (c);
 }
 
-t_coeff		*coeff(void)
+t_coeff		*coeffmap(void)
 {
 	int		i;
 	t_coeff	*coeff;
 
-	if ((coeff = malloc(3 * sizeof(t_coeff))))
+	if ((coeff = malloc(NCOEFF * sizeof(t_coeff))))
 	{
 		i = 0;
 		while (i < 3)

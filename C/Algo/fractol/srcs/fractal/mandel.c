@@ -32,15 +32,16 @@ void		*mandel(void *arg)
 	getarg(arg, &env, &x, &y);
 	while (++x < SCREEN_W)
 	{
-		c.r = (double)x / env->zoom_x + env->x_min;
-		c.i = env->y_max - (double)y / env->zoom_y;
+		
+		c.r = env->ptx + ((x - (SCREEN_W / 2)) / env->zoom);
+		c.i = env->pty + ((y - (SCREEN_H / 2)) / env->zoom);
 		z = cplx(0.0, 0.0);
 		a = cplx(c.r, c.i);
 		i = -1;
 		while (mod(z) < 16 && ++i < env->max_i)
 		{
 			z = cplx_add(cplx_mult(z, z), c);
-			a = heart(env->coeff[i % env->nc], a.r, a.i);
+			a = heart(env->coeff[i % NCOEFF], a.r, a.i);
 		}
 		if (i == env->max_i)
 			plotpixel(env, x, y, Black);

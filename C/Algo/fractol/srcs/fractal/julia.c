@@ -26,14 +26,15 @@ void		*julia(void *arg)
 	while (++x < SCREEN_W)
 	{
 		i = -1;
-		z.r = (double)x / env->zoom_x + env->x_min;
-		z.i = env->y_max - (double)y / env->zoom_y;
-		c = conf(env->conf);
+		z.r = env->ptx + ((x - (SCREEN_W / 2)) / env->zoom);
+		z.i = env->pty + ((y - (SCREEN_H / 2)) / env->zoom);
+		c.r = -0.8;
+		c.i = -0.8;
 		a = cplx(z.r, z.i);
 		while (mod(z) < 4 && ++i < env->max_i)
 		{
 			z = cplx_add(cplx_cos(z), c);
-			a = cross(env->coeff[i % env->nc], a.r, a.i);
+			a = cross(env->coeff[i % NCOEFF], a.r, a.i);
 		}
 		if (i == env->max_i)
 			plotpixel(env, x, y, Black);

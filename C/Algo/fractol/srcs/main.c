@@ -18,7 +18,8 @@ int		main(int ac, char **av)
 
 	if (ac == 2)
 	{        
-        init(&env, av);
+        init(&env, av, ac);
+        render(&env);
         mlx_key_hook(env.win, key_hook, &env);
         mlx_hook(env.win, ButtonPress, ButtonPressMask, mouse_press, &env);
        	mlx_hook(env.win, MotionNotify, PointerMotionMask, mouse_motion, &env);
