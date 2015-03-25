@@ -32,13 +32,12 @@ void		*mandel(void *arg)
 	getarg(arg, &env, &x, &y);
 	while (++x < SCREEN_W)
 	{
-		
 		c.r = env->ptx + ((x - (SCREEN_W / 2)) / env->zoom);
 		c.i = env->pty + ((y - (SCREEN_H / 2)) / env->zoom);
 		z = cplx(0.0, 0.0);
 		a = cplx(c.r, c.i);
 		i = -1;
-		while (mod(z) < 16 && ++i < env->max_i)
+		while (mod(z) <4 && ++i < env->max_i)
 		{
 			z = cplx_add(cplx_mult(z, z), c);
 			a = heart(env->coeff[i % NCOEFF], a.r, a.i);
@@ -48,5 +47,6 @@ void		*mandel(void *arg)
 		else
 			plotpixel(env, x, y, getcolor(a));
 	}
+	pthread_exit(NULL);
 	return (NULL);
 }

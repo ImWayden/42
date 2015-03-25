@@ -43,9 +43,9 @@ SRC = $(SDIR)main.c \
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes -I minilibx_macos
-LIB = ./libft/libft.a
+LIB = ./libft/libft.a ./minilibx_macos/libmlx.a
 DIR_LIBS = ./minilibx_macos
-LDFLAGS += -L$(DIR_LIBS) -framework OpenGL -framework AppKit -lglut -lGL -lGLU -lGLEW -lpthread
+LDFLAGS += -L$(DIR_LIBS) -framework OpenGL -framework AppKit -lpthread
 CFLAGS = -Wall -Werror -Wextra
 
 all: $(NAME)

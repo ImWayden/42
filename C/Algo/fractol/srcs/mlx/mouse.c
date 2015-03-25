@@ -39,8 +39,11 @@ int		mouse_press(int button, int x, int y, t_env *env)
 			env->zoom *= ZOOM_FACTOR;
 		if (button == 5)
 			env->zoom /= ZOOM_FACTOR;
-		env->max_i = (SCREEN_W / 2) * 0.049715909 * log10(env->zoom);
+		env->max_i = (env->zoom)* 0.049715909 * log10(SCREEN_W) ;
+		printf("%li\n", env->max_i);
 		render(env);
+	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
+		
 		gettimeofday(&(env->start), NULL);
 	}
 	return 0;

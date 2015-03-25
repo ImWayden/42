@@ -36,6 +36,9 @@ static int init_args(t_env *env, char **av, int ac)
 	env->coeff = NULL;
 	env->t = NULL;
 	env->zoom = SCREEN_W * 0.25296875f;
+	env->ptx = -0.5;
+	env->pty = 0.0;
+	env->max_i = (SCREEN_W / 2) * 0.049715909 * log10(env->zoom);
 	while (--ac)
 	{
 		if (!ft_strcmp(av[ac], "-m"))

@@ -104,7 +104,7 @@ typedef struct			s_triangle
 	t_coord				p3;
 }						t_triangle;
 
-typedef struct			s_env
+struct			s_env
 {
 	void				*ptr;
 	void				*win;
@@ -121,7 +121,9 @@ typedef struct			s_env
 	struct timeval		end;
 	t_thread			*t;
 	void 				*(*fract)(void *arg);
-}						t_env;
+};
+
+
 
 
 /*
