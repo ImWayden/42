@@ -16,14 +16,18 @@ t_thread		*threadmap(t_env *env)
 {
 	t_thread	*thread;
 	int			y;
+	//int			x;
+	int			d;
 
 	thread = NULL;
-	if ((thread = malloc(SCREEN_H * sizeof(t_thread))))
+	d = SCREEN_H;
+	if ((thread = malloc(d * sizeof(t_thread))))
 	{
 		y = -1;
 		while (++y < SCREEN_H)
 		{
 			thread[y].y = y;
+			thread[y].x = -1;
 			thread[y].env = env;
 		}
 	}

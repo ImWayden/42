@@ -15,7 +15,7 @@
 void		getarg(void *arg, t_env **env, int *x, int *y)
 {
 	*env = ((t_thread *)arg)->env;
-	*x = -1;//((t_thread *)arg)->x;
+	*x = ((t_thread *)arg)->x;
 	*y = ((t_thread *)arg)->y;
 }
 

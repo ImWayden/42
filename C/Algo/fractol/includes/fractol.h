@@ -22,6 +22,7 @@
 # include <time.h>
 # include <sys/time.h>
 # include <pthread.h>
+# include <limits.h> 
 # include "libft.h"
 # include "colors.h"
 # include "complex.h"
