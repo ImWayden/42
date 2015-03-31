@@ -65,7 +65,7 @@ t_rgb			orbittrap(t_env *env, t_cplx z)
 	double		r;
 
 	r = log(dot(z, z)) / 4.0 / log(M_PI) - arg(z) / 2.0 * M_PI;
-	r = abs(r - round(r));
+	r = fabs(r - round(r));
 	if (r > 2 || r < 0)
 		r = 0.0;
 	else
