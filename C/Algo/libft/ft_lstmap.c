@@ -10,20 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/libft.h"
+#include "libft.h"
 
 t_list		*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
 	t_list	*list;
 
-	if (lst && lst->next)
+	if (f && lst && lst->next)
 	{
-		list = ft_lstmap(lst->next, f);
-		ft_lstadd(&list, f(lst));
+		if ((list = ft_lstmap(lst->next, f)))
+			ft_lstadd(&list, f(lst));
 		return (list);
 	}
-	else if (lst)
+	if (f && lst)
 		return (f(lst));
-	else
-		return (lst);
+	return (NULL);
 }

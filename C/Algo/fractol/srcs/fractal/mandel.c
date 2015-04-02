@@ -37,15 +37,13 @@ void		*mandel(void *arg)
 		z = cplx(0.0, 0.0);
 		a = cplx(c.r, c.i);
 		i = -1;
-		while (mod(z) <4 && ++i < env->max_i)
-		{
+		while (mod(z) < 4 && ++i < env->max_i)
 			z = cplx_add(cplx_mult(z, z), c);
-			a = heart(env->coeff[i % NCOEFF], a.r, a.i);
-		}
+		a = heart(env->coeff[i % NCOEFF], z.r, z.i);
 		if (i == env->max_i)
-			plotpixel(env, x, y, Black);
+			plotpixel(env, x, y, getcolor(z));
 		else
-			plotpixel(env, x, y, getcolor(a));
+			plotpixel(env, x, y, style2(a, env->color[i % NCOLORS], i));
 	}
 	pthread_exit(NULL);
 	return (NULL);

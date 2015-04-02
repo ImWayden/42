@@ -15,7 +15,7 @@
 
 int		key_hook(int keycode, t_env *env)
 {
-	if (keycode == 65307)
+	if (keycode == 53)
 		ft_exit(env, "See ya.");
 	if (keycode == '=' || keycode == 65451)
 		env->max_i += 10;
@@ -42,8 +42,7 @@ int		mouse_press(int button, int x, int y, t_env *env)
 		env->max_i = (env->zoom)* 0.049715909 * log10(SCREEN_W) ;
 		printf("%li\n", env->max_i);
 		render(env);
-	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
-		
+		mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
 		gettimeofday(&(env->start), NULL);
 	}
 	return 0;

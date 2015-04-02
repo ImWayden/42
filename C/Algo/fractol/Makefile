@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+         #
+#    By: msarr <msarr@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2014/01/22 14:52:23 by sraccah           #+#    #+#              #
-#    Updated: 2014/12/26 17:26:39 by msarr            ###   ########.fr        #
+#    Created: 2015/01/20 14:23:13 by msarr             #+#    #+#              #
+#    Updated: 2015/01/20 14:23:13 by msarr            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fractol
 
 MAKE = make
-CC = clang -os
+CC = gcc
 RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
@@ -36,21 +36,25 @@ SRC = $(SDIR)main.c \
 	  $(IDIR)init.c $(IDIR)thread.c $(IDIR)coeff.c $(IDIR)pixel.c $(IDIR)color.c\
 	  $(PDIR)plotpixel.c \
 	  $(FDIR)mandel.c $(FDIR)julia.c $(FDIR)buddha.c  $(FDIR)conf.c $(FDIR)render.c \
-	  $(F3DIR)pyramid.c \
+	  $(F3DIR)render_3d.c \
 	  $(BDIR)bckgrd.c $(BDIR)bckgrd1.c $(BDIR)bckgrd2.c $(BDIR)bckgrd3.c $(BDIR)bckgrd4.c \
 	  $(BDIR)bckgrd5.c $(BDIR)bckgrd6.c $(BDIR)bckgrd7.c $(BDIR)bckgrd8.c $(BDIR)bckgrd9.c\
 	  $(EDIR)exit.c
 
 OBJ = $(SRC:.c=.o)
-INC = -I includes -I $(LDIR)includes
-LIB = ./libft/libft.a
-DIR_LIBS = /opt/X11/lib
-LDFLAGS += -L$(DIR_LIBS) -lmlx -lXext -lX11 -lm -lpthread
-CFLAGS = -Wall -Wextra -Werror
+INC = -I includes -I $(LDIR)includes -I minilibx_macos
+LIB = ./libft/libft.a ./minilibx_macos/libmlx.a
+DIR_LIBS = ./minilibx_macos
+LDFLAGS += -L$(DIR_LIBS) -framework OpenGL -framework AppKit -lpthread
+CFLAGS = -Wall -Werror -Wextra
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
+	@echo "\033[31;1m"
+	@echo -n '---> Compiling Minilibx... <---'
+	@echo "\033[0m"
+	$(MAKE) re -C ./minilibx_macos
 	@echo "\033[31;1m"
 	@echo -n '---> Creating the Libft... <---'
 	@echo "\033[0m"

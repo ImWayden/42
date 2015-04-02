@@ -17,11 +17,17 @@ char		*ft_strncpy(char *s1, char *s2, size_t n)
 	int		i;
 
 	i = 0;
-	while (s2[i] && n)
+	while (n && s2[i])
 	{
 		s1[i] = s2[i];
 		i++;
 		n--;
+	}
+	while (n)
+	{
+		s1[i] = '\0';
+		n--;
+		i++;
 	}
 	return (s1);
 }

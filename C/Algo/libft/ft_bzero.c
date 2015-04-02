@@ -10,16 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/libft.h"
+#include "libft.h"
 
 void		ft_bzero(void *s, size_t n)
 {
 	char	*tmp;
 
 	tmp = s;
-	while (n && tmp)
-	{
+	while (n-- && tmp)
 		*tmp++ = '\0';
-		n--;
-	}
 }

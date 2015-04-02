@@ -27,8 +27,8 @@ static char		**ft_array(char *s, char c)
 		while (*s && *s != c)
 			s++;
 	}
-	split = (char **)malloc(sizeof(char) * (j + 1));
-	split[j] = NULL;
+	if ((split = (char **)malloc(sizeof(char *) * (j + 1))))
+		split[j] = 0;
 	return (split);
 }
 
@@ -57,7 +57,8 @@ char			**ft_strsplit(char const *s, char c)
 	{
 		j = c;
 		s = ft_split((char *)s, &j);
-		split[i] = ft_strsub(s, 0, j);
+		if (j && *s)
+			split[i] = ft_strsub(s, 0, j);
 		s = s + j;
 		i++;
 	}

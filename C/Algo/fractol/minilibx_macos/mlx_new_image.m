@@ -89,6 +89,7 @@ void    mlx_put_image_to_window(mlx_ptr_t *mlx_ptr, mlx_win_list_t *win_ptr, mlx
   [(id)(win_ptr->winid) mlx_gl_draw_img:img_ptr andCtx:imgctx andX:x andY:y];
 
   win_ptr->nb_flush ++;
+  glFinish();
 }
 
 // assume here 32bpp little endian

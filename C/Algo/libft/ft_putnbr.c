@@ -14,6 +14,11 @@
 
 void	ft_putnbr(int n)
 {
+	if (n == -2147483648)
+	{
+		ft_putstr("-214748364");
+		n = 8;
+	}
 	if (n < 0)
 	{
 		n = -n;

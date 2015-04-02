@@ -16,19 +16,16 @@ int			render(t_env *env)
 {
 	int		y;
 	int		d;
-	pthread_attr_t attr;
 
-	pthread_attr_init (&attr);
-	pthread_attr_setdetachstate (&attr, PTHREAD_CREATE_DETACHED);
 	d = SCREEN_H;
 	y = -1;
 	while (++y < d)
 		if (pthread_create(&env->t[y].t, NULL, env->fract, (void *)&env->t[y]))
 			ft_exit(env, "Thread create error.");
 	y = -1;
-	// while (++y < SCREEN_H)
-	// 	if (pthread_join(env->t[y].t, NULL))
-	// 		ft_exit(env, "Thread join error.");
+	while (++y < SCREEN_H)
+	 	if (pthread_join(env->t[y].t, NULL))
+	 		ft_exit(env, "Thread join error.");
 	// //putpixels(env);
 	return(0);
 }

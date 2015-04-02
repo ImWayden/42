@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/libft.h"
+#include "libft.h"
 
 int			ft_intlen(int n)
 {
@@ -27,19 +27,21 @@ int			ft_intlen(int n)
 char		*ft_itoa(int n)
 {
 	int		j;
+	int		s;
 	char	*str;
 
 	j = ft_intlen(n);
 	str = ft_strnew(j);
-	if (n < 0)
+	s = 1;
+	if (n < 0 && (s = -1))
 		*str = '-';
 	if (!n)
 		*str = '0';
-	while (str && n && j)
+	while (str && n)
 	{
-		j--;
-		str[j] = (n % 10) + '0';
+		str[--j] = s * (n % 10) + '0';
 		n = n / 10;
 	}
+	ft_putendl(str);
 	return (str);
 }

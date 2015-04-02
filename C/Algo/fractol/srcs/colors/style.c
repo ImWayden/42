@@ -47,7 +47,6 @@ t_rgb		style2(t_cplx z, t_rgb color, int i)
 	co = (double)i + 1.0 - log2(0.5 * log2(dot(z, z)));
 	co = sqrt(co / 256.0);
 	co2 = mod(z);
-	//co += co2;
 	fac = clamp(1.0 / pow(co2, Power), 0.0, 1.0);
 	c.r = (.5 + .5 * cos(6.2831 * co + (int)color.r % 256)) * fac * 255.0;
 	c.g = (.5 + .5 * cos(6.2831 * co + (int)color.g % 256)) * fac * 255.0;
@@ -55,20 +54,5 @@ t_rgb		style2(t_cplx z, t_rgb color, int i)
 	return (c);
 }
 
-double		 arg(t_cplx c)
-{
-	return atan2(c.r, c.i);
-}
 
-t_rgb			orbittrap(t_env *env, t_cplx z)
-{
-	double		r;
 
-	r = log(dot(z, z)) / 4.0 / log(M_PI) - arg(z) / 2.0 * M_PI;
-	r = fabs(r - round(r));
-	if (r > 2 || r < 0)
-		r = 0.0;
-	else
-		r = 1.0 - (r / 2.0);
-	return (env->color[(int)(r * 255.0) % NCOLORS]);
-}

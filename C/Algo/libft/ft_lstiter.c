@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/libft.h"
+#include "libft.h"
 
 void ft_lstiter(t_list *lst, void (*f)(t_list *elem))
 {
 	if (lst && lst->next)
-		f(lst->next);
-	else if (lst)
+		ft_lstiter(lst->next, f);
+	if (*f && lst)
 		f(lst);
 }

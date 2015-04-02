@@ -42,7 +42,7 @@ t_coord		mult(t_coord vect, double d)
 	return (v);
 }
 
-void		plot3d(t_env *env, t_coord c, int i)
+void		plot3d(t_env *env, t_coord c, t_rgb col)
 {
 	double	x;
 	double	y;
@@ -50,7 +50,7 @@ void		plot3d(t_env *env, t_coord c, int i)
 	x = (0.71 * (c.x - c.y) + 10) * 30.0;
 	y = (-0.82 * c.z + 0.41 * (c.x + c.y) + 10) * 30.0;
 	if (x >= 0 && y >= 0)
-	plotpixel(env, (int)x , (int)y, env->color[i % 3]);
+	plotpixel(env, (int)x , (int)y, col);
 }
 
 void		drawp(t_env *env, t_coord *t)
@@ -72,7 +72,8 @@ void		drawp(t_env *env, t_coord *t)
 			if (k > ((double)i - 1.0) / 3.0 && k < (double) i / 3.0)
 			{
 				v = mult(add(v, t[i]), 1.0/2.0);
-				plot3d(env, v, i);
+				plot3d(env, v, White);
+
 			}
 			i++;
  		}
@@ -81,9 +82,12 @@ void		drawp(t_env *env, t_coord *t)
 }
 
 
-void		pyramid(t_env *env, t_coord	p, int depth, double z, int j)
+void		pyramid(t_env *env, t_coord	p, int depth, double z, t_rgb col)
 {
 	t_coord	t[4];
+	t_rgb	r[4];
+
+
 	int 	i;
 
 	if (depth)
@@ -92,31 +96,37 @@ void		pyramid(t_env *env, t_coord	p, int depth, double z, int j)
 		t[1] = add(p, coord(z / 2.0, -z / 2.0, -z));
 		t[2] = add(p, coord(-z / 2.0, z / 2.0, -z));
 		t[3] = add(p, coord(z / 2.0, z / 2.0, -z));
+		r[0] = Red;
+		r[1] = Blue;
+		r[2] = Green;
+		r[3] = Yellow;
 		i = -1;
 		while (++i < 4)
 		{
-			plot3d(env, t[i], j);
+			plot3d(env, t[i], r[i]);
 			t[i] = mult(add(p, t[i]), 1.0 / 2.0);
+
 		}
-		pyramid(env, t[0], depth -1, z / 2.0, 0);
-		pyramid(env, t[1], depth -1, z / 2.0, 1);
-		pyramid(env, t[2], depth -1, z / 2.0, 0);
-		pyramid(env, t[3], depth -1, z / 2.0, 1);
-		pyramid(env, p, depth -1, z / 2.0, j);
+		pyramid(env, t[0], depth -1, z / 2.0, r[0]);
+		pyramid(env, t[1], depth -1, z / 2.0, r[1]);
+		pyramid(env, t[2], depth -1, z / 2.0, r[2]);
+		pyramid(env, t[3], depth -1, z / 2.0, r[3]);
+		pyramid(env, p, depth -1, z / 2.0, col);
 	}
 }
 
 
-int			main_attract(t_env *env)
+int			render_3d(t_env *env)
 {
-	t_coord	t[3];
+	t_coord	t;
+	char str[3];//"༼ つ ◕_◕ ༽つ";
 
-	t[0] = coord(-1.0, 1.0, 0.0);
-	t[1] = coord(-1.0, -1.0, 0.0);
-	t[2] = coord(1.0, -1.0, 0.0);
-//	t = coord(0.0, 0.0, 7.0);
-//	plot3d(env, t, 0);
-//	pyramid(env, t, 8, 7.0, 2);
-	drawp(env, t);
+	str[0] = -32;
+	str[1] = -68;
+	str[2] = -68;
+		ft_putendl(str);
+	t = coord(0.0, 0.0, 7.0);
+	plot3d(env, t, White);
+	pyramid(env, t, 8, 7.0, White);
 	return (0);
 }

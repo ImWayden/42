@@ -136,7 +136,7 @@ int						render(t_env *env);
 void					*julia(void *arg);
 void					*mandel(void *arg);
 void					*buddha(void *arg);
-int						main_attract(t_env *env);
+int						render_3d(t_env *env);
 void					getarg(void *arg, t_env **env, int *x, int *y);
 
 /*
@@ -198,7 +198,7 @@ void					init(t_env *env, char **av, int ac);
 ** Colors
 */
 
-void					plot3d(t_env *env, t_coord c, int i);
+void					plot3d(t_env *env, t_coord c, t_rgb col);
 t_coord					coord(double x, double y, double z);
 void					lotpixel(char *data, t_rgb color);
 void					addpixel(t_env *env, int x, int y, t_rgb color);

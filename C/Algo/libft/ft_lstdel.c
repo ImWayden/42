@@ -10,16 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/libft.h"
+#include "libft.h"
 
 void		ft_lstdel(t_list **alst, void (*del)(void *, size_t))
 {
 	if (alst && *alst && (*alst)->next)
 		ft_lstdel(&((*alst)->next), del);
-	else if (alst && *alst)
-	{
-		del((void *)(*alst)->content, (*alst)->content_size);
-		free(*alst);
-		*alst = NULL;
-	}
+	ft_lstdelone(alst, del);
 }

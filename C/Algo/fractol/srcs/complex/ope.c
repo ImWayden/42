@@ -128,3 +128,8 @@ t_cplx		toangle(t_cplx z)
 	theta = atan2(z.i, z.r);
 	return (cplx(phi,theta));
 }
+
+double		 arg(t_cplx c)
+{
+	return (atan2(c.r, c.i));
+}

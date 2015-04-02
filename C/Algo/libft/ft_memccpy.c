@@ -15,13 +15,19 @@
 void			*ft_memccpy(void *s1, const void *s2, int c, size_t n)
 {
 	char		*tmp1;
-	const char	*tmp2;
+	char		*tmp2;
 
 	tmp1 = s1;
-	tmp2 = s2;
-	while (*tmp1 && *tmp2 && n-- && *(tmp2 - 1) != c)
-		*tmp1++ = *tmp2++;
-	if (*(tmp2 - 1) != c)
+	tmp2 = (char *)s2;
+	while (tmp1 && tmp2 && n--)
+	{
+		*tmp1 = *tmp2;
+		if (*tmp2 == c)
+			break ;
+		tmp1++;
+		tmp2++;
+	}
+	if (*tmp2 != c)
 		return (NULL);
-	return (tmp1);
+	return (++tmp1);
 }
