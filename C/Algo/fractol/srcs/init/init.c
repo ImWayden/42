@@ -41,14 +41,20 @@ static int init_args(t_env *env, char **av, int ac)
 	env->max_i = (SCREEN_W / 2) * 0.049715909 * log10(env->zoom);
 	while (--ac)
 	{
+		ft_putendl(av[ac]);
 		if (!ft_strcmp(av[ac], "-m"))
 			env->fract = mandel;
 		else if (!ft_strcmp(av[ac], "-j"))
 			env->fract = julia;
 		else if (!ft_strcmp(av[ac], "-b"))
 			env->fract = buddha;
+		else if (!ft_strcmp(av[ac - 1], "-c"))
+			env->back = background(ft_atoi(av[ac--]));
 		else
+		{
+			ft_putendl(av[ac]);
 			break ;
+		}
 	}
 	return (ac);
 }
@@ -69,4 +75,5 @@ void		init(t_env *env, char **av, int ac)
 		ft_exit(env, "Unable to create coeffmap");
 	if (!(env->t = threadmap(env)))
 		ft_exit(env, "Unable to create threadmap");
+	ft_putendl("OK);");
 }

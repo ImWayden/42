@@ -122,6 +122,7 @@ struct			s_env
 	struct timeval		end;
 	t_thread			*t;
 	void 				*(*fract)(void *arg);
+	t_cplx				(*back)(t_coeff, double, double);
 };
 
 
@@ -138,6 +139,8 @@ void					*mandel(void *arg);
 void					*buddha(void *arg);
 int						render_3d(t_env *env);
 void					getarg(void *arg, t_env **env, int *x, int *y);
+t_cplx					(*background(int i))(t_coeff, double, double);
+
 
 /*
 ** Flames

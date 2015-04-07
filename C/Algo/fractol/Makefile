@@ -34,6 +34,7 @@ SRC = $(SDIR)main.c \
 	  $(CDIR)color.c $(CDIR)conversion.c $(CDIR)linear.c \
 	  $(CDIR)style.c $(CDIR)ope.c $(CDIR)lifted.c\
 	  $(IDIR)init.c $(IDIR)thread.c $(IDIR)coeff.c $(IDIR)pixel.c $(IDIR)color.c\
+	  $(IDIR)background.c\
 	  $(PDIR)plotpixel.c \
 	  $(FDIR)mandel.c $(FDIR)julia.c $(FDIR)buddha.c  $(FDIR)conf.c $(FDIR)render.c \
 	  $(F3DIR)render_3d.c \
@@ -75,6 +76,7 @@ clean:
 	@echo -n '---> Clean : <---'
 	@echo "\033[0m"
 	$(RM) -rf $(OBJ)
+	$(RM) -rf ./minilibx_macos/*.o
 	$(MAKE) clean -C $(LDIR)
 	@echo "\033[1;32m"
 	@echo -n '---> DONE ! <---'

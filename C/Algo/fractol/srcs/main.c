@@ -16,15 +16,13 @@ int		main(int ac, char **av)
 {
 	t_env	env;
 
-	if (ac == 2)
-	{        
-        init(&env, av, ac);
-        render(&env);
-        mlx_key_hook(env.win, key_hook, &env);
-        mlx_hook(env.win, ButtonPress, ButtonPressMask, mouse_press, &env);
-       	mlx_hook(env.win, MotionNotify, PointerMotionMask, mouse_motion, &env);
-        mlx_loop_hook(env.ptr, loop_hook, &env);
-        mlx_loop(env.ptr);
-	}
+		 
+	init(&env, av, ac);
+	render(&env);
+	mlx_key_hook(env.win, key_hook, &env);
+	mlx_hook(env.win, ButtonPress, ButtonPressMask, mouse_press, &env);
+	mlx_hook(env.win, MotionNotify, PointerMotionMask, mouse_motion, &env);
+	mlx_loop_hook(env.ptr, loop_hook, &env);
+	mlx_loop(env.ptr);
 	return (0);
 }

@@ -33,11 +33,16 @@ void		*julia(void *arg)
 		a = cplx(z.r, z.i);
 		while (mod(z) < 4 && ++i < env->max_i)
 			z = cplx_add(cplx_mult(z, z), c);
-		a = cross(env->coeff[i % NCOEFF], z.r, z.i);
 		if (i == env->max_i)
-			plotpixel(env, x, y, getcolor(z));
+		{
+			a = env->back(env->coeff[i % NCOEFF], a.r, a.i);
+			plotpixel(env, x, y, getcolor(a));
+		}
 		else
-			plotpixel(env, x, y, lerp(a, i));
+		{
+			a = env->back(env->coeff[i % NCOEFF], z.r, z.i);
+			plotpixel(env, x, y, style2(a, env->color[i % NCOLORS], i));
+		}
 	}
 	return (NULL);
 }
