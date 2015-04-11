@@ -12,19 +12,12 @@
 
 #include "fractol.h"
 
-void		getarg(void *arg, t_env **env, int *x, int *y)
-{
-	*env = ((t_thread *)arg)->env;
-	*x = ((t_thread *)arg)->x;
-	*y = ((t_thread *)arg)->y;
-}
-
 void		*mandel(void *arg)
 {
 	t_env	*env;
 	int		x;
 	int		y;
-	int		i;
+	size_t	i;
 	t_cplx	 z;
 	t_cplx	 a;
 	t_cplx	 c;
@@ -39,16 +32,7 @@ void		*mandel(void *arg)
 		i = -1;
 		while (mod(z) < 4 && ++i < env->max_i)
 			z = cplx_add(cplx_mult(z, z), c);
-		if (i == env->max_i)
-		{
-			a = env->back(env->coeff[i % NCOEFF], a.r, a.i);
-			plotpixel(env, x, y, getcolor(a));
-		}
-		else
-		{
-			a = env->back(env->coeff[i % NCOEFF], z.r, z.i);
-			plotpixel(env, x, y, style2(a, env->color[i % NCOLORS], i));
-		}
+		plotpixel(env, x, y, get_color(env, z, a, i));
 	}
 	pthread_exit(NULL);
 	return (NULL);

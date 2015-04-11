@@ -16,7 +16,7 @@ void	addred(t_env *env, t_cplx *z, int n)
 {
 	int		x;
 	int		y;
-	int		i;
+	size_t	i;
 	int		d;
 
 	i = -1;
@@ -42,7 +42,7 @@ void		*buddha(void *ptr)
 	t_env	*env;
 	int		x;
 	int		y;
-	int		i;
+	size_t	i;
 	t_cplx	 z;
 	t_cplx	 zt[ITT];
 	t_cplx	 c;

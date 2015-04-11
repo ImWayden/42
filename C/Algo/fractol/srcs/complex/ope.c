@@ -79,6 +79,15 @@ t_cplx 		cplx_mult(t_cplx a, t_cplx b)
 	return (c);
 }
 
+t_cplx 		cplx_mult2(t_cplx a, double b)
+{
+	t_cplx	c;
+
+	c.r = a.r * b;
+	c.i = a.r * b;
+	return (c);
+}
+
 t_cplx		cplx_sqrt(t_cplx a)
 {
 	t_cplx	c;

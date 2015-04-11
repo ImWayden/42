@@ -15,13 +15,16 @@
 t_rgb		*rgbmap(void)
 {
 	t_rgb	*rgbtab;
+	int		i;
 
 	rgbtab = NULL;
+	i = -1;
 	if ((rgbtab = malloc(NCOLORS * sizeof(t_rgb))))
 	{
-		rgbtab[0] = Green;
-		rgbtab[1] = Yellow;
-		rgbtab[2] = Red;
+		while (++i < NCOLORS)
+			rgbtab[i] = rgb((64 + RANDR (64, 256)), (64 + RANDR (64, 256))
+						, (64 + RANDR (64, 256)));
 	}
+	ft_putendl("OK");
 	return (rgbtab);
 }

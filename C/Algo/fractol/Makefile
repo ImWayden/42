@@ -33,13 +33,15 @@ SRC = $(SDIR)main.c \
 	  $(CPDIR)ope.c \
 	  $(CDIR)color.c $(CDIR)conversion.c $(CDIR)linear.c \
 	  $(CDIR)style.c $(CDIR)ope.c $(CDIR)lifted.c\
-	  $(IDIR)init.c $(IDIR)thread.c $(IDIR)coeff.c $(IDIR)pixel.c $(IDIR)color.c\
-	  $(IDIR)background.c\
+	  $(IDIR)init.c $(IDIR)thread.c $(IDIR)coeff.c $(IDIR)pixel.c \
+	  $(IDIR)color.c $(IDIR)background.c\
 	  $(PDIR)plotpixel.c \
-	  $(FDIR)mandel.c $(FDIR)julia.c $(FDIR)buddha.c  $(FDIR)conf.c $(FDIR)render.c \
+	  $(FDIR)mandel.c $(FDIR)julia.c $(FDIR)buddha.c $(FDIR)newton.c\
+	  $(FDIR)render.c $(FDIR)get_arg.c $(FDIR)get_color.c \
 	  $(F3DIR)render_3d.c \
-	  $(BDIR)bckgrd.c $(BDIR)bckgrd1.c $(BDIR)bckgrd2.c $(BDIR)bckgrd3.c $(BDIR)bckgrd4.c \
-	  $(BDIR)bckgrd5.c $(BDIR)bckgrd6.c $(BDIR)bckgrd7.c $(BDIR)bckgrd8.c $(BDIR)bckgrd9.c\
+	  $(BDIR)bckgrd.c $(BDIR)bckgrd1.c $(BDIR)bckgrd2.c $(BDIR)bckgrd3.c \
+	  $(BDIR)bckgrd4.c $(BDIR)bckgrd5.c $(BDIR)bckgrd6.c $(BDIR)bckgrd7.c \
+	  $(BDIR)bckgrd8.c $(BDIR)bckgrd9.c \
 	  $(EDIR)exit.c
 
 OBJ = $(SRC:.c=.o)

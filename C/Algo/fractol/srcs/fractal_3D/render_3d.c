@@ -57,6 +57,7 @@ void		drawp(t_env *env, t_coord *t)
 {
 	double	k;
 	double	n;
+	t_cplx	c;
 	t_coord	v;
 	int		i;
  
@@ -69,11 +70,13 @@ void		drawp(t_env *env, t_coord *t)
 		i = 0;
 		while(i < 3)
  		{
-			if (k > ((double)i - 1.0) / 3.0 && k < (double) i / 3.0)
+			if (k > ((double)i - 1.0) / 4.0 && k < (double) i / 2.0)
 			{
-				v = mult(add(v, t[i]), 1.0/2.0);
-				plot3d(env, v, White);
-
+				v = mult(add(v, t[i]), 1.0 / 3.0);
+				c.r = (v.x * env->zoom) + (SCREEN_W / 2);
+				c.i = (v.y * env->zoom) + (SCREEN_H / 2);
+				printf("%lf %lf\n", c.r, c.i);
+				plotpixel(env, (int)c.r, (int)c.i, Red);
 			}
 			i++;
  		}
@@ -118,15 +121,23 @@ void		pyramid(t_env *env, t_coord	p, int depth, double z, t_rgb col)
 
 int			render_3d(t_env *env)
 {
-	t_coord	t;
-	char str[3];//"༼ つ ◕_◕ ༽つ";
+	t_coord	t[5];
 
-	str[0] = -32;
-	str[1] = -68;
-	str[2] = -68;
-		ft_putendl(str);
-	t = coord(0.0, 0.0, 7.0);
-	plot3d(env, t, White);
-	pyramid(env, t, 8, 7.0, White);
+	t[0] = coord(-1.0, 1.0, 0.0);
+	t[1] = coord(-1.0, -1.0, 0.0);
+	t[2] = coord(1.0, -1.0, 0.0);
+	t[3] = coord(1.0, -1.0, 0.0);
+	//t[3] = coord(0.5, -0.5, 0.0);
+	drawp(env, t);
+	// t_coord	t;
+	// char str[3];
+
+	// str[0] = -32;
+	// str[1] = -68;
+	// str[2] = -68;
+	// 	ft_putendl(str);
+	// t = coord(0.0, 0.0, 7.0);
+	// plot3d(env, t, White);
+	// pyramid(env, t, 8, 7.0, White);
 	return (0);
 }

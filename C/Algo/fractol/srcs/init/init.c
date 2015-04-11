@@ -31,30 +31,29 @@ static int		img_init(t_env *env)
 
 static int init_args(t_env *env, char **av, int ac)
 {
-	env->color = NULL;
-	env->pixel = NULL;
-	env->coeff = NULL;
-	env->t = NULL;
 	env->zoom = SCREEN_W * 0.25296875f;
 	env->ptx = -0.5;
 	env->pty = 0.0;
 	env->max_i = (SCREEN_W / 2) * 0.049715909 * log10(env->zoom);
+	env->back = diamond;
+	env->c.r = 0.285;
+	env->c.i = 0.013;
 	while (--ac)
 	{
-		ft_putendl(av[ac]);
 		if (!ft_strcmp(av[ac], "-m"))
 			env->fract = mandel;
 		else if (!ft_strcmp(av[ac], "-j"))
 			env->fract = julia;
 		else if (!ft_strcmp(av[ac], "-b"))
 			env->fract = buddha;
+		else if (!ft_strcmp(av[ac], "-n"))
+			env->fract = newton;
 		else if (!ft_strcmp(av[ac - 1], "-c"))
 			env->back = background(ft_atoi(av[ac--]));
+		else if (!ft_strcmp(av[ac - 1], "-nc"))
+			env->nc = ft_atoi(av[ac--]);
 		else
-		{
-			ft_putendl(av[ac]);
 			break ;
-		}
 	}
 	return (ac);
 }
@@ -63,8 +62,13 @@ static int init_args(t_env *env, char **av, int ac)
 
 void		init(t_env *env, char **av, int ac)
 {
-	if ((init_args(env, av, ac)))
-		ft_exit(env, NULL);
+	env->color = NULL;
+	env->pixel = NULL;
+	env->coeff = NULL;
+	env->t = NULL;
+	env->fract = NULL;
+	if ((init_args(env, av, ac)) || !env->fract)
+		ft_exit(env, "Wrong arg !");
 	if (!(img_init(env)))
 		ft_exit(env, "Unable to init mlx.");
 	if (!(env->color = rgbmap()))
@@ -75,5 +79,4 @@ void		init(t_env *env, char **av, int ac)
 		ft_exit(env, "Unable to create coeffmap");
 	if (!(env->t = threadmap(env)))
 		ft_exit(env, "Unable to create threadmap");
-	ft_putendl("OK);");
 }

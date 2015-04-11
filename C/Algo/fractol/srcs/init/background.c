@@ -53,5 +53,5 @@ t_cplx			(*background(int i))(t_coeff, double, double)
 	back[34] = square;
 	back[35] = cross;
 	back[36] = collatz;
-	return (back[i - 1]);
+	return (back[i]);
 }

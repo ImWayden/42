@@ -17,9 +17,8 @@ void		*julia(void *arg)
 	t_env	*env;
 	int		x;
 	int		y;
-	int		i;
+	size_t	i;
 	t_cplx	 z;
-	t_cplx	 c;
 	t_cplx	 a;
 
 	getarg(arg, &env, &x, &y);
@@ -27,22 +26,11 @@ void		*julia(void *arg)
 	{
 		i = -1;
 		z.r = env->ptx + ((x - (SCREEN_W / 2)) / env->zoom);
-		z.i = env->pty + ((y - (SCREEN_H / 2)) / env->zoom);
-		c.r = 0.285;
-		c.i = 0.013;
+		z.i = -(env->pty + ((y - (SCREEN_H / 2)) / env->zoom));
 		a = cplx(z.r, z.i);
 		while (mod(z) < 4 && ++i < env->max_i)
-			z = cplx_add(cplx_mult(z, z), c);
-		if (i == env->max_i)
-		{
-			a = env->back(env->coeff[i % NCOEFF], a.r, a.i);
-			plotpixel(env, x, y, getcolor(a));
-		}
-		else
-		{
-			a = env->back(env->coeff[i % NCOEFF], z.r, z.i);
-			plotpixel(env, x, y, style2(a, env->color[i % NCOLORS], i));
-		}
+			z = cplx_add(cplx_mult(z, z), env->c);
+		plotpixel(env, x, y, get_color(env, z, a, i));
 	}
 	return (NULL);
 }

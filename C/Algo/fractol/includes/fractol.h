@@ -29,8 +29,9 @@
 
 # define SCREEN_W 		670
 # define SCREEN_H		480
+# define EPS			0.0001
 # define random_bit()	random() & 01
-# define NCOLORS		3
+# define NCOLORS		16
 # define NCOEFF			30
 # define ZOOM_FACTOR	1.1
 # define SAMPLES 		2000
@@ -114,10 +115,12 @@ struct			s_env
 	t_coeff				*coeff;
 	t_rgb				*color;
 	t_rgb				*pixel;
-	double				zoom;
+	t_cplx				c;
+	long double			zoom;
 	long double			ptx;
 	long double			pty;
-	long int 			max_i;
+	long unsigned int	max_i;
+	size_t 				nc;
 	struct timeval		start;
 	struct timeval		end;
 	t_thread			*t;
@@ -129,16 +132,17 @@ struct			s_env
 
 
 /*
-** Mandelbrot
+** Fractal rendering
 */
 
-t_cplx					conf(double i);
 int						render(t_env *env);
 void					*julia(void *arg);
 void					*mandel(void *arg);
 void					*buddha(void *arg);
+void					*newton(void *arg);
 int						render_3d(t_env *env);
 void					getarg(void *arg, t_env **env, int *x, int *y);
+t_rgb					get_color(t_env *env, t_cplx z, t_cplx a, size_t i);
 t_cplx					(*background(int i))(t_coeff, double, double);
 
 
