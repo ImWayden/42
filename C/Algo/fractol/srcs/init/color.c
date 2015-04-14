@@ -25,6 +25,5 @@ t_rgb		*rgbmap(void)
 			rgbtab[i] = rgb((64 + RANDR (64, 256)), (64 + RANDR (64, 256))
 						, (64 + RANDR (64, 256)));
 	}
-	ft_putendl("OK");
 	return (rgbtab);
 }

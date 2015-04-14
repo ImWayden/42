@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-t_cplx 		cplx_cos(t_cplx z )
+t_cplx 		cplx_cos(t_cplx z)
 {
 	double	a;
 	double	b;
@@ -138,7 +138,24 @@ t_cplx		toangle(t_cplx z)
 	return (cplx(phi,theta));
 }
 
-double		 arg(t_cplx c)
+double		 args(t_cplx c)
 {
 	return (atan2(c.r, c.i));
+}
+
+double		cplx_abs(t_cplx z)
+{
+	return (sqrt(z.r * z.r + z.i * z.i));
+}
+
+t_cplx		cplx_pow(t_cplx z, int n)
+{
+	t_cplx	out;
+	int 	i;
+	
+	i = -1;
+	out = cplx(z.r, z.i);
+	while (++i < n)
+		out = cplx_mult(z, out);
+	return out;
 }

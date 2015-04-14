@@ -65,7 +65,7 @@ void		*buddha(void *ptr)
 			a = curl(env->coeff[i % NCOEFF], a.r, a.i);
 			zt[i] = cplx(z.r, z.i);
 		}
-		plotpixel(env, x, y, lerp(c, arg(c)));
+		plotpixel(env, x, y, lerp(c, args(c)));
 		if (i < env->max_i)
 			addred(env, zt, i);
 	}
