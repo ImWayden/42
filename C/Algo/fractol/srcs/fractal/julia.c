@@ -29,7 +29,7 @@ void		*julia(void *arg)
 		z.i = -(env->pty + ((y - (SCREEN_H / 2)) / env->zoom));
 		a = cplx(z.r, z.i);
 		while (mod(z) < 4 && ++i < env->max_i)
-			z = cplx_add(cplx_mult(z, z), cplx(1, 0));
+			z = cplx_add(cplx_mult(z, z), env->c);
 		plotpixel(env, x, y, get_color(env, z, a, i));
 	}
 	return (NULL);

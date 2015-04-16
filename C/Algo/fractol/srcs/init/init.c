@@ -34,7 +34,7 @@ static int init_args(t_env *env, char **av, int ac)
 	env->zoom = SCREEN_W * 0.25296875f;
 	env->ptx = -0.0;
 	env->pty = 0.0;
-	env->max_i = 100;//(SCREEN_W / 2) * 0.049715909 * log10(env->zoom);
+	env->max_i = 32;//(SCREEN_W / 2) * 0.049715909 * log10(env->zoom);
 	env->back = diamond;
 	env->c.r = 0.285;
 	env->c.i = 0.013;
@@ -48,6 +48,8 @@ static int init_args(t_env *env, char **av, int ac)
 			env->fract = buddha;
 		else if (!ft_strcmp(av[ac], "-n"))
 			env->fract = newton;
+		else if (!ft_strcmp(av[ac], "-bu"))
+			env->fract = burningship;
 		else if (!ft_strcmp(av[ac - 1], "-c"))
 			env->back = background(ft_atoi(av[ac--]));
 		else if (!ft_strcmp(av[ac - 1], "-nc"))

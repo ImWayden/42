@@ -140,6 +140,7 @@ void					*julia(void *arg);
 void					*mandel(void *arg);
 void					*buddha(void *arg);
 void					*newton(void *arg);
+void					*burningship(void *arg);
 int						render_3d(t_env *env);
 void					getarg(void *arg, t_env **env, int *x, int *y);
 t_rgb					get_color(t_env *env, t_cplx z, t_cplx a, size_t i);
