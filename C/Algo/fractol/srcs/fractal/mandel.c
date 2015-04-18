@@ -26,7 +26,7 @@ void		*mandel(void *arg)
 	while (++x < SCREEN_W)
 	{
 		c.r = env->ptx + ((x - (SCREEN_W / 2)) / env->zoom);
-		c.i = env->pty + ((y - (SCREEN_H / 2)) / env->zoom);
+		c.i = -(env->pty + ((y - (SCREEN_H / 2)) / env->zoom));
 		z = cplx(0.0, 0.0);
 		a = cplx(c.r, c.i);
 		i = -1;

@@ -29,7 +29,7 @@ CDIR = srcs/colors/
 EDIR = srcs/exit/
 
 SRC = $(SDIR)main.c \
-	  $(MXDIR)expose.c  $(MXDIR)mouse.c \
+	  $(MXDIR)key_hook.c  $(MXDIR)mouse_press.c  $(MXDIR)loop_hook.c $(MXDIR)mouse_motion.c\
 	  $(CPDIR)ope.c \
 	  $(CDIR)color.c $(CDIR)conversion.c $(CDIR)linear.c \
 	  $(CDIR)style.c $(CDIR)ope.c $(CDIR)lifted.c\

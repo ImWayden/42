@@ -66,6 +66,9 @@ typedef struct			s_thread
 {
 	int					y;
 	int					x;
+	t_cplx				c;
+	long double			zoom;
+	size_t				max_i;
 	char				*pix;
 	t_env				*env;
 	pthread_t			t;
@@ -106,8 +109,9 @@ typedef struct			s_triangle
 	t_coord				p3;
 }						t_triangle;
 
-struct			s_env
+struct					s_env
 {
+
 	void				*ptr;
 	void				*win;
 	void				*img;
@@ -124,6 +128,7 @@ struct			s_env
 	struct timeval		start;
 	struct timeval		end;
 	t_thread			*t;
+	pthread_mutex_t		lock;
 	void 				*(*fract)(void *arg);
 	t_cplx				(*back)(t_coeff, double, double);
 };
@@ -135,7 +140,7 @@ struct			s_env
 ** Fractal rendering
 */
 
-int						render(t_env *env);
+void						*render(void *envp);
 void					*julia(void *arg);
 void					*mandel(void *arg);
 void					*buddha(void *arg);

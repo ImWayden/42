@@ -12,24 +12,6 @@
 
 #include "fractol.h"
 
-t_rgb		newton_color(t_env *env, t_cplx z, t_cplx a, size_t i)
-{
-	t_rgb	r;
-
-	if (i == env->max_i)
-	{
-		a = env->back(env->coeff[i % NCOEFF], z.r, z.i);
-		r = style2(a, env->color[i % NCOLORS], i);
-		
-	}
-	else
-	{
-		a = env->back(env->coeff[i % NCOEFF], a.r, a.i);
-		r = getcolor(a);
-	}
-	return (r);
-}
-
 static int		isroot(t_cplx z)
 {
 	t_cplx		z1;
@@ -69,7 +51,7 @@ void		*newton(void *arg)
 			if (isroot(z))
 				break;
 		}
-		plotpixel(env, x, y, newton_color(env, z, a, i));
+		plotpixel(env, x, y, get_color(env, a, z, i));
 	}
 	pthread_exit(NULL);
 	return (NULL);
