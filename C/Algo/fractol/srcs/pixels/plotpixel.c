@@ -29,22 +29,6 @@ void	plotpixel(t_env *env, int x, int y, t_rgb color)
 	env->data[p + 2] = color.b;
 }
 
-void	putpixels(t_env *env)
-{
-	int		x;
-	int		y;
-
-	x = -1;
-	while (++x < SCREEN_H)
-	{
-		y = -1;
-		while (++y < SCREEN_W)
-			if (!(ISBLACK(env->pixel[y + x * SCREEN_W])))
-				plotpixel(env, y, x, env->pixel[y + x * SCREEN_W]);
-	}
-}
-
-
 void	addpixel(t_env *env, int x, int y, t_rgb color)
 {
 	unsigned int p;

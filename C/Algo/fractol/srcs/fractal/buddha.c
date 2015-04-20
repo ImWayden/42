@@ -12,15 +12,29 @@
 
 #include "fractol.h"
 
+void	putpixels(t_env *env, int y)
+{
+	int		x;
+	int		d;
+
+	x = -1;
+	while (++x < SCREEN_H)
+	{
+		d = x + y * SCREEN_W;
+		if (!ISBLACK(env->pixel[d]))
+			plotpixel(env, x, y, env->pixel[d]);
+	}
+}
+
 void	addred(t_env *env, t_cplx *z, int n)
 {
 	int		x;
 	int		y;
-	size_t	i;
+	int		i;
 	int		d;
 
 	i = -1;
-	while (++i < env->max_i)
+	while (++i < n)
 	{
 		x = ((z[i].r - env->ptx) * env->zoom) + (SCREEN_W / 2);
 		y = ((z[i].i - env->pty) * env->zoom) + (SCREEN_H / 2);
@@ -49,6 +63,7 @@ void		*buddha(void *ptr)
 	t_cplx	 a;
 
 	getarg(ptr, &env, &x, &y);
+	env->max_i = ITT;
 	while (++x < SCREEN_W)
 	{
 		i = -1;
@@ -62,12 +77,13 @@ void		*buddha(void *ptr)
 		while (mod(z) < 4 && ++i < env->max_i)
 		{
 			z = cplx_add(cplx_mult(z, z), c);
-			a = curl(env->coeff[i % NCOEFF], a.r, a.i);
 			zt[i] = cplx(z.r, z.i);
 		}
+			a = curl(env->coeff[i % NCOEFF], a.r, a.i);
 		plotpixel(env, x, y, lerp(c, args(c)));
 		if (i < env->max_i)
 			addred(env, zt, i);
+		putpixels(env, y);
 	}
 	return (NULL);
 }

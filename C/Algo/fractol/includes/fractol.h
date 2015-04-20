@@ -140,7 +140,7 @@ struct					s_env
 ** Fractal rendering
 */
 
-void						*render(void *envp);
+void					*render(void *envp);
 void					*julia(void *arg);
 void					*mandel(void *arg);
 void					*buddha(void *arg);
@@ -218,7 +218,7 @@ void					addpixel(t_env *env, int x, int y, t_rgb color);
 void					plotpixel(t_env *env, int x, int y, t_rgb color);
 t_rgb					getpixel(t_env *env, int x, int y);
 t_rgb					getcolor(t_cplx z);
-void					putpixels(t_env *env);
+void					putpixels(t_env *env, int y);
 
 /*
 ** Background
