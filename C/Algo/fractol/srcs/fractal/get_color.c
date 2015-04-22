@@ -18,13 +18,15 @@ t_rgb		get_color(t_env *env, t_cplx z, t_cplx a, size_t i)
 
 	if (i == env->max_i)
 	{
-		a = env->back(env->coeff[1], a.r, a.i);
+		a = env->back(env->coeff[i], a.r, a.i);
 		r = getcolor(a);
 	}
 	else
 	{
-		a = env->back(env->coeff[1], z.r, z.i);
-		r = style2(a, env->color[1], i);
+		a = env->back(env->coeff[i], z.r, z.i);
+		r = style2(a, env->color[i], i);
+		//if (ISBLACK(r))
+		//	r = lerp(a, i);
 	}
 	return (r);
 }

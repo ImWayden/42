@@ -12,50 +12,7 @@
 
 #include "fractol.h"
 
-static void	randing(double *a, double *d)
-{
-	int	i;
-
-	i = 0;
-	while (!i || (*a * *a + *d * *d) > 1)
-	{
-		*a = drand48();
-		*d = RANDR(*a * *a, 1);
-		if (random_bit())
-			*d = -(*d);
-		i++;
-	}
-}
-
-static void	mapping (t_coeff *coeff)
-{
-	double	a;
-	double	b;
-	double	d;
-	double	e;
-	double	k;
-
-	a = 0;
-	b = 0;
-	d = 0;
-	e = 0;
-	k = 0;
-	while (!k || (a * a + b * b + d * d + e * e)
-		> (1 + (a * e - d * b) * (a * e - d * b)))
-	{
-		randing(&a, &d);
-		randing(&b, &e);
-		k++;
-	}
-	coeff->ac = a;
-	coeff->bc = b;
-	coeff->cc = RANDR (-2, 2);
-	coeff->dc = d;
-	coeff->ec = e;
-	coeff->fc = RANDR (-2, 2);
-}
-
-t_coeff		co()
+t_coeff		coeff()
 {
 	t_coeff	c;
 
@@ -75,18 +32,13 @@ t_coeff		co()
 t_coeff		*coeffmap(void)
 {
 	int		i;
-	t_coeff	*coeff;
+	t_coeff	*c;
 
-	if ((coeff = malloc(NCOEFF * sizeof(t_coeff))))
+	if ((c = malloc(NCOEFF * sizeof(t_coeff))))
 	{
-		i = 0;
-		while (i < 3)
-		{
-			coeff[i] = co();
-			if (random_bit())
-				mapping (&coeff[i]);
-			i++;
-		}
+		i = -1;
+		while (++i < NCOEFF)
+			c[i] = coeff();
 	}
-	return (coeff);
+	return (c);
 }
