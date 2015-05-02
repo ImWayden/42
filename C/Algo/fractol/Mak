@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: msarr <msarr@student.42.fr>                +#+  +:+       +#+         #
+#    By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2015/01/20 14:23:13 by msarr             #+#    #+#              #
-#    Updated: 2015/01/20 14:23:13 by msarr            ###   ########.fr        #
+#    Created: 2014/01/22 14:52:23 by sraccah           #+#    #+#              #
+#    Updated: 2014/12/26 17:26:39 by msarr            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fractol
 
 MAKE = make
-CC = gcc
+CC = clang -os
 RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
@@ -45,19 +45,15 @@ SRC = $(SDIR)main.c \
 	  $(EDIR)exit.c
 
 OBJ = $(SRC:.c=.o)
-INC = -I includes -I $(LDIR)includes -I minilibx_macos
-LIB = ./libft/libft.a ./minilibx_macos/libmlx.a
-DIR_LIBS = ./minilibx_macos
-LDFLAGS += -L$(DIR_LIBS) -framework OpenGL -framework AppKit -lpthread
-CFLAGS = -Wall -Werror -Wextra
+INC = -I includes -I $(LDIR)includes
+LIB = ./libft/libft.a
+DIR_LIBS = /opt/X11/lib
+LDFLAGS += -L$(DIR_LIBS) -lmlx -lXext -lX11 -lm -lpthread
+CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@echo "\033[31;1m"
-	@echo -n '---> Compiling Minilibx... <---'
-	@echo "\033[0m"
-	$(MAKE) re -C ./minilibx_macos
 	@echo "\033[31;1m"
 	@echo -n '---> Creating the Libft... <---'
 	@echo "\033[0m"
@@ -78,7 +74,6 @@ clean:
 	@echo -n '---> Clean : <---'
 	@echo "\033[0m"
 	$(RM) -rf $(OBJ)
-	$(RM) -rf ./minilibx_macos/*.o
 	$(MAKE) clean -C $(LDIR)
 	@echo "\033[1;32m"
 	@echo -n '---> DONE ! <---'

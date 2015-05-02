@@ -43,14 +43,21 @@ t_rgb		style2(t_cplx z, t_rgb color, int i)
 	double co2;
 	double fac;
 	t_rgb	c;
+	t_cplx	a;
 
-	co = (double)i + 1.0 - log2(0.5 * log2(dot(z, z)));
+	//co = (double)i + 1.0 - log2(0.5 * log2(dot(z, z)));
+	//co = sqrt(co / 256.0);
+	//co2 = mod(z);
+	(void)i;
+	(void)color;
+	a = toangle(z);
+	co = a.r;
 	co = sqrt(co / 256.0);
-	co2 = mod(z);
+	co2 = mod(a);
 	fac = clamp(1.0 / pow(co2, Power), 0.0, 1.0);
-	c.r = (.5 + .5 * cos(6.2831 * co + (int)color.r % 256)) * fac * 255.0;
-	c.g = (.5 + .5 * cos(6.2831 * co + (int)color.g % 256)) * fac * 255.0;
-	c.b = (.5 + .5 * cos(6.2831 * co + (int)color.b % 256)) * fac * 255.0;
+	c.r = (.5 + .5 * cos(6.2831 * co)) * fac * 255.0;
+	c.g = (.5 + .5 * cos(6.2831 * co)) * fac * 255.0;
+	c.b = (.5 + .5 * cos(6.2831 * co)) * fac * 255.0;
 	return (c);
 }
 

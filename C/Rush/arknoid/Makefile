@@ -6,7 +6,7 @@
 #    By: sraccah <sraccah@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/22 14:52:23 by sraccah           #+#    #+#              #
-#    Updated: 2015/05/02 04:11:42 by sraccah          ###   ########.fr        #
+#    Updated: 2015/05/02 03:34:21 by sraccah          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,7 @@ NAME = arkanoid
 
 MAKE = make
 CC = clang
-GIT = git
-RM = rm
-RMF = rm -rf
+RM = /bin/rm
 LDIR = libft/
 GDIR = glfw/
 SDIR = srcs/
@@ -40,10 +38,10 @@ A = $(R)[$(B)$(NAME)$(R)]----->\033[0m
 all: $(NAME)
 
 glfw:
-	@git submodule add --force https://github.com/glfw/glfw.git glfw
+	git submodule add --force https://github.com/glfw/glfw.git glfw
 
 glfw/Makefile:
-	@cd glfw ; /nfs/zfs-student-2/users/2013_paris/sraccah/.brew/Cellar/cmake/3.2.2/bin/cmake . ; cd ../
+	cd glfw ; $(HOME)/.brew/Cellar/cmake/3.2.2/bin/cmake . ; cd ../
 
 glfw/src/libglfw3.a: glfw glfw/Makefile
 	@$(MAKE) -C $(GDIR)
@@ -61,17 +59,15 @@ $(NAME): glfw/src/libglfw3.a $(OBJ)
 	@$(CC) $(CFLAGS) $(INC) $(GINC) -c $< -o $@
 
 clean:
-	@$(RM) -rf $(OBJ)
-	@$(MAKE) clean -C $(LDIR)
+	$(RM) -rf $(OBJ)
+	$(MAKE) clean -C $(LDIR)
 	@echo "$(R)[$(Y)Clean$(R): $(G)DONE$(R)]$(Z)"
 
 fclean: clean
-	@$(RM) -rf $(NAME)
-	@$(MAKE) fclean -C $(LDIR)
-	@$(RMF) $(GDIR)
-ifeq ($(GDIR), 1)
-		@$(GIT) rm -rf $(GDIR)
-endif
+	$(RM) -rf $(NAME)
+	$(MAKE) fclean -C $(LDIR)
+	$(RM) -rf glfw/
+	git rm -rf --ignore-unmatch glfw/
 	@echo "$(R)[$(Y)Fclean$(R): $(G)DONE$(R)]$(Z)"
 
 re: fclean all

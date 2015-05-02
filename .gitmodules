@@ -1,0 +1,3 @@
+[submodule "C/Rush/arknoid/glfw"]
+	path = C/Rush/arknoid/glfw
+	url = https://github.com/glfw/glfw.git
