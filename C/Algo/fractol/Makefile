@@ -32,7 +32,7 @@ SRC = $(SDIR)main.c \
 	  $(MXDIR)key_hook.c  $(MXDIR)mouse_press.c  $(MXDIR)loop_hook.c $(MXDIR)mouse_motion.c\
 	  $(CPDIR)ope.c \
 	  $(CDIR)color.c $(CDIR)conversion.c $(CDIR)linear.c \
-	  $(CDIR)style.c $(CDIR)ope.c $(CDIR)lifted.c\
+	  $(CDIR)style.c $(CDIR)ope.c $(CDIR)lifted.c $(CDIR)basecolor.c $(CDIR)phase.c\
 	  $(IDIR)init.c $(IDIR)thread.c $(IDIR)coeff.c $(IDIR)pixel.c \
 	  $(IDIR)color.c $(IDIR)background.c\
 	  $(PDIR)plotpixel.c \
@@ -44,11 +44,19 @@ SRC = $(SDIR)main.c \
 	  $(BDIR)bckgrd8.c $(BDIR)bckgrd9.c \
 	  $(EDIR)exit.c
 
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	LDFLAGS += -L$(DIR_LIBS) -lmlx -lXext -lX11 -lm -lpthread
+endif
+ifeq ($(UNAME_S),Darwin)
+	LDFLAGS += -L$(DIR_LIBS) -framework OpenGL -framework AppKit -lpthread
+	INC = -I minilibx_macos
+endif
 OBJ = $(SRC:.c=.o)
-INC = -I includes -I $(LDIR)includes -I minilibx_macos
+INC += -I includes -I $(LDIR)includes 
 LIB = ./libft/libft.a ./minilibx_macos/libmlx.a
 DIR_LIBS = ./minilibx_macos
-LDFLAGS += -L$(DIR_LIBS) -framework OpenGL -framework AppKit -lpthread
+
 CFLAGS = -Wall -Werror -Wextra
 
 all: $(NAME)

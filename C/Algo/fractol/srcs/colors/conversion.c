@@ -96,3 +96,57 @@ t_rgb			hsvtorgb(t_hsv hsv)
 		return rgb(hsv.v,p,q);
 	return rgb(0, 0, 0);
 }
+
+t_rgb		ihstorgb(double in, double hue, double sat)
+{
+	int ihue;
+	int i;
+	int k;
+	int r;
+	int b;
+	int g;
+	double rhue;
+
+	i = round(255 * in);
+	k = round(i * (1 - sat));
+	rhue = hue;
+	ihue = (int)rhue;
+	rhue = rhue - ihue;
+	if (!ihue)
+	{
+		r = i;
+		g = round(i * sat * rhue * rhue * (3 - 2 * rhue)) + k;
+		b = k;
+	}
+	if(ihue == 1)
+	{
+		g = i;
+		r = round(i * sat * (1 + rhue * rhue * (2 * rhue - 3))) + k;
+		b = k;
+	}
+	if (ihue == 2)
+	{
+		g = i;
+		b = round(i * sat * rhue * rhue * (3 - 2 * rhue)) + k;
+		r = k;
+	}
+	if (ihue == 3)
+	{
+		b = i;
+		g = round(i * sat * (1 + rhue * rhue * (2 * rhue - 3))) + k;
+		r = k;
+	}
+	if (ihue == 4)
+	{
+		b = i;
+		r = round(i * sat * rhue * rhue * (3 - 2 * rhue)) + k;
+		g = k;
+	}
+	if (ihue == 5)
+	{
+		r = i;
+		b = round(i * sat * (1 + rhue * rhue * (2 * rhue - 3))) + k;
+		g = k;
+	}
+	return (rgb(r, g, b));
+}

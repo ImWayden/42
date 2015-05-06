@@ -224,11 +224,10 @@ void					putpixels(t_env *env, int y);
 ** Background
 */
 
-t_rgb					orbittrap(t_env *env, t_cplx z);
-t_rgb					lerp(t_cplx z, double t);
-t_rgb					style1(t_cplx z, t_rgb color);
-t_rgb					basecolor(t_cplx z, t_rgb color);
-t_rgb					style2(t_cplx z, t_rgb color, int i);
+t_rgb					lerp(t_cplx z);
+t_rgb					basecolor(t_cplx z);
+t_rgb					style(t_cplx z);
+double					phase(double x, double y);
 double					clamp(double value, double min, double max);
 
 /*

@@ -17,16 +17,15 @@ t_rgb		linear_inter(t_rgb v0, t_rgb v1, double t)
 	return (rgb_add(v0, rgb_mult(rgb_sub(v1, v0), t)));
 }
 
-t_rgb		lerp(t_cplx z, double t)
+t_rgb		lerp(t_cplx z)
 {
 	t_rgb 	r;
 	double		p1;
 
-	r = rgb(z.r, z.i, t);
-	p1 = sqrt (r.r * r.r + r.g * r.b);
-	p1++;
+	
+	p1 = sqrt(r.r * r.r + r.g * r.b);
 	r.r = sqrt(2.0 / (p1 + 1)) * z.r * 255;
 	r.g = sqrt(2.0 / (p1 + 1)) * z.i * 255;
-	r.b = (int)(t * 255) % 256;
-	return r;
+	r.b = (r.r + r.g) / 2.0;
+	return (r);
 }
