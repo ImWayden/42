@@ -64,11 +64,11 @@ int					ft_key_hook(t_env *env)
 
 	if (env->forward)
 		forward(env, movespeed);
-	else if (env->back)
+	if (env->back)
 		back(env, movespeed);
-	else if (env->right)
+	if (env->right)
 		turn_right(env, rotspeed);
-	else if (env->left)
+	if (env->left)
 		turn_left(env, rotspeed);
 	raycaster(env);
 	return (0);
