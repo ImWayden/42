@@ -30,7 +30,7 @@ int				ft_get_tex(t_env *env)
 {
 	t_img		*img;
 	int			i;
-	char		*tab[9];
+	char		*tab[10];
 	int			x2;
 	int			y2;
 

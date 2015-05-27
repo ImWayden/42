@@ -10,16 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf.h"
+#include "Wolf.h"
 
 int					mouse_hook(int button, int x, int y)
 {
-	printf("HEY y = <%d>\n", y);
-	e->cursor = y;
-	if (button == 1)
-		ft_destroy_block(e, x, y);
-	if (button == 3)
-		ft_add_block(e, x, y);
+	ft_putstr("mouse : button : ");
+	ft_putnbr(button);
+	ft_putchar(' ');
+	ft_putnbr(x);
+	ft_putchar('-');
+	ft_putnbr(y);
+ 	ft_putchar('\n');
 	return (0);
 }
 
@@ -53,14 +54,15 @@ void			ft_init(t_env *env)
 
 void				ft_main_extend_mlx(t_env *e)
 {
-	mlx_expose_hook(e->win, expose_hook, e);
-	mlx_do_key_autorepeatoff(e->mlx);
+	mlx_expose_hook(e->win, raycaster, e);
 	mlx_hook(e->win, KeyPress, KeyPressMask, ft_key_press, e);
 	mlx_hook(e->win, KeyRelease, KeyReleaseMask, ft_key_release, e);
 	mlx_hook(e->win, MotionNotify, PointerMotionMask, mouse_hook, e);
 	mlx_mouse_hook(e->win, mouse_hook, e);
-	mlx_loop_hook(e->mlx, ft_loop_hook, e);
-	mlx_loop(e->mlx);
+	mlx_loop_hook(e->ptr, ft_key_hook, e);
+	mlx_do_key_autorepeatoff(e->ptr);
+	mlx_loop(e->ptr);
+}
 
 int				main(int ac, char **argv)
 {
@@ -74,16 +76,13 @@ int				main(int ac, char **argv)
 		, "Raycaster")) == NULL)
 		return (0);
 	ft_create_img(&env);
+	ft_putchar('w');
 	ft_get_tex(&env);
+	ft_putchar('e');
 	ft_init(&env);
+	ft_putchar('l');
 	get_map(&env.worldmap, argv[1]);
-	mlx_expose_hook(env.win, raycaster, &env);
-	mlx_do_key_autorepeatoff(env.ptr);
-	mlx_hook(env.win, KeyPress, KeyPressMask, ft_key_press, &env);
-	mlx_hook(env.win, KeyRelease, KeyReleaseMask, ft_key_release, &env);
-	mlx_hook(e->win, MotionNotify, PointerMotionMask, mouse_hook, e);
-	//mlx_mouse_hook(env.win, ft_mouse_hook, &env);
-	mlx_loop_hook(env.ptr, ft_key_hook, &env);
-	mlx_loop(env.ptr);
+	ft_putchar('l');
+	ft_main_extend_mlx(&env);
 	return (0);
 }

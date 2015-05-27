@@ -14,7 +14,6 @@
 # define WOLF_H
 
 # include <mlx.h>
-# include </usr/X11/include/X11/X.h>
 # include <math.h>
 # include <fcntl.h>
 # include "libft.h"
@@ -31,10 +30,20 @@
 # define SCREENHEIGHT	384
 # define MAPWIDTH		24
 # define MAPHEIGHT 		24
-# define UP				65362
-# define DOWN			65364
-# define LEFT			65361
-# define RIGHT			65363
+# define UP				126
+# define DOWN			125
+# define LEFT			123
+# define RIGHT			124
+# define KeyPress		2
+# define KeyRelease		3
+# define ButtonPress	4
+# define ButtonRelease	5
+# define MotionNotify	6
+# define KeyPressMask	(1L<<0)
+# define KeyReleaseMask	(1L<<1)
+# define ButtonPressMask	(1L<<2)
+# define ButtonReleaseMask	(1L<<3)
+# define PointerMotionMask	(1L<<6)
 
 typedef struct			s_img
 {

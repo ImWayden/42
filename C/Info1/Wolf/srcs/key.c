@@ -12,6 +12,18 @@
 
 #include "wolf.h"
 
+void 			ft_exit(t_env *env, char *str)
+{
+	// ft_memdel((void **)&env->color);
+	// ft_memdel((void **)&env->pixel);
+	// ft_memdel((void **)&env->coeff);
+	// ft_memdel((void **)&env->t);
+	// ft_putstr("Fractol : ");
+	(void)env;
+	ft_putendl(str);
+	exit(0);
+}
+
 int					ft_key_press(int keycode, t_env *env)
 {
 	ft_putstr("key : ");
@@ -25,8 +37,8 @@ int					ft_key_press(int keycode, t_env *env)
 		env->left = 1;
 	if (keycode == RIGHT)
 		env->right = 1;
-	if (keycode == 65307)
-		exit(0);
+	if (keycode == 53)
+		ft_exit(env, "See ya.");
 	return (0);
 }
 

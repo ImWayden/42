@@ -24,10 +24,18 @@ SRC = $(SDIR)main.c $(SDIR)draw.c $(SDIR)draw_floor.c $(SDIR)draw_sky.c \
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes
-LIB = ./libft/libft.a
-DIR_LIBS = /opt/X11/lib
-LDFLAGS += -L$(DIR_LIBS) -lmlx -lXext -lX11 -lm
+LIB = ./libft/libft.a ./minilibx_macos/libmlx.a
+DIR_LIBS = ./minilibx_macos
 CFLAGS = -Wall -Wextra -Werror
+
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	LDFLAGS += -L$(DIR_LIBS) -lmlx -lXext -lX11 -lm -lpthread
+endif
+ifeq ($(UNAME_S),Darwin)
+	LDFLAGS += -L$(DIR_LIBS) -framework OpenGL -framework AppKit -lpthread
+	INC += -I minilibx_macos
+endif
 
 all: $(NAME)
 
