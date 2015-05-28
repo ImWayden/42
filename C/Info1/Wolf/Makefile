@@ -18,13 +18,13 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 
-SRC = $(SDIR)main.c $(SDIR)draw.c $(SDIR)draw_floor.c $(SDIR)draw_sky.c \
+SRC = $(SDIR)main.c $(SDIR)draw.c $(SDIR)floor.c $(SDIR)sky.c $(SDIR)wall.c\
 	  $(SDIR)get_tex.c $(SDIR)get_map.c $(SDIR)moove.c $(SDIR)raycaster.c \
 	  $(SDIR)key.c \
 
 OBJ = $(SRC:.c=.o)
 INC = -I includes -I $(LDIR)includes
-LIB = ./libft/libft.a ./minilibx_macos/libmlx.a
+LIB = ./libft/libft.a
 DIR_LIBS = ./minilibx_macos
 CFLAGS = -Wall -Wextra -Werror
 
@@ -35,6 +35,7 @@ endif
 ifeq ($(UNAME_S),Darwin)
 	LDFLAGS += -L$(DIR_LIBS) -framework OpenGL -framework AppKit -lpthread
 	INC += -I minilibx_macos
+	LIB += ./minilibx_macos/libmlx.a
 endif
 
 all: $(NAME)

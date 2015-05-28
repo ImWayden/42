@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Wolf.h"
+#include "wolf.h"
 
 int					mouse_hook(int button, int x, int y)
 {
