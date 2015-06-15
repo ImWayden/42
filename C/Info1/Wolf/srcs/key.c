@@ -12,19 +12,14 @@
 
 #include "wolf.h"
 
-void 			ft_exit(t_env *env, char *str)
+void				ft_exit(t_env *env, char *str)
 {
-	// ft_memdel((void **)&env->color);
-	// ft_memdel((void **)&env->pixel);
-	// ft_memdel((void **)&env->coeff);
-	// ft_memdel((void **)&env->t);
-	// ft_putstr("Fractol : ");
 	(void)env;
 	ft_putendl(str);
 	exit(0);
 }
 
-int					ft_key_press(int keycode, t_env *env)
+int					key_press(int keycode, t_env *env)
 {
 	ft_putstr("key : ");
 	ft_putnbr(keycode);
@@ -42,7 +37,7 @@ int					ft_key_press(int keycode, t_env *env)
 	return (0);
 }
 
-int					ft_key_release(int keycode, t_env *env)
+int					key_release(int keycode, t_env *env)
 {
 	if (keycode == UP)
 		env->forward = 0;
@@ -57,10 +52,10 @@ int					ft_key_release(int keycode, t_env *env)
 	return (0);
 }
 
-int					ft_key_hook(t_env *env)
+int					key_hook(t_env *env)
 {
-	static double	movespeed = 0.005;
-	static double	rotspeed = 0.005;
+	static double	movespeed = 0.05;
+	static double	rotspeed = 0.05;
 
 	if (env->forward)
 		forward(env, movespeed);

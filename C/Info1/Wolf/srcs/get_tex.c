@@ -26,7 +26,7 @@ static void		tex(char **tab)
 	tab[9] = "map/Rocky.xpm";
 }
 
-int				ft_get_tex(t_env *env)
+int				get_tex(t_env *env)
 {
 	t_img		*img;
 	int			i;

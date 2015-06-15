@@ -12,7 +12,7 @@
 
 #include "wolf.h"
 
-void				ray_init(t_env *env)
+static void		ray_init(t_env *env)
 {
 	env->rayposx = env->posx;
 	env->rayposy = env->posy;
@@ -26,7 +26,7 @@ void				ray_init(t_env *env)
 		(env->raydiry * env->raydiry));
 }
 
-void				ray_hit(t_env *env)
+static void		ray_hit(t_env *env)
 {
 	int				hit;
 
@@ -50,7 +50,7 @@ void				ray_hit(t_env *env)
 	}
 }
 
-void				ray_draw_coord(t_env *env)
+static void		ray_draw_coord(t_env *env)
 {
 	if (env->side == 0)
 		env->perpwalldist = fabs((env->mapx - env->rayposx
@@ -67,7 +67,7 @@ void				ray_draw_coord(t_env *env)
 		env->drawend = SCREENHEIGHT - 1;
 }
 
-void				ray_dir(t_env *env)
+static void		ray_dir(t_env *env)
 {
 	if (env->raydirx < 0)
 	{
@@ -91,13 +91,14 @@ void				ray_dir(t_env *env)
 	}
 }
 
-int					raycaster(t_env *env)
+int				raycaster(t_env *env)
 {
-	int				x;
-	int				w;
+	int			x;
+	int			w;
 
 	w = SCREENWIDTH;
 	x = 0;
+	ft_bzero((void *)env->img[10]->data, SCREENWIDTH * SCREENHEIGHT * 4);
 	while (x < w)
 	{
 		env->camerax = 2 * x / (double)(w) - 1;

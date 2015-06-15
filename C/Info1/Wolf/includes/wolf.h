@@ -34,16 +34,16 @@
 # define DOWN			125
 # define LEFT			123
 # define RIGHT			124
-# define KeyPress		2
-# define KeyRelease		3
-# define ButtonPress	4
-# define ButtonRelease	5
-# define MotionNotify	6
-# define KeyPressMask	(1L<<0)
-# define KeyReleaseMask	(1L<<1)
-# define ButtonPressMask	(1L<<2)
-# define ButtonReleaseMask	(1L<<3)
-# define PointerMotionMask	(1L<<6)
+# define KEYPRESS		2
+# define KEYRELEASE		3
+# define BUTTONPRESS	4
+# define BUTTONRELEASE	5
+# define MOTIONNOTIFY	6
+# define KEYPRESSMASK	(1L<<0)
+# define KEYRELEASEMASK	(1L<<1)
+# define BUTTONPRESSMASK	(1L<<2)
+# define BUTTONRELEASEMASK	(1L<<3)
+# define POINTERMOTIONMASK	(1L<<6)
 
 typedef struct			s_img
 {
@@ -114,14 +114,14 @@ int						back(t_env *env, double movespeed);
 int						forward(t_env *env, double movespeed);
 int						turn_right(t_env *env, double rotspeed);
 int						turn_left(t_env *env, double rotspeed);
-int						ft_key_hook(t_env *env);
-int						ft_key_release(int keycode, t_env *env);
-int						ft_key_press(int keycode, t_env *env);
+int						key_hook(t_env *env);
+int						key_release(int keycode, t_env *env);
+int						key_press(int keycode, t_env *env);
 int						get_map(int ***tab, char *file);
 void					draw_floor(t_env *env, int x, int z);
-int						draw_wall(t_env *env, int x);
+int						wall(t_env *env);
 void					draw_sky(t_env *env, int x, int z);
-int						ft_get_tex(t_env *env);
+int						get_tex(t_env *env);
 void					draw(t_env *env, int x);
 
 #endif

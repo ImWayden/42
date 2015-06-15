@@ -36,7 +36,7 @@ static int		ft_malloc(int ***tab)
 	return (0);
 }
 
-static int		ft_getfile(int fd, int **tab)
+static int		getfile(int fd, int **tab)
 {
 	int			i;
 	int			j;
@@ -70,6 +70,6 @@ int				get_map(int ***tab, char *file)
 
 	fd = ft_open(file);
 	ft_malloc(tab);
-	ft_getfile(fd, *tab);
+	getfile(fd, *tab);
 	return (0);
 }

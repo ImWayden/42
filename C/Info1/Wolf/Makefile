@@ -18,7 +18,7 @@ RM = /bin/rm
 LDIR = libft/
 SDIR = srcs/
 
-SRC = $(SDIR)main.c $(SDIR)draw.c $(SDIR)floor.c $(SDIR)sky.c $(SDIR)wall.c\
+SRC = $(SDIR)main.c $(SDIR)draw.c $(SDIR)wall.c $(SDIR)sky.c $(SDIR)floor.c\
 	  $(SDIR)get_tex.c $(SDIR)get_map.c $(SDIR)moove.c $(SDIR)raycaster.c \
 	  $(SDIR)key.c \
 
