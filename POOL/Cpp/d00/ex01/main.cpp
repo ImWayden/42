@@ -11,26 +11,20 @@
 /* ************************************************************************** */
 
 #include <iostream>
-#include "Contact.class.hpp"
-
-static int i = -1;
-static Contact	phonebook[8];
+#include <cstdlib>
+#include "Phonebook.class.hpp"
 
 int		main(void) {
 	std::string		str;
-	int 			j;
+	Phonebook		book;
 
 	while (std::cout << "ENTER YOUR CHOICE : " && std::cin >> str) {
 		if (str == "EXIT")
 			std::exit(0);
-		else if (str == "ADD" && i < 7 && i++)
-			phonebook[i].setContact();
 		else if (str == "ADD")
-			std::cout << "THE PHONEBOOK IS FULL." << std::endl;
-		else if (str == "SEARCH" && i != -1) {
-			j = -1;
-			while (++j < 8)
-				phonebook[j].getContact();		
+			book.addContact();
+		else if (str == "SEARCH")
+			book.searchContact();	
 		}
-	}
+		return 0;
 }

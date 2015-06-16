@@ -17,7 +17,7 @@ CC = clang++
 RM = /bin/rm
 
 
-SRC = main.cpp Contact.class.cpp
+SRC = main.cpp Contact.class.cpp Phonebook.class.cpp
 OBJ = $(SRC:.cpp=.o)
 CFLAGS = -Wall -Werror -Wextra
 

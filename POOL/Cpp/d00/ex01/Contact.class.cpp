@@ -66,45 +66,6 @@ std::string Contact::getDarkestSecret(void){
 	return this->_darkestSecret;
 }
 
-void		Contact::setContact(void) {
-	std::string		buffer;
-
-	std::cout << "ADD a new Contact :" << std::endl;
-	std::cout << "firt name : " << std::endl;
-	std::cin >> buffer;
-	this->setFirstname(buffer);
-	std::cout << "last name : " << std::endl;
-	std::cin >> buffer;
-	this->setLastname(buffer);
-	std::cout << "nickname : " << std::endl;
-	std::cin >> buffer;
-	this->setNickname(buffer);
-	std::cout << "login : " << std::endl;
-	std::cin >> buffer;
-	this->setLogin(buffer);
-	std::cout << "postal address : " << std::endl;
-	std::cin >> buffer;
-	this->setPostalAddress(buffer);
-	std::cout << "email address : " << std::endl;
-	std::cin >> buffer;
-	this->setEmailAddress(buffer);
-	std::cout << "phone number : " << std::endl;
-	std::cin >> buffer;
-	this->setPhone(buffer);
-	std::cout << "birthday date : " << std::endl;
-	std::cin >> buffer;
-	this->setBirthdayDate(buffer);
-	std::cout << "favorite meal : " << std::endl;
-	std::cin >> buffer;
-	this->setMeel(buffer);
-	std::cout << "underwear color : " << std::endl;
-	std::cin >> buffer;
-	this->setUnderwearColor(buffer);
-	std::cout << "darkest secret : " << std::endl;
-	std::cin >> buffer;
-	this->setDarkestSecret(buffer);
-}
-
 void		Contact::setFirstname(std::string str){
 	this->_firstname = str;
 	return ;

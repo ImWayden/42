@@ -15,7 +15,7 @@
 
 # include <string>
 
-class	Contact{
+class	Contact {
 
 	public:
 		Contact(void);
@@ -32,7 +32,6 @@ class	Contact{
 		std::string		getUnderWearColor(void);
 		std::string		getDarkestSecret(void);
 
-		void			setContact(void);
 		void			setFirstname(std::string);
 		void			setLastname(std::string);
 		void			setNickname(std::string);
