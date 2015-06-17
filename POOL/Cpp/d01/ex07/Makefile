@@ -18,7 +18,7 @@ RM = /bin/rm
 
 
 SRC = Seed.cpp
-OBJ = $(SRC:.c=.o)
+OBJ = $(SRC:.cpp=.o)
 CFLAGS = -Wall -Werror -Wextra
 
 all: $(NAME)
