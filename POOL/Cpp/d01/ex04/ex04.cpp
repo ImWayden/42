@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Pony.hpp                                           :+:      :+:    :+:   */
+/*   ex04.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/06/16 16:26:05 by msarr             #+#    #+#             */
-/*   Updated: 2015/06/16 16:26:07 by msarr            ###   ########.fr       */
+/*   Created: 2015/06/17 12:51:15 by msarr             #+#    #+#             */
+/*   Updated: 2015/06/17 12:51:15 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PONY_CLASS_H
-# define PONY_CLASS_H
-
 #include <iostream>
 
-class Pony {
+int main()
+{
+    std::string simplestring = "HI THIS IS BRAIN";
+    std::string *pointer = &simplestring;
+    std::string &ref = simplestring;
 
-	public:
-    	Pony(void);
-    	~Pony(void);
-    	void speak(void);
-    	void setColor(std::string);
-    	void setName(std::string);
+    std::cout << "pointeur : " << *pointer << std::endl;
+    std::cout << "Ref : " << ref << std::endl;
 
-	private:
-    	std::string color;
-    	std::string name;
-};
-
-#endif
+    return 0;
+}

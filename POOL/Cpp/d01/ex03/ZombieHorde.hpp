@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Pony.hpp                                           :+:      :+:    :+:   */
+/*   ZombieHorde.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/06/16 16:26:05 by msarr             #+#    #+#             */
-/*   Updated: 2015/06/16 16:26:07 by msarr            ###   ########.fr       */
+/*   Created: 2015/06/17 12:44:56 by msarr             #+#    #+#             */
+/*   Updated: 2015/06/17 12:44:56 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PONY_CLASS_H
-# define PONY_CLASS_H
+#ifndef ZOMBIE_HORDE_H
+# define ZOMBIE_HORDE_H
 
+#include <cstdlib>
 #include <iostream>
+#include "Zombie.hpp"
 
-class Pony {
 
+class ZombieHorde
+{
 	public:
-    	Pony(void);
-    	~Pony(void);
-    	void speak(void);
-    	void setColor(std::string);
-    	void setName(std::string);
-
+	    ZombieHorde(int N);
+	    ~ZombieHorde(void);
+	    void announce();
+	    Zombie *horde;
 	private:
-    	std::string color;
-    	std::string name;
+    	void createZombie(int N);
+	    int numberOfZombie;
 };
 
 #endif

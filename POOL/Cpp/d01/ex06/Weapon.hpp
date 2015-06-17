@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Pony.hpp                                           :+:      :+:    :+:   */
+/*   Weapon.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/06/16 16:26:05 by msarr             #+#    #+#             */
-/*   Updated: 2015/06/16 16:26:07 by msarr            ###   ########.fr       */
+/*   Created: 2015/06/17 14:36:41 by msarr             #+#    #+#             */
+/*   Updated: 2015/06/17 14:36:41 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PONY_CLASS_H
-# define PONY_CLASS_H
+#ifndef WEAPON_H
+# define WEAPON_H
 
 #include <iostream>
 
-class Pony {
-
+class Weapon
+{
 	public:
-    	Pony(void);
-    	~Pony(void);
-    	void speak(void);
-    	void setColor(std::string);
-    	void setName(std::string);
-
-	private:
-    	std::string color;
-    	std::string name;
+    	Weapon(std::string type);
+	    ~Weapon(void);
+	    void setType(std::string);
+    	std::string const &	getType(void);
+    private:
+    	std::string type;
 };
 
 #endif

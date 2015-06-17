@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Pony.hpp                                           :+:      :+:    :+:   */
+/*   Human.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/06/16 16:26:05 by msarr             #+#    #+#             */
-/*   Updated: 2015/06/16 16:26:07 by msarr            ###   ########.fr       */
+/*   Created: 2015/06/17 13:04:21 by msarr             #+#    #+#             */
+/*   Updated: 2015/06/17 13:04:21 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PONY_CLASS_H
-# define PONY_CLASS_H
+#ifndef HUMAN_H
+# define HUMAN_H
 
-#include <iostream>
+#include "Brain.hpp"
 
-class Pony {
-
+class Human
+{
 	public:
-    	Pony(void);
-    	~Pony(void);
-    	void speak(void);
-    	void setColor(std::string);
-    	void setName(std::string);
-
+    	Human(void);
+	    ~Human(void);
+	    Brain&		getBrain(void);
+	    std::string identify(void);
 	private:
-    	std::string color;
-    	std::string name;
+    	Brain const brain;
+
 };
 
 #endif

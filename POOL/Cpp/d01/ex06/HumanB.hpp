@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Pony.hpp                                           :+:      :+:    :+:   */
+/*   HumanB.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/06/16 16:26:05 by msarr             #+#    #+#             */
-/*   Updated: 2015/06/16 16:26:07 by msarr            ###   ########.fr       */
+/*   Created: 2015/06/17 14:32:19 by msarr             #+#    #+#             */
+/*   Updated: 2015/06/17 14:32:19 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PONY_CLASS_H
-# define PONY_CLASS_H
+#ifndef HUMAN_B_H
+# define HUMAN_B_H
 
 #include <iostream>
+#include "Weapon.hpp"
 
-class Pony {
-
+class HumanB
+{
 	public:
-    	Pony(void);
-    	~Pony(void);
-    	void speak(void);
-    	void setColor(std::string);
-    	void setName(std::string);
-
+	    HumanB(std::string name);
+	    ~HumanB(void);
+	    void attack();
+	    void setWeapon(Weapon &weapon);
 	private:
-    	std::string color;
     	std::string name;
+    	Weapon *weapon;
 };
 
 #endif
