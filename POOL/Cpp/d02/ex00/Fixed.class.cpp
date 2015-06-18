@@ -14,6 +14,7 @@
 
 Fixed::Fixed(void) : fractionalbBits(8)
 {
+    (void)fractionalbBits;
     this->setRawBits(0);
     std::cout << "Default Constructor called" << std::endl;
 }
@@ -35,7 +36,7 @@ Fixed::~Fixed()
     std::cout << "Destructor called" << std::endl;
 }
 
-Fixed &		Fixed::operator=(Fixed const &rhs)
+Fixed   &Fixed::operator=(Fixed const &rhs)
 {
     std::cout << "Assignation operator called" << std::endl;
     this->rawBits = rhs.getRawBits();

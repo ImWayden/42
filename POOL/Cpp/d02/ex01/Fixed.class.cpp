@@ -16,6 +16,7 @@
 
 Fixed::Fixed(void) : fractionalbBits(8)
 {
+    (void)fractionalbBits;
     this->setRawBits(0);
     std::cout << "Default Constructor called" << std::endl;
 }
