@@ -1,57 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Fragtrap.cpp                                       :+:      :+:    :+:   */
+/*   ClapTrap.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <msarr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/06/19 11:47:27 by msarr             #+#    #+#             */
-/*   Updated: 2015/06/19 11:47:27 by msarr            ###   ########.fr       */
+/*   Created: 2015/06/19 13:31:31 by msarr             #+#    #+#             */
+/*   Updated: 2015/06/19 13:32:10 by msarr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "FragTrap.hpp"
+#include "ClapTrap.hpp"
 
-FragTrap::FragTrap()
+ClapTrap::ClapTrap()
 {
-    std::cout << "FragTag Default Constructor Called" << std::endl;
+    std::cout << "Default ClapTrap Constructor Called" << std::endl;
 }
 
-FragTrap::FragTrap(FragTrap const &src)
+ClapTrap::ClapTrap(ClapTrap const &src)
 {
-    std::cout << "FragTag Copy Constructor Called" << std::endl;
+    std::cout << "Copy ClapTrap Constructor Called" << std::endl;
     *this = src;
 }
 
-FragTrap::FragTrap(const std::string str) : name(str)
+ClapTrap::ClapTrap(const std::string str) : name(str)
 {
-    std::cout << "FragTag String Constructor Called" << std::endl;
+    std::cout << "String ClapTrap Constructor Called" << std::endl;
     this->HitPoint = 100;
-    this->MaxHitPoint = 100;
-    this->EnergyPoint = 100;
+    this->MaxEnergyPoint = 100;
+    this->EnergyPoint = 50;
     this->MaxEnergyPoint = 100;
     this->level = 1;
-    this->meleeAttackDamage = 30;
-    this->rangedAttackDamage = 20;
-    this->ArmorAttackReduction = 5;
+    this->meleeAttackDamage = 20;
+    this->rangedAttackDamage = 15;
+    this->ArmorAttackReduction = 3;
 }
 
-FragTrap::~FragTrap()
+ClapTrap::~ClapTrap()
 {
-    std::cout << "Destructor Called" << std::endl;
+    std::cout << "Destructor ClapTrap Called" << std::endl;
 }
 
-void FragTrap::rangedAttack(const std::string &target)
+void ClapTrap::rangedAttack(const std::string &target)
 {
     std::cout << "FR4G-TP <" << this->getName() << "> attacks <" << target << "> at range, causing <" << this->getRangedAttackDamage() << "> points of damage" << std::endl;
 }
 
-void FragTrap::meleeAttack(const std::string &target)
+void ClapTrap::meleeAttack(const std::string &target)
 {
     std::cout << "FR4G-TP <" << this->getName() << "> attacks <" << target << "> at melee, causing <" << this->getMeleeAttackDamage() << "> points of damage" << std::endl;
 }
 
-void FragTrap::beRepaired(unsigned int amount)
+void ClapTrap::beRepaired(unsigned int amount)
 {
     if (this->getHitPoint() >= this->getMaxHitPoint())
         std::cout << "The unit is already at Max Hit Point" << std::endl;
@@ -68,26 +68,7 @@ void FragTrap::beRepaired(unsigned int amount)
     }
 }
 
-void    FragTrap::vaulthunter_dot_exe(const std::string &target)
-{
-    if ((this->getEnergyPoint() - 25) > 0)
-    {
-        std::string randomAttack[5];
-        randomAttack[0] = "Lazer";
-        randomAttack[1] = "MachineGun";
-        randomAttack[2] = "FireBall";
-        randomAttack[3] = "Two Handed Axe";
-        randomAttack[4] = "Sword";
-
-        this->EnergyPoint -= 25;
-        std::cout << "FR4G-TP <" << this->getName() << "> is attacking <" << target << "> with " << randomAttack[std::rand() % 5] << std::endl;
-    }
-    else
-        std::cout << "FR4G-TP <" << this->getName() << "> Not enough Energy Points to attack" << std::endl;
-  
-}
-
-void FragTrap::takeDamage(unsigned int amount)
+void ClapTrap::takeDamage(unsigned int amount)
 {
     this->HitPoint -= (amount -= this->getArmorAttackReduction());
     this->HitPoint =  (this->getHitPoint() < 0) ? 0 : this->HitPoint;
@@ -97,7 +78,7 @@ void FragTrap::takeDamage(unsigned int amount)
         std::cout << "FR4G-TP <" << this->getName() << "> is hit by <" << amount + this->getArmorAttackReduction() << "> Hit points " << "(reduced to " << amount << ")" << std::endl;
 }
 
-FragTrap &FragTrap::operator=(FragTrap const &rhs)
+ClapTrap &ClapTrap::operator=(ClapTrap const &rhs)
 {
     this->HitPoint = rhs.getHitPoint();
     this->EnergyPoint = rhs.getEnergyPoint();
@@ -109,47 +90,47 @@ FragTrap &FragTrap::operator=(FragTrap const &rhs)
     return *this;
 }
 
-int FragTrap::getHitPoint() const
+int ClapTrap::getHitPoint() const
 {
     return HitPoint;
 }
 
-int FragTrap::getMaxHitPoint() const
+int ClapTrap::getMaxHitPoint() const
 {
     return MaxHitPoint;
 }
 
-int FragTrap::getEnergyPoint() const
+int ClapTrap::getEnergyPoint() const
 {
     return EnergyPoint;
 }
 
-int FragTrap::getMaxEnergyPoint() const
+int ClapTrap::getMaxEnergyPoint() const
 {
     return MaxEnergyPoint;
 }
 
-int FragTrap::getLevel() const
+int ClapTrap::getLevel() const
 {
     return level;
 }
 
-std::string FragTrap::getName() const
+std::string ClapTrap::getName() const
 {
     return name;
 }
 
-int FragTrap::getMeleeAttackDamage() const
+int ClapTrap::getMeleeAttackDamage() const
 {
     return meleeAttackDamage;
 }
 
-int FragTrap::getRangedAttackDamage() const
+int ClapTrap::getRangedAttackDamage() const
 {
     return rangedAttackDamage;
 }
 
-int FragTrap::getArmorAttackReduction() const
+int ClapTrap::getArmorAttackReduction() const
 {
     return ArmorAttackReduction;
 }

@@ -12,14 +12,15 @@
 
 #include "FragTrap.hpp"
 
+FragTrap::FragTrap()
+{
+    std::cout << "Default Constructor Called" << std::endl;
+}
+
 FragTrap::FragTrap(FragTrap const &src)
 {
     std::cout << "Copy Constructor Called" << std::endl;
     *this = src;
-}
-
-FragTrap::FragTrap() {
-    std::cout << "Default Constructor Called" << std::endl;
 }
 
 FragTrap::FragTrap(const std::string str) : name(str)
@@ -58,53 +59,42 @@ void FragTrap::beRepaired(unsigned int amount)
     {
         if (this->getHitPoint() == 0)
             std::cout << "FR4G-TP <" << this->getName() << "> has been resurected" << std::endl;
-        std::cout << "FR4G-TP <" << this->getName() << "> is heal by " << amount << "> Hit points" << std::endl;
-        if ((this->getHitPoint() + (int) amount) > this->getMaxHitPoint())
-            this->HitPoint = this->getMaxHitPoint();
         else
+        {
+            std::cout << "FR4G-TP <" << this->getName() << "> is heal by " << amount << "> Hit points" << std::endl;
             this->HitPoint += amount;
+            this->HitPoint =  (this->getHitPoint() > this->getMaxHitPoint()) ? this->getMaxHitPoint() : this->HitPoint;
+        }
     }
 }
 
-void FragTrap::vaulthunter_dot_exe(const std::string &target)
+void    FragTrap::vaulthunter_dot_exe(const std::string &target)
 {
-    if ((this->getEnergyPoint() - 25) > -0)
+    if ((this->getEnergyPoint() - 25) > 0)
     {
         std::string randomAttack[5];
-        randomAttack[0] = "Knife";
+        randomAttack[0] = "Lazer";
         randomAttack[1] = "MachineGun";
         randomAttack[2] = "FireBall";
         randomAttack[3] = "Two Handed Axe";
         randomAttack[4] = "Sword";
-
-        srand(time(NULL));
 
         this->EnergyPoint -= 25;
         std::cout << "FR4G-TP <" << this->getName() << "> is attacking <" << target << "> with " << randomAttack[std::rand() % 5] << std::endl;
     }
     else
         std::cout << "FR4G-TP <" << this->getName() << "> Not enough Energy Points to attack" << std::endl;
+  
 }
 
 void FragTrap::takeDamage(unsigned int amount)
 {
-    amount -= this->getArmorAttackReduction();
+    this->HitPoint -= (amount -= this->getArmorAttackReduction());
+    this->HitPoint =  (this->getHitPoint() < 0) ? 0 : this->HitPoint;
     if (this->getHitPoint() <= 0)
-        std::cout << "this unit is already dead" << std::endl;
+        std::cout << "this unit is destroyed" << std::endl;
     else
-    {
-        if ((this->getHitPoint() < (int) amount))
-        {
-            this->HitPoint = 0;
-            std::cout << "FR4G-TP <" << this->getName() << "> is hit by <" << amount + this->getArmorAttackReduction() << "> Hit points " << "(reduced to " << amount << ")" << std::endl;
-            std::cout << "FR4G-TP <" << this->getName() << "> This unit is now dead" << std::endl;
-        }
-        else
-        {
-            this->HitPoint -= amount;
-            std::cout << "FR4G-TP <" << this->getName() << "> is hit by <" << amount + this->getArmorAttackReduction() << "> Hit points " << "(reduced to " << amount << ")" << std::endl;
-        }
-    }
+        std::cout << "FR4G-TP <" << this->getName() << "> is hit by <" << amount + this->getArmorAttackReduction() << "> Hit points " << "(reduced to " << amount << ")" << std::endl;
 }
 
 FragTrap &FragTrap::operator=(FragTrap const &rhs)
