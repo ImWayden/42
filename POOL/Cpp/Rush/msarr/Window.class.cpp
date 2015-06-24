@@ -3,27 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   Window.class.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: dgrimm <dgrimm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/06/20 15:43:26 by msarr             #+#    #+#             */
-/*   Updated: 2015/06/20 15:43:30 by msarr            ###   ########.fr       */
+/*   Created: 2015/06/21 17:46:32 by dgrimm            #+#    #+#             */
+/*   Updated: 2015/06/21 17:46:35 by dgrimm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Window.class.hpp"
 
-Window::Window()
+Window::Window( void )
 {
     std::cout << "Initialisation de la fenetre !" << std::endl;
     if (initscr())
     {
         start_color();
+		init_color(COLOR_YELLOW, 500, 400, 100);
         init_pair(1, COLOR_CYAN, COLOR_BLACK);
         init_pair(2, COLOR_BLUE, COLOR_BLACK);
         init_pair(3, COLOR_RED, COLOR_BLACK);
         init_pair(4, COLOR_GREEN, COLOR_BLACK);
+        init_pair(5, COLOR_YELLOW, COLOR_BLACK);
         noecho();
         cbreak();
+		timeout(50);
         keypad(stdscr, TRUE);
         bkgd(COLOR_PAIR(1));
         refresh();
@@ -36,16 +39,13 @@ Window::Window()
     {
         std::cout << "Game_2048: Initialisation failed." << std::endl;
         std::exit(0);
-    }   
-}
-
-Window::Window(Window &)
-{
+    }
 }
 
 Window::~Window()
 {
     this->exit();
+    std::cout << "Ncurses perfectly close" << std::endl;
 }
 
 void    Window::setSize()
@@ -61,7 +61,7 @@ void    Window::setSize()
     {
         std::cout << "Game_2048: Initialisation failed." << std::endl;
         std::exit(0);
-    } 
+    }
 }
 
  WINDOW *    Window::getWin()

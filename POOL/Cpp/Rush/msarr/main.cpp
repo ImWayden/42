@@ -1,37 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Game.class.hpp                                     :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarr <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: dgrimm <dgrimm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/06/20 17:31:12 by msarr             #+#    #+#             */
-/*   Updated: 2015/06/20 17:31:14 by msarr            ###   ########.fr       */
+/*   Created: 2015/06/21 17:46:49 by dgrimm            #+#    #+#             */
+/*   Updated: 2015/06/21 17:46:53 by dgrimm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GAME_CLASS_H
-# define GAME_CLASS_H
+#include "Game.class.hpp"
 #include "Window.class.hpp"
+#include "Character.class.hpp"
 
-class 	Game
+int			main(void)
 {
-	public:
-		Game();
-		~Game();
-
-		void	play();
-		void	setY();
-
-
-	private:
-		//Charater	_tabChar[10];
-		int			_score;
-		int			_x;
-		int			_y;
-		Window		*_w;
-		void		display();
-
-	
-};
-#endif
+	srand(time(NULL));
+	time(NULL);
+	Game game;
+	game.play();
+	return (0);
+}
