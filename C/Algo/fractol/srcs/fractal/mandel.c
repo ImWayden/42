@@ -32,7 +32,6 @@ void		*mandel(void *arg)
 		i = -1;
 		while (mod(z) < 4 && ++i < env->max_i)
 			z = cplx_add(cplx_mult(cplx_mult(z, z), z), c);
-			a = env->back(env->coeff[i], z.r, z.i);
 		plotpixel(env, x, y, get_color(env, z, a, i));
 	}
 	pthread_exit(NULL);

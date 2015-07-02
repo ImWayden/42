@@ -31,7 +31,7 @@
 # define SCREEN_H		480
 # define EPS			0.0001
 # define random_bit()	random() & 01
-# define NCOLORS		16
+# define NCOLORS		1024
 # define NCOEFF			30
 # define ZOOM_FACTOR	1.1
 # define SAMPLES 		2000
