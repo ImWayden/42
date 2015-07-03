@@ -16,7 +16,6 @@ t_thread		*threadmap(t_env *env)
 {
 	t_thread	*thread;
 	int			y;
-	//int			x;
 	int			d;
 
 	thread = NULL;

@@ -21,11 +21,8 @@ static int		isroot(t_cplx z)
     return (fabs(mod(z1)) < EPS);
   }
 
-void		*newton(void *arg)
+void		newton(t_env *env, int x, int y)
 {
-	t_env	*env;
-	int		x;
-	int		y;
 	t_cplx	 z;
 	t_cplx	 zn;
 	t_cplx	 zd;
@@ -33,26 +30,20 @@ void		*newton(void *arg)
 	size_t	i;
 
 
-	getarg(arg, &env, &x, &y);
-	while (++x < SCREEN_W)
+	i = -1;
+	z.r = env->ptx + ((x - (SCREEN_W / 2)) / env->zoom);
+	z.i = -(env->pty + ((y - (SCREEN_H / 2)) / env->zoom));
+	a = cplx(z.r, z.i);
+	while (++i < env->max_i)
 	{
-		i = -1;
-		z.r = env->ptx + ((x - (SCREEN_W / 2)) / env->zoom);
-		z.i = -(env->pty + ((y - (SCREEN_H / 2)) / env->zoom));
-		a = cplx(z.r, z.i);
-		while (++i < env->max_i)
+		if (cplx_abs(z) > 0)
 		{
-			if (cplx_abs(z) > 0)
-			{
-				zn = cplx_sub(cplx_pow(z, 3), cplx(1.0, 0));
-				zd = cplx_mult(cplx(3, 0), cplx_pow(z, 2));
-				z = cplx_sub(z, cplx_div(zn, zd));
-			}
-			if (isroot(z))
-				break;
+			zn = cplx_sub(cplx_pow(z, 3), cplx(1.0, 0));
+			zd = cplx_mult(cplx(3, 0), cplx_pow(z, 2));
+			z = cplx_sub(z, cplx_div(zn, zd));
 		}
-		plotpixel(env, x, y, get_color(env, a, z, i));
+		if (isroot(z))
+			break;
 	}
-	pthread_exit(NULL);
-	return (NULL);
+	plotpixel(env, x, y, get_color(env, a, z, i));
 }

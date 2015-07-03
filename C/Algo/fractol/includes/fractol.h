@@ -129,7 +129,7 @@ struct					s_env
 	struct timeval		end;
 	t_thread			*t;
 	pthread_mutex_t		lock;
-	void 				*(*fract)(void *arg);
+	void 				(*fract)(t_env *env, int x, int y);
 	t_cplx				(*back)(t_coeff, double, double);
 };
 
@@ -140,12 +140,12 @@ struct					s_env
 ** Fractal rendering
 */
 
-void					*render(void *envp);
-void					*julia(void *arg);
-void					*mandel(void *arg);
-void					*buddha(void *arg);
-void					*newton(void *arg);
-void					*burningship(void *arg);
+void					render(t_env *env);
+void					julia(t_env *env, int x, int y);
+void					mandel(t_env *env, int x, int y);
+void					buddha(t_env *env, int x, int y);
+void					newton(t_env *env, int x, int y);
+void					burningship(t_env *env, int x, int y);
 int						render_3d(t_env *env);
 void					getarg(void *arg, t_env **env, int *x, int *y);
 t_rgb					get_color(t_env *env, t_cplx z, t_cplx a, size_t i);

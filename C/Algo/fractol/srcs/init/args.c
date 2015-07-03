@@ -30,7 +30,8 @@ static int	treat_args(t_env *env, char **av, int ac)
 			env->back = background(ft_atoi(av[ac--]));
 		else if (!ft_strcmp(av[ac - 1], "-nc"))
 			env->nc = ft_atoi(av[ac--]);
-		else
+		else if (!ft_strcmp(av[ac], "-t"))
+			;
 			break ;
 	}
 	return (ac);
