@@ -25,6 +25,6 @@ void		mandel(t_env *env, int x, int y)
 	a = cplx(c.r, c.i);
 	i = -1;
 	while (mod(z) < 4 && ++i < env->max_i)
-		z = cplx_add(cplx_mult(cplx_mult(z, z), z), c);
+		z = cplx_add(cplx_mult(z, z), c);
 	plotpixel(env, x, y, get_color(env, z, a, i));
 }

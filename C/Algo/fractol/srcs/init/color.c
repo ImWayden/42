@@ -22,8 +22,8 @@ t_rgb		*rgbmap(void)
 	if ((rgbtab = malloc(NCOLORS * sizeof(t_rgb))))
 	{
 		while (++i < NCOLORS)
-			rgbtab[i] = rgb((64 + RANDR (64, 256)), (64 + RANDR (64, 256))
-						, (64 + RANDR (64, 256)));
+			rgbtab[i] = rgb(RANDR (0, 256), RANDR (0, 256)
+						, RANDR (0, 256));
 	}
 	return (rgbtab);
 }

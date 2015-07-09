@@ -14,10 +14,8 @@
 
 int		loop_hook(t_env *env)
 {
-	if (!pthread_mutex_trylock(&env->lock))
-	{
-		mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
-		pthread_mutex_unlock(&env->lock);
-	}
+	render(env);
+	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
+	printf("Fractol : iter :  %lu, zoom : %Lf\n", env->max_i, env->zoom);
 	return (0);
 }

@@ -25,8 +25,8 @@ int		mouse_motion(int x, int y, t_env *env)
 		if (env->c.r < -1)
 			env->c.r = 1;
 		
-		render(env);
-		mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
+		//render(env);
+		//mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
 	}
 	(void)x;
 	(void)y;

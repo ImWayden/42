@@ -14,21 +14,20 @@
 
 int		mouse_press(int button, int x, int y, t_env *env)
 {
+	double	pointx;
+	double	pointy;
+
 	if (button == 5  || button == 4)
 	{
-		gettimeofday(&(env->end), NULL);
-		if ((env->end.tv_usec - env->start.tv_usec) > 10000)
-		{
-			env->ptx = env->ptx + ((x - (SCREEN_W / 2)) / env->zoom);
-			env->pty = env->pty + ((y - (SCREEN_H / 2)) / env->zoom);
-		}
+		pointx = env->ptx + ((x - (SCREEN_W / 2)) / env->zoom);
+		pointy = env->pty + ((y - (SCREEN_H / 2)) / env->zoom);
 		if (button == 4)
 			env->zoom *= ZOOM_FACTOR;
 		if (button == 5)
 			env->zoom /= ZOOM_FACTOR;
+		env->ptx = pointx - (double) ((x - (SCREEN_W / 2.0)) / env->zoom);
+		env->pty = pointy - (double) ((y - (SCREEN_H / 2.0)) / env->zoom);
 		env->max_i = (SCREEN_W / 2) * 0.049715909 * log10(env->zoom);
-		gettimeofday(&(env->start), NULL);
-		render((void *)env);
 	}
 	return 0;
 }
