@@ -20,9 +20,9 @@ void	putpixels(t_env *env, int y)
 	x = -1;
 	while (++x < SCREEN_H)
 	{
-		d = x + y * SCREEN_W;
-		if (!ISBLACK(env->pixel[d]))
-			plotpixel(env, x, y, env->pixel[d]);
+		d = y + x * SCREEN_W;
+		//if (!ISBLACK(env->pixel[d]))
+			addpixel(env, x, y, env->pixel[d]);
 	}
 }
 
@@ -42,11 +42,11 @@ void	addred(t_env *env, t_cplx *z, int n)
 		{
 			d = (x + y * SCREEN_W) * 4;
 			if (n < 115)
-				env->data[d] += 25;
+				env->data[d] *= 1.1;
 			if (n < 30)
-				env->data[d + 1] += 25;
+				env->data[d + 1] *= 1.1;
 			if (n < 20)
-				env->data[d + 2] += 25;
+				env->data[d + 2] *= 1.1;
 		}
 	}
 }
@@ -63,7 +63,7 @@ void		buddha(t_env *env, int x, int y)
 	
 	i = -1;
 	while (++i < env->max_i)
-		zt[i] = cplx(0.0, 0.0);
+		zt[i] = cplx(1.0, 1.0);
 	c.r = env->ptx + ((x - (SCREEN_W / 2)) / env->zoom);
 	c.i = env->pty + ((y - (SCREEN_H / 2)) / env->zoom);
 	a = cplx(c.r, c.i);
@@ -74,9 +74,9 @@ void		buddha(t_env *env, int x, int y)
 		z = cplx_add(cplx_mult(z, z), c);
 		zt[i] = cplx(z.r, z.i);
 	}
-	a = curl(env->coeff[i % NCOEFF], a.r, a.i);
+	//a = curl(env->coeff[i % NCOEFF], a.r, a.i);
 	//plotpixel(env, x, y, lerp(c));
 	if (i < env->max_i)
 		addred(env, zt, i);
-	//putpixels(env, y);
+	putpixels(env, y);
 }

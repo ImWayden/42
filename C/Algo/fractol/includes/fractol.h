@@ -27,15 +27,15 @@
 # include "colors.h"
 # include "complex.h"
 
-# define SCREEN_W 		670
-# define SCREEN_H		480
+# define SCREEN_W 		600
+# define SCREEN_H		600
 # define EPS			0.0001
 # define random_bit()	random() & 01
-# define NCOLORS		1024
+# define NCOLORS		16
 # define NCOEFF			30
 # define ZOOM_FACTOR	1.1
 # define SAMPLES 		2000
-# define ITT 			10000
+# define ITT 			1000
 # define SUPER 			1
 # define GAMMA 			2.2
 # define SEED 			1
