@@ -12,56 +12,6 @@
 
 #include "fractol.h"
 
-static int		img_init(t_env *env)
-{
-	int			sizel;
-	int			endian;
-	int			bpp;
-
-	if (!(env->ptr = mlx_init()))
-		return (0);
-	if (!(env->win = mlx_new_window(env->ptr, SCREEN_W, SCREEN_H, "Fractol")))
-		return (0);
-	if (!(env->img = mlx_new_image(env->ptr, SCREEN_W, SCREEN_H)))
-		return (0);
-	if (!(env->data = mlx_get_data_addr(env->img, &bpp, &sizel, &endian)))
-		return (0);
-	return (1); 
-}
-
-static int init_args(t_env *env, char **av, int ac)
-{
-	env->zoom = SCREEN_W * 0.25296875f;
-	env->ptx = -0.0;
-	env->pty = 0.0;
-	env->max_i = 32;//(SCREEN_W / 2) * 0.049715909 * log10(env->zoom);
-	env->back = diamond;
-	env->c.r = 1;
-	env->c.i = 1;
-	while (--ac)
-	{
-		if (!ft_strcmp(av[ac], "-m"))
-			env->fract = mandel;
-		else if (!ft_strcmp(av[ac], "-j"))
-			env->fract = julia;
-		else if (!ft_strcmp(av[ac], "-b"))
-			env->fract = buddha;
-		else if (!ft_strcmp(av[ac], "-n"))
-			env->fract = newton;
-		else if (!ft_strcmp(av[ac], "-bu"))
-			env->fract = burningship;
-		else if (!ft_strcmp(av[ac - 1], "-c"))
-			env->back = background(ft_atoi(av[ac--]));
-		else if (!ft_strcmp(av[ac - 1], "-nc"))
-			env->nc = ft_atoi(av[ac--]);
-		else
-			break ;
-	}
-	return (ac);
-}
-
-
-
 void		init(t_env *env, char **av, int ac)
 {
 	env->color = NULL;

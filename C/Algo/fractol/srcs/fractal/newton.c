@@ -19,7 +19,7 @@ static int		isroot(t_cplx z)
 	z1 = cplx_pow(z, 3);
     z1 = cplx_sub(z1, cplx(1, 0));    
     return (fabs(mod(z1)) < EPS);
-  }
+}
 
 void		newton(t_env *env, int x, int y)
 {
@@ -36,10 +36,10 @@ void		newton(t_env *env, int x, int y)
 	a = cplx(z.r, z.i);
 	while (++i < env->max_i)
 	{
-		if (cplx_abs(z) > 0)
+		if (mod(z) > 0)
 		{
-			zn = cplx_sub(cplx_pow(z, 3), cplx(1.0, 0));
-			zd = cplx_mult(cplx(3, 0), cplx_pow(z, 2));
+			zn = cplx_sub(cplx_pow(z, env->pow), cplx(1.0, 0));
+			zd = cplx_mult(cplx(env->pow, 0), cplx_pow(z, env->pow - 1));
 			z = cplx_sub(z, cplx_div(zn, zd));
 		}
 		if (isroot(z))

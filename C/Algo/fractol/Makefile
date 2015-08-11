@@ -30,14 +30,15 @@ EDIR = srcs/exit/
 
 SRC = $(SDIR)main.c \
 	  $(MXDIR)key_hook.c  $(MXDIR)mouse_press.c  $(MXDIR)loop_hook.c $(MXDIR)mouse_motion.c\
-	  $(CPDIR)ope.c \
+	  $(CPDIR)complex.c $(CPDIR)ope.c $(CPDIR)ope1.c $(CPDIR)ope2.c  $(CPDIR)transform.c \
 	  $(CDIR)color.c $(CDIR)conversion.c $(CDIR)linear.c \
 	  $(CDIR)style.c $(CDIR)ope.c $(CDIR)lifted.c $(CDIR)basecolor.c $(CDIR)phase.c\
 	  $(IDIR)init.c $(IDIR)thread.c $(IDIR)coeff.c $(IDIR)pixel.c \
-	  $(IDIR)color.c $(IDIR)background.c\
+	  $(IDIR)color.c $(IDIR)background.c $(IDIR)args.c $(IDIR)img.c\
 	  $(PDIR)plotpixel.c \
 	  $(FDIR)mandel.c $(FDIR)julia.c $(FDIR)buddha.c $(FDIR)newton.c\
-	  $(FDIR)render.c $(FDIR)get_arg.c $(FDIR)get_color.c $(FDIR)burningship.c\
+	  $(FDIR)render.c $(FDIR)trender.c $(FDIR)get_arg.c $(FDIR)get_color.c \
+	  $(FDIR)burningship.c\
 	  $(F3DIR)render_3d.c \
 	  $(BDIR)bckgrd.c $(BDIR)bckgrd1.c $(BDIR)bckgrd2.c $(BDIR)bckgrd3.c \
 	  $(BDIR)bckgrd4.c $(BDIR)bckgrd5.c $(BDIR)bckgrd6.c $(BDIR)bckgrd7.c \

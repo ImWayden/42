@@ -31,7 +31,8 @@ static int	treat_args(t_env *env, char **av, int ac)
 		else if (!ft_strcmp(av[ac - 1], "-nc"))
 			env->nc = ft_atoi(av[ac--]);
 		else if (!ft_strcmp(av[ac], "-t"))
-			;
+			env->render = t_render;
+		else
 			break ;
 	}
 	return (ac);
@@ -40,11 +41,13 @@ static int	treat_args(t_env *env, char **av, int ac)
 int 		init_args(t_env *env, char **av, int ac)
 {
 	env->zoom = SCREEN_W * 0.25296875f;
+	env->pow = 2.0;
 	env->ptx = -0.0;
 	env->pty = 0.0;
 	env->max_i = (SCREEN_W / 2) * 0.049715909 * log10(env->zoom);
 	env->back = curl;
 	env->c.r = 0.0;
 	env->c.i = 0.0;
+	env->render = render;
 	return (treat_args(env, av, ac));
 }

@@ -123,30 +123,43 @@ struct					s_env
 	long double			zoom;
 	long double			ptx;
 	long double			pty;
+	double				pow;
 	long unsigned int	max_i;
 	size_t 				nc;
 	struct timeval		start;
 	struct timeval		end;
 	t_thread			*t;
 	pthread_mutex_t		lock;
+	void 				(*render)(t_env *env);
 	void 				(*fract)(t_env *env, int x, int y);
 	t_cplx				(*back)(t_coeff, double, double);
 };
 
+/*
+** Prog Init
+*/
 
-
+t_rgb					*rgbmap(void);
+t_coeff					*coeffmap(void);
+t_rgb					*pixelmap(void);
+t_thread				*threadmap(t_env *env);
+void					ft_exit(t_env *env, char *str);
+void					init(t_env *env, char **av, int ac);
+int 					init_args(t_env *env, char **av, int ac);
+int						img_init(t_env *env);
 
 /*
 ** Fractal rendering
 */
 
 void					render(t_env *env);
+void					t_render(t_env *env);
+void					render_3d(t_env *env);
 void					julia(t_env *env, int x, int y);
 void					mandel(t_env *env, int x, int y);
 void					buddha(t_env *env, int x, int y);
 void					newton(t_env *env, int x, int y);
 void					burningship(t_env *env, int x, int y);
-int						render_3d(t_env *env);
 void					getarg(void *arg, t_env **env, int *x, int *y);
 t_rgb					get_color(t_env *env, t_cplx z, t_cplx a, size_t i);
 t_cplx					(*background(int i))(t_coeff, double, double);
@@ -196,16 +209,7 @@ t_cplx					collatz(t_coeff col, double x, double y);
 t_cplx					mobius(t_coeff col, double x, double y);
 t_cplx					bwaves(t_coeff col, double x, double y);
 
-/*
-** Prog Init
-*/
 
-t_rgb					*rgbmap(void);
-t_coeff					*coeffmap(void);
-t_rgb					*pixelmap(void);
-t_thread				*threadmap(t_env *env);
-void					ft_exit(t_env *env, char *str);
-void					init(t_env *env, char **av, int ac);
 
 /*
 ** Colors

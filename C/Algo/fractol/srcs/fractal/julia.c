@@ -23,6 +23,6 @@ void		julia(t_env *env, int x, int y)
 	z.i = -(env->pty + ((y - (SCREEN_H / 2)) / env->zoom));
 	a = cplx(z.r, z.i);
 	while (mod(z) < 4 && ++i < env->max_i)
-		z = cplx_add(cplx_mult(z, z), env->c);
+		z = cplx_add(cplx_pow(z, env->pow), env->c);
 	plotpixel(env, x, y, get_color(env, z, a, i));
 }

@@ -25,7 +25,7 @@ void		burningship(t_env *env, int x, int y)
 	z = cplx(0.0, 0.0);
 	a = cplx(c.r, c.i);
 	i = -1;
-	while (++i < env->max_i && cplx_abs(z) < 2)
+	while (++i < env->max_i && mod(z) < 2)
 	{
 		z = cplx(fabs(z.r), fabs(z.i));
 		z = cplx_add(cplx_mult(z, z), c);

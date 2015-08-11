@@ -87,3 +87,5 @@ ls -R
 cd ..
 clear
 exit
+ls
+exit
