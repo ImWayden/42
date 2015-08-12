@@ -64,7 +64,7 @@
 # define MediumOrchid     	rgb(147, 112, 219)
 # define Pink       		rgb(188, 143, 143)
 # define Plum       		rgb(234, 173, 234)
-# define Red     			rgb(255, 0, 0);
+# define Red     			rgb(255, 0, 0)
 
 
 

@@ -79,6 +79,7 @@ typedef struct			s_coord
 	double				x;
 	double				y;
 	double				z;
+	struct s_coord		*t_coord;
 }						t_coord;
 
 
@@ -100,14 +101,7 @@ typedef struct 				s_coeff
 	double					pa2;
 	double					pa3;
 	double					pa4;
-}							t_coeff; 
-
-typedef struct			s_triangle
-{
-	t_coord				p1;
-	t_coord				p2;
-	t_coord				p3;
-}						t_triangle;
+}							t_coeff;
 
 struct					s_env
 {

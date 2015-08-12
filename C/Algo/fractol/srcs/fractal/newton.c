@@ -45,5 +45,6 @@ void		newton(t_env *env, int x, int y)
 		if (isroot(z))
 			break;
 	}
-	plotpixel(env, x, y, get_color(env, a, z, i));
+	if (!(isroot(z)))
+		plotpixel(env, x, y, Red);//, i));
 }
