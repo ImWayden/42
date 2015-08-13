@@ -18,14 +18,8 @@ t_rgb		get_color(t_env *env, t_cplx z, t_cplx a, size_t i)
 
 
 	if (i == env->max_i)
-	{
-		a = toangle(z);//formula(z);//env->back(env->coeff[i], z.r, z.i);
-		r = getcolor(a);
-	}
+		r = getcolor(z);
 	else
-	{
-		a = env->back(env->coeff[i], z.r, z.i);
-		r = lerp(a);
-	}
+		r = orbitrap(env, a, i);
 	return (r);
 }

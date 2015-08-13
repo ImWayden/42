@@ -24,9 +24,9 @@ void	plotpixel(t_env *env, int x, int y, t_rgb color)
 
 	p = x + y * SCREEN_W;
 	p *= 4;
-	env->data[p] = color.r;
-	env->data[p + 1] = color.g;
-	env->data[p + 2] = color.b;
+	env->data[p] = ~ (int)(color.r);
+	env->data[p + 1] = ~(int)(color.g);
+	env->data[p + 2] = ~(int)(color.b);
 }
 
 void	addpixel(t_env *env, int x, int y, t_rgb color)

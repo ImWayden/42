@@ -120,12 +120,9 @@ struct					s_env
 	double				pow;
 	long unsigned int	max_i;
 	size_t 				nc;
-	struct timeval		start;
-	struct timeval		end;
 	t_thread			*t;
-	pthread_mutex_t		lock;
-	void 				(*render)(t_env *env);
-	void 				(*fract)(t_env *env, int x, int y);
+	void 				(*render)(t_env *);
+	void 				(*fract)(t_env *, int , int);
 	t_cplx				(*back)(t_coeff, double, double);
 };
 
@@ -227,6 +224,7 @@ t_rgb					basecolor(t_cplx z);
 t_rgb					style(t_cplx z);
 double					phase(double x, double y);
 double					clamp(double value, double min, double max);
+t_rgb					orbitrap(t_env *env, t_cplx z, int i);
 
 /*
 ** MLX

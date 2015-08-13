@@ -20,7 +20,6 @@ t_thread		*threadmap(t_env *env)
 
 	thread = NULL;
 	d = SCREEN_H;
-	pthread_mutex_init(&env->lock, NULL);
 	if ((thread = malloc(d * sizeof(t_thread))))
 	{
 		y = -1;
