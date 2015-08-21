@@ -28,6 +28,8 @@ int		mouse_press(int button, int x, int y, t_env *env)
 		env->ptx = pointx - (double) ((x - (SCREEN_W / 2.0)) / env->zoom);
 		env->pty = pointy - (double) ((y - (SCREEN_H / 2.0)) / env->zoom);
 		env->max_i = (SCREEN_W / 2) * 0.049715909 * log10(env->zoom);
+	printf("Fractol : iter :  %lu, zoom : %Lf\n", env->max_i, env->zoom);
+		
 	}
 	return 0;
 }

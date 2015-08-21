@@ -12,32 +12,44 @@
 
 #include "fractol.h"
 
+static int	fractal(t_env *env, char *str)
+{
+	if (!ft_strcmp(str, "-m"))
+		env->fract = mandel;
+	else if (!ft_strcmp(str, "-j"))
+		env->fract = julia;
+	else if (!ft_strcmp(str, "-b"))
+		env->fract = buddha;
+	else if (!ft_strcmp(str, "-n"))
+		env->fract = newton;
+	else if (!ft_strcmp(str, "-bu"))
+		env->fract = burningship;
+	else
+		return (0);
+	return (1);
+}
+
 static int	treat_args(t_env *env, char **av, int ac)
 {
-	while (--ac)
+	int		i;
+
+	i = 1;
+	while (i < ac)
 	{
-		if (!ft_strcmp(av[ac], "-m"))
-			env->fract = mandel;
-		else if (!ft_strcmp(av[ac], "-j"))
-			env->fract = julia;
-		else if (!ft_strcmp(av[ac], "-b"))
-			env->fract = buddha;
-		else if (!ft_strcmp(av[ac], "-n"))
-			env->fract = newton;
-		else if (!ft_strcmp(av[ac], "-bu"))
-			env->fract = burningship;
-		else if (!ft_strcmp(av[ac - 1], "-c"))
-			env->back = background(ft_atoi(av[ac--]));
-		else if (!ft_strcmp(av[ac - 1], "-nc"))
-			env->nc = ft_atoi(av[ac--]);
-		else if (!ft_strcmp(av[ac - 1], "-p"))
-			env->pow = ft_atoi(av[ac--]);
-		else if (!ft_strcmp(av[ac], "-t"))
+		if (!ft_strcmp(av[i], "-c"))
+			env->back = background(ft_atoi(av[++i]));
+		else if (!ft_strcmp(av[i], "-nc"))
+			env->nc = ft_atoi(av[++i]);
+		else if (!ft_strcmp(av[i], "-p"))
+			env->pow = ft_atoi(av[++i]);
+		else if (!ft_strcmp(av[i], "-t") && i++)
 			env->render = t_render;
+		else if (fractal(env, av[i]))
+			i++;
 		else
 			break ;
 	}
-	return (ac);
+	return (i - ac);
 }
 
 int 		init_args(t_env *env, char **av, int ac)
@@ -50,6 +62,6 @@ int 		init_args(t_env *env, char **av, int ac)
 	env->back = curl;
 	env->c.r = 0.0;
 	env->c.i = 0.0;
-	env->render = render;
+	env->render = sierpinski;
 	return (treat_args(env, av, ac));
 }

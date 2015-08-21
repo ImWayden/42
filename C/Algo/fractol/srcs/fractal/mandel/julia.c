@@ -24,7 +24,7 @@ void		julia(t_env *env, int x, int y)
 	a = cplx(z.r, z.i);
 	while (mod(z) < 4 && ++i < env->max_i)
 	{
-		a = env->back(env->coeff[i], z.r, z.i);
+		//a = env->back(env->coeff[i], z.r, z.i);
 		z = cplx_add(cplx_pow(z, env->pow), env->c);
 	}
 	plotpixel(env, x, y, get_color(env, z, a, i));

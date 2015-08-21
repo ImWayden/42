@@ -14,8 +14,7 @@
 
 int		loop_hook(t_env *env)
 {
-	render(env);
+	env->render(env);
 	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
-	printf("Fractol : iter :  %lu, zoom : %Lf\n", env->max_i, env->zoom);
 	return (0);
 }

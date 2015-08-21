@@ -19,7 +19,7 @@ void		init(t_env *env, char **av, int ac)
 	env->coeff = NULL;
 	env->t = NULL;
 	env->fract = NULL;
-	if ((init_args(env, av, ac)) || !env->fract)
+	if ((init_args(env, av, ac)))
 		ft_exit(env, "Wrong arg !");
 	if (!(img_init(env)))
 		ft_exit(env, "Unable to init mlx.");
