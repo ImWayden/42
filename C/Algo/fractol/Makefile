@@ -63,10 +63,11 @@ endif
 ifeq ($(UNAME_S),Darwin)
 	LDFLAGS += -L$(DIR_LIBS) -framework OpenGL -framework AppKit -lpthread
 	INC = -I minilibx_macos
+	LIB += ./minilibx_macos/libmlx.a
 endif
 OBJ = $(SRC:.c=.o)
 INC += -I includes -I $(LDIR)includes 
-LIB = ./libft/libft.a ./minilibx_macos/libmlx.a
+LIB += ./libft/libft.a
 DIR_LIBS = ./minilibx_macos
 
 CFLAGS = -Wall -Werror -Wextra
@@ -74,11 +75,13 @@ CFLAGS = -Wall -Werror -Wextra
 all: $(NAME)
 
 $(NAME): $(OBJ)
+ifeq ($(UNAME_S),Darwin)
 	@echo "\033[31;1m"
 	@echo -n '---> Compiling Minilibx... <---'
 	@echo "\033[0m"
 	$(MAKE) re -C ./minilibx_macos
 	@echo "\033[31;1m"
+endif
 	@echo -n '---> Creating the Libft... <---'
 	@echo "\033[0m"
 	$(MAKE) re -C $(LDIR)

@@ -1,0 +1,36 @@
+app_article:
+    resource: "@AppArticleBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app_user:
+    resource: "@AppUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+gallery:
+    resource: '@SonataMediaBundle/Resources/config/routing/gallery.xml'
+    prefix: /media/gallery
+
+media:
+    resource: '@SonataMediaBundle/Resources/config/routing/media.xml'
+    prefix: /media
+
+ed_blog_admin_feed:
+    path:      /feed/{type}
+    defaults:  { _controller: EDBlogBundle:Backend/Feed:feed }
+
+ed_blog_frontend:
+    resource: "@EDBlogBundle/Controller/Frontend/"
+    type:     annotation
+    prefix:   /
+
+ed_blog:
+    resource: "@EDBlogBundle/Controller/Backend/"
+    type:     annotation
+    prefix:   /blog/admin/
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"

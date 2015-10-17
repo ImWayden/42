@@ -57,7 +57,7 @@ void		buddha(t_env *env, int x, int y)
 	t_cplx	 z;
 	t_cplx	 zt[ITT];
 	t_cplx	 c;
-	t_cplx	 a;
+	//t_cplx	 a;
 
 	env->max_i = ITT;
 	
@@ -66,7 +66,7 @@ void		buddha(t_env *env, int x, int y)
 		zt[i] = cplx(1.0, 1.0);
 	c.r = env->ptx + ((x - (SCREEN_W / 2)) / env->zoom);
 	c.i = env->pty + ((y - (SCREEN_H / 2)) / env->zoom);
-	a = cplx(c.r, c.i);
+	//a = cplx(c.r, c.i);
 	z = cplx(0.0, 0.0);
 	i = -1;
 	while (mod(z) < 4 && ++i < env->max_i)

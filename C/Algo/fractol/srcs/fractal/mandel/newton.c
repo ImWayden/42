@@ -26,14 +26,14 @@ void		newton(t_env *env, int x, int y)
 	t_cplx	 z;
 	t_cplx	 zn;
 	t_cplx	 zd;
-	t_cplx	 a;
+	//t_cplx	 a;
 	size_t	i;
 
 
 	i = -1;
 	z.r = env->ptx + ((x - (SCREEN_W / 2)) / env->zoom);
 	z.i = -(env->pty + ((y - (SCREEN_H / 2)) / env->zoom));
-	a = cplx(z.r, z.i);
+	//a = cplx(z.r, z.i);
 	while (++i < env->max_i)
 	{
 		if (mod(z) > 0)

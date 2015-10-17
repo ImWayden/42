@@ -26,9 +26,11 @@ void		mandel(t_env *env, int x, int y)
 	i = -1;
 	while (mod(z) < 4 && ++i < env->max_i)
 	{
-		z = cplx_add(cplx_pow(z, env->pow), c);
+		a = env->back(env->coeff[1], z.r, z.i);
+
+		//z = cplx_add(cplx_pow(z, env->pow), c);
 	}
-			a = env->back(env->coeff[1], a.r, a.i);
+			//a = env->back(env->coeff[1], a.r, a.i);
 	
-	plotpixel(env, x, y, get_color(env, z, a, i));
+	plotpixel(env, x, y, get_color(env, a, a, i));
 }

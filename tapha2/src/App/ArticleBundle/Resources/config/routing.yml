@@ -1,0 +1,3 @@
+app_article_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: AppArticleBundle:Default:index }
