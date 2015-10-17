@@ -145,6 +145,7 @@ int						img_init(t_env *env);
 
 void					render(t_env *env);
 void					t_render(t_env *env);
+void					sierpinski(t_env *env);
 void					render_3d(t_env *env);
 void					julia(t_env *env, int x, int y);
 void					mandel(t_env *env, int x, int y);

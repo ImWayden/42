@@ -38,7 +38,7 @@ void		t_render(t_env *env)
 		env->t[y].c = cplx(env->c.r, env->c.i);
 		if (pthread_create(&env->t[y].t, NULL, fract, (void *)&env->t[y]))
 			ft_exit(env, "Thread create error.");
-		pthread_detach(env->t[y].t);
+		//pthread_detach(env->t[y].t);
 	}
 	mlx_put_image_to_window(env->ptr, env->win, env->img, 0, 0);
 }

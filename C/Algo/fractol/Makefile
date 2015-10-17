@@ -47,6 +47,7 @@ SRC = $(SDIR)main.c \
 	  $(FDIR)render.c $(FDIR)trender.c \
 	  $(FDIR)/utils/get_arg.c $(FDIR)/utils/get_color.c \
 	  $(FDIR)/burn/burningship.c\
+	  $(FDIR)/sierp/sierpinski.c\
 	  \
 	  $(F3DIR)render_3d.c \
 	  \
