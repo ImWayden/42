@@ -19,20 +19,17 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
 
             new FOS\UserBundle\FOSUserBundle(), 
-            new ED\BlogBundle\EDBlogBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
-            new Sonata\CoreBundle\SonataCoreBundle(),
-            new Sonata\MediaBundle\SonataMediaBundle(),
-            new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
-            new JMS\SerializerBundle\JMSSerializerBundle(),
-            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            
             new Eko\FeedBundle\EkoFeedBundle(),
+
+            new Tapha\BlogBundle\TaphaBlogBundle(),
+            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+            new FM\ElfinderBundle\FMElfinderBundle(),
+            new JMS\AopBundle\JMSAopBundle(),
+            new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             
-            new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
             
-            new App\UserBundle\AppUserBundle(),
-            new App\ArticleBundle\AppArticleBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
